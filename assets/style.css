@@ -903,3 +903,12 @@ footer .logo .lgm{width:46px;height:46px}
 .logo b{color:#ff6a00}
 footer .logo span,[data-theme=dark] .logo span{color:#fff}
 footer .logo b,[data-theme=dark] .logo b{color:#ff8a2a}
+
+/* Daha sakin görünüm: anlatım kutuları ve kenardan bakan kuryeler küçültüldü */
+.card .pic{aspect-ratio:16/9!important;max-height:200px}
+@media(max-width:700px){.card .pic{max-height:170px}}
+.card .pic .stp{height:34px;bottom:8px}
+.card .pic .stp>span{font-size:.76rem;padding:0 10px}
+.roam .pk svg{width:40px!important;height:auto!important}
+.roam .pt .cb{left:40px;top:22px}
+.roam .pk .cb{font-size:10.5px;padding:5px 8px}
