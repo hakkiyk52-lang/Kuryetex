@@ -884,3 +884,13 @@ html[data-theme=dark] .clrx{background:#efe9df;color:#2a3f57}
 @property --lb2{syntax:'<color>';inherits:false;initial-value:#f27aae}
 .langbar,html[data-theme=dark] .langbar{background:linear-gradient(90deg,var(--lb1,#21b3ad),var(--lb2,#f27aae))!important;transition:--lb1 1.4s ease,--lb2 1.4s ease}
 .ph1{font-size:clamp(1.7rem,5vw,2.6rem);margin:8px 0 18px;line-height:1.15}
+
+/* Tasarruf düğmesi: sağdaki yuvarlak ikonların üstünde, küçük yuvarlak */
+.ecob{left:auto!important;right:19px;bottom:calc(226px + env(safe-area-inset-bottom));width:44px!important;height:44px!important;padding:0!important;border-radius:50%!important;justify-content:center;gap:0;border-width:2px}
+.ecob b{display:none}
+.ecob .bt{width:24px;height:13px;margin:0 3px 0 0!important;border-width:2px}
+.ecob .bt::after{right:-5px;top:2.5px;width:3px;height:5px}
+html[dir=rtl] .ecob{right:auto!important;left:19px!important}
+.ecot{left:auto;right:12px;bottom:calc(282px + env(safe-area-inset-bottom));max-width:min(320px,calc(100vw - 24px))}
+html[dir=rtl] .ecot{right:auto;left:12px}
+@media(min-width:900px){.ecob{right:32px;bottom:152px}html[dir=rtl] .ecob{left:32px!important}.ecot{bottom:208px;right:22px}}
