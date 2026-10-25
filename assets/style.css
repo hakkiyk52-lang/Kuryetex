@@ -894,3 +894,12 @@ html[dir=rtl] .ecob{right:auto!important;left:19px!important}
 .ecot{left:auto;right:12px;bottom:calc(282px + env(safe-area-inset-bottom));max-width:min(320px,calc(100vw - 24px))}
 html[dir=rtl] .ecot{right:auto;left:12px}
 @media(min-width:900px){.ecob{right:32px;bottom:152px}html[dir=rtl] .ecob{left:32px!important}.ecot{bottom:208px;right:22px}}
+
+/* Kuryetex logosu */
+.logo .lgm{width:40px;height:40px;flex:none;border-radius:10px;background:#fff;object-fit:contain;box-shadow:0 2px 8px -3px rgba(11,31,77,.35)}
+.top .logo .lgm{width:42px;height:42px}
+footer .logo .lgm{width:46px;height:46px}
+.logo span{font-style:italic;font-weight:900;letter-spacing:.01em;color:#0b2259}
+.logo b{color:#ff6a00}
+footer .logo span,[data-theme=dark] .logo span{color:#fff}
+footer .logo b,[data-theme=dark] .logo b{color:#ff8a2a}
