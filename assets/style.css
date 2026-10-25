@@ -912,3 +912,21 @@ footer .logo b,[data-theme=dark] .logo b{color:#ff8a2a}
 .roam .pk svg{width:40px!important;height:auto!important}
 .roam .pt .cb{left:40px;top:22px}
 .roam .pk .cb{font-size:10.5px;padding:5px 8px}
+
+/* Sağdaki 3 ikon: biraz daha sağda, eşit aralıklı, 5 sn'de bir yaprak gibi döner, sürüklenip atılabilir */
+.fab:not(.fabc){right:6px}
+.fabc{right:11px}
+.ecob{right:13px}
+html[dir=rtl] .fab:not(.fabc){right:auto;left:6px}
+html[dir=rtl] .fabc{right:auto;left:11px}
+html[dir=rtl] .ecob{left:13px!important}
+@media(min-width:900px){.fab:not(.fabc){right:14px}.fabc{right:19px}.ecob{right:21px}}
+@keyframes leaf{0%,74%,100%{transform:none}79%{transform:rotate(-14deg) translateY(-3px)}85%{transform:rotateY(180deg) rotate(9deg)}91%{transform:rotateY(360deg) rotate(-6deg)}96%{transform:rotateY(360deg) rotate(2deg)}}
+.fab.lf,.ecob.lf{animation:leaf 5s ease-in-out infinite!important}
+.ecob.lf{animation-delay:.25s!important}
+.fabc.lf{animation-delay:.5s!important}
+.fab.lf:not(.fabc){animation-delay:.75s!important}
+.fab.drg,.ecob.drg{animation:none!important;transition:none!important;cursor:grabbing;touch-action:none}
+.fab,.ecob{touch-action:none;-webkit-user-drag:none;user-select:none;-webkit-touch-callout:none}
+html[data-calm] .fab.lf,html[data-calm] .ecob.lf{animation:none!important}
+@media(prefers-reduced-motion:reduce){.fab.lf,.ecob.lf{animation:none!important}}
