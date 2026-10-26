@@ -38,3 +38,15 @@
   // kullanıcı seçim yapmadıysa: pil %20 altında ve şarjda değilse otomatik aç
   if(get()===null&&navigator.getBattery){navigator.getBattery().then(function(bt){function chk(){if(get()===null&&!bt.charging&&bt.level<=.2&&!d.classList.contains("saver")){d.classList.add("saver");paint();toast("🔋 Pil düşük: güç tasarruf modu (karanlık tema) açıldı")}}chk();bt.addEventListener("levelchange",chk);bt.addEventListener("chargingchange",chk)}).catch(function(){})}
 })();
+// ---- alt menü dokunma hissi: dalga + kısa titreşim
+(function(){
+  if(window.__kxTap)return;window.__kxTap=1;
+  document.addEventListener("pointerdown",function(e){
+    var t=e.target.closest&&e.target.closest(".bbar>a,.bbar>button");if(!t)return;
+    t.classList.add("tap");setTimeout(function(){t.classList.remove("tap")},160);
+    try{if(navigator.vibrate)navigator.vibrate(12)}catch(x){}
+    if(document.documentElement.classList.contains("saver"))return;
+    var r=t.getBoundingClientRect(),s=document.createElement("span");s.className="rp";
+    s.style.left=(e.clientX-r.left)+"px";s.style.top=(e.clientY-r.top)+"px";t.appendChild(s);setTimeout(function(){s.remove()},460);
+  },{passive:true});
+})();
