@@ -433,18 +433,14 @@ body.mapping{overflow:hidden}body.mapping .bbar,body.mapping .fabs{display:none!
 }
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
 
-/* ---- sayfa geçişi: yaprak çevirme ---- */
+/* ---- sayfa geçişi: hızlı kayarak geçiş (yalnızca opacity/transform, GPU dostu) ---- */
 @view-transition{navigation:auto}
 .hd{view-transition-name:kx-hd}
 .bbar{view-transition-name:kx-bbar}
-::view-transition-group(root){animation-duration:.6s}
-::view-transition-old(root){z-index:2;transform-origin:0 50%;animation:kx-leaf-out .6s cubic-bezier(.45,.05,.3,1) both}
-::view-transition-new(root){z-index:1;animation:kx-leaf-in .6s cubic-bezier(.45,.05,.3,1) both}
-@keyframes kx-leaf-out{0%{transform:perspective(1600px) rotateY(0);box-shadow:0 0 0 rgba(15,23,36,0)}
- 60%{box-shadow:30px 0 60px rgba(15,23,36,.35);opacity:1}100%{transform:perspective(1600px) rotateY(-95deg);box-shadow:40px 0 80px rgba(15,23,36,0);opacity:.5}}
-@keyframes kx-leaf-in{0%{transform:scale(.97);filter:brightness(.82)}100%{transform:none;filter:none}}
-/* SPA önizlemesi için aynı efekt */
-.kx-leaf-old{position:fixed;inset:0;z-index:200;pointer-events:none;transform-origin:0 50%;animation:kx-leaf-out .6s cubic-bezier(.45,.05,.3,1) both;overflow:hidden;background:var(--paper)}
+::view-transition-old(root){animation:kx-out .14s ease-in both}
+::view-transition-new(root){animation:kx-in .24s cubic-bezier(.2,.8,.2,1) .06s both}
+@keyframes kx-out{to{opacity:0;transform:translate3d(0,-10px,0)}}
+@keyframes kx-in{from{opacity:0;transform:translate3d(0,22px,0)}}
 @media (prefers-reduced-motion:reduce){::view-transition-old(root),::view-transition-new(root){animation:none}}
 
 /* ---- güç tasarruf modu ---- */
