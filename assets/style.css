@@ -1116,3 +1116,10 @@ html[data-tk=fix] .tick{background:#ff7a1a!important}
 
 /* === Ekranda en fazla 4 hareketli ikon: 3 araç + 1 karakter === */
 .roam .pk.pl,.roam .pk.pr{display:none!important}
+/* === Koyu bölümler temanın lacivertine bağlı === */
+.abone-strip,footer,.corp .btn,[data-theme=dark] .abone-strip,[data-theme=dark] footer,[data-theme=dark] .corp .btn{background:var(--kxbar)!important}
+.langbar a,.langbar>span[aria-hidden]{background:var(--kxbar)!important;border-color:var(--kxbar)!important}
+.langbar a[aria-current]{background:#ff7a1a!important;border-color:#fff!important;color:#fff!important}
+.kxsky g[fill="#16314b"]{fill:var(--kxbar)}
+.kxbadge .kbi{background:var(--kxbar)}
+.btn-main{background:linear-gradient(135deg,color-mix(in srgb,var(--kxbar) 70%,#4a8ad0),var(--kxbar))!important}
