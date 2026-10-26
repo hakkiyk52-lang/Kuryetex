@@ -432,3 +432,34 @@ body.mapping{overflow:hidden}body.mapping .bbar,body.mapping .fabs{display:none!
   .seg button{font-size:.8rem}
 }
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
+
+/* ---- sayfa geçişi: yaprak çevirme ---- */
+@view-transition{navigation:auto}
+.hd{view-transition-name:kx-hd}
+.bbar{view-transition-name:kx-bbar}
+::view-transition-group(root){animation-duration:.6s}
+::view-transition-old(root){z-index:2;transform-origin:0 50%;animation:kx-leaf-out .6s cubic-bezier(.45,.05,.3,1) both}
+::view-transition-new(root){z-index:1;animation:kx-leaf-in .6s cubic-bezier(.45,.05,.3,1) both}
+@keyframes kx-leaf-out{0%{transform:perspective(1600px) rotateY(0);box-shadow:0 0 0 rgba(15,23,36,0)}
+ 60%{box-shadow:30px 0 60px rgba(15,23,36,.35);opacity:1}100%{transform:perspective(1600px) rotateY(-95deg);box-shadow:40px 0 80px rgba(15,23,36,0);opacity:.5}}
+@keyframes kx-leaf-in{0%{transform:scale(.97);filter:brightness(.82)}100%{transform:none;filter:none}}
+/* SPA önizlemesi için aynı efekt */
+.kx-leaf-old{position:fixed;inset:0;z-index:200;pointer-events:none;transform-origin:0 50%;animation:kx-leaf-out .6s cubic-bezier(.45,.05,.3,1) both;overflow:hidden;background:var(--paper)}
+@media (prefers-reduced-motion:reduce){::view-transition-old(root),::view-transition-new(root){animation:none}}
+
+/* ---- güç tasarruf modu ---- */
+.saver-t{display:flex;align-items:center;gap:10px;width:100%;padding:12px 14px;border:0;border-radius:16px;background:#fff;box-shadow:inset 0 0 0 1px var(--line);font:700 .92rem/1.2 var(--fb);color:var(--ink);cursor:pointer;text-align:left}
+.saver-t .sv-l{flex:1}
+.saver-t em{font-style:normal;font-size:.78rem;font-weight:800;padding:4px 10px;border-radius:999px;background:var(--paper2);color:var(--mute)}
+.saver-t[aria-pressed=true] em{background:#e6f7ed;color:var(--wa-d)}
+.ft-bot .saver-t{width:auto;padding:8px 12px;background:rgba(255,255,255,.06);color:#c9d1de;box-shadow:inset 0 0 0 1px rgba(255,255,255,.18);font-size:.82rem}
+.ft-bot .saver-t em{background:rgba(255,255,255,.12);color:#c9d1de}
+.ft-bot .saver-t[aria-pressed=true] em{background:#1faf5a;color:#fff}
+.kx-toast{position:fixed;left:50%;bottom:calc(92px + env(safe-area-inset-bottom));transform:translateX(-50%);z-index:300;background:var(--ink);color:#fff;font:700 .9rem/1.3 var(--fb);padding:12px 18px;border-radius:999px;box-shadow:var(--sh2);max-width:calc(100vw - 32px);text-align:center}
+html.saver *,html.saver *::before,html.saver *::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+html.saver .reveal{opacity:1!important;transform:none!important}
+html.saver .hd,html.saver .bbar,html.saver .dr-bg{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+html.saver .hd{background:var(--paper)!important}
+html.saver .hero::before,html.saver .hero::after,html.saver .cta-band::before,html.saver .cta-band::after{display:none!important}
+html.saver ::view-transition-old(root),html.saver ::view-transition-new(root),html.saver ::view-transition-group(*){animation:none!important}
+html.saver .dot{background:#3ee07f}

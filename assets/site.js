@@ -23,3 +23,18 @@
   // dönüşüm olayları (gtag eklendiğinde)
   document.addEventListener("click",function(e){var a=e.target.closest&&e.target.closest("[data-ev]");if(a&&typeof window.gtag==="function")window.gtag("event",a.getAttribute("data-ev"))});
 })();
+// ---- güç tasarruf modu
+(function(){
+  if(window.__kxSaver)return;window.__kxSaver=1;
+  var d=document.documentElement;
+  function get(){try{return localStorage.getItem("kx-saver")}catch(e){return null}}
+  function paint(){var on=d.classList.contains("saver");document.querySelectorAll("[data-saver]").forEach(function(b){b.setAttribute("aria-pressed",on?"true":"false");var e=b.querySelector("em");if(e)e.textContent=on?"Açık":"Kapalı"});
+    document.querySelectorAll("svg").forEach(function(s){try{on?s.pauseAnimations():s.unpauseAnimations()}catch(e){}})}
+  function toast(t){var o=document.querySelector(".kx-toast");if(o)o.remove();var x=document.createElement("div");x.className="kx-toast";x.setAttribute("role","status");x.textContent=t;document.body.appendChild(x);setTimeout(function(){x.remove()},3000)}
+  function set(on,msg){d.classList.toggle("saver",on);try{localStorage.setItem("kx-saver",on?"1":"0")}catch(e){}paint();toast(msg||(on?"🔋 Güç tasarruf modu açık: animasyonlar kapatıldı":"Güç tasarruf modu kapalı"))}
+  window.__kxPaint=paint;
+  document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-saver]");if(b){e.preventDefault();set(!d.classList.contains("saver"))}});
+  paint();
+  // kullanıcı seçim yapmadıysa: pil %20 altında ve şarjda değilse otomatik aç
+  if(get()===null&&navigator.getBattery){navigator.getBattery().then(function(bt){function chk(){if(get()===null&&!bt.charging&&bt.level<=.2&&!d.classList.contains("saver")){d.classList.add("saver");paint();toast("🔋 Pil düşük: güç tasarruf modu açıldı")}}chk();bt.addEventListener("levelchange",chk);bt.addEventListener("chargingchange",chk)}).catch(function(){})}
+})();
