@@ -930,3 +930,12 @@ html[dir=rtl] .ecob{left:13px!important}
 .fab,.ecob{touch-action:none;-webkit-user-drag:none;user-select:none;-webkit-touch-callout:none}
 html[data-calm] .fab.lf,html[data-calm] .ecob.lf{animation:none!important}
 @media(prefers-reduced-motion:reduce){.fab.lf,.ecob.lf{animation:none!important}}
+
+/* ana sayfa girişi: daha ferah */
+.hero.full .hero-copy{max-width:520px}
+.hero.full .eyebrow{font-size:.7rem;padding:4px 11px;letter-spacing:.12em}
+.hero.full h1{font-size:clamp(2rem,6vw,3.4rem);line-height:1.06;margin-top:14px;letter-spacing:-.025em}
+.hero.full p.sub{margin-top:14px;font-size:clamp(.98rem,2.2vw,1.12rem);line-height:1.55;color:#4a5878;max-width:34ch}
+.hero.full p.sub b{display:block;color:var(--navy);font-weight:800;margin-bottom:2px}
+.hero.full .cta-row{margin-top:24px}
+@media(max-width:600px){.hero.full .wrap{padding-top:108px}.hero.full h1{font-size:2.15rem}.hero.full p.sub{font-size:.98rem}}
