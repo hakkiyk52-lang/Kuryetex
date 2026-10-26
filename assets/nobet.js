@@ -26,6 +26,15 @@
     return best&&best.km<6?best:null})};
   function body(el){return el.querySelector(".nb-body")||el}
   function msg(el,t){body(el).innerHTML='<p class="nb-st">'+t+'</p>'}
+  // Ücretsiz yedek: liste alınamazsa Google Haritalar ve resmî nöbet listesine yönlendir
+  function free(el,il,pos){var night=nobetSaati(),q=(night?"nöbetçi eczane":"eczane")+(il?" "+il+" İstanbul":""),
+    g=pos&&!il?"https://www.google.com/maps/search/"+encodeURIComponent(q)+"/@"+pos[0].toFixed(5)+","+pos[1].toFixed(5)+",15z":"https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(q),
+    w="https://wa.me/"+WA+"?text="+encodeURIComponent("Merhaba, "+(il?il+" ":"")+"yakınımdaki "+(night?"nöbetçi":"açık")+" eczaneden ilaç getirtmek istiyorum.\nEczane: \nTeslim adresim: ");
+    body(el).innerHTML='<p class="nb-h"><b>'+(il?esc(loc(il))+" ":"Yakınınızdaki ")+(night?"nöbetçi":"açık")+' eczaneler</b></p>'+
+      '<div class="nb-free"><a class="nb-fl" href="'+g+'" target="_blank" rel="noopener" data-ev="nobet_maps">🗺️ Haritada '+(il?esc(loc(il))+" ":"yakınımdaki ")+(night?"nöbetçi":"açık")+' eczaneler</a>'+
+      (night?'<a class="nb-fl" href="'+IEO+'" target="_blank" rel="noopener" data-ev="nobet_ieo">📋 Resmî nöbet listesi (İstanbul Eczacı Odası)</a>':'')+
+      '<p class="nb-st">Eczaneyi seçin, adını bize WhatsApp\'tan yazın; kurye oradan alıp kapınıza getirsin. İsterseniz en yakın eczaneyi biz buluruz.</p>'+
+      '<a class="nb-pick nb-fwa" href="'+w+'" target="_blank" rel="noopener" data-ev="wa_nobet_free">WhatsApp\'tan yaz</a></div>'}
   function list(el,d,title){
     var o=el.__opts||{},it=(d&&d.items)||[],max=o.max||5,h=(d&&d.demo?'<p class="nb-demo">Önizleme: örnek veri. Sitede gerçek eczaneler çıkar.</p>':'')+
       '<p class="nb-h"><b>'+title+'</b></p><ul class="nb-l">';
@@ -41,16 +50,16 @@
   function showIlce(el,il,my){
     msg(el,esc(loc(il))+" bugünkü nöbetçi eczaneler yükleniyor…");
     byIlce(il).then(function(d){if(el.__req!==my)return;
-      if(!d||!d.items||!d.items.length){msg(el,'Liste şu an alınamadı. <a href="'+IEO+'" target="_blank" rel="noopener">Resmî nöbet listesine</a> bakabilir ya da bize yazabilirsiniz; en yakın eczaneyi biz buluruz.');return}
+      if(!d||!d.items||!d.items.length){free(el,il,el.__pos);return}
       list(el,d,"Bugün "+esc(loc(il))+" nöbetçi eczaneler")})}
   // Yakındaki eczaneler: konum alınamazsa (gece) seçili ilçenin nöbet listesine düşer
   window.__ekNear=function(el,opts){
     el.__opts=opts||el.__opts||{};el.hidden=false;var my=el.__req=(el.__req||0)+1,night=nobetSaati(),il=el.__opts.ilce||"";
     function run(lat,lon){msg(el,"Size en yakın "+(night?"nöbetçi":"açık")+" eczaneler aranıyor…");
       near(lat,lon,!night).then(function(d){if(el.__req!==my)return;
-        if(!d||!d.items||!d.items.length){if(night&&il)return showIlce(el,il,my);msg(el,"Yakınınızdaki eczane bilgisine şu an ulaşamadık. Bize yazın, en yakın eczaneyi biz bulalım.");return}
+        if(!d||!d.items||!d.items.length){free(el,"",[lat,lon]);return}
         list(el,d,"Size en yakın "+(night?"nöbetçi":"açık")+" eczaneler")})}
-    function fail(t){if(night&&il)return showIlce(el,il,my);msg(el,t+(night?' <a href="'+IEO+'" target="_blank" rel="noopener">Resmî nöbet listesi</a>':""))}
+    function fail(t){if(night&&il)return showIlce(el,il,my);free(el,il,null)}
     if(window.EK_DEMO_NEAR){if(el.__opts.onPos)el.__opts.onPos(40.9935,29.0371);return run(40.9935,29.0371)}
     if(el.__pos)return run(el.__pos[0],el.__pos[1]);
     if(!navigator.geolocation)return fail("Bu cihazda konum kullanılamıyor.");
