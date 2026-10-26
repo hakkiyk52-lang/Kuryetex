@@ -193,3 +193,12 @@ header.top .burger{background:rgba(255,255,255,.1)!important;color:#fff!importan
 @property --tk2{syntax:'<color>';inherits:false;initial-value:#ff8a3d}
 .langbar,html[data-theme=dark] .langbar{transition:--lb1 11s ease-in-out,--lb2 11s ease-in-out!important}
 .tick{background:linear-gradient(90deg,var(--tk1,#ffb15c),var(--tk2,#ff8a3d))!important;transition:--tk1 11s ease-in-out,--tk2 11s ease-in-out}
+/* === Kullanıcı seçimi: klasik lacivert, kırmızı→bordo çıtalar iki kenarda, kırmızı menü === */
+:root{--kxbar:#13235a;--kxline:linear-gradient(90deg,#e53935 0%,#b71c1c 60%,#7f1d1d 100%);--kxred:#ff5247}
+:root[data-theme=dark]{--kxbar:#0e1a45}
+header.top::after{bottom:0!important;height:3px}
+header.top::before{content:"";position:absolute;left:0;right:0;top:0;height:3px;background:var(--kxline);pointer-events:none;z-index:1}
+.bar::after{content:"";position:absolute;left:0;right:0;bottom:0;height:3px;background:var(--kxline);pointer-events:none}
+@media(min-width:900px){.bar::after{left:34px;right:34px;border-radius:4px 4px 0 0}}
+header.top .burger{color:var(--kxred)!important}
+.bar a,.bar button,[data-theme=dark] .bar a,[data-theme=dark] .bar button{color:var(--kxred)!important}
