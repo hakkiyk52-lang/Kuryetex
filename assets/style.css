@@ -525,3 +525,16 @@ html.saver b.n{background:#0f1724;color:#fff}
  .dr-f{font-size:.76rem}
 }
 @media(min-width:901px){.dr-p{width:380px}}
+
+/* ---- SSS kategorileri ---- */
+.faq-nav{margin-top:18px}
+.faq-cat{scroll-margin-top:90px}
+.faq-cat+.faq-cat{margin-top:40px}
+.faq-cat h2{font-size:clamp(1.25rem,2.6vw,1.6rem);margin-bottom:14px}
+.faq-ask{margin-top:48px;padding:26px 22px;border-radius:24px;background:var(--card,#fff);box-shadow:inset 0 0 0 1px var(--line);text-align:center}
+.faq-ask p{color:var(--mute)}
+.faq-ask .btn{margin:6px 4px 0}
+.faq details p a{color:var(--flame-d);font-weight:700}
+.drawer{overflow:hidden}html{overflow-x:clip}
+@media(max-width:400px){.hd-in{gap:10px}.brand{font-size:1.12rem;gap:8px}.brand img{width:36px;height:36px}.hd-cta{padding:0 13px;min-height:42px;font-size:.86rem;gap:6px}.hd-cta svg{width:18px;height:18px}.menu-b{width:42px;height:42px}}
+@media(max-width:350px){.hd-cta span{display:none}.hd-cta{padding:0;width:42px}}
