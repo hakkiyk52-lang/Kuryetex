@@ -1056,7 +1056,7 @@ select.nb-go2{text-align:left;padding:0 12px}
 .kxbadge b{display:block;font-weight:800;font-size:.95rem;letter-spacing:-.01em}
 .kxbadge small{display:block;font-weight:600;font-size:.78rem;color:#4f6076;margin-top:2px}
 html[dir=rtl] .kxbadge{right:auto;left:5%;direction:rtl}
-@media(max-width:759px){.kxv .kxsky{left:auto;right:-70px;top:auto;bottom:0;width:780px;height:440px}
+@media(max-width:759px){.kxv .kxsky{left:calc(50% - 526px);right:auto;top:auto;bottom:0;width:780px;height:440px}
 .kxbadge{left:50%;right:auto;bottom:18px;transform:translateX(-50%);white-space:nowrap;padding:8px 14px 8px 8px}
 html[dir=rtl] .kxbadge{left:50%}
 .kxbadge .kbi{width:32px;height:32px}.kxbadge b{font-size:.86rem}.kxbadge small{font-size:.72rem}}
@@ -1077,3 +1077,6 @@ header.top .burger{background:rgba(255,255,255,.1)!important;color:#fff!importan
 .bar,[data-theme=dark] .bar{background:var(--kxbar)!important;color:#fff}
 .bar::before{content:"";position:absolute;left:0;right:0;top:0;height:3px;background:var(--kxline);pointer-events:none}
 @media(min-width:900px){.bar::before{left:34px;right:34px;border-radius:0 0 4px 4px}}
+
+.roam .kxcar{left:0;top:0;right:auto;animation:none!important;transform-origin:50% 50%;font-size:21px}
+.lane{display:none!important}

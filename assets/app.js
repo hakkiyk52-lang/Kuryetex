@@ -730,3 +730,30 @@ document.addEventListener("dragstart",function(e){if(e.target.closest&&e.target.
 apply();if("MutationObserver" in window)new MutationObserver(function(m){for(var i=0;i<m.length;i++)if(m[i].addedNodes.length){apply();break}}).observe(document.body,{childList:true,subtree:false});
 var app=document.getElementById("app");if(app&&"MutationObserver" in window)new MutationObserver(apply).observe(app,{childList:true});
 addEventListener("resize",function(){document.querySelectorAll(".fab,.ecob").forEach(function(el){if(!S[key(el)])return;var r=el.getBoundingClientRect(),p=clampXY(el,r.left,r.top);setP(el,p[0],p[1])})})})();
+/* === Ekran kenarında dolaşan araçlar: tek döngü, birbirini iten (ters mıknatıs) === */
+;(function(){if(window.__kxTraffic)return;window.__kxTraffic=1;
+var R=document.querySelector(".roam");if(!R)return;var H=document.documentElement,B=document.body;
+[].forEach.call(document.querySelectorAll(".roam .rv,.lane"),function(e){e.parentNode&&e.parentNode.removeChild(e)});
+var EM=["🏍️","🚗","🛵","🚚","🏍️"],V=[],L=1,W=0,Hh=0,x0=0,x1=0,y0=0,y1=0,GAP=64,RAD=170,lt=0,raf=0;
+EM.forEach(function(em,i){var e=document.createElement("span");e.className="rv kxcar";e.textContent=em;e.setAttribute("aria-hidden","true");R.appendChild(e);
+ var o={e:e,s:0,v:0,b:38+((i*17)%5)*7,hid:0};e.addEventListener("click",function(){var r=e.getBoundingClientRect();if(window.__boom)try{window.__boom(e,r.left+r.width/2,r.top+r.height/2)}catch(_){}o.hid=performance.now()+5000;e.style.visibility="hidden"});V.push(o)});
+function geo(){W=innerWidth;Hh=innerHeight;var hd=document.querySelector("header.top"),br=document.querySelector(".bar"),t=hd?hd.getBoundingClientRect().bottom:0,b=Hh;if(br){var rb=br.getBoundingClientRect();if(rb.height&&rb.top>Hh*.5)b=rb.top}
+ x0=6;x1=W-34;y0=Math.max(8,t+8);y1=Math.max(y0+120,b-34);var nl=2*((x1-x0)+(y1-y0));
+ if(!V[0].v){V.forEach(function(o,i){o.s=nl*i/V.length;o.v=o.b})}else V.forEach(function(o){o.s=o.s/L*nl});L=nl}
+function at(s){s=((s%L)+L)%L;var a=x1-x0,c=y1-y0;
+ if(s<a)return[x0+s,y1,"scaleX(-1)"];s-=a;
+ if(s<c)return[x1,y1-s,"rotate(90deg)"];s-=c;
+ if(s<a)return[x1-s,y0,"none"];s-=a;
+ return[x0,y0+s,"rotate(-90deg)"]}
+function step(dt){var now=performance.now(),A=V.filter(function(o){if(o.hid&&now>o.hid){o.hid=0;o.e.style.visibility=""}return!o.hid});
+ A.forEach(function(o){o.v+=(o.b-o.v)*Math.min(1,dt*1.2)});
+ if(A.length>1){A.sort(function(p,q){return((p.s%L)+L)%L-((q.s%L)+L)%L});
+  for(var i=0;i<A.length;i++){var a=A[i],b=A[(i+1)%A.length],g=((b.s-a.s)%L+L)%L;if(g<RAD){var f=900*(1/Math.max(g,8)-1/RAD);b.v+=f*dt*60;a.v-=f*dt*60}}}
+ A.forEach(function(o){o.v=Math.max(8,Math.min(150,o.v));o.s+=o.v*dt});
+ if(A.length>1)for(var k=0;k<3;k++)for(var j=0;j<A.length;j++){var p=A[j],q=A[(j+1)%A.length],gg=((q.s-p.s)%L+L)%L;if(gg<GAP){var d=(GAP-gg)/2;q.s+=d;p.s-=d}}
+ A.forEach(function(o){var P=at(o.s);o.e.style.transform="translate3d("+P[0].toFixed(1)+"px,"+P[1].toFixed(1)+"px,0) "+P[2]})}
+function off(){return document.hidden||H.hasAttribute("data-calm")||H.classList.contains("focusing")||getComputedStyle(R).display==="none"}
+function tick(ms){raf=0;if(off()){lt=0;return}var dt=lt?Math.min(.05,(ms-lt)/1000):0;lt=ms;step(dt);raf=requestAnimationFrame(tick)}
+function go(){if(!raf){lt=0;raf=requestAnimationFrame(tick)}}
+geo();step(0);go();addEventListener("resize",function(){geo();step(0)});document.addEventListener("visibilitychange",go);
+new MutationObserver(go).observe(H,{attributes:true,attributeFilter:["data-calm","class"]});setInterval(function(){geo();go()},2000)})();
