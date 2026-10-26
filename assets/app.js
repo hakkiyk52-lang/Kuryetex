@@ -699,7 +699,8 @@ for(var j=0;j<ins.length;j++)if(ins[j].__clr)upd(ins[j]);})();
 function hsl(h,s,l){h=((h%360)+360)%360;return'hsl('+h.toFixed(1)+','+s+'%,'+l+'%)'}
 function set(){var lb=document.querySelector(".langbar"),tk=document.querySelector(".tick");
  if(lb){lb.style.setProperty("--lb1",hsl(h,62,52));lb.style.setProperty("--lb2",hsl(h+38,66,58))}
- if(tk){tk.style.setProperty("--tk1",hsl(h+24,92,74));tk.style.setProperty("--tk2",hsl(h+52,92,68))}}
+ if(tk){tk.style.setProperty("--tk1",hsl(h+24,92,74));tk.style.setProperty("--tk2",hsl(h+52,92,68))}
+ var m=document.querySelector('meta[name=theme-color]');if(m)m.content=hsl(h,62,52)}
 var ls=0;function step(ms){if(!document.hidden&&!H.hasAttribute("data-calm")){if(last)h+=(ms-last)/1000*360/PER;if(ms-ls>70){ls=ms;set()}}last=ms;requestAnimationFrame(step)}
 set();requestAnimationFrame(step)})();
 /* === Sağdaki ikonlar: sürükle-at, yere düşsün, yerinde kalsın === */

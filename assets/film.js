@@ -64,18 +64,13 @@ function glyphTex(ch,i){return ct(256,320,function(x,w,h){x.clearRect(0,0,w,h);x
  if(i<5){x.fillStyle='#173a7a'}else{var g=x.createLinearGradient(0,-120,0,120);g.addColorStop(0,'#ffb347');g.addColorStop(.55,'#ff7a1a');g.addColorStop(1,'#e8520a');x.fillStyle=g}
  x.lineWidth=10;x.strokeStyle='rgba(255,255,255,.9)';x.strokeText(ch,0,0);x.fillText(ch,0,0);x.restore()})}
 function build(s,cam,fx){
- world(s,'#8fd0f5','#eef8ff',0xd9e8c8);
+ world(s,'#8fd0f5','#eef8ff',false);
  var ft=ct(1024,1024,function(x,w,h){x.fillStyle='#f3e8d2';x.fillRect(0,0,w,h);
   x.fillStyle='#6fb8e6';x.beginPath();x.moveTo(470,0);x.bezierCurveTo(560,250,430,520,560,760);x.lineTo(610,1024);x.lineTo(700,1024);x.bezierCurveTo(630,760,700,500,600,250);x.lineTo(565,0);x.fill();
   x.beginPath();x.moveTo(505,420);x.bezierCurveTo(400,410,300,350,180,330);x.lineTo(185,360);x.bezierCurveTo(300,390,400,455,512,470);x.fill();
   x.fillStyle='rgba(31,60,136,.5)';x.font='900 40px '+FONT;x.fillText('AVRUPA',250,600);x.fillText('ANADOLU',600,470);
 });
  var fl=new T.Mesh(new T.CircleGeometry(14,72),new T.MeshStandardMaterial({map:ft,roughness:.9}));fl.rotation.x=-PI/2;fl.position.y=.01;s.add(fl);
- var at=ct(1024,128,function(x,w,h){x.fillStyle='#ead7b6';x.fillRect(0,0,w,h);x.fillStyle='#c9ad85';for(var i=0;i<w;i+=64){x.beginPath();x.moveTo(i+12,h);x.lineTo(i+12,50);x.arc(i+32,50,20,PI,0);x.lineTo(i+52,h);x.fill()}x.fillStyle='#d8bf98';x.fillRect(0,0,w,14)});at.wrapS=T.RepeatWrapping;at.repeat.set(4,1);
- var wall=new T.Mesh(new T.CylinderGeometry(14.2,14.2,2.6,72,1,true),new T.MeshStandardMaterial({map:at,side:T.DoubleSide,roughness:.9}));wall.position.y=1.3;s.add(wall);
- [[15.6,4.2,0xe6d2ae],[17.2,5.8,0xdcc59d],[18.8,7.4,0xd2b98f]].forEach(function(a){var c=new T.Mesh(new T.CylinderGeometry(a[0],a[0],a[1],72,1,true),M(a[2],{side:T.DoubleSide}));c.position.y=a[1]/2;s.add(c);var top=new T.Mesh(new T.RingGeometry(a[0]-1.6,a[0],72),M(a[2],{side:T.DoubleSide}));top.rotation.x=-PI/2;top.position.y=a[1];s.add(top)});
- var sp=[],sc=[],rr=rnd(3);for(var i=0;i<800;i++){var a=rr()*PI*2,k=Math.floor(rr()*3),rad=[15,16.6,18.2][k]+rr()*.4,y=[2.7,4.3,5.9][k]+.25;sp.push(Math.cos(a)*rad,y,Math.sin(a)*rad);var c=new T.Color([0xff7a1a,0x1f3c88,0xffffff,0xd62828,0xffd23f][Math.floor(rr()*5)]);sc.push(c.r,c.g,c.b)}
- var sg=new T.BufferGeometry();sg.setAttribute('position',new T.Float32BufferAttribute(sp,3));sg.setAttribute('color',new T.Float32BufferAttribute(sc,3));var fans=new T.Points(sg,new T.PointsMaterial({size:.35,vertexColors:true}));s.add(fans);
  var PA=[.5,2.1,3.7,5.3],PR=7,pins=PA.map(function(a,i){var p=pin(i%2?NAVY:ORG);p.position.set(Math.cos(a)*PR,0,Math.sin(a)*PR);s.add(p);return p});
  // harfler + kırılan kutu panelleri + logo harf yüzleri
  var L=makeLetters(s),env=L.map(function(l){var e=envelope();l.userData.carry.add(e);return e});
