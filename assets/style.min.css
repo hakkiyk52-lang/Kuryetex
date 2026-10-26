@@ -7,3 +7,13 @@
 .hero.full p.sub b{display:block;color:var(--navy);font-weight:800;margin-bottom:2px}
 .hero.full .cta-row{margin-top:24px}
 @media(max-width:600px){.hero.full .wrap{padding-top:108px}.hero.full h1{font-size:2.15rem}.hero.full p.sub{font-size:.98rem}}
+
+/* küçük telefonlarda üst menü sığsın */
+@media(max-width:400px){
+ header.top .wrap{gap:8px}
+ header.top .logo{font-size:1.05rem;gap:6px;min-width:0}
+ header.top .logo .lgm{width:32px;height:32px}
+ header.top .callp{padding:5px 10px 5px 5px;gap:6px}
+ header.top .callp .ci{width:28px;height:28px}
+}
+@media(max-width:374px){header.top .callp>:not(.ci){display:none}header.top .callp{padding:5px}}
