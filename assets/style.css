@@ -1086,12 +1086,28 @@ header.top .burger{background:rgba(255,255,255,.1)!important;color:#fff!importan
 @property --tk2{syntax:'<color>';inherits:false;initial-value:#ff8a3d}
 .langbar,html[data-theme=dark] .langbar{transition:--lb1 11s ease-in-out,--lb2 11s ease-in-out!important}
 .tick{background:linear-gradient(90deg,var(--tk1,#ffb15c),var(--tk2,#ff8a3d))!important;transition:--tk1 11s ease-in-out,--tk2 11s ease-in-out}
-/* === Kullanıcı seçimi: klasik lacivert, kırmızı→bordo çıtalar iki kenarda, kırmızı menü === */
-:root{--kxbar:#13235a;--kxline:linear-gradient(90deg,#e53935 0%,#b71c1c 60%,#7f1d1d 100%);--kxred:#ff5247}
+/* === Tema değişkenleri (bant rengi, çıta, ikon rengi) === */
+:root{--kxbar:#13235a;--kxline:linear-gradient(90deg,#e53935 0%,#b71c1c 60%,#7f1d1d 100%);--kxico:#ffffff;--kxburg:#ffffff;--kxth:3px;--kxtex:#ff8a2a}
 :root[data-theme=dark]{--kxbar:#0e1a45}
-header.top::after{bottom:0!important;height:3px}
-header.top::before{content:"";position:absolute;left:0;right:0;top:0;height:3px;background:var(--kxline);pointer-events:none;z-index:1}
-.bar::after{content:"";position:absolute;left:0;right:0;bottom:0;height:3px;background:var(--kxline);pointer-events:none}
-@media(min-width:900px){.bar::after{left:34px;right:34px;border-radius:4px 4px 0 0}}
-header.top .burger{color:var(--kxred)!important}
-.bar a,.bar button,[data-theme=dark] .bar a,[data-theme=dark] .bar button{color:var(--kxred)!important}
+header.top::after,header.top::before,.bar::before,.bar::after{content:"";position:absolute;left:0;right:0;height:var(--kxth);background:var(--kxline);pointer-events:none;display:none;z-index:1}
+header.top::before{top:0}header.top::after{bottom:0!important}.bar::before{top:0}.bar::after{bottom:0}
+html:not([data-st]) header.top::after,html:not([data-st]) .bar::before,html[data-st=in] header.top::after,html[data-st=in] .bar::before,html[data-st=both] header.top::after,html[data-st=both] header.top::before,html[data-st=both] .bar::before,html[data-st=both] .bar::after,html[data-st=out] header.top::before,html[data-st=out] .bar::after{display:block}
+@media(min-width:900px){.bar::before,.bar::after{left:34px;right:34px}}
+header.top .burger{color:var(--kxburg)!important}
+header.top .logo b{color:var(--kxtex)!important}
+.bar a,.bar button,[data-theme=dark] .bar a,[data-theme=dark] .bar button{color:var(--kxico)!important}
+html[data-tk=fix] .tick{background:#ff7a1a!important}
+.kxtp-b{position:fixed;left:10px;bottom:calc(84px + env(safe-area-inset-bottom));z-index:90;border:0;border-radius:999px;padding:10px 14px;font:700 .85rem/1 inherit;font-family:inherit;background:#fff;color:#13235a;box-shadow:0 8px 24px -8px rgba(0,0,0,.45);cursor:pointer}
+.kxtp{position:fixed;left:0;right:0;bottom:0;z-index:91;max-height:72vh;overflow:auto;background:#fff;color:#13235a;border-radius:20px 20px 0 0;box-shadow:0 -12px 40px rgba(0,0,0,.35);padding:14px 14px calc(18px + env(safe-area-inset-bottom));display:none}
+.kxtp.on{display:block}
+.kxtp h3{margin:0 0 4px;font-size:1.05rem}.kxtp p{margin:0 0 12px;font-size:.82rem;color:#4f6076}
+.kxtp .g{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.kxtp button.t{border:2px solid #e3e8f0;border-radius:14px;background:#fff;padding:0;overflow:hidden;text-align:left;cursor:pointer;font-family:inherit;color:#13235a}
+.kxtp button.t.sel{border-color:#ff7a1a}
+.kxtp .pv{height:54px;position:relative}.kxtp .pv i{position:absolute;left:0;right:0;height:4px}
+.kxtp .pv em{position:absolute;left:10px;top:50%;transform:translateY(-50%);font:800 .9rem/1 inherit;font-family:inherit;font-style:normal;color:#fff}
+.kxtp .pv u{position:absolute;right:10px;top:50%;transform:translateY(-50%);width:18px;height:12px;background:linear-gradient(currentColor 0 2px,transparent 2px 5px,currentColor 5px 7px,transparent 7px 10px,currentColor 10px 12px)}
+.kxtp .nm{display:block;padding:8px 10px;font-size:.8rem;font-weight:700}
+.kxtp .row{display:flex;gap:8px;margin:12px 0 0}.kxtp .row button{flex:1;border:1.5px solid #13235a;background:#fff;color:#13235a;border-radius:12px;padding:10px;font:700 .82rem inherit;font-family:inherit}
+.kxtp .row button.on{background:#13235a;color:#fff}
+.kxtp .x{float:right;border:0;background:#eef2f8;border-radius:50%;width:32px;height:32px;font-size:1.1rem;color:#13235a}
