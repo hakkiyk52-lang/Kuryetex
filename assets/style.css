@@ -463,3 +463,40 @@ html.saver .hd{background:var(--paper)!important}
 html.saver .hero::before,html.saver .hero::after,html.saver .cta-band::before,html.saver .cta-band::after{display:none!important}
 html.saver ::view-transition-old(root),html.saver ::view-transition-new(root),html.saver ::view-transition-group(*){animation:none!important}
 html.saver .dot{background:#3ee07f}
+
+/* ---- tasarruf modu düğmesi (sağda sabit) ---- */
+.sv-fab{position:fixed;right:max(14px,env(safe-area-inset-right));bottom:calc(24px + env(safe-area-inset-bottom));z-index:65;display:grid;place-items:center;width:50px;height:50px;border-radius:50%;border:0;cursor:pointer;background:#0f1724;color:#ffd166;box-shadow:0 10px 24px -10px rgba(0,0,0,.55),inset 0 0 0 2px rgba(255,255,255,.12)}
+.sv-fab svg{width:26px;height:26px}
+.sv-fab[aria-pressed=true]{background:#1faf5a;color:#fff}
+@media(max-width:900px){.sv-fab{bottom:calc(84px + env(safe-area-inset-bottom));width:46px;height:46px}}
+
+/* ---- tasarruf modu = karanlık tema ---- */
+html.saver{--paper:#0e131b;--paper2:#141b26;--card:#18202c;--ink:#e6ebf2;--ink2:#c2cad6;--mute:#8e98aa;--line:#2a3547;--flame-s:#2a1a12;--sea-s:#14233a;color-scheme:dark}
+html.saver body{background:var(--paper);color:var(--ink)}
+html.saver .hd{background:#0e131b!important;border-color:var(--line)}
+html.saver .phero{background:var(--paper)!important}
+html.saver .bbar{background:#121924!important;border-color:var(--line)}
+html.saver .bbar a,html.saver .bbar button{color:var(--ink2)}
+html.saver :is(.dd-p,.menu-b,.dr-x,.mtl,.mp-list,.mp,.trust a,.swap,.acl,.seg button,.mpov,.svc,.chip,.steps li,.rev,.plan,.zones>div,.zl a,.zl span,.faq details,.mini-steps li,.rule,.tier,.perk,.cbox,.saver-t,.btn-ghost,.note-box,.photos figure,.card){background:var(--card)!important;color:var(--ink)}
+html.saver :is(.nav>a,.dd>a){color:var(--ink2)}
+html.saver :is(.nav>a:hover,.dd>a:hover,.nav a[aria-current]){background:var(--card)!important;color:var(--ink)}
+html.saver .menu-b i{background:var(--ink)}
+html.saver :is(.brand,h1,h2,h3,h4,h5){color:var(--ink)}
+html.saver .btn-line{border-color:var(--ink2);color:var(--ink)}
+html.saver .btn-ink{background:#e6ebf2;color:#0f1724}
+html.saver a:not(.btn):not(.fab){color:inherit}
+html.saver .prose a,html.saver p a{color:#ff9a62}
+html.saver .ft{background:#080c13}
+html.saver .ft-bot .saver-t{background:rgba(255,255,255,.06)!important;color:#c9d1de}
+/* fiyat hesaplama ve başvuru kutuları: göz yormayan açık ton */
+html.saver :is(.calc-card,.form-card,.cform,.result){--paper:#eef1f5;--paper2:#e2e7ee;--card:#f4f6f9;--ink:#0f1724;--ink2:#2a3445;--mute:#5a6475;--line:#d1d8e1;background:#e6eaf0!important;color:#0f1724}
+html.saver :is(.calc-card,.form-card,.cform,.result) :is(h1,h2,h3,h4,label,b,p,small,span){color:inherit}
+html.saver .cc-h{background:#dde3eb!important}
+html.saver :is(.calc-card,.form-card,.cform) input,html.saver :is(.calc-card,.form-card,.cform) select,html.saver :is(.calc-card,.form-card,.cform) textarea{background:#f4f6f9;color:#0f1724}
+html.saver .seg button[aria-pressed=true]{background:#0f1724!important;color:#fff}
+html.saver :is(.topline,.sec-ink,.kx-toast){background:#080c13!important;color:#e6ebf2}
+html.saver .sec-ink :is(h2,h3,p){color:#e6ebf2}
+html.saver .plan-hl{background:#1f2a3b!important;color:#fff}
+html.saver :is(.mini-steps li::before,.faq summary i::before,.faq summary i::after){background:#e6ebf2}
+html.saver .zl a:hover{background:#e6ebf2!important;color:#0f1724}
+html.saver b.n{background:#0f1724;color:#fff}
