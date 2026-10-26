@@ -152,3 +152,35 @@ select.nb-go2{text-align:left;padding:0 12px}
 .nb-free .nb-fl:hover{border-color:#2f6a9e}
 .nb-free .nb-st{margin:2px 0 0}
 .nb-free .nb-fwa{justify-self:start;background:#1fa855;color:#fff;border-radius:10px;padding:10px 16px;font-weight:800;text-decoration:none}
+/* === Giriş görseli: İstanbul silueti === */
+.hero .kxv{background:#f2f6fb;overflow:hidden}
+.kxv .kxsky{position:absolute;inset:0;width:100%;height:100%;display:block}
+.kxv .kxrt{animation:kxdash 2.4s linear infinite}
+@keyframes kxdash{to{stroke-dashoffset:-26}}
+.kxbadge{position:absolute;right:5%;bottom:7%;z-index:3;display:flex;align-items:center;gap:12px;padding:10px 18px 10px 10px;border-radius:16px;background:rgba(255,255,255,.82);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border:1px solid rgba(22,49,75,.1);box-shadow:0 14px 34px -14px rgba(22,49,75,.45);color:#16314b;line-height:1.2}
+.kxbadge .kbi{width:38px;height:38px;border-radius:11px;background:#16314b;display:grid;place-items:center;flex:none}
+.kxbadge .kbi svg{width:22px;height:22px}
+.kxbadge b{display:block;font-weight:800;font-size:.95rem;letter-spacing:-.01em}
+.kxbadge small{display:block;font-weight:600;font-size:.78rem;color:#4f6076;margin-top:2px}
+html[dir=rtl] .kxbadge{right:auto;left:5%;direction:rtl}
+@media(max-width:759px){.kxv .kxsky{left:auto;right:-70px;top:auto;bottom:0;width:780px;height:440px}
+.kxbadge{left:50%;right:auto;bottom:18px;transform:translateX(-50%);white-space:nowrap;padding:8px 14px 8px 8px}
+html[dir=rtl] .kxbadge{left:50%}
+.kxbadge .kbi{width:32px;height:32px}.kxbadge b{font-size:.86rem}.kxbadge small{font-size:.72rem}}
+@media(prefers-reduced-motion:reduce){.kxv .kxrt{animation:none}}
+html[data-calm] .kxv .kxrt{animation:none}
+
+/* === Üst menü alttaki menüyle aynı lacivert + turuncu-kırmızı çıta === */
+:root{--kxbar:#14293f;--kxline:linear-gradient(90deg,#ff9a3d 0%,#ff7a1a 35%,#e8620a 65%,#d62828 100%)}
+:root[data-theme=dark]{--kxbar:#0b1a2a}
+header.top,[data-theme=dark] header.top{background:var(--kxbar)!important;border-bottom:0!important;-webkit-backdrop-filter:none;backdrop-filter:none;box-shadow:0 8px 22px -12px rgba(8,20,36,.6)}
+header.top::after{content:"";position:absolute;left:0;right:0;bottom:-3px;height:3px;background:var(--kxline);pointer-events:none}
+header.top .logo,header.top .logo span{color:#fff!important}
+header.top .logo b{color:#ff8a2a!important}
+.top nav>a,.top nav .ddb{color:#e6edf5!important}
+.top nav>a:hover,.top nav .ddb:hover,.top nav>a[aria-current]{color:#ffb070!important}
+.top nav>a[href^="/abone-musteri/"]{background:var(--acc);color:#2a1300!important;border-radius:99px;padding:6px 14px}
+header.top .burger{background:rgba(255,255,255,.1)!important;color:#fff!important}
+.bar,[data-theme=dark] .bar{background:var(--kxbar)!important;color:#fff}
+.bar::before{content:"";position:absolute;left:0;right:0;top:0;height:3px;background:var(--kxline);pointer-events:none}
+@media(min-width:900px){.bar::before{left:34px;right:34px;border-radius:0 0 4px 4px}}
