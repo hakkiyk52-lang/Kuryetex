@@ -507,3 +507,20 @@ html.saver b.n{background:#0f1724;color:#fff}
 .bbar>:active,.bbar>.tap{transform:scale(.9) translateY(1px);filter:brightness(.88);box-shadow:inset 0 2px 5px rgba(0,0,0,.28)}
 .bbar .rp{position:absolute;width:40px;height:40px;margin:-20px 0 0 -20px;border-radius:50%;background:rgba(255,255,255,.5);transform:scale(0);animation:kx-rp .45s ease-out forwards;pointer-events:none}
 @keyframes kx-rp{to{transform:scale(3.2);opacity:0}}
+
+/* ---- menü: tüm ekranı kaplamasın (telefonda alttan açılan panel) ---- */
+.dr-bg{background:rgba(15,23,36,.32)}
+@media(max-width:900px){
+ .dr-p{top:auto;left:0;right:0;bottom:0;width:auto;max-height:68vh;max-height:68svh;border-radius:24px 24px 0 0;padding:8px 14px calc(16px + env(safe-area-inset-bottom));transform:translateY(104%);box-shadow:0 -20px 50px -20px rgba(15,23,36,.45);gap:10px}
+ .dr-p::before{content:"";flex:none;align-self:center;width:44px;height:5px;border-radius:99px;background:var(--line);margin:2px 0 2px}
+ .drawer.open .dr-p{transform:none}
+ .dr-h .brand img{width:32px;height:32px}.dr-h .brand{font-size:1.1rem}
+ .dr-x{width:38px;height:38px}
+ .dr-cta .btn{min-height:44px}
+ .mt-grid{grid-template-columns:repeat(4,1fr);gap:6px}
+ .mtl{padding:9px 4px 8px;font-size:.68rem;gap:5px;border-radius:14px}
+ .dd-p i,.mtl i{width:34px;height:34px;font-size:1.05rem;border-radius:10px}
+ .mp{padding:11px 14px}
+ .saver-t{padding:10px 12px}
+}
+@media(min-width:901px){.dr-p{width:380px}}
