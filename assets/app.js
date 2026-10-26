@@ -781,7 +781,9 @@ new MutationObserver(go).observe(H,{attributes:true,attributeFilter:["data-calm"
 ["5 · Koyu lacivert & altın","#0b1630","linear-gradient(90deg,#f5c84c,#e8b931 50%,#c9961a)","in","#ffffff","#f5c84c","#f5c84c"],
 ["6 · Kraliyet laciverti & turuncu ikon","#1a2b6b","#ff7a1a","in","#ff9a3d","#ff9a3d","#ff9a3d"],
 ["7 · Demir mavisi & turuncu (önceki)","#14293f","linear-gradient(90deg,#ff9a3d,#ff7a1a 35%,#e8620a 65%,#d62828)","in","#ffffff","#ffffff","#ff8a2a"],
-["8 · Sade lacivert, çıtasız","#13235a","none","none","#ffffff","#ffffff","#ff8a2a"]];
+["8 · Sade lacivert, çıtasız","#13235a","none","none","#ffffff","#ffffff","#ff8a2a"],
+["9 · Parlament mavisi & turuncu","#1f3c88","linear-gradient(90deg,#ff9a3d,#ff7a1a 35%,#e8620a 65%,#d62828)","in","#ffffff","#ffffff","#ff8a2a"],
+["10 · Parlament mavisi & kırmızı çift çıta","#1f3c88","linear-gradient(90deg,#e53935,#b71c1c 60%,#7f1d1d)","both","#ffffff","#ff6b5e","#ff8a2a"]];
 function ap(i,tk){var t=T[i];if(!t)return;var s=H.style;s.setProperty("--kxbar",t[1]);s.setProperty("--kxline",t[2]);H.setAttribute("data-st",t[3]);s.setProperty("--kxico",t[4]);s.setProperty("--kxburg",t[5]);s.setProperty("--kxtex",t[6]);if(tk)H.setAttribute("data-tk","fix");else H.removeAttribute("data-tk")}
 var on=/pages\.dev$/.test(location.hostname)||/[?&]tema/.test(location.search);if(!on)return;
 var st={i:0,tk:0};try{st=JSON.parse(localStorage.getItem(K))||st}catch(e){}ap(st.i,st.tk);

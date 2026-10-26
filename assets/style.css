@@ -1111,3 +1111,5 @@ html[data-tk=fix] .tick{background:#ff7a1a!important}
 .kxtp .row{display:flex;gap:8px;margin:12px 0 0}.kxtp .row button{flex:1;border:1.5px solid #13235a;background:#fff;color:#13235a;border-radius:12px;padding:10px;font:700 .82rem inherit;font-family:inherit}
 .kxtp .row button.on{background:#13235a;color:#fff}
 .kxtp .x{float:right;border:0;background:#eef2f8;border-radius:50%;width:32px;height:32px;font-size:1.1rem;color:#13235a}
+/* === Giriş: Abone ol butonu turuncu === */
+.hero .cta-row .btn-ghost[href*="abone"],:root[data-theme=dark] .hero .cta-row .btn-ghost[href*="abone"]{background:linear-gradient(135deg,#ffa05a,#e8620a)!important;color:#fff!important;border-color:transparent!important;box-shadow:0 10px 22px -10px #e8620a}
