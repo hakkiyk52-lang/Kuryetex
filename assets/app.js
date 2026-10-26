@@ -694,11 +694,13 @@ for(var i=0;i<ins.length;i++){var el=ins[i];if(el.__clr)continue;var t=(el.type|
 function upd(x){var b=x.parentNode.querySelector(".clrx");if(b&&b.__in===x)b.classList.toggle("on",!!x.value)}
 if(!window.__clrInit){window.__clrInit=1;document.addEventListener("input",function(e){if(e.target.__clr)upd(e.target)},true);setInterval(function(){var a=document.querySelectorAll(".clrin");for(var k=0;k<a.length;k++)upd(a[k])},600)}
 for(var j=0;j<ins.length;j++)if(ins[j].__clr)upd(ins[j]);})();
-/* === Üst şerit renk döngüsü (8 renk, 4 sn) === */
+/* === Üst şerit ve kayan yazı bandı: renk tekerleği sırasıyla, fark ettirmeden yavaş geçiş === */
 ;(function(){if(window.__lbInit)return;window.__lbInit=1;
-var P=[["#21b3ad","#f27aae"],["#ff9a3d","#e0563f"],["#7b5cff","#ff6fb5"],["#2f80ed","#2ec4b6"],["#1fae6e","#e8b931"],["#4f6bed","#c06ff2"],["#ff6b6b","#ffa95c"],["#0ea5e9","#7cc41a"]],i=0,H=document.documentElement;
-function set(){var lb=document.querySelector(".langbar");if(lb){lb.style.setProperty("--lb1",P[i][0]);lb.style.setProperty("--lb2",P[i][1])}var m=document.querySelector('meta[name=theme-color]');if(m)m.content=P[i][0]}
-set();setInterval(function(){if(document.hidden||H.hasAttribute("data-calm"))return;i=(i+1)%P.length;set()},4000);
+var P=[["#21b3ad","#2ec4b6"],["#2ec4b6","#0ea5e9"],["#0ea5e9","#2f80ed"],["#2f80ed","#4f6bed"],["#4f6bed","#7b5cff"],["#7b5cff","#c06ff2"],["#c06ff2","#f27aae"],["#f27aae","#ff6b6b"],["#ff6b6b","#ff9a3d"],["#ff9a3d","#e8b931"],["#e8b931","#1fae6e"],["#1fae6e","#21b3ad"]];
+var Q=[["#ffb15c","#ff8a3d"],["#ffc857","#ffb15c"],["#ffd27a","#ffc857"],["#c9e27a","#ffd27a"],["#8fdcc0","#c9e27a"],["#86cdf0","#8fdcc0"],["#b8acf5","#86cdf0"],["#f3a9d2","#b8acf5"],["#ff9f8f","#f3a9d2"],["#ff8a3d","#ff9f8f"]];
+var i=0,j=0,H=document.documentElement,STEP=16000;
+function set(){var lb=document.querySelector(".langbar"),tk=document.querySelector(".tick");if(lb){lb.style.setProperty("--lb1",P[i][0]);lb.style.setProperty("--lb2",P[i][1])}if(tk){tk.style.setProperty("--tk1",Q[j][0]);tk.style.setProperty("--tk2",Q[j][1])}var m=document.querySelector('meta[name=theme-color]');if(m)m.content=P[i][0]}
+set();setInterval(function(){if(document.hidden||H.hasAttribute("data-calm"))return;i=(i+1)%P.length;j=(j+1)%Q.length;set()},STEP);
 new MutationObserver(function(){var lb=document.querySelector(".langbar");if(lb&&!lb.style.getPropertyValue("--lb1"))set()}).observe(document.body,{childList:true,subtree:false});})();
 /* === Sağdaki ikonlar: sürükle-at, yere düşsün, yerinde kalsın === */
 ;(function(){if(window.__flyInit)return;window.__flyInit=1;var K="k360fly",S={};try{S=JSON.parse(localStorage.getItem(K)||"{}")||{}}catch(e){}

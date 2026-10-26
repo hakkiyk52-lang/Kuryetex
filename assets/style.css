@@ -1080,3 +1080,9 @@ header.top .burger{background:rgba(255,255,255,.1)!important;color:#fff!importan
 
 .roam .kxcar{left:0;top:0;right:auto;animation:none!important;transform-origin:50% 50%;font-size:21px}
 .lane{display:none!important}
+/* === Bantlarda yumuşak renk geçişi === */
+@property --lb2{syntax:'<color>';inherits:false;initial-value:#f27aae}
+@property --tk1{syntax:'<color>';inherits:false;initial-value:#ffb15c}
+@property --tk2{syntax:'<color>';inherits:false;initial-value:#ff8a3d}
+.langbar,html[data-theme=dark] .langbar{transition:--lb1 11s ease-in-out,--lb2 11s ease-in-out!important}
+.tick{background:linear-gradient(90deg,var(--tk1,#ffb15c),var(--tk2,#ff8a3d))!important;transition:--tk1 11s ease-in-out,--tk2 11s ease-in-out}
