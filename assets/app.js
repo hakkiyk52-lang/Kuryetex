@@ -772,27 +772,3 @@ function tick(ms){raf=0;if(off()){lt=0;return}var dt=lt?Math.min(.05,(ms-lt)/100
 function go(){if(!raf){lt=0;raf=requestAnimationFrame(tick)}}
 geo();step(0);go();addEventListener("resize",function(){geo();step(0)});document.addEventListener("visibilitychange",go);
 new MutationObserver(go).observe(H,{attributes:true,attributeFilter:["data-calm","class"]});setInterval(function(){geo();go()},2000)})();
-/* === Tema seçici: yalnızca önizleme sitesinde (pages.dev) ya da ?tema ile görünür === */
-;(function(){var H=document.documentElement,K="kxtema",T=[
-["1 · Lacivert & bordo çift çıta","#13235a","linear-gradient(90deg,#e53935,#b71c1c 60%,#7f1d1d)","both","#ff5247","#ff5247","#ff8a2a"],
-["2 · Lacivert & kırmızı çıta","#13235a","linear-gradient(90deg,#e53935,#b71c1c 60%,#7f1d1d)","in","#ffffff","#ffffff","#ff8a2a"],
-["3 · Gece laciverti & turuncu","#0f1f3d","linear-gradient(90deg,#ff9a3d,#ff7a1a 35%,#e8620a 65%,#d62828)","in","#ffffff","#ffffff","#ff8a2a"],
-["4 · Gece laciverti & ince kırmızı","#0f1f3d","#d62828","in","#ffffff","#ff5247","#ff8a2a"],
-["5 · Koyu lacivert & altın","#0b1630","linear-gradient(90deg,#f5c84c,#e8b931 50%,#c9961a)","in","#ffffff","#f5c84c","#f5c84c"],
-["6 · Kraliyet laciverti & turuncu ikon","#1a2b6b","#ff7a1a","in","#ff9a3d","#ff9a3d","#ff9a3d"],
-["7 · Demir mavisi & turuncu (önceki)","#14293f","linear-gradient(90deg,#ff9a3d,#ff7a1a 35%,#e8620a 65%,#d62828)","in","#ffffff","#ffffff","#ff8a2a"],
-["8 · Sade lacivert, çıtasız","#13235a","none","none","#ffffff","#ffffff","#ff8a2a"],
-["9 · Parlament mavisi & turuncu","#1f3c88","linear-gradient(90deg,#ff9a3d,#ff7a1a 35%,#e8620a 65%,#d62828)","in","#ffffff","#ffffff","#ff8a2a"],
-["10 · Parlament mavisi & kırmızı çift çıta","#1f3c88","linear-gradient(90deg,#e53935,#b71c1c 60%,#7f1d1d)","both","#ffffff","#ff6b5e","#ff8a2a"]];
-function ap(i,tk){var t=T[i];if(!t)return;var s=H.style;s.setProperty("--kxbar",t[1]);s.setProperty("--kxline",t[2]);H.setAttribute("data-st",t[3]);s.setProperty("--kxico",t[4]);s.setProperty("--kxburg",t[5]);s.setProperty("--kxtex",t[6]);if(tk)H.setAttribute("data-tk","fix");else H.removeAttribute("data-tk")}
-var on=/pages\.dev$/.test(location.hostname)||/[?&]tema/.test(location.search);if(!on)return;
-var st={i:0,tk:0};try{st=JSON.parse(localStorage.getItem(K))||st}catch(e){}ap(st.i,st.tk);
-function save(){try{localStorage.setItem(K,JSON.stringify(st))}catch(e){}}
-function ui(){var b=document.createElement("button");b.className="kxtp-b";b.type="button";b.textContent="🎨 Tema";document.body.appendChild(b);
- var p=document.createElement("div");p.className="kxtp";var h='<button class="x" type="button" aria-label="Kapat">×</button><h3>Renk kombinasyonu seç</h3><p>Dokun, site anında değişsin. Beğendiğinin numarasını yazman yeterli. (Sadece önizlemede görünür.)</p><div class="g">';
- T.forEach(function(t,i){var line=t[3]=="none"?"":'<i style="background:'+t[2]+';'+(t[3]=="out"?"top:0":"bottom:0")+'"></i>'+(t[3]=="both"?'<i style="background:'+t[2]+';top:0"></i>':"");h+='<button class="t" type="button" data-i="'+i+'"><span class="pv" style="display:block;background:'+t[1]+'">'+line+'<em>Kurye<span style="color:'+t[6]+'">TEX</span></em><u style="color:'+t[5]+'"></u></span><span class="nm">'+t[0]+'</span></button>'});
- h+='</div><div class="row"><button type="button" data-tk="0">Kayan bant: renkli</button><button type="button" data-tk="1">Kayan bant: turuncu</button></div>';p.innerHTML=h;document.body.appendChild(p);
- function mark(){[].forEach.call(p.querySelectorAll("button.t"),function(x){x.classList.toggle("sel",+x.getAttribute("data-i")===st.i)});[].forEach.call(p.querySelectorAll("[data-tk]"),function(x){x.classList.toggle("on",+x.getAttribute("data-tk")===st.tk)})}
- b.onclick=function(){p.classList.add("on");mark()};p.querySelector(".x").onclick=function(){p.classList.remove("on")};
- p.addEventListener("click",function(e){var t=e.target.closest("button.t");if(t){st.i=+t.getAttribute("data-i");ap(st.i,st.tk);save();mark()}var k=e.target.closest("[data-tk]");if(k){st.tk=+k.getAttribute("data-tk");ap(st.i,st.tk);save();mark()}});mark()}
-if(document.body)ui();else document.addEventListener("DOMContentLoaded",ui)})();
