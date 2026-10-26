@@ -220,3 +220,6 @@ html[data-tk=fix] .tick{background:#ff7a1a!important}
 .kxtp .x{float:right;border:0;background:#eef2f8;border-radius:50%;width:32px;height:32px;font-size:1.1rem;color:#13235a}
 /* === Giriş: Abone ol butonu turuncu === */
 .hero .cta-row .btn-ghost[href*="abone"],:root[data-theme=dark] .hero .cta-row .btn-ghost[href*="abone"]{background:linear-gradient(135deg,#ffa05a,#e8620a)!important;color:#fff!important;border-color:transparent!important;box-shadow:0 10px 22px -10px #e8620a}
+
+/* === Ekranda en fazla 4 hareketli ikon: 3 araç + 1 karakter === */
+.roam .pk.pl,.roam .pk.pr{display:none!important}
