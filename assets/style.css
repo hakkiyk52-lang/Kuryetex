@@ -1110,3 +1110,7 @@ html[data-tk=fix] .tick{background:#ff7a1a!important}
 
 .kxbadge .kbi{background:var(--kxbar)}
 .btn-main{background:linear-gradient(135deg,color-mix(in srgb,var(--kxbar) 70%,#4a8ad0),var(--kxbar))!important}
+/* === Sağdaki butonlar: WhatsApp alt menünün çıtasına sıfır, üstünde arama ve tasarruf === */
+@media(max-width:899px){.fab:not(.fabc){bottom:calc(79px + env(safe-area-inset-bottom))!important}
+.fab.fabc{bottom:calc(147px + env(safe-area-inset-bottom))!important}
+.ecob{bottom:calc(205px + env(safe-area-inset-bottom))!important}}
