@@ -1114,3 +1114,5 @@ html[data-tk=fix] .tick{background:#ff7a1a!important}
 @media(max-width:899px){.fab:not(.fabc){bottom:calc(79px + env(safe-area-inset-bottom))!important}
 .fab.fabc{bottom:calc(147px + env(safe-area-inset-bottom))!important}
 .ecob{bottom:calc(205px + env(safe-area-inset-bottom))!important}}
+
+.kxsky .kxfront{fill:var(--kxbar)}
