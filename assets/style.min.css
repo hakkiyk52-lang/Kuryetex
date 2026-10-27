@@ -232,3 +232,18 @@ html[data-tk=fix] .tick{background:#ff7a1a!important}
 
 .langbar,html[data-theme=dark] .langbar{transition:none!important}
 .tick{transition:none!important}
+/* === Alt bilgi: açılır ilçe/şehir listeleri === */
+footer details.fil>summary{list-style:none;display:flex;align-items:center;justify-content:space-between;gap:12px;cursor:pointer;min-height:44px;-webkit-tap-highlight-color:transparent}
+footer details.fil>summary::-webkit-details-marker{display:none}
+footer details.fil>summary h4{margin:0}
+footer details.fil>summary i{flex:none;position:relative;width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.12)}
+footer details.fil>summary i::before,footer details.fil>summary i::after{content:"";position:absolute;left:50%;top:50%;width:14px;height:2px;margin:-1px 0 0 -7px;background:#ff8a2a;border-radius:2px;transition:transform .25s}
+footer details.fil>summary i::after{transform:rotate(90deg)}
+footer details.fil[open]>summary i::after{transform:rotate(0)}
+footer details.fil>summary:focus-visible{outline:2px solid #ff8a2a;outline-offset:4px;border-radius:8px}
+footer details.fil[open]>.fcl{margin-top:12px}
+
+footer details.fil{background:none;border:0;border-top:1px solid rgba(255,255,255,.14);border-radius:0;padding:18px 0 0;box-shadow:none}
+footer details.fil>summary{padding:0;color:#fff}
+footer details.fil>summary::after{content:none}
+footer details.fil>summary h4{color:#fff}
