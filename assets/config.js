@@ -121,6 +121,7 @@ window.K360={
   "Üsküdar": "c"
  },
  "ROUND": 50,
+ "MIN_FEE": 580,
  "SIZE_EXTRA": [
   0,
   75,
