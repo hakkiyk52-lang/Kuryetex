@@ -123,6 +123,7 @@ window.K360={
  "ROUND": 50,
  "MIN_FEE": 580,
  "MIN_CROSS": 780,
+ "EZ_NEAR_KM": 10,
  "SIZE_EXTRA": [
   0,
   75,

@@ -153,7 +153,7 @@ window.__hv=true;window.__rs={};window.__RF=function(k,f){if(window.__hv&&!docum
     var f=m<=60?(C.TF_VIP||.2):m<=90?0:m<=120?-(C.TF_2H||.1):-(C.TF_DAY||.2);
     return lastTx=Math.round((base||0)*f/50)*50}
   function txs(x){return x>0?"+"+tl(x):x<0?"−"+tl(-x):tl(0)}
-  function txn(){if(cur&&cur.np)return window.__ezX?_t("Farklı ilçeye eczane teslimi mesafeye göre hesaplanır."):_t("Eczane teslimi standart fiyattır.");return lastTx>0?_t("Hızlı teslim farkı: ")+txs(lastTx)+".":lastTx<0?_t("Geç teslim indirimi: ")+txs(lastTx)+".":_t("Express (90 dk) standart fiyat.")}
+  function txn(){if(cur&&cur.np)return window.__ezX?_t("Uzak ilçeye eczane teslimi VIP tarifesiyle hesaplanır."):_t("Eczane teslimi standart fiyattır.");return lastTx>0?_t("Hızlı teslim farkı: ")+txs(lastTx)+".":lastTx<0?_t("Geç teslim indirimi: ")+txs(lastTx)+".":_t("Express (90 dk) standart fiyat.")}
   function tmText(){if(cur&&cur.np)return _t("30–45 dakika (hava şartlarına bağlı)");return tmv==="custom"?(tmc&&tmc.value?_t("Saat ")+tmc.value+" (belirli saat)":""):tmv}
   var cur=null,size=-1,sizeName="",raf=0,shown=0;
   var res=$("result"),errEl=$("cerr");
@@ -201,7 +201,7 @@ window.__hv=true;window.__rs={};window.__RF=function(k,f){if(window.__hv&&!docum
     if(!(fa===tb&&!pa&&!pb)&&C.FAR&&(C.FAR.indexOf(fa)>-1||C.FAR.indexOf(tb)>-1))raw=Math.max(raw,km*C.FAR_RATE);raw=Math.max(raw,C.MINP[C.ZONE[fa]],C.MINP[C.ZONE[tb]]);
     var p=null,ezp=(cur.np&&window.__ekZonePrice)?window.__ekZonePrice(to):null;
     var ext=0;if(cur.t==="calc"){var base=Math.round(raw/C.ROUND)*C.ROUND;p=cur.mult?Math.round(base*cur.mult/C.ROUND)*C.ROUND:base+(cur.add||0);var tx0=tmExtra(p);if(tx0<0)p+=tx0;else ext+=tx0;ext+=sx+wx}
-    var ezSame=(fa===tb&&!pa&&!pb);window.__ezX=!!(ezp&&!ezSame);if(ezp){p=ezSame?ezp:base+Math.round(base*-(C.TF_DAY||.2)/50)*50}var sdA=(C.D[fa]||a||{}).side,sdB=(C.D[tb]||b||{}).side,xs=!!(sdA&&sdB&&sdA!==sdB);if(p!==null){p=Math.max(p,xs?(C.MIN_CROSS||780):(C.MIN_FEE||580));if(!(ezp&&ezSame))p+=ext}
+    var sdA=(C.D[fa]||a||{}).side,sdB=(C.D[tb]||b||{}).side,xs=!!(sdA&&sdB&&sdA!==sdB);var ezSame=!!ezp&&((fa===tb&&!pa&&!pb)||(!xs&&km<=(C.EZ_NEAR_KM||10)));window.__ezX=!!(ezp&&!ezSame);if(ezp){if(ezSame){p=ezp;ext=0}else{p=base;ext=Math.round(base*(C.TF_VIP||.2)/50)*50}}if(p!==null){p=Math.max(p,xs?(C.MIN_CROSS||780):(C.MIN_FEE||580));if(!(ezp&&ezSame))p+=ext}
     var hl=cur.l.replace(/^\S+\s/,"");
     $("route").textContent=from.value+" → "+to.value;
     $("km").textContent=_t("Mesafe: ")+km.toFixed(1).replace(".",",")+_t(" km (tahmini)");
