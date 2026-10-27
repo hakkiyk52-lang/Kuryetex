@@ -739,7 +739,7 @@ var R=document.querySelector(".roam");if(!R)return;var H=document.documentElemen
 [].forEach.call(document.querySelectorAll(".roam .rv,.lane"),function(e){e.parentNode&&e.parentNode.removeChild(e)});
 var EM=["🏍️","🚗","🚚"],SP=[22,18,15],V=[],L=1,x0=0,x1=0,y0=0,y1=0,GAP=64,RAD=150,lt=0,raf=0;
 function geo(){var W=innerWidth,Hh=innerHeight,hd=document.querySelector("header.top"),br=document.querySelector(".bar"),t=hd?hd.getBoundingClientRect().bottom:0,b=Hh;if(br){var rb=br.getBoundingClientRect();if(rb.height&&rb.top>Hh*.5)b=rb.top}
- x0=6;x1=W-34;y0=Math.max(8,t+8);y1=Math.max(y0+120,b-34);var nl=2*((x1-x0)+(y1-y0));
+ x0=6;x1=W-34;y0=Math.max(8,t+8);y1=Math.max(y0+120,b-20);var nl=2*((x1-x0)+(y1-y0));
  if(!V.inited){V.inited=1;V.forEach(function(o,i){o.s=nl*i/V.length;o.v=o.b})}else V.forEach(function(o){o.s=o.s/L*nl});L=nl}
 function at(s){s=((s%L)+L)%L;var a=x1-x0,c=y1-y0;
  if(s<a)return[x0+s,y1,"scaleX(-1)"];s-=a;
