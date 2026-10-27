@@ -65,10 +65,10 @@ function glyphTex(ch,i){return ct(256,320,function(x,w,h){x.clearRect(0,0,w,h);x
  x.lineWidth=10;x.strokeStyle='rgba(255,255,255,.9)';x.strokeText(ch,0,0);x.fillText(ch,0,0);x.restore()})}
 function build(s,cam,fx){
  world(s,'#8fd0f5','#eef8ff',false);
- var ft=ct(1024,1024,function(x,w,h){x.fillStyle='#f3e8d2';x.fillRect(0,0,w,h);
+ var ft=ct(1024,1024,function(x,w,h){x.fillStyle='#cfe6c2';x.fillRect(0,0,w,h);
   x.fillStyle='#6fb8e6';x.beginPath();x.moveTo(470,0);x.bezierCurveTo(560,250,430,520,560,760);x.lineTo(610,1024);x.lineTo(700,1024);x.bezierCurveTo(630,760,700,500,600,250);x.lineTo(565,0);x.fill();
   x.beginPath();x.moveTo(505,420);x.bezierCurveTo(400,410,300,350,180,330);x.lineTo(185,360);x.bezierCurveTo(300,390,400,455,512,470);x.fill();
-  x.fillStyle='rgba(31,60,136,.5)';x.font='900 40px '+FONT;x.fillText('AVRUPA',250,600);x.fillText('ANADOLU',600,470);
+  x.font='900 50px '+FONT;x.textAlign='center';x.lineJoin='round';[['AVRUPA',330,600],['YAKASI',330,656],['ANADOLU',790,470],['YAKASI',790,526]].forEach(function(t){x.lineWidth=12;x.strokeStyle='#ffffff';x.strokeText(t[0],t[1],t[2]);x.fillStyle=t[0]==='YAKASI'?'#e8620a':'#1f3c88';x.fillText(t[0],t[1],t[2])});x.textAlign='start';
 });
  var fl=new T.Mesh(new T.CircleGeometry(14,72),new T.MeshStandardMaterial({map:ft,roughness:.9}));fl.rotation.x=-PI/2;fl.position.y=.01;s.add(fl);
  var PA=[.5,2.1,3.7,5.3],PR=7,pins=PA.map(function(a,i){var p=pin(i%2?NAVY:ORG);p.position.set(Math.cos(a)*PR,0,Math.sin(a)*PR);s.add(p);return p});
