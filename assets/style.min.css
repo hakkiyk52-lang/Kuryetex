@@ -247,3 +247,5 @@ footer details.fil{background:none;border:0;border-top:1px solid rgba(255,255,25
 footer details.fil>summary{padding:0;color:#fff}
 footer details.fil>summary::after{content:none}
 footer details.fil>summary h4{color:#fff}
+
+.mlang a[aria-current]{background:#ff7a1a!important;color:#fff!important;box-shadow:0 0 0 2px #fff,0 0 0 4px #ff7a1a}
