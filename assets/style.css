@@ -637,7 +637,7 @@ body{padding-top:34px}
 .eyebrow{color:var(--blue)}
 
 /* animasyonları kapat / sade mod */
-html[data-calm] *:not(.xpl *):not(#hizmetler *):not(.ecob):not(.ecot),html[data-calm] *::before,html[data-calm] *::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+html[data-calm] *:not(.xpl *):not(#hizmetler *):not(.ecob):not(.ecot):not(.ezsos):not(.ezsos-ic i),html[data-calm] *::before,html[data-calm] *::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
 html[data-calm] .reveal{opacity:1!important;transform:none!important}
 .fold{margin-top:18px}
 .fold>summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;gap:8px;min-height:48px;padding:0 22px;border-radius:999px;background:var(--card);border:2px solid var(--pm1);color:var(--pm1);font-weight:800}
@@ -1303,3 +1303,20 @@ body:not(.inhero) .roam{display:none!important}
 .kxmore{display:block;margin:10px auto 0;padding:12px 22px;border-radius:999px;border:1.5px solid var(--line);background:var(--card);color:var(--tx);font:800 .95rem/1 inherit;cursor:pointer}
 
 .soc{display:flex;flex-wrap:wrap;gap:10px;align-items:center}.soc a{width:40px;height:40px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;color:#fff;transition:transform .15s,box-shadow .15s}.soc a:hover{transform:translateY(-2px);box-shadow:0 6px 14px -6px rgba(0,0,0,.45);color:#fff}.soc svg{width:21px;height:21px}.soc .s-ig{background:radial-gradient(circle at 30% 107%,#fdf497 0%,#fd5949 45%,#d6249f 60%,#285aeb 90%)}.soc .s-fb{background:#1877f2}.soc .s-fb svg{width:24px;height:24px}.soc .s-gm{background:#fff;color:#ea4335;box-shadow:inset 0 0 0 1px var(--line)}.soc .s-gm:hover{color:#ea4335}.soc .s-yx{background:#fc3f1d}.soc .s-li{background:#0a66c2}.soc .s-yt{background:#ff0000}.soc .s-tt{background:#000}.mft .soc{margin:2px 0}.fci .socli{margin-top:6px}.soc a.s-ig,.soc a.s-fb,.soc a.s-yx,.soc a.s-li,.soc a.s-yt,.soc a.s-tt{color:#fff}.soc a.s-gm{color:#ea4335}footer .soc a.s-gm{box-shadow:none}footer .cols li .soc a,footer .soc a{display:inline-flex;padding:0;min-height:0;line-height:1;width:44px;height:44px}
+/* Eczane sayfaları: acil ilaç düğmesi (kırmızı-yeşil, eczane işareti) */
+.ezcta .ezsos{display:flex;align-items:center;gap:14px;width:100%;max-width:460px;padding:12px 14px 12px 12px;border-radius:18px;color:#fff;text-decoration:none;background:#c8102e;border:2px solid rgba(255,255,255,.55);box-shadow:0 10px 26px -10px rgba(200,16,46,.75);animation:ezsosBg 2.4s ease-in-out infinite;position:relative;-webkit-tap-highlight-color:transparent}
+.ezcta .ezsos:hover,.ezcta .ezsos:focus-visible{color:#fff;transform:translateY(-1px)}
+.ezcta .ezsos:active{transform:scale(.98)}
+.ezsos-ic{flex:0 0 52px;height:52px;border-radius:14px;background:#fff;display:grid;place-items:center;position:relative;box-shadow:0 2px 6px rgba(0,0,0,.18)}
+.ezsos-ic b{font:900 2.05rem/1 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:#c8102e;letter-spacing:-.02em}
+.ezsos-ic i{position:absolute;right:-6px;top:-6px;width:22px;height:22px;border-radius:6px;background:#12a454;border:2px solid #fff;animation:ezsosBlink 1.2s steps(1) infinite}
+.ezsos-ic i::before,.ezsos-ic i::after{content:"";position:absolute;background:#fff;border-radius:1px;left:50%;top:50%;transform:translate(-50%,-50%)}
+.ezsos-ic i::before{width:12px;height:4px}.ezsos-ic i::after{width:4px;height:12px}
+.ezsos-tx{display:grid;gap:2px;flex:1;min-width:0;text-align:left}
+.ezsos-tx strong{font-size:1.18rem;font-weight:900;letter-spacing:.02em;line-height:1.1}
+.ezsos-tx small{font-size:.86rem;font-weight:600;opacity:.95;line-height:1.25}
+.ezsos-go{flex:0 0 38px;height:38px;border-radius:50%;background:rgba(255,255,255,.2);display:grid;place-items:center}
+.ezsos-go svg{width:22px;height:22px}
+@keyframes ezsosBg{0%,100%{background:#c8102e;box-shadow:0 0 0 0 rgba(200,16,46,.55),0 10px 26px -10px rgba(200,16,46,.75)}50%{background:#0f8a46;box-shadow:0 0 0 10px rgba(15,138,70,0),0 10px 26px -10px rgba(15,138,70,.75)}}
+@keyframes ezsosBlink{0%{background:#12a454}50%{background:#c8102e}}
+@media (prefers-reduced-motion:reduce){.ezcta .ezsos,.ezsos-ic i{animation:none}}
