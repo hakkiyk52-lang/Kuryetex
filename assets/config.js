@@ -3324,5 +3324,5 @@ window.K360={
    ]
   ]
  },
- "EXTRA_CAP_PCT": 30
+ "EXTRA_CAP_PCT": 15
 };
