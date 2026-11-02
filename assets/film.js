@@ -65,12 +65,10 @@ function glyphTex(ch,i){return ct(256,320,function(x,w,h){x.clearRect(0,0,w,h);x
  x.lineWidth=10;x.strokeStyle='rgba(255,255,255,.9)';x.strokeText(ch,0,0);x.fillText(ch,0,0);x.restore()})}
 function build(s,cam,fx){
  world(s,'#8fd0f5','#eef8ff',false);
- var ft=ct(1024,1024,function(x,w,h){x.fillStyle='#cfe6c2';x.fillRect(0,0,w,h);
-  x.fillStyle='#6fb8e6';x.beginPath();x.moveTo(470,0);x.bezierCurveTo(560,250,430,520,560,760);x.lineTo(610,1024);x.lineTo(700,1024);x.bezierCurveTo(630,760,700,500,600,250);x.lineTo(565,0);x.fill();
-  x.beginPath();x.moveTo(505,420);x.bezierCurveTo(400,410,300,350,180,330);x.lineTo(185,360);x.bezierCurveTo(300,390,400,455,512,470);x.fill();
-  x.font='900 50px '+FONT;x.textAlign='center';x.lineJoin='round';[['AVRUPA',330,600],['YAKASI',330,656],['ANADOLU',790,470],['YAKASI',790,526]].forEach(function(t){x.lineWidth=12;x.strokeStyle='#ffffff';x.strokeText(t[0],t[1],t[2]);x.fillStyle=t[0]==='YAKASI'?'#e8620a':'#1f3c88';x.fillText(t[0],t[1],t[2])});x.textAlign='start';
-});
- var fl=new T.Mesh(new T.CircleGeometry(14,72),new T.MeshStandardMaterial({map:ft,roughness:.9}));fl.rotation.x=-PI/2;fl.position.y=.01;s.add(fl);
+ // Sade İstanbul haritası (hazır görsel, sabit). 1 birim lon=35.6, lat=47; arena merkezi 28.66E/41.17N
+ var GL0=27.9513956,GL1=29.978148,GB0=40.7827042,GB1=41.6050271,KO=35.6,KL=47,MW=(GL1-GL0)*KO,MH=(GB1-GB0)*KL;
+ var ft=new T.TextureLoader().load('/assets/img/istanbul-sade.webp');
+ var fl=new T.Mesh(new T.PlaneGeometry(MW,MH),new T.MeshBasicMaterial({map:ft,alphaTest:.5}));fl.rotation.x=-PI/2;fl.position.set(((GL0+GL1)/2-28.66)*KO,.01,-(((GB0+GB1)/2)-41.17)*KL);s.add(fl);
  var PA=[.5,2.1,3.7,5.3],PR=7,pins=PA.map(function(a,i){var p=pin(i%2?NAVY:ORG);p.position.set(Math.cos(a)*PR,0,Math.sin(a)*PR);s.add(p);return p});
  // harfler + kırılan kutu panelleri + logo harf yüzleri
  var L=makeLetters(s),env=L.map(function(l){var e=envelope();l.userData.carry.add(e);return e});
@@ -100,14 +98,14 @@ function build(s,cam,fx){
   pins.forEach(function(p,i){var w=t-7.35;p.scale.setScalar((1+(w>0&&w<.8?Math.sin(w/.8*PI)*.6:0))*(1-seg(t,9,9.8)));p.visible=t<9.9;p.rotation.y=t*.8});
   conf(t);conf2(t);
   var u;
-  if(t<8.6){var ca=.55+t*.08;camLook(cam,V(Math.cos(ca)*22,14,Math.sin(ca)*22),V(0,0,0))}
-  else if(t<11){u=seg(t,8.6,10.8);var ca2=.55+8.6*.08;blendCam(cam,t,0,0,[V(Math.cos(ca2)*22,14,Math.sin(ca2)*22),V(0,0,0)],[V(0,4.2,15),V(0,1.2,3)],u)}
+  if(t<8.6){var ca=PI/2;camLook(cam,V(Math.cos(ca)*22,14,Math.sin(ca)*22),V(0,0,0))}
+  else if(t<11){u=seg(t,8.6,10.8);var ca2=PI/2;blendCam(cam,t,0,0,[V(Math.cos(ca2)*22,14,Math.sin(ca2)*22),V(0,0,0)],[V(0,4.2,15),V(0,1.2,3)],u)}
   else{u=seg(t,11,12.5);blendCam(cam,t,0,0,[V(0,4.2,15),V(0,1.2,3)],[V(0,2.6,12.6),V(0,1.75,3)],u)}
   fx(t)}}
 
 var cv=host.querySelector('canvas'),fl=host.querySelector('.kxflash'),H=document.documentElement,r;
 try{r=new T.WebGLRenderer({canvas:cv,antialias:true,alpha:true})}catch(e){return}
-r.setPixelRatio(Math.min(window.devicePixelRatio||1,1.5));r.setClearColor(0,0);
+r.setPixelRatio(Math.min(window.devicePixelRatio||1,Math.min(screen.width,screen.height)<700?1.25:1.5));r.setClearColor(0,0);
 var sc=new T.Scene(),cam=new T.PerspectiveCamera(45,1,.1,500);
 var fx=function(t){var f=0;if(t<.6)f=1-t/.6;else if(t>=20)f=seg(t,20,20.9);if(fl)fl.style.opacity=f.toFixed(3)};
 var up=build(sc,cam,fx);sc.background=null;
