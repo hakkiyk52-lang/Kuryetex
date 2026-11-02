@@ -65,41 +65,25 @@ function glyphTex(ch,i){return ct(256,320,function(x,w,h){x.clearRect(0,0,w,h);x
  x.lineWidth=10;x.strokeStyle='rgba(255,255,255,.9)';x.strokeText(ch,0,0);x.fillText(ch,0,0);x.restore()})}
 function build(s,cam,fx){
  world(s,'#8fd0f5','#eef8ff',false);
- var MW=30,MH=30,ft=ct(1024,1024,function(x,w,h){
-  // İstanbul: Avrupa (sol) ve Anadolu (sağ) yakası, ortada Boğaz, altta Haliç ve Marmara, üstte Karadeniz
-  var R=function(a,b){return a+Math.random()*(b-a)};
-  function bos(){x.beginPath();x.moveTo(585,40);x.bezierCurveTo(640,150,560,230,600,300);x.bezierCurveTo(640,370,520,430,545,520);x.bezierCurveTo(565,600,470,650,500,760);x.lineTo(520,900)}
-  // kara
-  x.fillStyle='#bfe0a3';x.fillRect(0,0,w,h);
-  x.save();x.beginPath();x.moveTo(585,0);x.bezierCurveTo(640,150,560,230,600,300);x.bezierCurveTo(640,370,520,430,545,520);x.bezierCurveTo(565,600,470,650,500,760);x.lineTo(520,1024);x.lineTo(1024,1024);x.lineTo(1024,0);x.closePath();x.fillStyle='#f1dc9f';x.fill();x.restore();
-  // Karadeniz
-  x.fillStyle='#5aa7e0';x.beginPath();x.moveTo(0,0);x.lineTo(1024,0);x.lineTo(1024,70);x.bezierCurveTo(860,110,760,40,640,80);x.bezierCurveTo(560,105,470,60,360,95);x.bezierCurveTo(220,135,120,70,0,110);x.closePath();x.fill();
-  // Marmara
-  x.beginPath();x.moveTo(0,860);x.bezierCurveTo(140,830,260,880,380,850);x.bezierCurveTo(450,830,480,820,510,815);x.bezierCurveTo(560,830,600,880,680,890);x.bezierCurveTo(800,905,900,960,1024,980);x.lineTo(1024,1024);x.lineTo(0,1024);x.closePath();x.fill();
-  // Boğaz
-  x.strokeStyle='#5aa7e0';x.lineCap='round';x.lineJoin='round';x.lineWidth=34;bos();x.stroke();
-  // Haliç
-  x.lineWidth=20;x.beginPath();x.moveTo(505,790);x.bezierCurveTo(440,775,400,740,330,730);x.bezierCurveTo(290,725,270,705,250,690);x.stroke();
-  // kıyı çizgisi
-  x.strokeStyle='rgba(255,255,255,.85)';x.lineWidth=4;
-  // Adalar
-  x.fillStyle='#f1dc9f';[[700,950,26,16],[760,975,20,12],[815,990,28,14],[650,930,12,8]].forEach(function(a){x.beginPath();x.ellipse(a[0],a[1],a[2],a[3],-.3,0,7);x.fill();x.stroke()});
+ // İstanbul il haritası (gerçek il sınırı). 1 birim = 2 km; arena merkezi Arnavutköy/Başakşehir (28.80E, 41.15N)
+ var GL0=27.9513956,GL1=29.978148,GB0=40.7827042,GB1=41.6050271,TW=2048,TH=1098,MW=(GL1-GL0)*42,MH=(GB1-GB0)*55.5;
+ var mcv=document.createElement('canvas');mcv.width=TW;mcv.height=TH;var mx=mcv.getContext('2d'),ft=new T.CanvasTexture(mcv);ft.anisotropy=4;
+ function P(lon,lat){return[(lon-GL0)/(GL1-GL0)*TW,(GB1-lat)/(GB1-GB0)*TH]}
+ var mim=new Image();mim.onload=function(){var x=mx;x.drawImage(mim,0,0);x.textAlign='center';x.lineJoin='round';
+  function lbl(t,lon,lat,sz,col){var q=P(lon,lat);x.font='800 '+sz+'px '+FONT;x.lineWidth=8;x.strokeStyle='rgba(255,255,255,.92)';x.strokeText(t,q[0],q[1]);x.fillStyle=col;x.fillText(t,q[0],q[1])}
   // köprüler
-  function bridge(y0,x1,x2){x.save();x.lineWidth=14;x.strokeStyle='#e8620a';x.beginPath();x.moveTo(x1,y0);x.lineTo(x2,y0-6);x.stroke();x.lineWidth=4;x.strokeStyle='#fff';x.beginPath();x.moveTo(x1,y0);x.lineTo(x2,y0-6);x.stroke();
-   [x1+8,x2-8].forEach(function(px){x.fillStyle='#1f3c88';x.fillRect(px-5,y0-20,10,26)});x.restore()}
-  bridge(268,555,650);bridge(470,505,600);bridge(640,470,560);
-  // ilçe adları
-  x.textAlign='center';x.lineJoin='round';
-  function lbl(t,px,py,sz,col){x.font='800 '+sz+'px '+FONT;x.lineWidth=7;x.strokeStyle='rgba(255,255,255,.9)';x.strokeText(t,px,py);x.fillStyle=col;x.fillText(t,px,py)}
-  [['Sarıyer',420,190],['Şişli',380,470],['Beşiktaş',440,575],['Fatih',380,800],['Bakırköy',150,790],['Esenyurt',110,560],['Başakşehir',200,330]].forEach(function(a){lbl(a[0],a[1],a[2],30,'#355a2b')});
-  [['Beykoz',800,190],['Üsküdar',650,690],['Kadıköy',700,840],['Ümraniye',800,520],['Ataşehir',880,700],['Kartal',950,900]].forEach(function(a){lbl(a[0],a[1],a[2],30,'#7a5a14')});
-  lbl('KARADENİZ',512,52,30,'#ffffff');lbl('MARMARA',260,960,34,'#ffffff');lbl('BOĞAZ',650,360,22,'#1f3c88');
-  // büyük yaka yazıları
-  x.font='900 58px '+FONT;[['AVRUPA',230,640],['YAKASI',230,700],['ANADOLU',820,360],['YAKASI',820,420]].forEach(function(t){x.lineWidth=14;x.strokeStyle='#ffffff';x.strokeText(t[0],t[1],t[2]);x.fillStyle=t[0]==='YAKASI'?'#e8620a':'#1f3c88';x.fillText(t[0],t[1],t[2])});
-  // kenarları yumuşat
-  x.globalCompositeOperation='destination-in';var g=x.createRadialGradient(512,512,380,512,512,512);g.addColorStop(0,'rgba(0,0,0,1)');g.addColorStop(1,'rgba(0,0,0,0)');x.fillStyle=g;x.fillRect(0,0,w,h);x.globalCompositeOperation='source-over';
- });
- var fl=new T.Mesh(new T.PlaneGeometry(MW,MH),new T.MeshStandardMaterial({map:ft,roughness:.9,transparent:true,depthWrite:false}));fl.rotation.x=-PI/2;fl.position.y=.01;s.add(fl);
+  [[29.036,41.045],[29.061,41.091],[29.112,41.203]].forEach(function(b){var q=P(b[0],b[1]);x.save();x.translate(q[0],q[1]);x.rotate(-.35);x.fillStyle='#e8620a';x.fillRect(-30,-5,60,10);x.fillStyle='#fff';x.fillRect(-30,-1.5,60,3);x.fillStyle='#1f3c88';x.fillRect(-24,-16,7,24);x.fillRect(17,-16,7,24);x.restore()});
+  // Kız Kulesi
+  (function(){var q=P(29.0043,41.0211),X=q[0]+6,Y=q[1]+10;x.save();x.fillStyle='#ffffff';x.beginPath();x.ellipse(X,Y+16,20,7,0,0,7);x.fill();
+   x.fillStyle='#f4efe6';x.strokeStyle='#1f3c88';x.lineWidth=2.5;x.fillRect(X-9,Y-18,18,32);x.strokeRect(X-9,Y-18,18,32);
+   x.fillStyle='#d2401f';x.beginPath();x.moveTo(X-12,Y-18);x.lineTo(X,Y-40);x.lineTo(X+12,Y-18);x.closePath();x.fill();x.stroke();
+   x.fillStyle='#1f3c88';x.fillRect(X-3,Y-10,6,8);x.restore();lbl('Kız Kulesi',29.005,40.995,26,'#d2401f')})();
+  [['Silivri',28.22,41.11],['Çatalca',28.46,41.27],['Arnavutköy',28.74,41.26],['Esenyurt',28.67,41.04],['Başakşehir',28.80,41.10],['Şişli',28.985,41.075],['Sarıyer',29.03,41.19]].forEach(function(a){lbl(a[0],a[1],a[2],30,'#2f5a22')});
+  [['Beykoz',29.15,41.14],['Üsküdar',29.11,41.05],['Kadıköy',29.10,40.975],['Şile',29.62,41.12],['Pendik',29.27,40.90]].forEach(function(a){lbl(a[0],a[1],a[2],30,'#7a5a14')});
+  x.font='900 66px '+FONT;[['AVRUPA',28.52,41.12],['YAKASI',28.52,41.068],['ANADOLU',29.24,41.27],['YAKASI',29.24,41.22]].forEach(function(t){var q=P(t[1],t[2]);x.lineWidth=16;x.strokeStyle='#ffffff';x.strokeText(t[0],q[0],q[1]);x.fillStyle=t[0]==='YAKASI'?'#e8620a':'#1f3c88';x.fillText(t[0],q[0],q[1])});
+  ft.needsUpdate=true};
+ mim.src='/assets/img/istanbul-il.webp';
+ var fl=new T.Mesh(new T.PlaneGeometry(MW,MH),new T.MeshStandardMaterial({map:ft,roughness:.9,transparent:true,depthWrite:false}));fl.position.set(((GL0+GL1)/2-28.80)*42,0,-(((GB0+GB1)/2)-41.15)*55.5);fl.rotation.x=-PI/2;fl.position.y=.01;s.add(fl);
  var PA=[.5,2.1,3.7,5.3],PR=7,pins=PA.map(function(a,i){var p=pin(i%2?NAVY:ORG);p.position.set(Math.cos(a)*PR,0,Math.sin(a)*PR);s.add(p);return p});
  // harfler + kırılan kutu panelleri + logo harf yüzleri
  var L=makeLetters(s),env=L.map(function(l){var e=envelope();l.userData.carry.add(e);return e});
