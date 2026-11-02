@@ -61,7 +61,7 @@
     // --- konumumu kullan ---
     var lb=document.createElement("button");lb.type="button";lb.className="ip-loc";lb.textContent="📍 Konumumu kullan";
     var lh=document.createElement("p");lh.className="ip-loch";lh.hidden=true;
-    w.insertBefore(lb,alt);w.insertBefore(lh,alt);
+    lb.textContent=word==="Teslim"?"📍 Konumuma gelsin":"📍 Konumum";field.classList.add("ip-f");if(lab&&lab.parentNode===field)field.insertBefore(lb,lab.nextSibling);else w.insertBefore(lb,alt);w.insertBefore(lh,alt);
     function lsay(t){lh.textContent=t;lh.hidden=!t}
     lb.addEventListener("click",function(){if(!navigator.geolocation){lsay("Konum bu cihazda kullanılamıyor; ilçe ve mahalleyi listeden seçin.");return}
       lsay("Konumunuz alınıyor…");lb.disabled=true;
@@ -106,7 +106,7 @@
     var svc=document.getElementById("svcsel"),from=document.getElementById("from"),to=document.getElementById("to");if(!svc||!from||!to||svc.__ez)return;svc.__ez=1;
     var f=from.closest(".field"),tf=to.closest(".field"),tlab=tf&&tf.querySelector("label"),tlab0=tlab?tlab.innerHTML:"";
     var w=document.createElement("div");w.className="kx-ez";w.hidden=true;
-    w.innerHTML='<div class="kx-ez-hd"><span class="kx-ez-ic" aria-hidden="true">💊</span><div><b>Eczaneyi biz buluruz!</b><small>İlacı alıp kapınıza getiririz. Siz sadece mahallenizi seçin.</small></div></div>'+
+    w.innerHTML='<div class="kx-ez-hd"><span class="kx-ez-ic" aria-hidden="true">💊</span><div><b>Eczaneyi biz buluruz</b><small>Mahallenizi seçin, ilacı alıp getirelim.</small></div></div>'+
       '<div class="nb-2"><button type="button" class="nb-go">📍 Konumu kullan</button><button type="button" class="nb-go2">Farklı isteğim var</button></div><p class="kx-ez-h" hidden></p>';
     f.parentNode.insertBefore(w,f);
     var ot=document.createElement("div");ot.className="kx-other";ot.hidden=true;
@@ -117,7 +117,7 @@
     var g=document.createElement("div");g.className="kx-ez kx-gen";g.hidden=true;
     g.innerHTML='<div class="kx-ez-hd"><span class="kx-ez-ic" aria-hidden="true">🏍️</span><div><b>Kurye kapınıza gelsin!</b><small>Konumunuzu kullanın; ilçe ve mahalle kendiliğinden seçilsin.</small></div></div>'+
       '<div class="nb-2"><button type="button" class="nb-go">📍 Buradan alınsın</button><button type="button" class="nb-go2">🏠 Buraya gelsin</button></div><p class="kx-ez-h" hidden></p>';
-    w.parentNode.insertBefore(g,w);
+
     var GT=[[/moto/i,"Moto kurye kapınızda!"],[/evrak/i,"Evrakınız güvenle yolda!"],[/paket servis|restoran/i,"Siparişleriniz sıcak sıcak yolda!"],[/express/i,"90 dakikada kapıda!"],[/araçlı|aracli/i,"Büyük gönderiler araçla taşınır!"],[/vip/i,"60 dakikada, doğrudan teslim!"],[/vale|şoför|sofor/i,"Şoförünüz kapınıza gelsin!"],[/uçak|ucak/i,"Havalimanından kapınıza!"],[/otobüs|otobus/i,"Otogardan kapınıza!"]];
     var gb=g.querySelector("b"),gi=g.querySelector(".kx-ez-ic"),gh=g.querySelector(".kx-ez-h");
     function gsay(t){gh.textContent=t;gh.hidden=!t}
@@ -137,7 +137,7 @@
         function(){say("Konum izni verilmedi; mahallenizi aşağıdan seçin.")},{enableHighAccuracy:true,timeout:10000})};
     function other(on){calcBox.classList.toggle("kx-is-other",on);ot.hidden=!on;if(on)ot.scrollIntoView({block:"nearest"})}
     own.onclick=function(){other(true)};ot.querySelector(".kx-other-back").onclick=function(){other(false)};
-    var last=null;function tick(){var v=svc.value||"",tm=document.getElementById("toMh"),ez=/eczane|ilaç|ilac/i.test(v);if(tm&&!tm.disabled){var ph="Mahalle seçin (zorunlu)";if(tm.placeholder!==ph)tm.placeholder=ph}if(v===last)return;last=v;var on=/eczane|ilaç|ilac/i.test(v);w.hidden=!on;g.hidden=on;if(!on){other(false);gset(v)}
+    var last=null;function tick(){var v=svc.value||"",tm=document.getElementById("toMh"),ez=/eczane|ilaç|ilac/i.test(v);if(tm&&!tm.disabled){var ph="Mahalle seçin (zorunlu)";if(tm.placeholder!==ph)tm.placeholder=ph}if(v===last)return;last=v;var on=/eczane|ilaç|ilac/i.test(v);w.hidden=!on;g.hidden=on;calcBox.classList.toggle("kx-svc",!!v);if(!on){other(false);gset(v)}
       if(f)f.style.display=on?"none":"";var ts=document.getElementById("toIl");if(ts){[].forEach.call(ts.querySelectorAll("optgroup"),function(g){if(g.label!=="İstanbul"){g.hidden=on;g.disabled=on}});var DD=(window.K360||{}).D||{};if(on&&ts.value&&DD[ts.value]&&DD[ts.value].il){ts.value="";ts.dispatchEvent(new Event("change"))}}
       if(tlab)tlab.innerHTML=on?tlab0.replace(/^\s*\d+\.\s*Nereye gidecek\?/,"2. İlaç nereye gelecek? (ilçe ve mahalle)"):tlab0}tick();calcBox.classList.add("kx-ready");setInterval(tick,300);
   }

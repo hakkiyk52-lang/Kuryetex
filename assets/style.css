@@ -1232,7 +1232,7 @@ body{overflow-x:clip}
 .calc:not(:has(#svcsel[data-def="eczane-kurye"])) .field:has(#from),.calc:not(:has(#svcsel[data-def="eczane-kurye"])) .field:has(#to){min-height:196px}
 .calc:has(#svcsel[data-def="eczane-kurye"]) .field:has(#to){min-height:194px}
 .calc:has(#svcsel[data-def="eczane-kurye"]):not(.kx-ready) .field:has(#from){display:none}
-.calc:has(#svcsel[data-def="eczane-kurye"]):not(.kx-ready) > div:first-child::before{content:"";display:block;height:var(--ezr,138px)}.calc:has(#svcsel[data-def="eczane-kurye"]):not(.kx-ready) #moreopt{display:none}.calc:has(#svcsel[data-def="eczane-kurye"]):not(.kx-ready) #calcBtn{display:none}
+.calc:has(#svcsel[data-def="eczane-kurye"]):not(.kx-ready) > div:first-child::before{content:"";display:block;height:var(--ezr,100px)}.calc:has(#svcsel[data-def="eczane-kurye"]):not(.kx-ready) #moreopt{display:none}.calc:has(#svcsel[data-def="eczane-kurye"]):not(.kx-ready) #calcBtn{display:none}
 @media(min-width:900px){
 .calc:not(:has(#svcsel[data-def])) .field:has(#from),.calc:not(:has(#svcsel[data-def])) .field:has(#to){min-height:126px}
 .calc:has(#svcsel[data-def]):not(:has(#svcsel[data-def="eczane-kurye"])) .field:has(#from),.calc:has(#svcsel[data-def]):not(:has(#svcsel[data-def="eczane-kurye"])) .field:has(#to){min-height:174px}
@@ -1241,7 +1241,7 @@ body{overflow-x:clip}
 }
 
 /* === Genel konum kutusu: alan altındaki küçük konum düğmeleri yerine === */
-.calc .ip-loc,.calc .ip-loch{display:none!important}
+
 .kx-gen .nb-2{grid-template-columns:1fr 1fr!important}
 .kx-gen .nb-go2{text-align:center!important}
 /* Yazarken üst çubuklar gizlensin, klavyeyle daralan ekranda yer açılsın */
@@ -1249,8 +1249,28 @@ body{overflow-x:clip}
 html.focusing .langbar,html.focusing .tick,html.focusing header.top{opacity:0!important;visibility:hidden!important;pointer-events:none!important}
 
 /* genel konum kutusu için açılışta yer ayır */
-.calc:not(:has(#svcsel[data-def="eczane-kurye"])):not(.kx-ready) > div:first-child::before{content:"";display:block;height:152px}
+
 
 .hcalc .calc:not(.kx-ready) #moreopt,.hcalc .calc:not(.kx-ready) #calcBtn{display:none}
 
-.hcalc .calc:not(:has(#svcsel[data-def="eczane-kurye"])):not(.kx-ready) > div:first-child::before{height:134px}
+
+
+/* === Sade konum düğmeleri (başlık satırında) ve sade eczane kartı === */
+.ip-f{position:relative}
+.ip-f>.ip-loc{position:absolute;top:-3px;right:0;margin:0;padding:4px 11px;min-height:0;font-size:.76rem;line-height:1.35;border-radius:999px;border:1.5px solid #ffc49a;background:#fff8f2;color:#c2410c;font-weight:800;box-shadow:none}
+.calc:not(.kx-svc) .ip-loc{display:none!important}
+.calc.kx-svc:not(:has(.kx-ez:not([hidden]))) .ip-f>label{padding-right:150px}
+.ip-loch{margin:6px 0 0!important;padding:7px 10px;border-radius:10px;background:#eef5ff;color:#1b4fa8!important;font-size:.8rem!important}
+.calc .kx-ez{background:#fff8f2!important;border:1.5px solid #ffd3b3!important;box-shadow:none!important;color:#28323d!important;padding:10px 12px!important;border-radius:14px!important;margin:0 0 12px!important}
+.calc .kx-ez::after{display:none!important}
+.calc .kx-ez .kx-ez-hd{gap:10px;margin-bottom:8px}
+.calc .kx-ez .kx-ez-ic{width:34px;height:34px;border-radius:10px;font-size:1.1rem;box-shadow:none;background:#ffe9d6}
+.calc .kx-ez .kx-ez-hd b{color:#c2410c!important;font-size:1rem}
+.calc .kx-ez .kx-ez-hd small{color:#5b6472!important;font-size:.84rem;margin-top:0}
+.calc .kx-ez .nb-2{grid-template-columns:auto auto!important;justify-content:start;gap:8px}
+.calc .kx-ez .nb-go,.calc .kx-ez .nb-go2{min-height:34px!important;border-radius:999px!important;padding:5px 14px!important;font-size:.82rem!important;text-align:center!important}
+.calc .kx-ez .nb-go{background:#ff7a1a!important;color:#fff!important;border:0!important}
+.calc .kx-ez .nb-go2{background:#fff!important;color:#c2410c!important;border:1.5px solid #ffc49a!important}
+.calc .kx-ez .kx-ez-h{background:#eef5ff!important;color:#1b4fa8!important;margin-top:8px;padding:8px 10px}
+
+.ip-f>.ip-loc{z-index:50}
