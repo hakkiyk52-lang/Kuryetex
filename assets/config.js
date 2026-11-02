@@ -146,7 +146,7 @@ window.K360={
  "MIN_FEE": 580,
  "MIN_CROSS": 780,
  "EZ_NEAR_KM": 10,
- "NIGHT_FEE": 185,
+ "NIGHT_FEE": 0,
  "NIGHT_START": 0,
  "NIGHT_END": 7,
  "SIZE_EXTRA": [
@@ -3324,5 +3324,6 @@ window.K360={
    ]
   ]
  },
- "EXTRA_CAP_PCT": 15
+ "EXTRA_CAP_PCT": 15,
+ "NIGHT_PCT": 15
 };

@@ -73,6 +73,7 @@ window.__hv=true;window.__rs={};window.__RF=function(k,f){if(window.__hv&&!docum
     (T.gunler||[]).forEach(function(g){if(g[0]!==n.ymd)return;var t=g[1];if((t==="ab"||t==="ar")&&n.h<13)return;var b=t==="b"||t==="ab";it.push([b?_t("bayram"):_t("resmî tatil"),b?(T.b||15):(T.r||13)])});
     (E.gunler||[]).forEach(function(g){if(g[0]===n.ymd)it.push([g[1],E.pct||15])});
     if(S.on)it.push([(S.txt||_t("yoğunluk")).toLocaleLowerCase("tr"),S.pct||15]);
+    if(C.NIGHT_PCT){var hh;if(typeof tmv!=="undefined"&&tmv==="custom"&&tmc&&tmc.value)hh=+tmc.value.split(":")[0];else hh=n.h;var na=C.NIGHT_START||0,nb=C.NIGHT_END||7;if(na<nb?(hh>=na&&hh<nb):(hh>=na||hh<nb))it.push([_t("gece saati"),C.NIGHT_PCT])}
     if(!it.length||!base)return{tot:0,txt:"",msg:""};
     var pct=0;it.forEach(function(x){pct=Math.max(pct,x[1])});if(it.length>1)pct=C.EXTRA_CAP_PCT||15;
     var tot=Math.max(50,Math.round(base*pct/100/50)*50),nm=it.map(function(x){return x[0]}),why=nm.length>1?nm.slice(0,-1).join(", ")+_t(" ve ")+nm[nm.length-1]:nm[0];
