@@ -45,7 +45,7 @@
     function qhide(){qb.style.display="none";qi.setAttribute("aria-expanded","false")}
     function qshow(){var t=nz(qi.value===sel.value?"":qi.value),all=qopts();
       qc=all.filter(function(o){return!t||nz(o.value).indexOf(t)===0});if(t&&!qc.length)qc=all.filter(function(o){return nz(o.value).indexOf(t)>0});
-      qb.innerHTML=qc.length?qc.map(function(o,i){var g=o.parentNode.label||"";return'<li role="option" data-i="'+i+'"><span>'+o.value+'</span>'+(g&&g!=="İstanbul"?'<em>'+g+'</em>':'')+'</li>'}).join(""):'<li class="none">Bu harflerle başlayan ilçe yok</li>';
+      qb.innerHTML=(t?'':'<li class="adr" role="option" data-loc="1"><span>Şu anki konumum</span></li>')+(qc.length?qc.map(function(o,i){var g=o.parentNode.label||"";return'<li role="option" data-i="'+i+'"><span>'+o.value+'</span>'+(g&&g!=="İstanbul"?'<em>'+g+'</em>':'')+'</li>'}).join(""):'<li class="none">Bu harflerle başlayan ilçe yok</li>');
       qb.style.display="block";qi.setAttribute("aria-expanded","true")}
     function qpick(o){sel.value=o.value;sel.dispatchEvent(new Event("change",{bubbles:true}));qi.value=o.value;qhide();qi.blur();setTimeout(function(){if(!inp.disabled)inp.focus()},60)}
     qi.addEventListener("pointerdown",function(){qjo=qb.style.display==="block"?2:1});qi.addEventListener("focus",function(){if(qb.style.display!=="block"){qi.select&&qi.select();qshow()}});
@@ -54,7 +54,7 @@
     qi.addEventListener("focus",function(){lift(qi)});inp.addEventListener("focus",function(){lift(inp)});
     qi.addEventListener("keydown",function(e){if(e.key==="Enter"&&qc.length){e.preventDefault();qpick(qc[0])}else if(e.key==="Escape"){qhide();qi.blur()}});
     qb.addEventListener("mousedown",function(e){e.preventDefault()});
-    qb.addEventListener("click",function(e){var li=e.target.closest("li[data-i]");if(li)qpick(qc[+li.getAttribute("data-i")])});
+    qb.addEventListener("click",function(e){if(e.target.closest("li[data-loc]")){qhide();qi.blur();lb.click();return}var li=e.target.closest("li[data-i]");if(li)qpick(qc[+li.getAttribute("data-i")])});
     qi.addEventListener("blur",function(){setTimeout(function(){qhide();qi.value=sel.value||""},150)});
     sel.addEventListener("change",function(){setTimeout(qsync,0)});
     if(window.MutationObserver)new MutationObserver(qsync).observe(sel,{attributes:true,attributeFilter:["class"]});
