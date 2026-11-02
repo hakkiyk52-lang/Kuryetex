@@ -58,37 +58,28 @@
   }
   // ---- eczane hizmeti seçilince: eczane seçimi (yakındaki açık / nöbetçi eczaneler)
   function ecz(){
-    var svc=document.getElementById("svcsel"),from=document.getElementById("from");if(!svc||!from||svc.__ez)return;svc.__ez=1;
-    var f=from.closest(".field"),lab=f&&f.querySelector("label"),lab0=lab?lab.innerHTML:"";
+    var svc=document.getElementById("svcsel"),from=document.getElementById("from"),to=document.getElementById("to");if(!svc||!from||!to||svc.__ez)return;svc.__ez=1;
+    var f=from.closest(".field"),tf=to.closest(".field"),tlab=tf&&tf.querySelector("label"),tlab0=tlab?tlab.innerHTML:"";
     var w=document.createElement("div");w.className="kx-ez";w.hidden=true;
-    w.innerHTML='<p class="kx-ez-t">💊 İlacı hangi eczaneden alalım?</p><p class="ez-def">Yakınınızdaki eczaneyi seçin ya da eczanenin ilçesini aşağıdan girin.</p>'+
-      '<div class="ez-sel" hidden><span>Seçilen eczane: <b></b></span><button type="button">Değiştir</button></div>'+
-      '<div class="nb-2"><button type="button" class="nb-go">📍 Yakınımdaki eczaneler</button><button type="button" class="nb-go2">Farklı bir isteğim var</button></div>'+
-
-      '<div class="nbl" hidden><div class="nb-body" aria-live="polite"></div></div><p class="kx-ez-h" hidden></p>';
+    w.innerHTML='<p class="kx-ez-t">💊 İlacı biz buluruz</p><p class="ez-def">Eczaneyi ya da nöbetçi eczaneyi biz buluyor, ilacınızı temin edip kapınıza getiriyoruz. Siz sadece ilacın geleceği mahalleyi seçin; kurye ücreti mahallenize göre çıkar.</p>'+
+      '<div class="nb-2"><button type="button" class="nb-go">📍 Konumumla doldur</button><button type="button" class="nb-go2">Farklı bir isteğim var</button></div><p class="kx-ez-h" hidden></p>';
     f.parentNode.insertBefore(w,f);
     var ot=document.createElement("div");ot.className="kx-other";ot.hidden=true;
-    ot.innerHTML='<p class="kx-other-t">Farklı bir isteğiniz mi var?</p><p>İlacınız başka bir şehirde mi, birden fazla eczaneden alım mı gerekiyor, ya da başka bir şey mi istiyorsunuz? WhatsApp\'tan yazın, size hemen yardımcı olalım.</p>'+
+    ot.innerHTML='<p class="kx-other-t">Farklı bir isteğiniz mi var?</p><p>İlacınız başka bir şehirde mi, birden fazla ilaç ya da özel bir ürün mü gerekiyor? WhatsApp\'tan yazın, size hemen yardımcı olalım.</p>'+
       '<a class="kx-other-wa" href="https://wa.me/905515315234?text='+encodeURIComponent("Merhaba, eczane siparişi için farklı bir isteğim var: ")+'" target="_blank" rel="noopener" data-ev="wa_other">WhatsApp\'tan yazın</a>'+
       '<button type="button" class="kx-other-back">← Fiyat hesaplamaya dön</button>';
     w.parentNode.insertBefore(ot,w);var calcBox=svc.closest(".calc")||w.parentNode;
-    var near=w.querySelector(".nb-go"),own=w.querySelector(".nb-go2"),nbl=w.querySelector(".nbl"),selBox=w.querySelector(".ez-sel"),btns=w.querySelector(".nb-2"),def=w.querySelector(".ez-def"),chosen=null;
-    if(window.__ekNearLabel)near.textContent=window.__ekNearLabel();
-    function state(){selBox.hidden=!chosen;btns.hidden=!!chosen;def.hidden=!!chosen;if(chosen)selBox.querySelector("b").textContent=chosen}
-    function pick(x){var d=x.district&&from.__ipSet&&Object.keys((window.K360||{}).D||{}).filter(function(n){return nz(n)===nz(x.district)})[0];
-      if(!d&&x.lat&&from.__ipNear)d=from.__ipNear(+x.lat,+x.lon);
-      if(!d&&window.__ekPos&&from.__ipNear)d=from.__ipNear(window.__ekPos[0],window.__ekPos[1]);
-      if(d&&from.__ipSet)from.__ipSet(d,x.name+", "+d,x.name);
-      chosen=x.name;from.__prefix="";nbl.hidden=true;state()}
-    var to=document.getElementById("to");
-    function onPos(lat,lon){if(!to||to.dataset.d||!window.__ekNearestMah)return;window.__ekNearestMah(lat,lon).then(function(r){
-      if(r&&!to.dataset.d&&to.__ipSet&&to.__ipSet(r.il,r.mah+" Mah, "+r.il,r.mah)){var h=w.querySelector(".kx-ez-h");h.textContent="📍 Teslim adresi konumunuza göre seçildi: "+r.mah+", "+r.il+". Farklıysa aşağıdan değiştirin.";h.hidden=false}})}
-    near.onclick=function(){window.__ekNear&&window.__ekNear(nbl,{pick:pick,max:5,ilce:from.dataset.d||"",onPos:onPos})};
+    var near=w.querySelector(".nb-go"),own=w.querySelector(".nb-go2"),hint=w.querySelector(".kx-ez-h");
+    function say(t){hint.textContent=t;hint.hidden=!t}
+    near.onclick=function(){if(!navigator.geolocation){say("Konum bu cihazda kullanılamıyor; mahallenizi aşağıdan seçin.");return}say("Konumunuz alınıyor…");
+      navigator.geolocation.getCurrentPosition(function(ps){var lat=ps.coords.latitude,lon=ps.coords.longitude;if(!window.__ekNearestMah){say("");return}
+        window.__ekNearestMah(lat,lon).then(function(r){if(r&&to.__ipSet&&to.__ipSet(r.il,r.mah+" Mah, "+r.il,r.mah))say("📍 Teslim mahallesi konumunuza göre seçildi: "+r.mah+", "+r.il+". Farklıysa aşağıdan değiştirin.");else say("Konumunuza yakın bir mahalle bulunamadı; mahallenizi aşağıdan seçin.")})},
+        function(){say("Konum izni verilmedi; mahallenizi aşağıdan seçin.")},{enableHighAccuracy:true,timeout:10000})};
     function other(on){calcBox.classList.toggle("kx-is-other",on);ot.hidden=!on;if(on)ot.scrollIntoView({block:"nearest"})}
     own.onclick=function(){other(true)};ot.querySelector(".kx-other-back").onclick=function(){other(false)};
-    selBox.querySelector("button").onclick=function(){chosen=null;from.__prefix="";if(from.dataset.d)from.value=from.value.replace(/^[^,]*,\s*/,"");state()};
-    var last="";setInterval(function(){var v=svc.value||"";if(v===last)return;last=v;var on=/eczane|ilaç|ilac/i.test(v);w.hidden=!on;if(!on)other(false);
-      if(lab)lab.innerHTML=on?lab0.replace(/Nereden alınacak\?/,"Eczane nerede? (ilçe / mahalle)"):lab0},400);
+    var last="";setInterval(function(){var v=svc.value||"",tm=document.getElementById("toMh"),ez=/eczane|ilaç|ilac/i.test(v);if(tm&&!tm.disabled){var ph=ez?"Mahalle seçin (zorunlu)":"Mahalle seçin (isteğe bağlı)";if(tm.placeholder!==ph)tm.placeholder=ph}if(v===last)return;last=v;var on=/eczane|ilaç|ilac/i.test(v);w.hidden=!on;if(!on)other(false);
+      if(f)f.style.display=on?"none":"";
+      if(tlab)tlab.innerHTML=on?tlab0.replace(/^\s*\d+\.\s*Nereye gidecek\?/,"2. İlaç nereye gelecek? (ilçe ve mahalle)"):tlab0},300);
   }
   function init(){enhance(document.getElementById("from"),"Alım");enhance(document.getElementById("to"),"Teslim");ecz()}
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",function(){setTimeout(init,0)});else setTimeout(init,0);
