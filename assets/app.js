@@ -43,19 +43,22 @@ window.__hv=true;window.__rs={};window.__RF=function(k,f){if(window.__hv&&!docum
   var names = Object.keys(C.D).sort(function(a,b){return a.localeCompare(b,"tr")});
   var f0 = from.getAttribute("data-def") || "", t0 = to.getAttribute("data-def") || "";
   function nz(s){return s.toLocaleLowerCase("tr").replace(/ı/g,"i").replace(/ş/g,"s").replace(/ğ/g,"g").replace(/ü/g,"u").replace(/ö/g,"o").replace(/ç/g,"c").replace(/i̇/g,"i")}
-  var items=[];names.forEach(function(n){items.push({k:nz(n),l:n+(n==="Gebze"?"":", İstanbul"),t:_t("İlçe"),d:n,r:0})});
+  var items=[];names.forEach(function(n){items.push({k:nz(n),l:n+", "+(C.D[n].il||"İstanbul"),t:_t("İlçe"),d:n,r:0})});
   (C.SEM||[]).forEach(function(s){items.push({k:nz(s[0]),l:s[0]+", "+s[1],t:"Mahalle",d:s[1],r:1})});
   var ILM=null,ilmLoading=false;
-  function addILM(J){ILM=J;J.c.forEach(function(cc){var code=cc[0],nm=cc[1];if(code!=="34")items.push({k:nz(nm),l:nm,t:_t("Şehirler arası · il"),d:"CITY:"+code,r:2,c:code});
+  function addILM(J){ILM=J;J.c.forEach(function(cc){var code=cc[0],nm=cc[1];if(code!=="34"&&code!=="41")items.push({k:nz(nm),l:nm,t:_t("Şehirler arası · il"),d:"CITY:"+code,r:2,c:code});
     (J.d[code]||[]).forEach(function(ic){var ilce=ic[0];
       if(code==="34"){if(!C.D[ilce])return;ic[1].forEach(function(m){items.push({k:nz(m[0]),l:m[0]+", "+ilce,t:_t("Mahalle · ")+m[1],d:ilce,r:1})});return}
-      if(code==="41"&&ilce==="Gebze"){ic[1].forEach(function(m){items.push({k:nz(m[0]),l:m[0]+", Gebze",t:_t("Mahalle · ")+m[1],d:"Gebze",r:1})});return}
+      if(code==="41"&&C.D[ilce]){ic[1].forEach(function(m){items.push({k:nz(m[0]),l:m[0]+", "+ilce,t:_t("Mahalle · ")+m[1],d:ilce,r:1})});return}
       var il=ilce+", "+nm;items.push({k:nz(ilce),l:il,t:_t("İlçe"),d:"CITY:"+code,r:3,c:code,i:ilce});
       ic[1].forEach(function(m){items.push({k:nz(m[0]),l:m[0]+", "+il,t:_t("Mahalle · ")+m[1],d:"CITY:"+code,r:4,c:code,i:ilce})})})});
     var ae=document.activeElement;if(ae&&(ae===from||ae===to)&&ae.value&&!ae.dataset.d)ae.dispatchEvent(new Event("input"))}
   function loadILM(){if(ILM||ilmLoading)return;if(window.__ILM){addILM(window.__ILM);return}ilmLoading=true;fetch("/assets/data/ilmah.json").then(function(r){return r.json()}).then(addILM).catch(function(){ilmLoading=false})}
   [from,to].forEach(function(el){el.addEventListener("focus",loadILM);el.addEventListener("input",loadILM)});
   function val(el){return el.dataset.d||""}
+  var MC=null;fetch("/assets/data/mahcoord.json").then(function(r){return r.json()}).then(function(j){MC=j}).catch(function(){});
+  function mahPt(el){var d=el.dataset.d;if(!MC||!d||!MC[d]||!C.D[d])return null;var o=MC[d],ps=(el.value||"").split(",");for(var i=0;i<ps.length;i++){var k=nz(ps[i].replace(/ Mah\.?\s*$/i,"").trim());for(var m in o){if(nz(m)===k)return{lat:o[m][0],lon:o[m][1],side:C.D[d].side}}}return null}
+  function tier(km){var T=C.TIERS,p=C.TIER_BASE||580;for(var i=0;i<T.length;i++){var f=T[i][0],t=i+1<T.length?T[i+1][0]:1e9;if(km>f)p+=(Math.min(km,t)-f)*T[i][1]}return p}
   function setSel(el,d){var it=items.filter(function(x){return x.d===d&&x.r===0})[0];el.value=it?it.l:d;el.dataset.d=d}
   function ac(el){
     var box=el.parentNode.querySelector(".acl"),cur=-1,list=[];
@@ -86,14 +89,14 @@ window.__hv=true;window.__rs={};window.__RF=function(k,f){if(window.__hv&&!docum
   // ---- sokak/adres arama + haritadan seçme
   function hav(a,b,c,d){var r=Math.PI/180,x=Math.sin((c-a)*r/2),y=Math.sin((d-b)*r/2),h=x*x+Math.cos(a*r)*Math.cos(c*r)*y*y;return 12742*Math.asin(Math.sqrt(h))}
   function nearD(lat,lon){var bn=null,bk=1e9;Object.keys(C.D).forEach(function(n){var d=C.D[n],k=hav(lat,lon,d.lat,d.lon);if(k<bk){bk=k;bn=n}});return{n:bn,km:bk}}
-  function setPt(el,lat,lon,label){var nd=nearD(lat,lon);if(nd.km>45){errEl.textContent=_t("Bu nokta İstanbul hizmet bölgesi dışında. Şehirler arası için listeden il veya ilçe seçin.");return false}
+  function setPt(el,lat,lon,label){var nd=nearD(lat,lon);if(nd.km>45){errEl.textContent=_t("Bu nokta İstanbul–Kocaeli hizmet bölgesi dışında. Şehirler arası için listeden il veya ilçe seçin.");return false}
     errEl.textContent="";el.value=label;el.dataset.d=nd.n;el.dataset.ll=lat.toFixed(5)+","+lon.toFixed(5);reset();return true}
   function ptOf(el){var s=el.dataset.ll;if(!s||!C.D[el.dataset.d])return null;var p=s.split(",");return{lat:+p[0],lon:+p[1],side:C.D[el.dataset.d].side}}
   var gcache={};
   function lbl(p){var a=[];var st=p.name||p.street||"";if(p.name&&p.street&&p.name!==p.street)st=p.street+" "+(p.housenumber||"");else if(p.housenumber)st+=" No:"+p.housenumber;
     [st,p.locality||p.suburb||p.district,p.district&&(p.locality||p.suburb)?p.district:"",p.city||p.county||p.state].forEach(function(x){x=(x||"").trim();if(x&&a.indexOf(x)<0)a.push(x)});return a.join(", ")}
   function geocode(q,cb){if(gcache[q])return cb(gcache[q]);
-    fetch("https://photon.komoot.io/api/?limit=8&lat=41.03&lon=29.0&bbox=27.9,40.6,30.1,41.6&q="+encodeURIComponent(q)).then(function(r){return r.json()}).then(function(j){
+    fetch("https://photon.komoot.io/api/?limit=8&lat=41.03&lon=29.0&bbox=27.9,40.5,30.4,41.6&q="+encodeURIComponent(q)).then(function(r){return r.json()}).then(function(j){
       var out=[];(j.features||[]).forEach(function(f){var p=f.properties||{};if(p.countrycode&&p.countrycode!=="TR")return;var c=f.geometry.coordinates;out.push({l:lbl(p),t:_t("Adres · ")+(p.postcode||"harita"),pt:[c[1],c[0]]})});
       gcache[q]=out;cb(out)}).catch(function(){cb([])})}
   function revgeo(lat,lon,cb){var fb=_t("Seçilen konum (")+lat.toFixed(4)+", "+lon.toFixed(4)+")";
@@ -127,7 +130,7 @@ window.__hv=true;window.__rs={};window.__RF=function(k,f){if(window.__hv&&!docum
       ov.querySelectorAll(".mpt button").forEach(function(b){b.onclick=function(){act=+b.dataset.w;ov.querySelectorAll(".mpt button").forEach(function(x){x.classList.toggle("on",x===b)});if(lab[act])msg.textContent=(act?"Teslim: ":_t("Alım: "))+lab[act];else if(pts[act])map.panTo(pts[act]);else msg.textContent="Haritaya dokunarak "+(act?"teslim":"alım")+" noktasını işaretleyin."}});
       ov.querySelector(".mpg").onclick=function(){if(!navigator.geolocation){msg.textContent=_t("Konum bu cihazda kullanılamıyor.");return}navigator.geolocation.getCurrentPosition(function(p){var ll=[p.coords.latitude,p.coords.longitude];map.setView(ll,17);place(act,ll,true)},function(){msg.textContent=_t("Konum izni verilmedi.")},{enableHighAccuracy:true,timeout:10000})};
       ov.querySelector(".mpo").onclick=function(){var ok=true,any=false;[0,1].forEach(function(w){if(pts[w]){any=true;if(!setPt(els[w],pts[w][0],pts[w][1],lab[w]||_t("Seçilen konum (")+pts[w][0].toFixed(4)+", "+pts[w][1].toFixed(4)+")"))ok=false}});
-        if(!any){msg.textContent=_t("Önce haritaya dokunarak bir nokta işaretleyin.");return}if(!ok){msg.textContent=_t("Bir nokta İstanbul hizmet bölgesi dışında kaldı. İğneyi İstanbul içine taşıyın.");return}close()};
+        if(!any){msg.textContent=_t("Önce haritaya dokunarak bir nokta işaretleyin.");return}if(!ok){msg.textContent=_t("Bir nokta İstanbul–Kocaeli hizmet bölgesi dışında kaldı. İğneyi bu bölgeye taşıyın.");return}close()};
     })}
   var mb=document.getElementById("mapPick");if(mb)mb.addEventListener("click",openMap);
   ac(from);ac(to);
@@ -154,7 +157,7 @@ window.__hv=true;window.__rs={};window.__RF=function(k,f){if(window.__hv&&!docum
     return lastTx=Math.round((base||0)*f/50)*50}
   function txs(x){return x>0?"+"+tl(x):x<0?"−"+tl(-x):tl(0)}
   function nightFee(){var F=C.NIGHT_FEE||0;if(!F)return 0;var h;if(tmv==="custom"&&tmc&&tmc.value){h=+tmc.value.split(":")[0]}else{h=new Date(Date.now()+(180+new Date().getTimezoneOffset())*60000).getHours()}var a=C.NIGHT_START||0,b=C.NIGHT_END||7;return (a<b?(h>=a&&h<b):(h>=a||h<b))?F:0}
-function txn(){if(cur&&cur.np)return window.__ezX?_t("Uzak ilçeye eczane teslimi VIP tarifesiyle hesaplanır."):_t("Eczane teslimi standart fiyattır.");return lastTx>0?_t("Hızlı teslim farkı: ")+txs(lastTx)+".":lastTx<0?_t("Geç teslim indirimi: ")+txs(lastTx)+".":_t("Express (90 dk) standart fiyat.")}
+function txn(){if(cur&&cur.np)return _t("Eczane teslimi 90 dk express fiyatıyla hesaplanır.");return lastTx>0?_t("Hızlı teslim farkı: ")+txs(lastTx)+".":lastTx<0?_t("Geç teslim indirimi: ")+txs(lastTx)+".":_t("Express (90 dk) standart fiyat.")}
   function tmText(){if(cur&&cur.np)return _t("30–45 dakika (hava şartlarına bağlı)");return tmv==="custom"?(tmc&&tmc.value?_t("Saat ")+tmc.value+" (belirli saat)":""):tmv}
   var cur=null,size=-1,sizeName="",raf=0,shown=0;
   var res=$("result"),errEl=$("cerr");
@@ -197,12 +200,13 @@ function txn(){if(cur&&cur.np)return window.__ezX?_t("Uzak ilçeye eczane teslim
       if(cur.size&&sizeName)m2+="\nGönderi boyutu: "+sizeName;if(cur.kg)m2+="\nAğırlık: "+(parseFloat(String(kg.value).replace(",","."))||0)+" kg";
       m2+="\nTeslim süresi: "+tmText()+"\nTahmini mesafe: ~"+Math.round(ikm/10)*10+" km\nSistemdeki fiyat: "+tl(ip)+" (şehirler arası tahmini"+(tx2?", teslim süresi farkı "+txs(tx2):"")+(nf2?", gece farkı +"+tl(nf2):"")+")";
       $("waBtn").href="https://wa.me/"+C.PHONE+"?text="+encodeURIComponent(m2);res.style.display="block";res.scrollIntoView({behavior:"smooth",block:"nearest"});return}
-    var pa=ptOf(from),pb=ptOf(to),a=pa||C.D[fa],b=pb||C.D[tb],km,raw,ar=air(a,b);
-    if(fa===tb&&!pa&&!pb){km=3;raw=0}else if(a.side==="B"&&b.side==="B"){km=Math.max(3,ar*1.15);raw=tarife(ar,C.ANCHORS_E)}else{km=Math.max(3,ar*C.ROAD+(a.side!==b.side?C.BRIDGE_KM:0));raw=tarife(km)}
-    if(!(fa===tb&&!pa&&!pb)&&C.FAR&&(C.FAR.indexOf(fa)>-1||C.FAR.indexOf(tb)>-1))raw=Math.max(raw,km*C.FAR_RATE);raw=Math.max(raw,C.MINP[C.ZONE[fa]],C.MINP[C.ZONE[tb]]);
-    var p=null,ezp=(cur.np&&window.__ekZonePrice)?window.__ekZonePrice(to):null;
-    var ext=0;if(cur.t==="calc"){var base=Math.round(raw/C.ROUND)*C.ROUND;p=cur.mult?Math.round(base*cur.mult/C.ROUND)*C.ROUND:base+(cur.add||0);var tx0=tmExtra(p);if(tx0<0)p+=tx0;else ext+=tx0;ext+=sx+wx}
-    var sdA=(C.D[fa]||a||{}).side,sdB=(C.D[tb]||b||{}).side,xs=!!(sdA&&sdB&&sdA!==sdB);var ezSame=!!ezp&&((fa===tb&&!pa&&!pb)||(!xs&&km<=(C.EZ_NEAR_KM||10)));window.__ezX=!!(ezp&&!ezSame);if(ezp){if(ezSame){p=ezp;ext=0}else{p=base;ext=Math.round(base*(C.TF_VIP||.2)/50)*50}}if(p!==null){p=Math.max(p,xs?(C.MIN_CROSS||780):(C.MIN_FEE||580));if(!(ezp&&ezSame))p+=ext}var nf=p!==null?nightFee():0;if(nf)p+=nf;
+    var pa=ptOf(from)||mahPt(from),pb=ptOf(to)||mahPt(to),a=pa||C.D[fa],b=pb||C.D[tb],km,raw,ar=air(a,b);
+    var sdA=(C.D[fa]||a||{}).side,sdB=(C.D[tb]||b||{}).side,xs=!!(sdA&&sdB&&sdA!==sdB),same=(fa===tb&&!pa&&!pb)||ar<0.3;
+    km=same?3:Math.max(C.MAH_KM_MIN||3,ar*C.ROAD+(xs?C.BRIDGE_KM:0));raw=tier(km);
+    if(!same&&C.FAR&&(C.FAR.indexOf(fa)>-1||C.FAR.indexOf(tb)>-1))raw=Math.max(raw,km*C.FAR_RATE);
+    var p=null;window.__ezX=false;
+    var ext=0;if(cur.t==="calc"){var B0=C.TIER_BASE||580,base=raw<=B0?B0:B0+Math.round((raw-B0)/C.ROUND)*C.ROUND;p=cur.mult?Math.round(base*cur.mult/C.ROUND)*C.ROUND:base+(cur.add||0);var tx0=tmExtra(p);if(tx0<0)p+=tx0;else ext+=tx0;ext+=sx+wx}
+    if(p!==null){p=Math.max(p,xs?(C.MIN_CROSS||780):(C.MIN_FEE||580));p+=ext}var nf=p!==null?nightFee():0;if(nf)p+=nf;
     var hl=cur.l.replace(/^\S+\s/,"");
     $("route").textContent=from.value+" → "+to.value;
     $("km").textContent=_t("Mesafe: ")+km.toFixed(1).replace(".",",")+_t(" km (tahmini)");

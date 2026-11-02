@@ -118,15 +118,26 @@ window.K360={
   "Sultanbeyli": "r",
   "Tuzla": "r",
   "Ümraniye": "c",
-  "Üsküdar": "c"
+  "Üsküdar": "c",
+  "Darıca": "u",
+  "Çayırova": "u",
+  "Dilovası": "u",
+  "Körfez": "u",
+  "Derince": "u",
+  "İzmit": "u",
+  "Kartepe": "u",
+  "Başiskele": "u",
+  "Gölcük": "u",
+  "Karamürsel": "u",
+  "Kandıra": "u"
  },
  "ROUND": 50,
  "MIN_FEE": 580,
  "MIN_CROSS": 780,
  "EZ_NEAR_KM": 10,
-  "NIGHT_FEE": 185,
-  "NIGHT_START": 0,
-  "NIGHT_END": 7,
+ "NIGHT_FEE": 185,
+ "NIGHT_START": 0,
+ "NIGHT_END": 7,
  "SIZE_EXTRA": [
   0,
   75,
@@ -135,7 +146,7 @@ window.K360={
  "FREE_KG": 5,
  "KG_STEP": 1,
  "KG_FEE": 15,
- "ROAD": 1.4,
+ "ROAD": 1.3,
  "FAR": [
   "Şile",
   "Silivri"
@@ -668,7 +679,8 @@ window.K360={
    "tier": 3,
    "lat": 40.8,
    "lon": 29.43,
-   "side": "B"
+   "side": "B",
+   "il": "Kocaeli"
   },
   "Şile": {
    "tier": 3,
@@ -705,6 +717,83 @@ window.K360={
    "lat": 41.02,
    "lon": 29.02,
    "side": "B"
+  },
+  "Darıca": {
+   "tier": 3,
+   "lat": 40.77,
+   "lon": 29.38,
+   "side": "B",
+   "il": "Kocaeli"
+  },
+  "Çayırova": {
+   "tier": 3,
+   "lat": 40.825,
+   "lon": 29.375,
+   "side": "B",
+   "il": "Kocaeli"
+  },
+  "Dilovası": {
+   "tier": 3,
+   "lat": 40.78,
+   "lon": 29.54,
+   "side": "B",
+   "il": "Kocaeli"
+  },
+  "Körfez": {
+   "tier": 3,
+   "lat": 40.776,
+   "lon": 29.738,
+   "side": "B",
+   "il": "Kocaeli"
+  },
+  "Derince": {
+   "tier": 3,
+   "lat": 40.756,
+   "lon": 29.815,
+   "side": "B",
+   "il": "Kocaeli"
+  },
+  "İzmit": {
+   "tier": 3,
+   "lat": 40.765,
+   "lon": 29.94,
+   "side": "B",
+   "il": "Kocaeli"
+  },
+  "Kartepe": {
+   "tier": 3,
+   "lat": 40.753,
+   "lon": 30.023,
+   "side": "B",
+   "il": "Kocaeli"
+  },
+  "Başiskele": {
+   "tier": 3,
+   "lat": 40.715,
+   "lon": 29.925,
+   "side": "B",
+   "il": "Kocaeli"
+  },
+  "Gölcük": {
+   "tier": 3,
+   "lat": 40.717,
+   "lon": 29.82,
+   "side": "B",
+   "il": "Kocaeli"
+  },
+  "Karamürsel": {
+   "tier": 3,
+   "lat": 40.692,
+   "lon": 29.616,
+   "side": "B",
+   "il": "Kocaeli"
+  },
+  "Kandıra": {
+   "tier": 3,
+   "lat": 41.071,
+   "lon": 30.153,
+   "side": "B",
+   "il": "Kocaeli"
   }
  },
  "SEM": [
@@ -3020,5 +3109,21 @@ window.K360={
    "Üsküdar Meydanı",
    "Üsküdar"
   ]
- ]
+ ],
+ "TIER_BASE": 580,
+ "TIERS": [
+  [
+   8,
+   30
+  ],
+  [
+   20,
+   22
+  ],
+  [
+   40,
+   18
+  ]
+ ],
+ "MAH_KM_MIN": 3
 };
