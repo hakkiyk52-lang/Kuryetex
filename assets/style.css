@@ -1221,3 +1221,9 @@ footer details.fil>summary h4{color:#fff}
 .ip-loc:disabled{opacity:.6;cursor:wait}
 .ip-loch{margin:6px 0 0;font-size:.82rem;font-weight:600;color:#3b5b2e}
 .calc:has(.kx-ez:not([hidden])) .ip-loc,.calc:has(.kx-ez:not([hidden])) .ip-loch{display:none!important}
+
+/* === Android: sayfa yatayda genişlemesin (alt çubuk kaybolmasın) === */
+html{overflow-x:clip}
+body{overflow-x:clip}
+.mnav{overflow:hidden!important}
+.mnav:not(.open) .mdr{visibility:hidden}
