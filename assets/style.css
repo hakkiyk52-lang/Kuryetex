@@ -1278,3 +1278,26 @@ html.focusing .langbar,html.focusing .tick,html.focusing header.top{opacity:0!im
 .ip-loc{display:none!important}
 .ip .acl li.adr,.ip .acl li.adr:nth-child(n){background:#fff8f2!important;border-left-color:#ff7a1a!important;color:#c2410c!important;font-weight:800}
 .ip .acl li.adr span:before{content:"📍 "}
+/* Gezen araçlar yalnızca ana sayfa açılış alanında */
+body:not(.inhero) .roam{display:none!important}
+/* Eczane sayfaları: fotoğrafla WhatsApp + süre satırı */
+.hero.mid .cta-row.ezcta{display:flex;margin-top:16px}
+.ezcta .btn:not(.btn-wa){display:none}
+.ezcta .btn-wa{width:100%;max-width:440px;justify-content:center;font-size:1.02rem;padding:15px 18px;font-weight:800}
+.ezeta{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;margin:12px 0 0;font-size:.95rem;color:var(--tx)}
+.ezeta b{color:var(--acc,#ff6a1a)}
+.ezeta a{font-weight:800;color:inherit;text-decoration:underline;text-underline-offset:3px}
+.revz{padding-top:34px;padding-bottom:34px}
+/* Mobil: hizmet kartları yatay kaydırma */
+@media(max-width:759px){
+.cards{display:flex;overflow-x:auto;gap:12px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding:4px 18px 14px;margin-left:-18px;margin-right:-18px;scroll-padding:0 18px;overscroll-behavior-x:contain}
+.cards>.card{flex:0 0 80%;scroll-snap-align:start}
+.cards>.card.reveal{opacity:1!important;transform:none!important}
+.cards::-webkit-scrollbar{height:4px}.cards::-webkit-scrollbar-thumb{background:var(--line);border-radius:4px}
+.cards-hint{display:block;font-size:.85rem;color:var(--mute);margin:10px 0 0}
+}
+@media(min-width:760px){.cards-hint{display:none}}
+/* Uzun yazılar: devamını oku (içerik sayfada kalır) */
+.kxfold{position:relative;max-height:var(--fh,560px);overflow:hidden}
+.kxfold{-webkit-mask-image:linear-gradient(to bottom,#000 calc(100% - 140px),transparent);mask-image:linear-gradient(to bottom,#000 calc(100% - 140px),transparent)}
+.kxmore{display:block;margin:10px auto 0;padding:12px 22px;border-radius:999px;border:1.5px solid var(--line);background:var(--card);color:var(--tx);font:800 .95rem/1 inherit;cursor:pointer}

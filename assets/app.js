@@ -550,7 +550,7 @@ function txn(){if(cur&&cur.np)return _t("Eczane teslimi mahalle bölgesine göre
 (function(){
   if(!window.__fx){
     var on=true,t="light",ac=null;
-    try{on=localStorage.getItem("k360fx")!=="0";t=localStorage.getItem("k360th")||"light"}catch(e){}
+    try{on=localStorage.getItem("k360fx")==="1";t=localStorage.getItem("k360th")||"light"}catch(e){}
     var fx={};
     fx.label=function(){var a=document.getElementById("fxTheme"),b=document.getElementById("fxSound");if(a)a.textContent=t==="dark"?"☀️ Aydınlık mod":_t("🌙 Karanlık mod");if(b)b.textContent=on?"🔊 Ses ve titreşim: Açık":_t("🔇 Ses ve titreşim: Kapalı")};
     fx.theme=function(){document.documentElement.setAttribute("data-theme",t);var m=document.querySelector('meta[name=theme-color]');if(m)m.content=t==="dark"?"#178f8a":"#21b3ad";fx.label()};
@@ -653,7 +653,7 @@ document.addEventListener("submit",function(e){var f=e.target;if(!f.matches||!f.
 function auto(){try{var c=localStorage.getItem("k360calm");if(c===null){var n=navigator,cn=n.connection||{};if((n.deviceMemory&&n.deviceMemory<=2)||(n.hardwareConcurrency&&n.hardwareConcurrency<=3)||cn.saveData||/2g|3g/.test(cn.effectiveType||""))c="1"}return c==="1"}catch(e){return false}}
 window.__calm=function(on,save){if(on)d.setAttribute("data-calm","1");else d.removeAttribute("data-calm");if(save){try{localStorage.setItem("k360calm",on?"1":"0")}catch(e){}}
  [].forEach.call(document.querySelectorAll("svg"),function(s){if(s.closest&&s.closest(".xpl,#hizmetler"))return;try{on?s.pauseAnimations():s.unpauseAnimations()}catch(e){}});
- var b=document.getElementById("fxCalm");if(b)b.setAttribute("aria-pressed",on?"true":"false");
+ var b=document.getElementById("fxCalm");if(b){b.setAttribute("aria-pressed",on?"true":"false");var _D=window.__D||{},L=on?"🔋 Tasarruf modu: Açık":"🔋 Tasarruf modu: Kapalı";b.textContent=_D[L]||L}
  if(save&&window.__fx&&window.__fx.set){try{if(on){localStorage.setItem("k360pre",d.getAttribute("data-theme")||"light");window.__fx.set("dark")}else{window.__fx.set(localStorage.getItem("k360pre")||"light")}}catch(e){}}
  if(save){var o=document.querySelector(".ecot");if(o)o.remove();var t=document.createElement("div");t.className="ecot";t.setAttribute("role","status");t.textContent=on?_t("🔋 Tasarruf modu: Açık"):_t("🔋 Tasarruf modu: Kapalı");document.body.appendChild(t);setTimeout(function(){t.remove()},3200)}};
 if(!window.__calmInit){window.__calmInit=1;window.__calmAuto=auto();document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("#fxCalm");if(b)window.__calm(!d.hasAttribute("data-calm"),true)},true)}
@@ -812,3 +812,17 @@ function tick(ms){raf=0;if(off()){lt=0;return}var dt=lt?Math.min(.05,(ms-lt)/100
 function go(){if(!raf){lt=0;raf=requestAnimationFrame(tick)}}
 requestAnimationFrame(function(){geo();step(0);go()});addEventListener("resize",function(){geo();step(0)});document.addEventListener("visibilitychange",go);
 new MutationObserver(go).observe(H,{attributes:true,attributeFilter:["data-calm","class"]});setInterval(function(){geo();go()},2000)})();
+
+/* === Mobilde uzun yazılar: "Devamını oku" (içerik DOM'da kalır) === */
+;(function(){if(window.__foldInit)return;window.__foldInit=1;
+var D=window.__D||{};function T(x){return D[x]||x}
+function run(){if(innerWidth>=760)return;
+var c=[].slice.call(document.querySelectorAll("section.sec .prose, section.sec.prose > .wrap"));
+c=c.filter(function(el){if(el.closest(".hero,#sss,#siparis,#hesapla,.calc,form"))return false;if(el.querySelector("form,.calc,details"))return false;for(var i=0;i<c.length;i++){if(c[i]!==el&&c[i].contains(el))return false}return true});
+c.forEach(function(el){if(el.scrollHeight<1000||el.classList.contains("kxfold"))return;
+var h=location.hash&&el.querySelector(location.hash.replace(/[^#\w-]/g,""));if(h)return;
+el.classList.add("kxfold");var b=document.createElement("button");b.type="button";b.className="kxmore";b.textContent=T("Devamını oku ▾");b.setAttribute("aria-expanded","false");
+b.addEventListener("click",function(){el.classList.remove("kxfold");b.remove()});el.parentNode.insertBefore(b,el.nextSibling)})}
+if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",run);else run()})();
+/* === Mobilde kart kaydırma ipucu === */
+;(function(){if(innerWidth>=760)return;document.querySelectorAll(".cards").forEach(function(c){if(c.children.length<2||c.nextElementSibling&&c.nextElementSibling.classList.contains("cards-hint"))return;var p=document.createElement("p");p.className="cards-hint";p.textContent=((window.__D||{})["Kaydırarak tüm hizmetleri görün →"])||"Kaydırarak tüm hizmetleri görün →";c.parentNode.insertBefore(p,c.nextSibling)})})();
