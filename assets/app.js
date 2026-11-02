@@ -46,10 +46,10 @@ window.__hv=true;window.__rs={};window.__RF=function(k,f){if(window.__hv&&!docum
   var items=[];names.forEach(function(n){items.push({k:nz(n),l:n+", "+(C.D[n].il||"İstanbul"),t:_t("İlçe"),d:n,r:0})});
   (C.SEM||[]).forEach(function(s){items.push({k:nz(s[0]),l:s[0]+", "+s[1],t:"Mahalle",d:s[1],r:1})});
   var ILM=null,ilmLoading=false;
-  function addILM(J){ILM=J;J.c.forEach(function(cc){var code=cc[0],nm=cc[1];if(code!=="34"&&code!=="41")items.push({k:nz(nm),l:nm,t:_t("Şehirler arası · il"),d:"CITY:"+code,r:2,c:code});
+  function addILM(J){ILM=J;J.c.forEach(function(cc){var code=cc[0],nm=cc[1];var LOC=(C.ILKOD&&Object.keys(C.ILKOD).map(function(k){return C.ILKOD[k]}))||["34","41"];if(LOC.indexOf(code)<0)items.push({k:nz(nm),l:nm,t:_t("Şehirler arası · il"),d:"CITY:"+code,r:2,c:code});
     (J.d[code]||[]).forEach(function(ic){var ilce=ic[0];
       if(code==="34"){if(!C.D[ilce])return;ic[1].forEach(function(m){items.push({k:nz(m[0]),l:m[0]+", "+ilce,t:_t("Mahalle · ")+m[1],d:ilce,r:1})});return}
-      if(code==="41"&&C.D[ilce]){ic[1].forEach(function(m){items.push({k:nz(m[0]),l:m[0]+", "+ilce,t:_t("Mahalle · ")+m[1],d:ilce,r:1})});return}
+      if(code!=="34"&&C.D[ilce]&&C.D[ilce].il){ic[1].forEach(function(m){items.push({k:nz(m[0]),l:m[0]+", "+ilce,t:_t("Mahalle · ")+m[1],d:ilce,r:1})});return}
       var il=ilce+", "+nm;items.push({k:nz(ilce),l:il,t:_t("İlçe"),d:"CITY:"+code,r:3,c:code,i:ilce});
       ic[1].forEach(function(m){items.push({k:nz(m[0]),l:m[0]+", "+il,t:_t("Mahalle · ")+m[1],d:"CITY:"+code,r:4,c:code,i:ilce})})})});
     var ae=document.activeElement;if(ae&&(ae===from||ae===to)&&ae.value&&!ae.dataset.d)ae.dispatchEvent(new Event("input"))}
@@ -183,6 +183,7 @@ function txn(){if(cur&&cur.np)return _t("Eczane teslimi mahalle bölgesine göre
     var missing=[];if(!cur)missing.push(_t("hizmet"));if(!val(from)&&!(cur&&cur.np))missing.push(_t("alım noktası"));if(!val(to))missing.push(_t("teslim noktası"));if(cur&&cur.size&&size<0)missing.push(_t("gönderi boyutu"));if(tmv==="custom"&&!(tmc&&tmc.value))missing.push(_t("teslim saati"));
     if(missing.length){errEl.textContent=_t("Lütfen seçin: ")+missing.join(", ")+".";res.style.display="none";if(window.__bad){if(!cur)window.__bad(svcsel,_t("Hizmet seçin"));if(!val(from)&&!(cur&&cur.np))window.__bad(from,_t("Alım noktasını seçin"));if(!val(to))window.__bad(to,_t("Teslim noktasını seçin"));if(tmv==="custom"&&!(tmc&&tmc.value))window.__bad(tmc,_t("Saat seçin"));if(cur&&cur.size&&size<0)window.__bad(document.getElementById("svc"),_t("Gönderi boyutunu seçin"));window.__goBad(document.querySelector("#hesapla .bad"))}return}
     errEl.textContent="";
+    if(cur.np&&C.D[val(to)]&&C.D[val(to)].il){errEl.textContent=_t("Eczane hizmetimiz yalnızca İstanbul içinde geçerlidir.");res.style.display="none";return}
     if(cur.np){var tv=to.value||"",td=val(to),hasM=(tv&&tv!==td&&/,/.test(tv))||!!to.dataset.ll;
       if(!hasM){errEl.textContent=_t("Lütfen ilacın geleceği mahalleyi seçin.");res.style.display="none";if(window.__bad){window.__bad(document.getElementById("toMh")||to,_t("Mahalle seçin"));window.__goBad(document.querySelector("#hesapla .bad"))}return}
       var zp=window.__ekZonePrice?window.__ekZonePrice(to):null,Zp=(window.EKZ||{}).p||{},zn={m:_t("Merkezi bölge"),k:_t("Ara bölge"),u:_t("Kırsal bölge")},zk=null;for(var kk in Zp)if(Zp[kk]===zp)zk=kk;

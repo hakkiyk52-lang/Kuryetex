@@ -13,14 +13,14 @@
     return Z.p[z]||null};
   function ilm(cb){if(ILM)return cb(ILM);if(window.__ILM){ILM=window.__ILM;return cb(ILM)}wait.push(cb);if(wait.length>1)return;
     fetch("/assets/data/ilmah.json").then(function(r){return r.json()}).then(function(j){ILM=window.__ILM=j;wait.forEach(function(f){f(j)});wait=[]}).catch(function(){})}
-  function mahs(il,J){var DD=(window.K360||{}).D||{},code=(DD[il]&&DD[il].il==="Kocaeli")?"41":"34",L=(J.d[code]||[]).filter(function(x){return x[0]===il})[0];return L?L[1].map(function(m){return m[0]}):[]}
+  function mahs(il,J){var K=window.K360||{},DD=K.D||{},code=((K.ILKOD||{})[(DD[il]&&DD[il].il)||"İstanbul"])||"34",L=(J.d[code]||[]).filter(function(x){return x[0]===il})[0];return L?L[1].map(function(m){return m[0]}):[]}
   function lbl(m){return m.replace(/ Mah$/,"").replace(/\s+/g," ").trim()}
   function enhance(el,word){
     if(!el||el.__ip)return;el.__ip=1;var C=window.K360||{},D=C.D||{};
     var names=Object.keys(D).sort(function(a,b){return nz(a).localeCompare(nz(b))});if(!names.length)return;
     var acWrap=el.closest(".ac")||el.parentNode,field=el.closest(".field")||acWrap.parentNode,lab=field.querySelector("label[for="+el.id+"]");
     var w=document.createElement("div");w.className="ip";
-    w.innerHTML='<div class="ip-r"><select class="ip-il" id="'+el.id+'Il" aria-label="'+word+' ilçe"><option value="">İlçe seçin</option><optgroup label="İstanbul">'+names.filter(function(n){return D[n].il!=="Kocaeli"}).map(function(n){return'<option>'+n+'</option>'}).join("")+'</optgroup><optgroup label="Kocaeli">'+names.filter(function(n){return D[n].il==="Kocaeli"}).map(function(n){return'<option>'+n+'</option>'}).join("")+'</optgroup></select>'+
+    w.innerHTML='<div class="ip-r"><select class="ip-il" id="'+el.id+'Il" aria-label="'+word+' ilçe"><option value="">İlçe seçin</option>'+["İstanbul","Kocaeli","Tekirdağ"].map(function(g){return'<optgroup label="'+g+'">'+names.filter(function(n){return(D[n].il||"İstanbul")===g}).map(function(n){return'<option>'+n+'</option>'}).join("")+'</optgroup>'}).join("")+'</select>'+
       '<div class="ac ip-ac"><input type="text" class="ip-mh" id="'+el.id+'Mh" disabled autocomplete="off" spellcheck="false" placeholder="Önce ilçe seçin" aria-label="'+word+' mahalle" role="combobox" aria-expanded="false"><ul class="acl" role="listbox"></ul></div></div>'+
       '<button type="button" class="ip-alt">Başka şehir, sokak adresi ya da haritadan seçmek için tıklayın</button>';
     acWrap.parentNode.insertBefore(w,acWrap);acWrap.classList.add("ip-hide");if(lab)lab.setAttribute("for",el.id+"Il");
@@ -78,7 +78,7 @@
     function other(on){calcBox.classList.toggle("kx-is-other",on);ot.hidden=!on;if(on)ot.scrollIntoView({block:"nearest"})}
     own.onclick=function(){other(true)};ot.querySelector(".kx-other-back").onclick=function(){other(false)};
     var last="";setInterval(function(){var v=svc.value||"",tm=document.getElementById("toMh"),ez=/eczane|ilaç|ilac/i.test(v);if(tm&&!tm.disabled){var ph=ez?"Mahalle seçin (zorunlu)":"Mahalle seçin (isteğe bağlı)";if(tm.placeholder!==ph)tm.placeholder=ph}if(v===last)return;last=v;var on=/eczane|ilaç|ilac/i.test(v);w.hidden=!on;if(!on)other(false);
-      if(f)f.style.display=on?"none":"";
+      if(f)f.style.display=on?"none":"";var ts=document.getElementById("toIl");if(ts){[].forEach.call(ts.querySelectorAll("optgroup"),function(g){if(g.label!=="İstanbul"){g.hidden=on;g.disabled=on}});var DD=(window.K360||{}).D||{};if(on&&ts.value&&DD[ts.value]&&DD[ts.value].il){ts.value="";ts.dispatchEvent(new Event("change"))}}
       if(tlab)tlab.innerHTML=on?tlab0.replace(/^\s*\d+\.\s*Nereye gidecek\?/,"2. İlaç nereye gelecek? (ilçe ve mahalle)"):tlab0},300);
   }
   function init(){enhance(document.getElementById("from"),"Alım");enhance(document.getElementById("to"),"Teslim");ecz()}

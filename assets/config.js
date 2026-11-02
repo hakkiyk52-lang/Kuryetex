@@ -129,7 +129,18 @@ window.K360={
   "Başiskele": "u",
   "Gölcük": "u",
   "Karamürsel": "u",
-  "Kandıra": "u"
+  "Kandıra": "u",
+  "Çorlu": "u",
+  "Çerkezköy": "u",
+  "Kapaklı": "u",
+  "Ergene": "u",
+  "Marmaraereğlisi": "u",
+  "Süleymanpaşa": "u",
+  "Saray": "u",
+  "Muratlı": "u",
+  "Malkara": "u",
+  "Hayrabolu": "u",
+  "Şarköy": "u"
  },
  "ROUND": 50,
  "MIN_FEE": 580,
@@ -794,6 +805,83 @@ window.K360={
    "lon": 30.153,
    "side": "B",
    "il": "Kocaeli"
+  },
+  "Çorlu": {
+   "tier": 3,
+   "lat": 41.159,
+   "lon": 27.8,
+   "side": "A",
+   "il": "Tekirdağ"
+  },
+  "Çerkezköy": {
+   "tier": 3,
+   "lat": 41.285,
+   "lon": 28.0,
+   "side": "A",
+   "il": "Tekirdağ"
+  },
+  "Kapaklı": {
+   "tier": 3,
+   "lat": 41.33,
+   "lon": 27.977,
+   "side": "A",
+   "il": "Tekirdağ"
+  },
+  "Ergene": {
+   "tier": 3,
+   "lat": 41.18,
+   "lon": 27.72,
+   "side": "A",
+   "il": "Tekirdağ"
+  },
+  "Marmaraereğlisi": {
+   "tier": 3,
+   "lat": 40.97,
+   "lon": 27.955,
+   "side": "A",
+   "il": "Tekirdağ"
+  },
+  "Süleymanpaşa": {
+   "tier": 3,
+   "lat": 40.978,
+   "lon": 27.511,
+   "side": "A",
+   "il": "Tekirdağ"
+  },
+  "Saray": {
+   "tier": 3,
+   "lat": 41.443,
+   "lon": 27.921,
+   "side": "A",
+   "il": "Tekirdağ"
+  },
+  "Muratlı": {
+   "tier": 3,
+   "lat": 41.172,
+   "lon": 27.502,
+   "side": "A",
+   "il": "Tekirdağ"
+  },
+  "Malkara": {
+   "tier": 3,
+   "lat": 40.89,
+   "lon": 26.903,
+   "side": "A",
+   "il": "Tekirdağ"
+  },
+  "Hayrabolu": {
+   "tier": 3,
+   "lat": 41.213,
+   "lon": 27.106,
+   "side": "A",
+   "il": "Tekirdağ"
+  },
+  "Şarköy": {
+   "tier": 3,
+   "lat": 40.612,
+   "lon": 27.11,
+   "side": "A",
+   "il": "Tekirdağ"
   }
  },
  "SEM": [
@@ -3125,5 +3213,10 @@ window.K360={
    18
   ]
  ],
- "MAH_KM_MIN": 3
+ "MAH_KM_MIN": 3,
+ "ILKOD": {
+  "İstanbul": "34",
+  "Kocaeli": "41",
+  "Tekirdağ": "59"
+ }
 };
