@@ -69,7 +69,7 @@ function build(s,cam,fx){
  var GL0=27.9513956,GL1=29.978148,GB0=40.7827042,GB1=41.6050271,KO=17.5,KL=23.1,MW=(GL1-GL0)*KO,MH=(GB1-GB0)*KL;
  var ft=new T.TextureLoader().load('/assets/img/istanbul-sade.webp?v=3');ft.anisotropy=4;
  var fl=new T.Mesh(new T.PlaneGeometry(MW,MH),new T.MeshBasicMaterial({map:ft,alphaTest:.5}));fl.rotation.x=-PI/2;fl.position.set(((GL0+GL1)/2-28.58)*KO,.01,-(((GB0+GB1)/2)-41.16)*KL);s.add(fl);
- var HUB=V(7,0,1.8),BW=V(7.6,0,2.45),BE=V(8.4,0,2.5);
+ var LX=7.5,HUB=V(7,0,1.8),BW=V(7.6,0,2.45),BE=V(8.4,0,2.5);
  // 8 kutucuk 8 ilçeye: 4 Avrupa, 4 Anadolu (köprüden geçerek)
  var TG=[V(-6.2,0,0),V(8.35,0,4.08),V(2.03,0,-1.2),V(12.4,0,5.87),V(2.92,0,1.59),V(18.6,0,1.22),V(4.8,0,4.19),V(9.56,0,3.2)],ANA=[0,1,0,1,0,1,0,1];
  var PATHS=TG.map(function(g,i){return ANA[i]?[BW,BE,g]:[g]});
@@ -79,7 +79,7 @@ function build(s,cam,fx){
  var GL=[],SH=[];L.forEach(function(l,i){var gm=new T.Mesh(new T.PlaneGeometry(1.25,1.56),new T.MeshBasicMaterial({map:glyphTex(WORD[i],i),transparent:true,depthWrite:false}));gm.visible=false;s.add(gm);GL.push(gm);
   var shards=[];var cm=M(LCOL[i],{roughness:.4,side:T.DoubleSide});[[0,0,.28,0],[0,0,-.28,PI],[.5,0,0,PI/2],[-.5,0,0,-PI/2],[0,.7,0,'t'],[0,-.7,0,'b']].forEach(function(f){var g=f[3]==='t'||f[3]==='b'?new T.PlaneGeometry(1,.55):(f[3]===0||f[3]===PI?new T.PlaneGeometry(1,1.4):new T.PlaneGeometry(.55,1.4));var m=new T.Mesh(g,cm);m.visible=false;s.add(m);shards.push({m:m,o:V(f[0],f[1],f[2]),r:f[3]})});SH.push(shards)});
  var start=L.map(function(l,i){var a=i/8*PI*2;return V(HUB.x+Math.cos(a)*1.3,0,HUB.z+Math.sin(a)*1.3)});
- var conf=confetti(s,V(0,1,3),10.9,160),conf2=confetti(s,V(0,2,3.2),12.7,180);
+ var conf=confetti(s,V(LX,1,3),10.9,160),conf2=confetti(s,V(LX,2,3.2),12.7,180);
  function arenaPos(i,t){
   if(t<1.2){var u=seg(t,.1+i*.05,1.1);return{p:arcV(HUB,start[i],u,2.2),f:faceTo(HUB,start[i]),run:0,bump:0}}
   var pts=[start[i]].concat(PATHS[i]),ln=[],tot=0;for(var k=1;k<pts.length;k++){var d=pts[k].distanceTo(pts[k-1]);ln.push(d);tot+=d}
@@ -87,25 +87,25 @@ function build(s,cam,fx){
   var a0=pts[j],a1=pts[j+1],pos=a0.clone().lerp(a1,ln[j]?Math.min(1,dd/ln[j]):1);
   return{p:pos,f:faceTo(a0,a1),run:u2>0&&u2<1?1:0,bump:0}}
  return function(t){
-  L.forEach(function(l,i){var ud=l.userData;l.visible=t<12.7;ud.body.visible=true;l.scale.setScalar(1);sit(l,false);ud.body.rotation.z=0;cheer(l,t,0);ud.arms.forEach(function(g){g.visible=true});
+  L.forEach(function(l,i){var ud=l.userData;l.visible=t<12.7;ud.body.visible=true;l.scale.setScalar(t<8.6?1.6:1);sit(l,false);ud.body.rotation.z=0;cheer(l,t,0);ud.arms.forEach(function(g){g.visible=true});
    if(t<8.6){var A=arenaPos(i,t);l.position.copy(A.p);l.rotation.y=A.f;run(l,t,A.run);ud.body.rotation.z=A.bump*.35;env[i].visible=t<7.5;if(t>7.4){cheer(l,t,1);l.position.y=Math.abs(Math.sin((t-7.4)*PI*2))*.45}}
-   else{env[i].visible=false;var from=arenaPos(i,8.59).p,s2=seg(t,11,12.5),sc=1+.3*s2,f=V((i-3.5)*1.32*sc,0,3);var u3=seg(t,8.7+i*.07,10.7);var p3=arcV(from,f,u3,1.8);l.position.copy(p3);l.scale.setScalar(sc);l.rotation.y=u3<1?faceTo(from,f):0;run(l,t,u3>0&&u3<1?1:0);if(u3>=1){var w=t-10.75-i*.13;l.position.y=w>0&&w<.6?Math.sin(w/.6*PI)*.95:0;cheer(l,t,w>0&&w<.3?1:0)}}
+   else{env[i].visible=false;var from=arenaPos(i,8.59).p,s2=seg(t,11,12.5),sc=(1+.3*s2)*(1+.6*(1-seg(t,8.6,10.5))),f=V(LX+(i-3.5)*1.32*sc,0,3);var u3=seg(t,8.7+i*.07,10.7);var p3=arcV(from,f,u3,1.8);l.position.copy(p3);l.scale.setScalar(sc);l.rotation.y=u3<1?faceTo(from,f):0;run(l,t,u3>0&&u3<1?1:0);if(u3>=1){var w=t-10.75-i*.13;l.position.y=w>0&&w<.6?Math.sin(w/.6*PI)*.95:0;cheer(l,t,w>0&&w<.3?1:0)}}
   });
   L.forEach(function(l,i){var b=l.userData.body,tb=10.75+i*.13,m=t<8.6?0:seg(t,tb+.3,tb+.62),mb=cl(m*2),mg=cl(m*2-1),on=m>=.5;
    b.visible=!on;b.rotation.y=mb*PI/2;l.userData.legs.forEach(function(g){g.visible=!on});l.userData.arms.forEach(function(g){g.visible=!on});l.userData.sh.visible=!on;
    SH[i].forEach(function(sd){sd.m.visible=false});
    var sc=l.scale.x,g=GL[i];g.visible=on;if(!on)return;
-   var fp=V(l.position.x,l.position.y+1.15*sc,3.2),tight=seg(t,13.1,13.8),fin=V((i-3.5)*(1.32*1.3*(1-tight)+1.12*1.45*tight),1.75,3.2),k=seg(t,12.7,13.6);
+   var fp=V(l.position.x,l.position.y+1.15*sc,3.2),tight=seg(t,13.1,13.8),fin=V(LX+(i-3.5)*(1.32*1.3*(1-tight)+1.12*1.45*tight),1.75,3.2),k=seg(t,12.7,13.6);
    var tau=Math.max(0,t-14),wave=Math.sin(tau*3.2-i*.55)*.18*seg(t,14,14.6);
    g.position.copy(lerpV(fp,fin,k));g.position.y+=wave;
    g.rotation.z=Math.sin(tau*2.2-i*.5)*.06*seg(t,14,14.6);g.rotation.y=-(1-mg)*PI/2+Math.sin(tau*1.1)*.25*seg(t,14.6,15.4);
    var pop=1+Math.max(0,Math.sin((tau-i*.18)*2.6))*.06*seg(t,14,14.6);g.scale.setScalar((1.45*sc/1.3*(1-k)+1.45*k)*pop);g.material.opacity=1});
-  pins.forEach(function(p,i){var w=t-7.35;p.scale.setScalar((1+(w>0&&w<.8?Math.sin(w/.8*PI)*.6:0))*(1-seg(t,9,9.8)));p.visible=t<9.9;p.rotation.y=t*.8});
+  pins.forEach(function(p,i){var w=t-7.35;p.scale.setScalar(1.5*(1+(w>0&&w<.8?Math.sin(w/.8*PI)*.6:0))*(1-seg(t,9,9.8)));p.visible=t<9.9;p.rotation.y=t*.8});
   conf(t);conf2(t);
   var u;
-  if(t<8.6){camLook(cam,V(6.7,25,12),V(6.7,0,.5))}
-  else if(t<11){u=seg(t,8.6,10.8);blendCam(cam,t,0,0,[V(6.7,25,12),V(6.7,0,.5)],[V(0,4.2,15),V(0,1.2,3)],u)}
-  else{u=seg(t,11,12.5);blendCam(cam,t,0,0,[V(0,4.2,15),V(0,1.2,3)],[V(0,2.6,12.6),V(0,1.75,3)],u)}
+  if(t<8.6){camLook(cam,V(6.3,19,10.5),V(6.3,0,1.8))}
+  else if(t<11){u=seg(t,8.6,10.8);blendCam(cam,t,0,0,[V(6.3,19,10.5),V(6.3,0,1.8)],[V(LX,4.2,15),V(LX,1.2,3)],u)}
+  else{u=seg(t,11,12.5);blendCam(cam,t,0,0,[V(LX,4.2,15),V(LX,1.2,3)],[V(LX,2.6,12.6),V(LX,1.75,3)],u)}
   fx(t)}}
 
 var cv=host.querySelector('canvas'),fl=host.querySelector('.kxflash'),H=document.documentElement,r;
