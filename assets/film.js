@@ -67,20 +67,25 @@ function build(s,cam,fx){
  world(s,'#8fd0f5','#eef8ff',false);
  // Sade İstanbul haritası (hazır görsel, sabit). 1 birim lon=35.6, lat=47; arena merkezi 28.66E/41.17N
  var GL0=27.9513956,GL1=29.978148,GB0=40.7827042,GB1=41.6050271,KO=17.5,KL=23.1,MW=(GL1-GL0)*KO,MH=(GB1-GB0)*KL;
- var ft=new T.TextureLoader().load('/assets/img/istanbul-sade.webp?v=2');ft.anisotropy=4;
+ var ft=new T.TextureLoader().load('/assets/img/istanbul-sade.webp?v=3');ft.anisotropy=4;
  var fl=new T.Mesh(new T.PlaneGeometry(MW,MH),new T.MeshBasicMaterial({map:ft,alphaTest:.5}));fl.rotation.x=-PI/2;fl.position.set(((GL0+GL1)/2-28.58)*KO,.01,-(((GB0+GB1)/2)-41.16)*KL);s.add(fl);
- var PA=[.5,2.1,3.7,5.3],PR=7,SZ=.4,pins=PA.map(function(a,i){var p=pin(i%2?NAVY:ORG);p.position.set(Math.cos(a)*PR,0,Math.sin(a)*PR*SZ);s.add(p);return p});
+ var HUB=V(7,0,1.8),BW=V(7.6,0,2.45),BE=V(8.4,0,2.5);
+ // 8 kutucuk 8 ilçeye: 4 Avrupa, 4 Anadolu (köprüden geçerek)
+ var TG=[V(-6.2,0,0),V(8.35,0,4.08),V(2.03,0,-1.2),V(12.4,0,5.87),V(2.92,0,1.59),V(18.6,0,1.22),V(4.8,0,4.19),V(9.56,0,3.2)],ANA=[0,1,0,1,0,1,0,1];
+ var PATHS=TG.map(function(g,i){return ANA[i]?[BW,BE,g]:[g]});
+ var pins=TG.map(function(g,i){var p=pin(ANA[i]?ORG:NAVY);p.position.copy(g);s.add(p);return p});
  // harfler + kırılan kutu panelleri + logo harf yüzleri
  var L=makeLetters(s),env=L.map(function(l){var e=envelope();l.userData.carry.add(e);return e});
  var GL=[],SH=[];L.forEach(function(l,i){var gm=new T.Mesh(new T.PlaneGeometry(1.25,1.56),new T.MeshBasicMaterial({map:glyphTex(WORD[i],i),transparent:true,depthWrite:false}));gm.visible=false;s.add(gm);GL.push(gm);
   var shards=[];var cm=M(LCOL[i],{roughness:.4,side:T.DoubleSide});[[0,0,.28,0],[0,0,-.28,PI],[.5,0,0,PI/2],[-.5,0,0,-PI/2],[0,.7,0,'t'],[0,-.7,0,'b']].forEach(function(f){var g=f[3]==='t'||f[3]==='b'?new T.PlaneGeometry(1,.55):(f[3]===0||f[3]===PI?new T.PlaneGeometry(1,1.4):new T.PlaneGeometry(.55,1.4));var m=new T.Mesh(g,cm);m.visible=false;s.add(m);shards.push({m:m,o:V(f[0],f[1],f[2]),r:f[3]})});SH.push(shards)});
- var pairs=[[0,3],[1,2],[4,5],[6,7]],start=L.map(function(l,i){var a=i/8*PI*2;return V(Math.cos(a)*2.6,0,Math.sin(a)*2.6*SZ)});
+ var start=L.map(function(l,i){var a=i/8*PI*2;return V(HUB.x+Math.cos(a)*1.3,0,HUB.z+Math.sin(a)*1.3)});
  var conf=confetti(s,V(0,1,3),10.9,160),conf2=confetti(s,V(0,2,3.2),12.7,180);
- function arenaPos(i,t){var p=pairs.findIndex(function(pr){return pr.indexOf(i)>=0}),side=pairs[p].indexOf(i),pa=PA[p],a0=i/8*PI*2;
-  if(t<1.2){var u=seg(t,.1+i*.05,1.1);return{p:arcV(V(0,0,0),start[i],u,2.2),f:faceTo(V(0,0,0),start[i]),run:0,bump:0}}
-  var u2=seg(t,1.4,7.4),ang=a0+(pa-a0)*u2,rad=2.6+(PR-1.1-2.6)*u2,bump=Math.exp(-Math.pow((u2-.5)/.06,2));
-  var off=(side?1:-1)*(.75-.6*bump);var pos=V(Math.cos(ang)*rad,0,Math.sin(ang)*rad).add(V(-Math.sin(ang),0,Math.cos(ang)).multiplyScalar(off));pos.y+=bump*.4;pos.z*=SZ;
-  return{p:pos,f:faceTo(pos,V(Math.cos(pa)*PR,0,Math.sin(pa)*PR*SZ)),run:u2<1?1:0,bump:bump*(side?-1:1)}}
+ function arenaPos(i,t){
+  if(t<1.2){var u=seg(t,.1+i*.05,1.1);return{p:arcV(HUB,start[i],u,2.2),f:faceTo(HUB,start[i]),run:0,bump:0}}
+  var pts=[start[i]].concat(PATHS[i]),ln=[],tot=0;for(var k=1;k<pts.length;k++){var d=pts[k].distanceTo(pts[k-1]);ln.push(d);tot+=d}
+  var u2=seg(t,1.4+i*.08,6.9+i*.06),e=u2*u2*(3-2*u2),dd=e*tot,j=0;while(j<ln.length-1&&dd>ln[j]){dd-=ln[j];j++}
+  var a0=pts[j],a1=pts[j+1],pos=a0.clone().lerp(a1,ln[j]?Math.min(1,dd/ln[j]):1);
+  return{p:pos,f:faceTo(a0,a1),run:u2>0&&u2<1?1:0,bump:0}}
  return function(t){
   L.forEach(function(l,i){var ud=l.userData;l.visible=t<12.7;ud.body.visible=true;l.scale.setScalar(1);sit(l,false);ud.body.rotation.z=0;cheer(l,t,0);ud.arms.forEach(function(g){g.visible=true});
    if(t<8.6){var A=arenaPos(i,t);l.position.copy(A.p);l.rotation.y=A.f;run(l,t,A.run);ud.body.rotation.z=A.bump*.35;env[i].visible=t<7.5;if(t>7.4){cheer(l,t,1);l.position.y=Math.abs(Math.sin((t-7.4)*PI*2))*.45}}
