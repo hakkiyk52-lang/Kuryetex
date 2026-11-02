@@ -66,21 +66,21 @@ function glyphTex(ch,i){return ct(256,320,function(x,w,h){x.clearRect(0,0,w,h);x
 function build(s,cam,fx){
  world(s,'#8fd0f5','#eef8ff',false);
  // Sade İstanbul haritası (hazır görsel, sabit). 1 birim lon=35.6, lat=47; arena merkezi 28.66E/41.17N
- var GL0=27.9513956,GL1=29.978148,GB0=40.7827042,GB1=41.6050271,KO=35.6,KL=47,MW=(GL1-GL0)*KO,MH=(GB1-GB0)*KL;
- var ft=new T.TextureLoader().load('/assets/img/istanbul-sade.webp');
- var fl=new T.Mesh(new T.PlaneGeometry(MW,MH),new T.MeshBasicMaterial({map:ft,alphaTest:.5}));fl.rotation.x=-PI/2;fl.position.set(((GL0+GL1)/2-28.66)*KO,.01,-(((GB0+GB1)/2)-41.17)*KL);s.add(fl);
- var PA=[.5,2.1,3.7,5.3],PR=7,pins=PA.map(function(a,i){var p=pin(i%2?NAVY:ORG);p.position.set(Math.cos(a)*PR,0,Math.sin(a)*PR);s.add(p);return p});
+ var GL0=27.9513956,GL1=29.978148,GB0=40.7827042,GB1=41.6050271,KO=17.5,KL=23.1,MW=(GL1-GL0)*KO,MH=(GB1-GB0)*KL;
+ var ft=new T.TextureLoader().load('/assets/img/istanbul-sade.webp?v=2');ft.anisotropy=4;
+ var fl=new T.Mesh(new T.PlaneGeometry(MW,MH),new T.MeshBasicMaterial({map:ft,alphaTest:.5}));fl.rotation.x=-PI/2;fl.position.set(((GL0+GL1)/2-28.58)*KO,.01,-(((GB0+GB1)/2)-41.16)*KL);s.add(fl);
+ var PA=[.5,2.1,3.7,5.3],PR=7,SZ=.4,pins=PA.map(function(a,i){var p=pin(i%2?NAVY:ORG);p.position.set(Math.cos(a)*PR,0,Math.sin(a)*PR*SZ);s.add(p);return p});
  // harfler + kırılan kutu panelleri + logo harf yüzleri
  var L=makeLetters(s),env=L.map(function(l){var e=envelope();l.userData.carry.add(e);return e});
  var GL=[],SH=[];L.forEach(function(l,i){var gm=new T.Mesh(new T.PlaneGeometry(1.25,1.56),new T.MeshBasicMaterial({map:glyphTex(WORD[i],i),transparent:true,depthWrite:false}));gm.visible=false;s.add(gm);GL.push(gm);
   var shards=[];var cm=M(LCOL[i],{roughness:.4,side:T.DoubleSide});[[0,0,.28,0],[0,0,-.28,PI],[.5,0,0,PI/2],[-.5,0,0,-PI/2],[0,.7,0,'t'],[0,-.7,0,'b']].forEach(function(f){var g=f[3]==='t'||f[3]==='b'?new T.PlaneGeometry(1,.55):(f[3]===0||f[3]===PI?new T.PlaneGeometry(1,1.4):new T.PlaneGeometry(.55,1.4));var m=new T.Mesh(g,cm);m.visible=false;s.add(m);shards.push({m:m,o:V(f[0],f[1],f[2]),r:f[3]})});SH.push(shards)});
- var pairs=[[0,3],[1,2],[4,5],[6,7]],start=L.map(function(l,i){var a=i/8*PI*2;return V(Math.cos(a)*2.6,0,Math.sin(a)*2.6)});
+ var pairs=[[0,3],[1,2],[4,5],[6,7]],start=L.map(function(l,i){var a=i/8*PI*2;return V(Math.cos(a)*2.6,0,Math.sin(a)*2.6*SZ)});
  var conf=confetti(s,V(0,1,3),10.9,160),conf2=confetti(s,V(0,2,3.2),12.7,180);
  function arenaPos(i,t){var p=pairs.findIndex(function(pr){return pr.indexOf(i)>=0}),side=pairs[p].indexOf(i),pa=PA[p],a0=i/8*PI*2;
   if(t<1.2){var u=seg(t,.1+i*.05,1.1);return{p:arcV(V(0,0,0),start[i],u,2.2),f:faceTo(V(0,0,0),start[i]),run:0,bump:0}}
   var u2=seg(t,1.4,7.4),ang=a0+(pa-a0)*u2,rad=2.6+(PR-1.1-2.6)*u2,bump=Math.exp(-Math.pow((u2-.5)/.06,2));
-  var off=(side?1:-1)*(.75-.6*bump);var pos=V(Math.cos(ang)*rad,0,Math.sin(ang)*rad).add(V(-Math.sin(ang),0,Math.cos(ang)).multiplyScalar(off));pos.y+=bump*.4;
-  return{p:pos,f:faceTo(pos,V(Math.cos(pa)*PR,0,Math.sin(pa)*PR)),run:u2<1?1:0,bump:bump*(side?-1:1)}}
+  var off=(side?1:-1)*(.75-.6*bump);var pos=V(Math.cos(ang)*rad,0,Math.sin(ang)*rad).add(V(-Math.sin(ang),0,Math.cos(ang)).multiplyScalar(off));pos.y+=bump*.4;pos.z*=SZ;
+  return{p:pos,f:faceTo(pos,V(Math.cos(pa)*PR,0,Math.sin(pa)*PR*SZ)),run:u2<1?1:0,bump:bump*(side?-1:1)}}
  return function(t){
   L.forEach(function(l,i){var ud=l.userData;l.visible=t<12.7;ud.body.visible=true;l.scale.setScalar(1);sit(l,false);ud.body.rotation.z=0;cheer(l,t,0);ud.arms.forEach(function(g){g.visible=true});
    if(t<8.6){var A=arenaPos(i,t);l.position.copy(A.p);l.rotation.y=A.f;run(l,t,A.run);ud.body.rotation.z=A.bump*.35;env[i].visible=t<7.5;if(t>7.4){cheer(l,t,1);l.position.y=Math.abs(Math.sin((t-7.4)*PI*2))*.45}}
@@ -98,8 +98,8 @@ function build(s,cam,fx){
   pins.forEach(function(p,i){var w=t-7.35;p.scale.setScalar((1+(w>0&&w<.8?Math.sin(w/.8*PI)*.6:0))*(1-seg(t,9,9.8)));p.visible=t<9.9;p.rotation.y=t*.8});
   conf(t);conf2(t);
   var u;
-  if(t<8.6){var ca=PI/2;camLook(cam,V(Math.cos(ca)*22,14,Math.sin(ca)*22),V(0,0,0))}
-  else if(t<11){u=seg(t,8.6,10.8);var ca2=PI/2;blendCam(cam,t,0,0,[V(Math.cos(ca2)*22,14,Math.sin(ca2)*22),V(0,0,0)],[V(0,4.2,15),V(0,1.2,3)],u)}
+  if(t<8.6){camLook(cam,V(6.7,25,12),V(6.7,0,.5))}
+  else if(t<11){u=seg(t,8.6,10.8);blendCam(cam,t,0,0,[V(6.7,25,12),V(6.7,0,.5)],[V(0,4.2,15),V(0,1.2,3)],u)}
   else{u=seg(t,11,12.5);blendCam(cam,t,0,0,[V(0,4.2,15),V(0,1.2,3)],[V(0,2.6,12.6),V(0,1.75,3)],u)}
   fx(t)}}
 
