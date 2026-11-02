@@ -61,8 +61,8 @@
     var svc=document.getElementById("svcsel"),from=document.getElementById("from"),to=document.getElementById("to");if(!svc||!from||!to||svc.__ez)return;svc.__ez=1;
     var f=from.closest(".field"),tf=to.closest(".field"),tlab=tf&&tf.querySelector("label"),tlab0=tlab?tlab.innerHTML:"";
     var w=document.createElement("div");w.className="kx-ez";w.hidden=true;
-    w.innerHTML='<p class="kx-ez-t">💊 İlacı biz buluruz</p><p class="ez-def">Eczaneyi ya da nöbetçi eczaneyi biz buluyor, ilacınızı temin edip kapınıza getiriyoruz. Siz sadece ilacın geleceği mahalleyi seçin; kurye ücreti mahallenize göre çıkar.</p>'+
-      '<div class="nb-2"><button type="button" class="nb-go">📍 Konumumla doldur</button><button type="button" class="nb-go2">Farklı bir isteğim var</button></div><p class="kx-ez-h" hidden></p>';
+    w.innerHTML='<div class="kx-ez-hd"><span class="kx-ez-ic" aria-hidden="true">💊</span><div><b>Eczaneyi biz buluruz!</b><small>İlacı alıp kapınıza getiririz. Siz sadece mahallenizi seçin.</small></div></div>'+
+      '<div class="nb-2"><button type="button" class="nb-go">📍 Konumu kullan</button><button type="button" class="nb-go2">Farklı isteğim var</button></div><p class="kx-ez-h" hidden></p>';
     f.parentNode.insertBefore(w,f);
     var ot=document.createElement("div");ot.className="kx-other";ot.hidden=true;
     ot.innerHTML='<p class="kx-other-t">Farklı bir isteğiniz mi var?</p><p>İlacınız başka bir şehirde mi, birden fazla ilaç ya da özel bir ürün mü gerekiyor? WhatsApp\'tan yazın, size hemen yardımcı olalım.</p>'+
