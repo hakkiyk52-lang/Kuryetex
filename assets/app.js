@@ -826,3 +826,6 @@ b.addEventListener("click",function(){el.classList.remove("kxfold");b.remove()})
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",run);else run()})();
 /* === Mobilde kart kaydırma ipucu === */
 ;(function(){if(innerWidth>=760)return;document.querySelectorAll(".cards").forEach(function(c){if(c.children.length<2||c.nextElementSibling&&c.nextElementSibling.classList.contains("cards-hint"))return;var p=document.createElement("p");p.className="cards-hint";p.textContent=((window.__D||{})["Kaydırarak tüm hizmetleri görün →"])||"Kaydırarak tüm hizmetleri görün →";c.parentNode.insertBefore(p,c.nextSibling)})})();
+
+/* Eczane: reklam saatlerinde "Şu an açığız" ışığı (İstanbul saati) */
+(function(){var el=document.querySelectorAll(".ezopen");if(!el.length)return;function chk(){try{var f=new Intl.DateTimeFormat("en-GB",{timeZone:"Europe/Istanbul",hour:"2-digit",hourCycle:"h23",weekday:"short"}).formatToParts(new Date()),h=0,d="";f.forEach(function(x){if(x.type==="hour")h=+x.value;if(x.type==="weekday")d=x.value});var open=h>=10||h<2||(d==="Sun"&&h<4);el.forEach(function(e){e.hidden=!open})}catch(e){}}chk();setInterval(chk,60000)})();
