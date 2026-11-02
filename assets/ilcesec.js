@@ -36,7 +36,7 @@
     function choose(m){inp.value=lbl(m);hide();setOrig(m+", "+il,il)}
     sel.addEventListener("change",function(){il=sel.value;inp.value="";list=[];
       if(!il){inp.disabled=true;inp.placeholder="Önce ilçe seçin";setOrig("","");return}
-      setOrig(il,il);inp.disabled=false;inp.placeholder="Mahalle seçin (isteğe bağlı)";
+      setOrig(il,il);inp.disabled=false;inp.placeholder="Mahalle seçin (zorunlu)";
       ilm(function(J){list=mahs(il,J);if(document.activeElement===inp)show()})});
     inp.addEventListener("focus",show);inp.addEventListener("input",function(){if(il)setOrig(il,il);show()});
     inp.addEventListener("keydown",function(e){var li=box.querySelectorAll("li[data-i]");
@@ -53,7 +53,7 @@
       sel.value=d;il=d;inp.disabled=false;ilm(function(J){list=mahs(il,J)});inp.value=shown||"";setOrig(label,d);return true};
     el.__ipNear=function(lat,lon){var bn=null,bk=1e9;Object.keys(D).forEach(function(n){var p=D[n];if(p&&p.lat!=null){var k=Math.hypot(p.lat-lat,(p.lon-lon)*.76);if(k<bk){bk=k;bn=n}}});return bn};
     // sayfa önceden bir ilçe seçtiyse (ilçe sayfaları) listeye yansıt
-    function sync(){var d=el.dataset.d||"";if(d&&D[d]&&sel.value!==d){sel.value=d;il=d;inp.disabled=false;inp.placeholder="Mahalle seçin (isteğe bağlı)";ilm(function(J){list=mahs(il,J)})}}
+    function sync(){var d=el.dataset.d||"";if(d&&D[d]&&sel.value!==d){sel.value=d;il=d;inp.disabled=false;inp.placeholder="Mahalle seçin (zorunlu)";ilm(function(J){list=mahs(il,J)})}}
     sync();setTimeout(sync,400);setTimeout(sync,1500);
   }
   // ---- eczane hizmeti seçilince: eczane seçimi (yakındaki açık / nöbetçi eczaneler)
@@ -77,7 +77,7 @@
         function(){say("Konum izni verilmedi; mahallenizi aşağıdan seçin.")},{enableHighAccuracy:true,timeout:10000})};
     function other(on){calcBox.classList.toggle("kx-is-other",on);ot.hidden=!on;if(on)ot.scrollIntoView({block:"nearest"})}
     own.onclick=function(){other(true)};ot.querySelector(".kx-other-back").onclick=function(){other(false)};
-    var last="";setInterval(function(){var v=svc.value||"",tm=document.getElementById("toMh"),ez=/eczane|ilaç|ilac/i.test(v);if(tm&&!tm.disabled){var ph=ez?"Mahalle seçin (zorunlu)":"Mahalle seçin (isteğe bağlı)";if(tm.placeholder!==ph)tm.placeholder=ph}if(v===last)return;last=v;var on=/eczane|ilaç|ilac/i.test(v);w.hidden=!on;if(!on)other(false);
+    var last="";setInterval(function(){var v=svc.value||"",tm=document.getElementById("toMh"),ez=/eczane|ilaç|ilac/i.test(v);if(tm&&!tm.disabled){var ph="Mahalle seçin (zorunlu)";if(tm.placeholder!==ph)tm.placeholder=ph}if(v===last)return;last=v;var on=/eczane|ilaç|ilac/i.test(v);w.hidden=!on;if(!on)other(false);
       if(f)f.style.display=on?"none":"";var ts=document.getElementById("toIl");if(ts){[].forEach.call(ts.querySelectorAll("optgroup"),function(g){if(g.label!=="İstanbul"){g.hidden=on;g.disabled=on}});var DD=(window.K360||{}).D||{};if(on&&ts.value&&DD[ts.value]&&DD[ts.value].il){ts.value="";ts.dispatchEvent(new Event("change"))}}
       if(tlab)tlab.innerHTML=on?tlab0.replace(/^\s*\d+\.\s*Nereye gidecek\?/,"2. İlaç nereye gelecek? (ilçe ve mahalle)"):tlab0},300);
   }
