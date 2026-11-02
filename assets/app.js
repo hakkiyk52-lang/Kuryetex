@@ -193,7 +193,7 @@ function txn(){if(cur&&cur.np)return _t("Eczane teslimi mahalle bölgesine göre
     reset()}
   (function(){var box=svcsel.parentNode.querySelector(".acl");
     function open(){box.innerHTML="";SV.forEach(function(s){var li=document.createElement("li");li.setAttribute("role","option");li.innerHTML="<span></span>";li.firstChild.textContent=s.l;li.addEventListener("mousedown",function(e){e.preventDefault();applySvc(s);box.style.display="none"});box.appendChild(li)});box.style.display="block"}
-    svcsel.addEventListener("click",open);svcsel.addEventListener("focus",open);svcsel.addEventListener("blur",function(){setTimeout(function(){box.style.display="none"},120)})})();
+    var jo=0;function shown(){return box.style.display==="block"}svcsel.addEventListener("pointerdown",function(){jo=shown()?2:1});svcsel.addEventListener("focus",function(){if(!shown())open()});svcsel.addEventListener("click",function(){var w=jo;jo=0;if(w===2){box.style.display="none";svcsel.blur()}else if(!shown())open()});svcsel.addEventListener("blur",function(){setTimeout(function(){box.style.display="none"},120)})})();
   var d0=svcsel.getAttribute("data-def");if(d0){var f=SV.filter(function(s){return s.k===d0})[0];if(f)applySvc(f)}
   var btns=document.querySelectorAll("#svc button");
   btns.forEach(function(b){b.addEventListener("click",function(){btns.forEach(function(x){x.setAttribute("aria-pressed","false")});b.setAttribute("aria-pressed","true");sizeName=b.getAttribute("data-s");size=+b.getAttribute("data-x");reset()})});
