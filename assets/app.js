@@ -239,19 +239,20 @@ function txn(){if(cur&&cur.np)return _t("Eczane teslimi mahalle bölgesine göre
     if(!same&&C.FAR&&(C.FAR.indexOf(fa)>-1||C.FAR.indexOf(tb)>-1))raw=Math.max(raw,km*C.FAR_RATE);
     var p=null;window.__ezX=false;
     var ext=0;if(cur.t==="calc"){var B0=C.TIER_BASE||580,base=raw<=B0?B0:B0+Math.round((raw-B0)/C.ROUND)*C.ROUND;p=cur.mult?Math.round(base*cur.mult/C.ROUND)*C.ROUND:base+(cur.add||0);var tx0=tmExtra(p);if(tx0<0)p+=tx0;else ext+=tx0;ext+=sx+wx}
-    if(p!==null){p=Math.max(p,xs?(C.MIN_CROSS||780):(C.MIN_FEE||580));p+=ext}var exN=p!==null?extras(a.lat,a.lon,p):{tot:0,txt:"",msg:""};var nf=p!==null?nightFee():0;if(nf)p+=nf;p=p!==null?p+exN.tot:p;
+    if(p!==null){p=Math.max(p,xs?(C.MIN_CROSS||780):(C.MIN_FEE||580));p+=ext}
+    var rz=0,rzn="";if(p!==null&&window.__ekZonePrice){var zb=(window.EKZ||{}).p||{},za=window.__ekZonePrice(from),zt=window.__ekZonePrice(to);[za,zt].forEach(function(z){if(z&&zb.m&&z-zb.m>rz)rz=z-zb.m});if(rz){rzn=rz>=((zb.u||780)-(zb.m||580))?_t("Kırsal bölge farkı"):_t("Ara bölge farkı");p+=rz}}var exN=p!==null?extras(a.lat,a.lon,p):{tot:0,txt:"",msg:""};var nf=p!==null?nightFee():0;if(nf)p+=nf;p=p!==null?p+exN.tot:p;
     var hl=cur.l.replace(/^\S+\s/,"");
     $("route").textContent=from.value+" → "+to.value;
     $("km").textContent=_t("Mesafe: ")+km.toFixed(1).replace(".",",")+_t(" km (tahmini)");
     $("svcname").textContent=cur.l;
     var det=[];if(cur.size&&sizeName)det.push(sizeName);if(cur.kg)det.push((w||0)+" kg");det.push(_t("Teslim: ")+tmText());$("detail").textContent=det.join(" · ");
-    $("kgnote").textContent=(xnote()?xnote()+". ":"")+txn()+(nf?" "+_t("Gece farkı (00:00–07:00): +")+tl(nf)+".":"")+"";
+    $("kgnote").textContent=(xnote()?xnote()+". ":"")+txn()+(rz?" "+rzn+": +"+tl(rz)+".":"")+(nf?" "+_t("Gece farkı (00:00–07:00): +")+tl(nf)+".":"")+"";
     var pe=$("price");
-    if(p!==null){pe.className="price";cancelAnimationFrame(raf);var s0=0,t0=performance.now();(function step(now){var t=Math.min(1,(now-t0)/500);pe.textContent=tl(Math.round(s0+(p-s0)*(1-Math.pow(1-t,3))));if(t<1)raf=requestAnimationFrame(step)})(t0);$("pnote").textContent=(exN.txt?exN.txt+" ":"")+(nf?_t("🌙 Gece farkı dahildir (00:00–07:00): +")+tl(nf)+". ":"")+_t("Tahmini fiyattır. Kesin fiyat sipariş sırasında netleşir.")}
+    if(p!==null){pe.className="price";cancelAnimationFrame(raf);var s0=0,t0=performance.now();(function step(now){var t=Math.min(1,(now-t0)/500);pe.textContent=tl(Math.round(s0+(p-s0)*(1-Math.pow(1-t,3))));if(t<1)raf=requestAnimationFrame(step)})(t0);$("pnote").textContent=(rz?rzn+" (+"+tl(rz)+") dahildir. ":"")+(exN.txt?exN.txt+" ":"")+(nf?_t("🌙 Gece farkı dahildir (00:00–07:00): +")+tl(nf)+". ":"")+_t("Tahmini fiyattır. Kesin fiyat sipariş sırasında netleşir.")}
     else{pe.className="price ask";pe.textContent=_t("Fiyat WhatsApp'ta netleşir");$("pnote").textContent=_t("Bu hizmetin fiyatı mesafe, saat ve gönderiye göre belirlenir. Bilgileriniz hazır mesajla bize ulaşacak.")}
     var msg="Merhaba, kuryetex.com.tr üzerinden sipariş vermek istiyorum.\n\nHizmet: "+hl+"\nAlım noktası: "+from.value+"\nTeslim noktası: "+to.value;if(pa)msg+="\nAlım konumu: https://maps.google.com/?q="+from.dataset.ll;if(pb)msg+="\nTeslim konumu: https://maps.google.com/?q="+to.dataset.ll;
     if(cur.size&&sizeName)msg+="\nGönderi boyutu: "+sizeName;if(cur.kg)msg+="\nAğırlık: "+(w||0)+" kg";
-    msg+="\nTeslim süresi: "+tmText()+(sx?"\nKoli ebat farkı: +"+tl(sx):"")+(wx?"\nAğırlık farkı: +"+tl(wx):"")+(nf?"\nGece farkı: +"+tl(nf):"")+exN.msg+"\nTahmini mesafe: "+km.toFixed(1).replace(".",",")+" km\nSistemdeki fiyat: "+(p!==null?tl(p):_t("WhatsApp'ta netleşecek"));
+    msg+="\nTeslim süresi: "+tmText()+(sx?"\nKoli ebat farkı: +"+tl(sx):"")+(wx?"\nAğırlık farkı: +"+tl(wx):"")+(nf?"\nGece farkı: +"+tl(nf):"")+(rz?"\n"+rzn+": +"+tl(rz):"")+exN.msg+"\nTahmini mesafe: "+km.toFixed(1).replace(".",",")+" km\nSistemdeki fiyat: "+(p!==null?tl(p):_t("WhatsApp'ta netleşecek"));
     $("waBtn").href="https://wa.me/"+C.PHONE+"?text="+encodeURIComponent(msg);
     res.style.display="block";res.scrollIntoView({behavior:"smooth",block:"nearest"});
   }
