@@ -3218,5 +3218,111 @@ window.K360={
   "İstanbul": "34",
   "Kocaeli": "41",
   "Tekirdağ": "59"
- }
+ },
+ "WX": {
+  "on": true,
+  "mid": 13,
+  "heavy": 15
+ },
+ "TATIL": {
+  "r": 13,
+  "b": 15,
+  "gunler": [
+   [
+    "2027-01-01",
+    "r",
+    "Yılbaşı"
+   ],
+   [
+    "2027-03-08",
+    "ab",
+    "Ramazan Bayramı arifesi"
+   ],
+   [
+    "2027-03-09",
+    "b",
+    "Ramazan Bayramı"
+   ],
+   [
+    "2027-03-10",
+    "b",
+    "Ramazan Bayramı"
+   ],
+   [
+    "2027-03-11",
+    "b",
+    "Ramazan Bayramı"
+   ],
+   [
+    "2027-04-23",
+    "r",
+    "23 Nisan"
+   ],
+   [
+    "2027-05-01",
+    "r",
+    "1 Mayıs"
+   ],
+   [
+    "2027-05-15",
+    "ab",
+    "Kurban Bayramı arifesi"
+   ],
+   [
+    "2027-05-16",
+    "b",
+    "Kurban Bayramı"
+   ],
+   [
+    "2027-05-17",
+    "b",
+    "Kurban Bayramı"
+   ],
+   [
+    "2027-05-18",
+    "b",
+    "Kurban Bayramı"
+   ],
+   [
+    "2027-05-19",
+    "b",
+    "Kurban Bayramı"
+   ],
+   [
+    "2027-07-15",
+    "r",
+    "15 Temmuz"
+   ],
+   [
+    "2027-08-30",
+    "r",
+    "30 Ağustos"
+   ],
+   [
+    "2027-10-28",
+    "ar",
+    "Cumhuriyet Bayramı arifesi"
+   ],
+   [
+    "2027-10-29",
+    "r",
+    "29 Ekim"
+   ]
+  ]
+ },
+ "SURGE": {
+  "on": false,
+  "pct": 15,
+  "txt": "Yoğunluk farkı"
+ },
+ "ETKINLIK": {
+  "pct": 15,
+  "gunler": [
+   [
+    "2026-11-01",
+    "İstanbul Maratonu"
+   ]
+  ]
+ },
+ "EXTRA_CAP_PCT": 30
 };
