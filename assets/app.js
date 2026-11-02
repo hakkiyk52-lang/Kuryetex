@@ -240,7 +240,7 @@ function txn(){if(cur&&cur.np)return _t("Eczane teslimi mahalle bölgesine göre
     var p=null;window.__ezX=false;
     var ext=0;if(cur.t==="calc"){var B0=C.TIER_BASE||580,base=raw<=B0?B0:B0+Math.round((raw-B0)/C.ROUND)*C.ROUND;p=cur.mult?Math.round(base*cur.mult/C.ROUND)*C.ROUND:base+(cur.add||0);var tx0=tmExtra(p);if(tx0<0)p+=tx0;else ext+=tx0;ext+=sx+wx}
     if(p!==null){p=Math.max(p,xs?(C.MIN_CROSS||780):(C.MIN_FEE||580));p+=ext}
-    var rz=0,rzn="";if(p!==null&&window.__ekZonePrice){var zb=(window.EKZ||{}).p||{},za=window.__ekZonePrice(from),zt=window.__ekZonePrice(to);[za,zt].forEach(function(z){if(z&&zb.m&&z-zb.m>rz)rz=z-zb.m});if(rz){rzn=rz>=((zb.u||780)-(zb.m||580))?_t("Kırsal bölge farkı"):_t("Ara bölge farkı");p+=rz}}var exN=p!==null?extras(a.lat,a.lon,p):{tot:0,txt:"",msg:""};var nf=p!==null?nightFee():0;if(nf)p+=nf;p=p!==null?p+exN.tot:p;
+    var rz=0,rzn="";if(p!==null&&window.__ekZonePrice&&tmv!==_t("Gün içi teslim (2,5–3 saat)")){var zb=(window.EKZ||{}).p||{},za=window.__ekZonePrice(from),zt=window.__ekZonePrice(to);[za,zt].forEach(function(z){if(z&&zb.m&&z-zb.m>rz)rz=z-zb.m});if(rz){rzn=rz>=((zb.u||780)-(zb.m||580))?_t("Kırsal bölge farkı"):_t("Ara bölge farkı");p+=rz}}var exN=p!==null?extras(a.lat,a.lon,p):{tot:0,txt:"",msg:""};var nf=p!==null?nightFee():0;if(nf)p+=nf;p=p!==null?p+exN.tot:p;
     var hl=cur.l.replace(/^\S+\s/,"");
     $("route").textContent=from.value+" → "+to.value;
     $("km").textContent=_t("Mesafe: ")+km.toFixed(1).replace(".",",")+_t(" km (tahmini)");
