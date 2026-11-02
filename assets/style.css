@@ -1147,3 +1147,60 @@ footer details.fil>summary h4{color:#fff}
 
 /* Gezen ikonlar yazıların altından geçsin */
 :where(h1,h2,h3,h4,p,li,dt,dd,summary,label,blockquote,figcaption,td,th,.btn,.abone-strip>span,.abone-strip>em,.eyebrow,.sub,.crumb){position:relative;z-index:41}
+
+
+
+
+.acl{z-index:45}
+
+.mdr .mh5{margin:18px 4px 8px;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mute);font-weight:800;line-height:1.65}footer h3{font-size:1em;font-weight:700;line-height:inherit;letter-spacing:normal;color:#fff;margin-bottom:10px}footer .fil h3{margin:0 0 12px}footer details.fil>summary h3{margin:0;color:#fff}
+.mnav .mdr .mh5{margin:12px 2px 6px;font-size:.66rem}
+.calc .field:focus-within,.calc .ip:focus-within{position:relative;z-index:46}.hero:focus-within .wrap{z-index:49}
+
+/* === Eczane: dikkat çekici kısa kutu === */
+.calc .kx-ez{position:relative;overflow:hidden;padding:14px 14px 12px;border:0;border-radius:18px;background:linear-gradient(135deg,#ff7a1a 0%,#e8462a 100%);color:#fff;box-shadow:0 12px 26px -14px rgba(232,70,42,.75)}
+.calc .kx-ez::after{content:"";position:absolute;right:-30px;top:-30px;width:110px;height:110px;border-radius:50%;background:rgba(255,255,255,.12);pointer-events:none}
+.kx-ez-hd{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.kx-ez-ic{flex:none;display:grid;place-items:center;width:46px;height:46px;border-radius:14px;background:#fff;font-size:1.5rem;box-shadow:0 4px 12px rgba(0,0,0,.15);animation:ezpop 2.4s ease-in-out infinite}
+@keyframes ezpop{0%,100%{transform:scale(1)}50%{transform:scale(1.08) rotate(-6deg)}}
+.kx-ez-hd b{display:block;font-size:1.12rem;font-weight:900;line-height:1.2;color:#fff}
+.kx-ez-hd small{display:block;margin-top:2px;font-size:.88rem;line-height:1.35;color:#fff4ea;font-weight:600}
+.calc .kx-ez .nb-2{grid-template-columns:1.3fr 1fr}
+.calc .kx-ez .nb-go,.calc .kx-ez .nb-go2{min-height:42px;font-size:.86rem;border-radius:12px}
+.calc .kx-ez .nb-go{background:#fff;color:#d2401f}
+.calc .kx-ez .nb-go2{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.7)}
+.calc .kx-ez .kx-ez-h{background:rgba(255,255,255,.95);color:#1b4fa8}
+@media(prefers-reduced-motion:reduce){.kx-ez-ic{animation:none}}
+/* === Hizmet seçici: renkli butonlar === */
+#svcsel{cursor:pointer;font-weight:700;border-color:var(--acc,#ff7a1a)!important;background:#fff8f1 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9'%3E%3Cpath d='M1 1l6 6 6-6' stroke='%23e8620a' stroke-width='2.4' fill='none'/%3E%3C/svg%3E") no-repeat right 16px center!important;padding-right:42px!important}
+#svcsel + ul.acl{padding:8px;display:none;gap:7px;max-height:72vh!important;overflow:auto}
+#svcsel + ul.acl[style*="block"]{display:grid!important}
+#svcsel + ul.acl li{--c:#2f6a9e;--t:#eef4fb;position:relative;display:flex;align-items:center;justify-content:space-between;padding:13px 14px 13px 16px;border-radius:14px;background:var(--t);border:1.5px solid color-mix(in srgb,var(--c) 30%,transparent);border-left:6px solid var(--c);font-weight:800;color:#16314b;box-shadow:0 3px 8px -6px rgba(0,0,0,.35);transition:transform .12s,box-shadow .12s,background .12s}
+#svcsel + ul.acl li::after{content:"›";font-size:1.4rem;line-height:1;color:var(--c);font-weight:900}
+#svcsel + ul.acl li:hover,#svcsel + ul.acl li.on{background:var(--c);color:#fff;transform:translateY(-1px);box-shadow:0 8px 16px -8px var(--c)}
+#svcsel + ul.acl li:hover::after,#svcsel + ul.acl li.on::after{color:#fff}
+#svcsel + ul.acl li:nth-child(1){--c:#ff7a1a;--t:#fff3e8}
+#svcsel + ul.acl li:nth-child(2){--c:#2f6a9e;--t:#ecf3fb}
+#svcsel + ul.acl li:nth-child(3){--c:#d99a00;--t:#fff8e3}
+#svcsel + ul.acl li:nth-child(4){--c:#e5484d;--t:#fff0f0}
+#svcsel + ul.acl li:nth-child(5){--c:#7c4dff;--t:#f3efff}
+#svcsel + ul.acl li:nth-child(6){--c:#0e9f6e;--t:#eafaf3}
+#svcsel + ul.acl li:nth-child(7){--c:#b8860b;--t:#fdf6e4}
+#svcsel + ul.acl li:nth-child(8){--c:#475569;--t:#f1f4f8}
+#svcsel + ul.acl li:nth-child(9){--c:#0284c7;--t:#e9f6fd}
+#svcsel + ul.acl li:nth-child(10){--c:#0d9488;--t:#e8f8f6}
+/* === Teslim süresi ve koli seçenekleri: renkli === */
+#tm button{--c:#2f6a9e;--t:#eef4fb;background:var(--t);border:1.5px solid color-mix(in srgb,var(--c) 35%,transparent);border-bottom:4px solid var(--c);color:#16314b}
+#tm button:nth-child(1){--c:#d4a017;--t:#fdf7e3}
+#tm button:nth-child(2){--c:#ff7a1a;--t:#fff3e8}
+#tm button:nth-child(3){--c:#2f6a9e;--t:#ecf3fb}
+#tm button:nth-child(4){--c:#0e9f6e;--t:#eafaf3}
+#tm button:nth-child(5){--c:#7c4dff;--t:#f3efff}
+#tm button[aria-pressed=true]{background:var(--c)!important;color:#fff!important;border-color:var(--c)!important;box-shadow:0 8px 16px -8px var(--c)}
+#tm button[aria-pressed=true] small{opacity:.95;color:#fff}
+#svc button{background:#eef4fb;border:1.5px solid #c9dae9;border-bottom:4px solid #2f6a9e;color:#16314b}
+#svc button[aria-pressed=true]{background:#2f6a9e!important;color:#fff!important;border-color:#2f6a9e!important}
+#svc button[aria-pressed=true] small{color:#fff}
+.calc .kx-ez .nb-go,.calc .kx-ez .nb-go2{white-space:nowrap;font-size:.82rem;padding:6px 10px}@media(max-width:340px){.calc .kx-ez .nb-2{grid-template-columns:1fr}}
+/* Gezen ikonlar yazıların üstünde görünsün */
+.roam{z-index:44}

@@ -65,12 +65,25 @@ function glyphTex(ch,i){return ct(256,320,function(x,w,h){x.clearRect(0,0,w,h);x
  x.lineWidth=10;x.strokeStyle='rgba(255,255,255,.9)';x.strokeText(ch,0,0);x.fillText(ch,0,0);x.restore()})}
 function build(s,cam,fx){
  world(s,'#8fd0f5','#eef8ff',false);
- var ft=ct(1024,1024,function(x,w,h){x.fillStyle='#cfe6c2';x.fillRect(0,0,w,h);
-  x.fillStyle='#6fb8e6';x.beginPath();x.moveTo(470,0);x.bezierCurveTo(560,250,430,520,560,760);x.lineTo(610,1024);x.lineTo(700,1024);x.bezierCurveTo(630,760,700,500,600,250);x.lineTo(565,0);x.fill();
-  x.beginPath();x.moveTo(505,420);x.bezierCurveTo(400,410,300,350,180,330);x.lineTo(185,360);x.bezierCurveTo(300,390,400,455,512,470);x.fill();
-  x.font='900 50px '+FONT;x.textAlign='center';x.lineJoin='round';[['AVRUPA',330,600],['YAKASI',330,656],['ANADOLU',790,470],['YAKASI',790,526]].forEach(function(t){x.lineWidth=12;x.strokeStyle='#ffffff';x.strokeText(t[0],t[1],t[2]);x.fillStyle=t[0]==='YAKASI'?'#e8620a':'#1f3c88';x.fillText(t[0],t[1],t[2])});x.textAlign='start';
-});
- var fl=new T.Mesh(new T.CircleGeometry(14,72),new T.MeshStandardMaterial({map:ft,roughness:.9}));fl.rotation.x=-PI/2;fl.position.y=.01;s.add(fl);
+ // İstanbul il haritası (gerçek il sınırı). 1 birim = 2 km; arena merkezi Arnavutköy/Başakşehir (28.80E, 41.15N)
+ var GL0=27.9513956,GL1=29.978148,GB0=40.7827042,GB1=41.6050271,TW=2048,TH=1098,MW=(GL1-GL0)*42,MH=(GB1-GB0)*55.5;
+ var mcv=document.createElement('canvas');mcv.width=TW;mcv.height=TH;var mx=mcv.getContext('2d'),ft=new T.CanvasTexture(mcv);ft.anisotropy=4;
+ function P(lon,lat){return[(lon-GL0)/(GL1-GL0)*TW,(GB1-lat)/(GB1-GB0)*TH]}
+ var mim=new Image();mim.onload=function(){var x=mx;x.drawImage(mim,0,0);x.textAlign='center';x.lineJoin='round';
+  function lbl(t,lon,lat,sz,col){var q=P(lon,lat);x.font='800 '+sz+'px '+FONT;x.lineWidth=8;x.strokeStyle='rgba(255,255,255,.92)';x.strokeText(t,q[0],q[1]);x.fillStyle=col;x.fillText(t,q[0],q[1])}
+  // köprüler
+  [[29.036,41.045],[29.061,41.091],[29.112,41.203]].forEach(function(b){var q=P(b[0],b[1]);x.save();x.translate(q[0],q[1]);x.rotate(-.35);x.fillStyle='#e8620a';x.fillRect(-30,-5,60,10);x.fillStyle='#fff';x.fillRect(-30,-1.5,60,3);x.fillStyle='#1f3c88';x.fillRect(-24,-16,7,24);x.fillRect(17,-16,7,24);x.restore()});
+  // Kız Kulesi
+  (function(){var q=P(29.0043,41.0211),X=q[0]+6,Y=q[1]+10;x.save();x.fillStyle='#ffffff';x.beginPath();x.ellipse(X,Y+16,20,7,0,0,7);x.fill();
+   x.fillStyle='#f4efe6';x.strokeStyle='#1f3c88';x.lineWidth=2.5;x.fillRect(X-9,Y-18,18,32);x.strokeRect(X-9,Y-18,18,32);
+   x.fillStyle='#d2401f';x.beginPath();x.moveTo(X-12,Y-18);x.lineTo(X,Y-40);x.lineTo(X+12,Y-18);x.closePath();x.fill();x.stroke();
+   x.fillStyle='#1f3c88';x.fillRect(X-3,Y-10,6,8);x.restore();lbl('Kız Kulesi',29.005,40.995,26,'#d2401f')})();
+  [['Silivri',28.22,41.11],['Çatalca',28.46,41.27],['Arnavutköy',28.74,41.26],['Esenyurt',28.67,41.04],['Başakşehir',28.80,41.10],['Şişli',28.985,41.075],['Sarıyer',29.03,41.19]].forEach(function(a){lbl(a[0],a[1],a[2],30,'#2f5a22')});
+  [['Beykoz',29.15,41.14],['Üsküdar',29.11,41.05],['Kadıköy',29.10,40.975],['Şile',29.62,41.12],['Pendik',29.27,40.90]].forEach(function(a){lbl(a[0],a[1],a[2],30,'#7a5a14')});
+  x.font='900 66px '+FONT;[['AVRUPA',28.52,41.12],['YAKASI',28.52,41.068],['ANADOLU',29.24,41.27],['YAKASI',29.24,41.22]].forEach(function(t){var q=P(t[1],t[2]);x.lineWidth=16;x.strokeStyle='#ffffff';x.strokeText(t[0],q[0],q[1]);x.fillStyle=t[0]==='YAKASI'?'#e8620a':'#1f3c88';x.fillText(t[0],q[0],q[1])});
+  ft.needsUpdate=true};
+ mim.src='/assets/img/istanbul-il.webp';
+ var fl=new T.Mesh(new T.PlaneGeometry(MW,MH),new T.MeshStandardMaterial({map:ft,roughness:.9,transparent:true,depthWrite:false}));fl.position.set(((GL0+GL1)/2-28.80)*42,0,-(((GB0+GB1)/2)-41.15)*55.5);fl.rotation.x=-PI/2;fl.position.y=.01;s.add(fl);
  var PA=[.5,2.1,3.7,5.3],PR=7,pins=PA.map(function(a,i){var p=pin(i%2?NAVY:ORG);p.position.set(Math.cos(a)*PR,0,Math.sin(a)*PR);s.add(p);return p});
  // harfler + kırılan kutu panelleri + logo harf yüzleri
  var L=makeLetters(s),env=L.map(function(l){var e=envelope();l.userData.carry.add(e);return e});

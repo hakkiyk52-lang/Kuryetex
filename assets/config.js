@@ -118,15 +118,37 @@ window.K360={
   "Sultanbeyli": "r",
   "Tuzla": "r",
   "Ümraniye": "c",
-  "Üsküdar": "c"
+  "Üsküdar": "c",
+  "Darıca": "u",
+  "Çayırova": "u",
+  "Dilovası": "u",
+  "Körfez": "u",
+  "Derince": "u",
+  "İzmit": "u",
+  "Kartepe": "u",
+  "Başiskele": "u",
+  "Gölcük": "u",
+  "Karamürsel": "u",
+  "Kandıra": "u",
+  "Çorlu": "u",
+  "Çerkezköy": "u",
+  "Kapaklı": "u",
+  "Ergene": "u",
+  "Marmaraereğlisi": "u",
+  "Süleymanpaşa": "u",
+  "Saray": "u",
+  "Muratlı": "u",
+  "Malkara": "u",
+  "Hayrabolu": "u",
+  "Şarköy": "u"
  },
  "ROUND": 50,
  "MIN_FEE": 580,
  "MIN_CROSS": 780,
  "EZ_NEAR_KM": 10,
-  "NIGHT_FEE": 185,
-  "NIGHT_START": 0,
-  "NIGHT_END": 7,
+ "NIGHT_FEE": 0,
+ "NIGHT_START": 0,
+ "NIGHT_END": 7,
  "SIZE_EXTRA": [
   0,
   75,
@@ -135,7 +157,7 @@ window.K360={
  "FREE_KG": 5,
  "KG_STEP": 1,
  "KG_FEE": 15,
- "ROAD": 1.4,
+ "ROAD": 1.3,
  "FAR": [
   "Şile",
   "Silivri"
@@ -668,7 +690,8 @@ window.K360={
    "tier": 3,
    "lat": 40.8,
    "lon": 29.43,
-   "side": "B"
+   "side": "B",
+   "il": "Kocaeli"
   },
   "Şile": {
    "tier": 3,
@@ -705,6 +728,160 @@ window.K360={
    "lat": 41.02,
    "lon": 29.02,
    "side": "B"
+  },
+  "Darıca": {
+   "tier": 3,
+   "lat": 40.77,
+   "lon": 29.38,
+   "side": "B",
+   "il": "Kocaeli"
+  },
+  "Çayırova": {
+   "tier": 3,
+   "lat": 40.825,
+   "lon": 29.375,
+   "side": "B",
+   "il": "Kocaeli"
+  },
+  "Dilovası": {
+   "tier": 3,
+   "lat": 40.78,
+   "lon": 29.54,
+   "side": "B",
+   "il": "Kocaeli"
+  },
+  "Körfez": {
+   "tier": 3,
+   "lat": 40.776,
+   "lon": 29.738,
+   "side": "B",
+   "il": "Kocaeli"
+  },
+  "Derince": {
+   "tier": 3,
+   "lat": 40.756,
+   "lon": 29.815,
+   "side": "B",
+   "il": "Kocaeli"
+  },
+  "İzmit": {
+   "tier": 3,
+   "lat": 40.765,
+   "lon": 29.94,
+   "side": "B",
+   "il": "Kocaeli"
+  },
+  "Kartepe": {
+   "tier": 3,
+   "lat": 40.753,
+   "lon": 30.023,
+   "side": "B",
+   "il": "Kocaeli"
+  },
+  "Başiskele": {
+   "tier": 3,
+   "lat": 40.715,
+   "lon": 29.925,
+   "side": "B",
+   "il": "Kocaeli"
+  },
+  "Gölcük": {
+   "tier": 3,
+   "lat": 40.717,
+   "lon": 29.82,
+   "side": "B",
+   "il": "Kocaeli"
+  },
+  "Karamürsel": {
+   "tier": 3,
+   "lat": 40.692,
+   "lon": 29.616,
+   "side": "B",
+   "il": "Kocaeli"
+  },
+  "Kandıra": {
+   "tier": 3,
+   "lat": 41.071,
+   "lon": 30.153,
+   "side": "B",
+   "il": "Kocaeli"
+  },
+  "Çorlu": {
+   "tier": 3,
+   "lat": 41.159,
+   "lon": 27.8,
+   "side": "A",
+   "il": "Tekirdağ"
+  },
+  "Çerkezköy": {
+   "tier": 3,
+   "lat": 41.285,
+   "lon": 28.0,
+   "side": "A",
+   "il": "Tekirdağ"
+  },
+  "Kapaklı": {
+   "tier": 3,
+   "lat": 41.33,
+   "lon": 27.977,
+   "side": "A",
+   "il": "Tekirdağ"
+  },
+  "Ergene": {
+   "tier": 3,
+   "lat": 41.18,
+   "lon": 27.72,
+   "side": "A",
+   "il": "Tekirdağ"
+  },
+  "Marmaraereğlisi": {
+   "tier": 3,
+   "lat": 40.97,
+   "lon": 27.955,
+   "side": "A",
+   "il": "Tekirdağ"
+  },
+  "Süleymanpaşa": {
+   "tier": 3,
+   "lat": 40.978,
+   "lon": 27.511,
+   "side": "A",
+   "il": "Tekirdağ"
+  },
+  "Saray": {
+   "tier": 3,
+   "lat": 41.443,
+   "lon": 27.921,
+   "side": "A",
+   "il": "Tekirdağ"
+  },
+  "Muratlı": {
+   "tier": 3,
+   "lat": 41.172,
+   "lon": 27.502,
+   "side": "A",
+   "il": "Tekirdağ"
+  },
+  "Malkara": {
+   "tier": 3,
+   "lat": 40.89,
+   "lon": 26.903,
+   "side": "A",
+   "il": "Tekirdağ"
+  },
+  "Hayrabolu": {
+   "tier": 3,
+   "lat": 41.213,
+   "lon": 27.106,
+   "side": "A",
+   "il": "Tekirdağ"
+  },
+  "Şarköy": {
+   "tier": 3,
+   "lat": 40.612,
+   "lon": 27.11,
+   "side": "A",
+   "il": "Tekirdağ"
   }
  },
  "SEM": [
@@ -3020,5 +3197,133 @@ window.K360={
    "Üsküdar Meydanı",
    "Üsküdar"
   ]
- ]
+ ],
+ "TIER_BASE": 580,
+ "TIERS": [
+  [
+   8,
+   30
+  ],
+  [
+   20,
+   22
+  ],
+  [
+   40,
+   18
+  ]
+ ],
+ "MAH_KM_MIN": 3,
+ "ILKOD": {
+  "İstanbul": "34",
+  "Kocaeli": "41",
+  "Tekirdağ": "59"
+ },
+ "WX": {
+  "on": true,
+  "mid": 13,
+  "heavy": 15
+ },
+ "TATIL": {
+  "r": 13,
+  "b": 15,
+  "gunler": [
+   [
+    "2027-01-01",
+    "r",
+    "Yılbaşı"
+   ],
+   [
+    "2027-03-08",
+    "ab",
+    "Ramazan Bayramı arifesi"
+   ],
+   [
+    "2027-03-09",
+    "b",
+    "Ramazan Bayramı"
+   ],
+   [
+    "2027-03-10",
+    "b",
+    "Ramazan Bayramı"
+   ],
+   [
+    "2027-03-11",
+    "b",
+    "Ramazan Bayramı"
+   ],
+   [
+    "2027-04-23",
+    "r",
+    "23 Nisan"
+   ],
+   [
+    "2027-05-01",
+    "r",
+    "1 Mayıs"
+   ],
+   [
+    "2027-05-15",
+    "ab",
+    "Kurban Bayramı arifesi"
+   ],
+   [
+    "2027-05-16",
+    "b",
+    "Kurban Bayramı"
+   ],
+   [
+    "2027-05-17",
+    "b",
+    "Kurban Bayramı"
+   ],
+   [
+    "2027-05-18",
+    "b",
+    "Kurban Bayramı"
+   ],
+   [
+    "2027-05-19",
+    "b",
+    "Kurban Bayramı"
+   ],
+   [
+    "2027-07-15",
+    "r",
+    "15 Temmuz"
+   ],
+   [
+    "2027-08-30",
+    "r",
+    "30 Ağustos"
+   ],
+   [
+    "2027-10-28",
+    "ar",
+    "Cumhuriyet Bayramı arifesi"
+   ],
+   [
+    "2027-10-29",
+    "r",
+    "29 Ekim"
+   ]
+  ]
+ },
+ "SURGE": {
+  "on": false,
+  "pct": 15,
+  "txt": "Yoğunluk farkı"
+ },
+ "ETKINLIK": {
+  "pct": 15,
+  "gunler": [
+   [
+    "2026-11-01",
+    "İstanbul Maratonu"
+   ]
+  ]
+ },
+ "EXTRA_CAP_PCT": 15,
+ "NIGHT_PCT": 15
 };
