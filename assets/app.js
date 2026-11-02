@@ -827,3 +827,24 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
 /* === Mobilde kart kaydırma ipucu === */
 ;(function(){if(innerWidth>=760)return;document.querySelectorAll(".cards").forEach(function(c){if(c.children.length<2||c.nextElementSibling&&c.nextElementSibling.classList.contains("cards-hint"))return;var p=document.createElement("p");p.className="cards-hint";p.textContent=((window.__D||{})["Kaydırarak tüm hizmetleri görün →"])||"Kaydırarak tüm hizmetleri görün →";c.parentNode.insertBefore(p,c.nextSibling)})})();
 
+
+/* Eczane: seçilen teslim ilçesine göre başlık, açıklama ve acil WhatsApp mesajı */
+(function(){
+  function loc(n){var v=(n.match(/[aeıioöuü](?=[^aeıioöuü]*$)/i)||["e"])[0].toLowerCase(),back=/[aıou]/.test(v),last=n.slice(-1).toLowerCase(),hard=/[çfhkpsşt]/.test(last);return n+"'"+(hard?"t":"d")+(back?"a":"e")}
+  var h1=document.querySelector(".hero h1"),sub=document.querySelector(".hero .sub"),P=null,cur=null;
+  if(h1){var m=h1.textContent.replace(/^\W+/,"").trim().match(/^(.+?) Eczane Kurye$/);if(m)P=m[1]}
+  var h1n=null;if(h1&&P){[].some.call(h1.childNodes,function(n){if(n.nodeType===3&&n.nodeValue.indexOf(P)>-1){h1n=n;return true}})}
+  var sub0=sub?sub.textContent:"";
+  function msg(yer){return"🚨 ACİL İLAÇ TALEBİ"+(yer?" – "+yer:"")+"\nEczaneden çok acil ilaç lazım, lütfen hemen kurye gönderin.\n\n💊 İlaç adı / fotoğrafı: \n🏠 Açık adresim: \n📍 Konumumu da gönderiyorum."}
+  function href(yer){return"https://wa.me/905515315234?text="+encodeURIComponent(msg(yer))}
+  function tick(){
+    var b=document.querySelectorAll(".ezsos");if(!b.length)return;
+    var il=(document.getElementById("toIl")||{}).value||"",mh=((document.getElementById("toMh")||{}).value||"").replace(/ Mah(allesi)?\b.*$/i,"").trim();
+    var yer=il?(mh&&mh.indexOf(",")<0?mh+", "+il:il):(P||"");var key=il+"|"+mh;
+    if(key===cur&&b.length===tick.n)return;cur=key;tick.n=b.length;
+    [].forEach.call(b,function(a){a.href=href(yer)});
+    if(P&&il&&h1n){h1n.nodeValue=h1n.nodeValue.replace(tick.last||P,il);tick.last=il;
+      if(sub){var esc=P.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");sub.textContent=sub0.replace(new RegExp(esc+"'[dt][ae]","g"),loc(il)).split(P).join(il)}}
+  }
+  tick();setInterval(tick,800);
+})();
