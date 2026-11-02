@@ -1229,13 +1229,28 @@ body{overflow-x:clip}
 .mnav:not(.open) .mdr{visibility:hidden}
 
 /* === Yükleme kaymasını önle: hesaplayıcı alanlarına son yüksekliklerinde yer ayır === */
-.calc:not(:has(#svcsel[data-def="eczane-kurye"])) .field:has(#from),.calc:not(:has(#svcsel[data-def="eczane-kurye"])) .field:has(#to){min-height:240px}
+.calc:not(:has(#svcsel[data-def="eczane-kurye"])) .field:has(#from),.calc:not(:has(#svcsel[data-def="eczane-kurye"])) .field:has(#to){min-height:196px}
 .calc:has(#svcsel[data-def="eczane-kurye"]) .field:has(#to){min-height:194px}
 .calc:has(#svcsel[data-def="eczane-kurye"]):not(.kx-ready) .field:has(#from){display:none}
 .calc:has(#svcsel[data-def="eczane-kurye"]):not(.kx-ready) > div:first-child::before{content:"";display:block;height:var(--ezr,138px)}.calc:has(#svcsel[data-def="eczane-kurye"]):not(.kx-ready) #moreopt{display:none}.calc:has(#svcsel[data-def="eczane-kurye"]):not(.kx-ready) #calcBtn{display:none}
 @media(min-width:900px){
-.calc:not(:has(#svcsel[data-def])) .field:has(#from),.calc:not(:has(#svcsel[data-def])) .field:has(#to){min-height:173px}
-.calc:has(#svcsel[data-def]):not(:has(#svcsel[data-def="eczane-kurye"])) .field:has(#from),.calc:has(#svcsel[data-def]):not(:has(#svcsel[data-def="eczane-kurye"])) .field:has(#to){min-height:197px}
+.calc:not(:has(#svcsel[data-def])) .field:has(#from),.calc:not(:has(#svcsel[data-def])) .field:has(#to){min-height:126px}
+.calc:has(#svcsel[data-def]):not(:has(#svcsel[data-def="eczane-kurye"])) .field:has(#from),.calc:has(#svcsel[data-def]):not(:has(#svcsel[data-def="eczane-kurye"])) .field:has(#to){min-height:174px}
 .calc:has(#svcsel[data-def="eczane-kurye"]) .field:has(#to){min-height:174px}
 .calc{--ezr:198px}
 }
+
+/* === Genel konum kutusu: alan altındaki küçük konum düğmeleri yerine === */
+.calc .ip-loc,.calc .ip-loch{display:none!important}
+.kx-gen .nb-2{grid-template-columns:1fr 1fr!important}
+.kx-gen .nb-go2{text-align:center!important}
+/* Yazarken üst çubuklar gizlensin, klavyeyle daralan ekranda yer açılsın */
+.langbar,.tick,header.top{transition:opacity .25s,visibility 0s}
+html.focusing .langbar,html.focusing .tick,html.focusing header.top{opacity:0!important;visibility:hidden!important;pointer-events:none!important}
+
+/* genel konum kutusu için açılışta yer ayır */
+.calc:not(:has(#svcsel[data-def="eczane-kurye"])):not(.kx-ready) > div:first-child::before{content:"";display:block;height:152px}
+
+.hcalc .calc:not(.kx-ready) #moreopt,.hcalc .calc:not(.kx-ready) #calcBtn{display:none}
+
+.hcalc .calc:not(:has(#svcsel[data-def="eczane-kurye"])):not(.kx-ready) > div:first-child::before{height:134px}
