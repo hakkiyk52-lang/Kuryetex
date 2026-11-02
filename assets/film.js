@@ -1,7 +1,9 @@
 /* KuryeTEX ana sayfa filmi: arenada teslimat, kutuların patlayıp harflere dönüşmesi (three.js r128) */
 ;(function(){var host=document.querySelector('.kxfilm');if(!host)return;
 function go(){if(!window.THREE)return;try{run()}catch(e){console.warn(e)}}
-if(window.THREE)go();else{var sc=document.createElement('script');sc.src='https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';sc.async=true;sc.onload=go;document.head.appendChild(sc)}
+function boot(){if(window.THREE)go();else{var sc=document.createElement('script');sc.src='https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';sc.async=true;sc.onload=go;document.head.appendChild(sc)}}
+function later(){(window.requestIdleCallback||function(f){setTimeout(f,350)})(boot,{timeout:1500})}
+if(document.readyState==='complete')later();else addEventListener('load',later);
 function run(){
 var T=THREE,PI=Math.PI,RM=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
 var NAVY=0x1f3c88,ORG=0xff7a1a,FONT='"Archivo Black","Arial Black",Arial';

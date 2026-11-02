@@ -116,9 +116,9 @@
         function(){say("Konum izni verilmedi; mahallenizi aşağıdan seçin.")},{enableHighAccuracy:true,timeout:10000})};
     function other(on){calcBox.classList.toggle("kx-is-other",on);ot.hidden=!on;if(on)ot.scrollIntoView({block:"nearest"})}
     own.onclick=function(){other(true)};ot.querySelector(".kx-other-back").onclick=function(){other(false)};
-    var last="";setInterval(function(){var v=svc.value||"",tm=document.getElementById("toMh"),ez=/eczane|ilaç|ilac/i.test(v);if(tm&&!tm.disabled){var ph="Mahalle seçin (zorunlu)";if(tm.placeholder!==ph)tm.placeholder=ph}if(v===last)return;last=v;var on=/eczane|ilaç|ilac/i.test(v);w.hidden=!on;if(!on)other(false);
+    var last="";function tick(){var v=svc.value||"",tm=document.getElementById("toMh"),ez=/eczane|ilaç|ilac/i.test(v);if(tm&&!tm.disabled){var ph="Mahalle seçin (zorunlu)";if(tm.placeholder!==ph)tm.placeholder=ph}if(v===last)return;last=v;var on=/eczane|ilaç|ilac/i.test(v);w.hidden=!on;if(!on)other(false);
       if(f)f.style.display=on?"none":"";var ts=document.getElementById("toIl");if(ts){[].forEach.call(ts.querySelectorAll("optgroup"),function(g){if(g.label!=="İstanbul"){g.hidden=on;g.disabled=on}});var DD=(window.K360||{}).D||{};if(on&&ts.value&&DD[ts.value]&&DD[ts.value].il){ts.value="";ts.dispatchEvent(new Event("change"))}}
-      if(tlab)tlab.innerHTML=on?tlab0.replace(/^\s*\d+\.\s*Nereye gidecek\?/,"2. İlaç nereye gelecek? (ilçe ve mahalle)"):tlab0},300);
+      if(tlab)tlab.innerHTML=on?tlab0.replace(/^\s*\d+\.\s*Nereye gidecek\?/,"2. İlaç nereye gelecek? (ilçe ve mahalle)"):tlab0}tick();calcBox.classList.add("kx-ready");setInterval(tick,300);
   }
   function init(){enhance(document.getElementById("from"),"Alım");enhance(document.getElementById("to"),"Teslim");ecz()}
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",function(){setTimeout(init,0)});else setTimeout(init,0);

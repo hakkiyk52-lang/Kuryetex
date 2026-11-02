@@ -1227,3 +1227,15 @@ html{overflow-x:clip}
 body{overflow-x:clip}
 .mnav{overflow:hidden!important}
 .mnav:not(.open) .mdr{visibility:hidden}
+
+/* === Yükleme kaymasını önle: hesaplayıcı alanlarına son yüksekliklerinde yer ayır === */
+.calc:not(:has(#svcsel[data-def="eczane-kurye"])) .field:has(#from),.calc:not(:has(#svcsel[data-def="eczane-kurye"])) .field:has(#to){min-height:240px}
+.calc:has(#svcsel[data-def="eczane-kurye"]) .field:has(#to){min-height:194px}
+.calc:has(#svcsel[data-def="eczane-kurye"]):not(.kx-ready) .field:has(#from){display:none}
+.calc:has(#svcsel[data-def="eczane-kurye"]):not(.kx-ready) > div:first-child::before{content:"";display:block;height:var(--ezr,138px)}.calc:has(#svcsel[data-def="eczane-kurye"]):not(.kx-ready) #moreopt{display:none}.calc:has(#svcsel[data-def="eczane-kurye"]):not(.kx-ready) #calcBtn{display:none}
+@media(min-width:900px){
+.calc:not(:has(#svcsel[data-def])) .field:has(#from),.calc:not(:has(#svcsel[data-def])) .field:has(#to){min-height:173px}
+.calc:has(#svcsel[data-def]):not(:has(#svcsel[data-def="eczane-kurye"])) .field:has(#from),.calc:has(#svcsel[data-def]):not(:has(#svcsel[data-def="eczane-kurye"])) .field:has(#to){min-height:197px}
+.calc:has(#svcsel[data-def="eczane-kurye"]) .field:has(#to){min-height:174px}
+.calc{--ezr:198px}
+}
