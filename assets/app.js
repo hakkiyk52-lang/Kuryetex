@@ -530,7 +530,7 @@ function txn(){if(cur&&cur.np)return window.__ezX?_t("Uzak ilçeye eczane teslim
 })();
 
 /* ===== Kendiliğinden oynayan tanıtım ===== */
-(function(){
+(function(){var __go=function(){
   var s=document.querySelector("[data-story]");if(!s)return;
   var path=s.querySelector(".sp"),dn=s.querySelector(".spd"),moto=s.querySelector(".smoto"),nodes=[].slice.call(s.querySelectorAll(".sn")),dots=[].slice.call(s.querySelectorAll(".sdots i")),sx=s.querySelector(".sx"),
   L=path.getTotalLength(),ST=JSON.parse(s.getAttribute("data-steps")),N=nodes.length,HOLD=2600,MOVE=1100,cur=-1,raf=0,pos=0,from=0,to=0,tm=0,pause=0;
@@ -548,7 +548,7 @@ function txn(){if(cur&&cur.np)return window.__ezX?_t("Uzak ilçeye eczane teslim
   sx.innerHTML="<b>"+ST[0][0]+"</b><p>"+ST[0][1]+"</p>";mark(0);cur=0;pos=0;from=to=0;tm=performance.now();draw(0);
   var red=window.matchMedia&&matchMedia("(prefers-reduced-motion:reduce)").matches;
   if(!red&&"IntersectionObserver" in window){new IntersectionObserver(function(en){if(en[0].isIntersecting){if(!raf){tm=performance.now()-MOVE;raf=requestAnimationFrame(frame)}}else{cancelAnimationFrame(raf);raf=0}}).observe(s)}
-})();
+};if(document.readyState==="complete")setTimeout(__go,60);else addEventListener("load",function(){setTimeout(__go,60)})})();
 
 /* ===== 3B koli ===== */
 (function(){
@@ -624,7 +624,7 @@ window.__calm(d.hasAttribute("data-calm")||window.__calmAuto,false)})();
 ;(function(){
   var vs=document.querySelectorAll(".roam .rv"),hd=document.querySelector("header.top"),pks=document.querySelectorAll(".roam .pt");
   function pos(){if(hd&&pks.length){var b=hd.getBoundingClientRect().bottom;pks.forEach(function(p){p.style.top=(b-2)+"px"})}}
-  pos();window.addEventListener("resize",pos);
+  requestAnimationFrame(pos);window.addEventListener("resize",pos);
   vs.forEach(function(v){
     var st=null,raf=0,dragged=false,home=v.className;
     function put(x,y){v.style.transform="translate3d("+x+"px,"+y+"px,0)"}
@@ -772,5 +772,5 @@ function step(dt){var now=performance.now();
 function off(){return document.hidden||H.hasAttribute("data-calm")||H.classList.contains("focusing")||getComputedStyle(R).display==="none"}
 function tick(ms){raf=0;if(off()){lt=0;return}var dt=lt?Math.min(.05,(ms-lt)/1000):0;lt=ms;step(dt);raf=requestAnimationFrame(tick)}
 function go(){if(!raf){lt=0;raf=requestAnimationFrame(tick)}}
-geo();step(0);go();addEventListener("resize",function(){geo();step(0)});document.addEventListener("visibilitychange",go);
+requestAnimationFrame(function(){geo();step(0);go()});addEventListener("resize",function(){geo();step(0)});document.addEventListener("visibilitychange",go);
 new MutationObserver(go).observe(H,{attributes:true,attributeFilter:["data-calm","class"]});setInterval(function(){geo();go()},2000)})();

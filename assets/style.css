@@ -1147,3 +1147,11 @@ footer details.fil>summary h4{color:#fff}
 
 /* Gezen ikonlar yazıların altından geçsin */
 :where(h1,h2,h3,h4,p,li,dt,dd,summary,label,blockquote,figcaption,td,th,.btn,.abone-strip>span,.abone-strip>em,.eyebrow,.sub,.crumb){position:relative;z-index:41}
+
+/* Gezen ikonlar yazı ve görsellerin altından geçsin (v2: tüm metin öğeleri + giriş alanı) */
+.hero .wrap{z-index:41}.kxbadge{z-index:41}
+:where(main,footer) :where(h5,h6,a,span,b,strong,em,small,i,button,input,select,textarea,output,svg,img,video,picture,canvas,figure){position:relative;z-index:41}
+footer,.faq,.guides{position:relative;z-index:41}.acl{z-index:45}
+.aside{z-index:41}:where(main) :where(.note,.price){position:relative;z-index:41}
+.mdr .mh5{margin:18px 4px 8px;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mute);font-weight:800;line-height:1.65}footer h3{font-size:1em;font-weight:700;line-height:inherit;letter-spacing:normal;color:#fff;margin-bottom:10px}footer .fil h3{margin:0 0 12px}footer details.fil>summary h3{margin:0;color:#fff}
+.mnav .mdr .mh5{margin:12px 2px 6px;font-size:.66rem}
