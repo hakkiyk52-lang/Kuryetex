@@ -862,3 +862,22 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
     h.scrollIntoView({behavior:"smooth",block:"start"});var c=h.querySelector(".calc");if(c){c.classList.remove("kx-flash");void c.offsetWidth;c.classList.add("kx-flash")}
     say("Önce kurye ücretini görün 👇 Fiyat çıkınca tek tuşla WhatsApp'tan gönderin.")},true);
 })();
+
+/* Fiyat hesaplanınca üstteki "ACİL İLAÇ LAZIM" düğmesi "KURYEYİ ÇAĞIR · ₺fiyat" olur, yeşile döner ve doğrudan fiyatlı WhatsApp mesajını açar. */
+(function(){
+  var wb=document.getElementById("waBtn");if(!wb)return;
+  var WA='<svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.2.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.4.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3z"/></svg>';
+  function heroes(){return Array.prototype.filter.call(document.querySelectorAll("a.ezsos"),function(a){return a!==wb&&!a.closest("#hesapla")})}
+  function ready(){return wb.offsetParent!==null&&/[?&]text=/.test(wb.href)}
+  function price(){var p=document.getElementById("price");var t=p&&p.textContent||"";return /₺\s?\d/.test(t)?t.trim():""}
+  var last=null;
+  function sync(){var r=ready(),pr=r?price():"",key=r+"|"+pr;if(key===last)return;last=key;
+    heroes().forEach(function(a){var st=a.querySelector(".ezsos-tx strong"),sm=a.querySelector(".ezsos-tx small"),go=a.querySelector(".ezsos-go");
+      if(!a.__o)a.__o={s:st&&st.innerHTML,m:sm&&sm.innerHTML,g:go&&go.innerHTML};
+      if(r){a.classList.add("ezready");if(st)st.textContent="KURYEYİ ÇAĞIR";if(sm){sm.textContent="";if(pr){var bb=document.createElement("b");bb.className="ezpr";bb.textContent=pr;sm.appendChild(bb)}sm.appendChild(document.createTextNode(" WhatsApp'tan tek tuşla gönderin"))}if(go)go.innerHTML=WA;a.setAttribute("aria-label","Kuryeyi çağır, WhatsApp'tan gönder")}
+      else{a.classList.remove("ezready");if(st&&a.__o.s!=null)st.innerHTML=a.__o.s;if(sm&&a.__o.m!=null)sm.innerHTML=a.__o.m;if(go&&a.__o.g!=null)go.innerHTML=a.__o.g;a.removeAttribute("aria-label")}})}
+  document.addEventListener("click",function(e){var a=e.target.closest&&e.target.closest("a.ezsos");if(!a||a===wb||a.closest("#hesapla")||!ready())return;e.preventDefault();e.stopPropagation();wb.click()},true);
+  new MutationObserver(sync).observe(wb,{attributes:true,attributeFilter:["href"]});
+  var res=document.getElementById("result");if(res)new MutationObserver(sync).observe(res,{attributes:true,attributeFilter:["style","class"]});
+  setInterval(sync,1200);sync();
+})();
