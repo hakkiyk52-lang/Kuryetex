@@ -728,15 +728,16 @@ document.addEventListener("submit",function(){if(H.classList.contains("focusing"
 document.addEventListener("pointerdown",function(e){if(!H.classList.contains("focusing")&&!B.classList.contains("typing"))return;var t=e.target;if(t&&t.closest&&t.closest(CTRL))return;var a=document.activeElement;if(isBox(a))try{a.blur()}catch(_){}back()},true);})();
 /* === Yazı kutularına temizle (×) düğmesi === */
 ;(function(){var L=(document.documentElement.lang||"tr").slice(0,2),lab=L==="en"?"Clear":L==="ar"?"مسح":"Temizle";
-var ins=document.querySelectorAll("input,textarea");
+function scan(){var ins=document.querySelectorAll("input,textarea");
 for(var i=0;i<ins.length;i++){var el=ins[i];if(el.__clr)continue;var t=(el.type||"").toLowerCase();if(/^(hidden|checkbox|radio|submit|button|range|time|date|file|color)$/.test(t)||el.name==="_honey"||el.style.display==="none")continue;el.__clr=1;
  var host=el.parentNode;if(!(host.classList&&host.classList.contains("ac"))){var w=document.createElement("span");w.className="clrw";host.insertBefore(w,el);w.appendChild(el);host=w}
  el.classList.add("clrin");var b=document.createElement("button");b.type="button";b.className="clrx";b.setAttribute("aria-label",lab);b.title=lab;b.tabIndex=-1;b.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7l10 10M17 7L7 17"/></svg>';host.appendChild(b);b.__in=el;
  b.addEventListener("pointerdown",function(e){e.preventDefault()});
- b.addEventListener("click",function(e){e.preventDefault();e.stopPropagation();var x=this.__in;x.value="";x.dispatchEvent(new Event("input",{bubbles:true}));x.dispatchEvent(new Event("change",{bubbles:true}));upd(x);try{x.focus()}catch(_){}})}
+ b.addEventListener("click",function(e){e.preventDefault();e.stopPropagation();var x=this.__in;x.value="";if(/Iq$/.test(x.id)){var sl=document.getElementById(x.id.replace(/Iq$/,"Il"));if(sl&&sl.value){sl.value="";sl.dispatchEvent(new Event("change",{bubbles:true}))}}x.dispatchEvent(new Event("input",{bubbles:true}));x.dispatchEvent(new Event("change",{bubbles:true}));upd(x);try{x.focus()}catch(_){}})}
 function upd(x){var b=x.parentNode.querySelector(".clrx");if(b&&b.__in===x)b.classList.toggle("on",!!x.value)}
 if(!window.__clrInit){window.__clrInit=1;document.addEventListener("input",function(e){if(e.target.__clr)upd(e.target)},true);setInterval(function(){var a=document.querySelectorAll(".clrin");for(var k=0;k<a.length;k++)upd(a[k])},600)}
-for(var j=0;j<ins.length;j++)if(ins[j].__clr)upd(ins[j]);})();
+for(var j=0;j<ins.length;j++)if(ins[j].__clr)upd(ins[j]);}
+scan();window.__clrScan=scan;setInterval(scan,1000);})();
 /* === Üst şerit ve kayan yazı bandı: renk tonu sürekli ve çok yavaş kayar (adım yok, sert geçiş yok) === */
 ;(function(){if(window.__lbInit)return;window.__lbInit=1;var H=document.documentElement,h=12,last=0,PER=180;
 function hsl(h,s,l){h=((h%360)+360)%360;return'hsl('+h.toFixed(1)+','+s+'%,'+l+'%)'}
