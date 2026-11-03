@@ -851,13 +851,13 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
   setTimeout(function(){cur=(document.getElementById("toIl")||{}).value||"";setInterval(tick,700)},1800);
 })();
 
-/* WhatsApp düğmeleri: önce fiyat hesaplama (net müşteri). Fiyat sonucu düğmesi ve "farklı isteğim var" doğrudan WhatsApp'a gider. */
+/* WhatsApp düğmeleri: önce fiyat hesaplama (net müşteri); fiyat hesaplandıysa tüm WhatsApp düğmeleri fiyatlı mesajı açar. Fiyat sonucu düğmesi ve "farklı isteğim var" doğrudan WhatsApp'a gider. */
 (function(){
   function ok(a){return a.id==="waBtn"||a.closest(".kx-other")||a.closest(".cmsg")||a.closest(".cform")}
   var toast=null,tt=0;
   function say(t){if(!toast){toast=document.createElement("div");toast.className="kx-toast";toast.setAttribute("role","status");document.body.appendChild(toast)}toast.textContent=t;toast.classList.add("on");clearTimeout(tt);tt=setTimeout(function(){toast.classList.remove("on")},4200)}
   document.addEventListener("click",function(e){var a=e.target.closest&&e.target.closest('a[href*="wa.me"]');if(!a||ok(a))return;
-    e.preventDefault();e.stopPropagation();var h=document.getElementById("hesapla");
+    e.preventDefault();e.stopPropagation();var wb=document.getElementById("waBtn");if(wb&&wb.offsetParent&&/[?&]text=/.test(wb.href)){wb.click();return}var h=document.getElementById("hesapla");
     if(!h){location.href="/#hesapla";return}
     h.scrollIntoView({behavior:"smooth",block:"start"});var c=h.querySelector(".calc");if(c){c.classList.remove("kx-flash");void c.offsetWidth;c.classList.add("kx-flash")}
     say("Önce kurye ücretini görün 👇 Fiyat çıkınca tek tuşla WhatsApp'tan gönderin.")},true);
