@@ -183,6 +183,8 @@ function txn(){if(cur&&cur.np)return _t("Eczane teslimi mahalle bölgesine göre
   function tmText(){if(cur&&cur.np)return _t("30–45 dakika (hava şartlarına bağlı)");return tmv==="custom"?(tmc&&tmc.value?_t("Saat ")+tmc.value+" (belirli saat)":""):tmv}
   var cur=null,size=-1,sizeName="",raf=0,shown=0;
   var res=$("result"),errEl=$("cerr");
+
+  function wbMode(ez){var b=$("waBtn");if(!b)return;if(!b.__o){b.__o=[b.className,b.innerHTML]}if(ez){b.className="ezsos ezres";b.innerHTML="<span class=\"ezsos-ic\" aria-hidden=\"true\"><b>E</b><i></i></span><span class=\"ezsos-tx\"><strong>KURYEYİ ÇAĞIR</strong><small>Bu fiyatla WhatsApp'tan gönder</small></span><span class=\"ezsos-go\" aria-hidden=\"true\"><svg viewBox=\"0 0 24 24\"><path fill=\"currentColor\" d=\"M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-3.3-.8-2.8-1.1-4.5-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.9 0-1.4.7-2 1-2.3.3-.3.6-.3.8-.3h.6c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.4 0 .6l-.4.6-.4.4c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.2 1.4 2.5 1.5.3.2.5.1.6-.1l.9-1c.2-.3.4-.2.7-.1l2 1c.3.1.5.2.5.3.1.2.1.8-.1 1.3z\"/></svg></span>";if(res)res.classList.add("ezcta")}else{b.className=b.__o[0];b.innerHTML=b.__o[1];if(res)res.classList.remove("ezcta")}}
   function reset(){if(res)res.style.display="none";if(errEl)errEl.textContent="";stage()}
   function stage(){if(typeof from==="undefined"||!from||!to)return;var s1=true,s2=true,s3=!!cur&&(cur.np||!!val(from))&&!!val(to);
     [[from.closest(".field"),s1],[to.closest(".field"),s2],[$("rowSize"),s3],[$("rowKg"),s3],[$("rowTm"),s3],[$("moreopt"),s3],[$("calcBtn"),s3]].forEach(function(m){var e=m[0];if(!e)return;var hid=e.classList.contains("stg-hide");if(m[1]&&hid){e.classList.remove("stg-hide");e.classList.add("stg-in")}else if(!m[1]&&!hid)e.classList.add("stg-hide")})}
@@ -204,7 +206,7 @@ function txn(){if(cur&&cur.np)return _t("Eczane teslimi mahalle bölgesine göre
   function compute(){
     var missing=[];if(!cur)missing.push(_t("hizmet"));if(!val(from)&&!(cur&&cur.np))missing.push(_t("alım noktası"));else if(!(cur&&cur.np)&&!hasMah(from))missing.push(_t("alım mahallesi"));if(val(to)&&!hasMah(to))missing.push(_t("teslim mahallesi"));if(!val(to))missing.push(_t("teslim noktası"));if(cur&&cur.size&&size<0)missing.push(_t("gönderi boyutu"));if(tmv==="custom"&&!(tmc&&tmc.value))missing.push(_t("teslim saati"));
     if(missing.length){errEl.textContent=_t("Lütfen seçin: ")+missing.join(", ")+".";res.style.display="none";if(window.__bad){if(!cur)window.__bad(svcsel,_t("Hizmet seçin"));if(!val(from)&&!(cur&&cur.np))window.__bad(from,_t("Alım noktasını seçin"));else if(!(cur&&cur.np)&&!hasMah(from))window.__bad(document.getElementById("fromMh")||from,_t("Mahalle seçin"));if(val(to)&&!hasMah(to))window.__bad(document.getElementById("toMh")||to,_t("Mahalle seçin"));if(!val(to))window.__bad(to,_t("Teslim noktasını seçin"));if(tmv==="custom"&&!(tmc&&tmc.value))window.__bad(tmc,_t("Saat seçin"));if(cur&&cur.size&&size<0)window.__bad(document.getElementById("svc"),_t("Gönderi boyutunu seçin"));window.__goBad(document.querySelector("#hesapla .bad"))}return}
-    errEl.textContent="";
+    errEl.textContent="";wbMode(!!cur.np);
     if(cur.np&&C.D[val(to)]&&C.D[val(to)].il){errEl.textContent=_t("Eczane hizmetimiz yalnızca İstanbul içinde geçerlidir.");res.style.display="none";return}
     if(cur.np){var tv=to.value||"",td=val(to),hasM=(tv&&tv!==td&&/,/.test(tv))||!!to.dataset.ll;
       if(!hasM){errEl.textContent=_t("Lütfen ilacın geleceği mahalleyi seçin.");res.style.display="none";if(window.__bad){window.__bad(document.getElementById("toMh")||to,_t("Mahalle seçin"));window.__goBad(document.querySelector("#hesapla .bad"))}return}
@@ -214,7 +216,7 @@ function txn(){if(cur&&cur.np)return _t("Eczane teslimi mahalle bölgesine göre
       $("kgnote").textContent=_t("Eczaneyi ve nöbetçi eczaneyi biz buluruz; ilacı temin edip getiririz. Ilaç ve kurye ücretini kapıda tek seferde ödersiniz.")+(nfE?" "+_t("Gece farkı (00:00–07:00): +")+tl(nfE)+".":"")+"";
       var peE=$("price");cancelAnimationFrame(raf);if(pE){peE.className="price";peE.textContent=tl(pE);$("pnote").textContent=(exE.txt?exE.txt+" ":"")+(nfE?_t("🌙 Gece farkı dahildir (00:00–07:00): +")+tl(nfE)+". ":"")+_t("Kurye ücreti teslim mahallesine göre belirlenir. Kesin fiyat sipariş sırasında netleşir.")}
       else{peE.className="price ask";peE.textContent=_t("Fiyat WhatsApp'ta netleşir");$("pnote").textContent=_t("Bu bölge için kurye ücretini WhatsApp'tan hemen bildiririz.")}
-      var mE="Merhaba, kuryetex.com.tr üzerinden eczane siparişi vermek istiyorum.\n\nTeslim mahallesi: "+tv+(to.dataset.ll?"\nKonum: https://maps.google.com/?q="+to.dataset.ll:"")+(zk?"\nBölge: "+zn[zk]:"")+exE.msg+"\nSistemdeki kurye ücreti: "+(pE?tl(pE)+(nfE?" (gece farkı dahil)":""):"WhatsApp'ta netleşecek")+"\n\nİlaç bilgisi: \nAçık adres: \n(Konumumu da gönderiyorum)";
+      var mE="🚨 ACİL İLAÇ TALEBİ – "+tv+"\n"+(pE?"Kurye ücreti: "+tl(pE)+(nfE?" (gece farkı dahil)":"")+" — sitedeki fiyatı onaylıyorum.":"Kurye ücreti: WhatsApp'ta netleşecek")+(zk?"\nBölge: "+zn[zk]:"")+exE.msg+(to.dataset.ll?"\nKonum: https://maps.google.com/?q="+to.dataset.ll:"")+"\n\n💊 İlaç adı / fotoğrafı: \n🏠 Açık adresim: \n📍 Konumumu da gönderiyorum.";
       $("waBtn").href="https://wa.me/"+C.PHONE+"?text="+encodeURIComponent(mE);res.style.display="block";res.scrollIntoView({behavior:"smooth",block:"nearest"});return}
     var fa=val(from),tb=val(to);
     var w=0,wx=0,sx=cur.size&&size>=0?C.SIZE_EXTRA[size]:0;if(cur.kg){w=parseFloat(String(kg.value).replace(",","."));if(!(w>=0))w=0;wx=w>C.FREE_KG?Math.ceil((w-C.FREE_KG)/C.KG_STEP)*C.KG_FEE:0}
@@ -828,23 +830,33 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
 ;(function(){if(innerWidth>=760)return;document.querySelectorAll(".cards").forEach(function(c){if(c.children.length<2||c.nextElementSibling&&c.nextElementSibling.classList.contains("cards-hint"))return;var p=document.createElement("p");p.className="cards-hint";p.textContent=((window.__D||{})["Kaydırarak tüm hizmetleri görün →"])||"Kaydırarak tüm hizmetleri görün →";c.parentNode.insertBefore(p,c.nextSibling)})})();
 
 
-/* Eczane: seçilen teslim ilçesine göre başlık, açıklama ve acil WhatsApp mesajı */
+
+/* Eczane sayfaları: teslim ilçesi seçilince o ilçenin eczane sayfası açıklaması (sayfa yenilenmeden) */
 (function(){
-  function loc(n){var v=(n.match(/[aeıioöuü](?=[^aeıioöuü]*$)/i)||["e"])[0].toLowerCase(),back=/[aıou]/.test(v),last=n.slice(-1).toLowerCase(),hard=/[çfhkpsşt]/.test(last);return n+"'"+(hard?"t":"d")+(back?"a":"e")}
-  var h1=document.querySelector(".hero h1"),sub=document.querySelector(".hero .sub"),P=null,cur=null;
-  if(h1){var m=h1.textContent.replace(/^\W+/,"").trim().match(/^(.+?) Eczane Kurye$/);if(m)P=m[1]}
-  var h1n=null;if(h1&&P){[].some.call(h1.childNodes,function(n){if(n.nodeType===3&&n.nodeValue.indexOf(P)>-1){h1n=n;return true}})}
-  var sub0=sub?sub.textContent:"";
-  function msg(yer){return"🚨 ACİL İLAÇ TALEBİ"+(yer?" – "+yer:"")+"\nEczaneden çok acil ilaç lazım, lütfen hemen kurye gönderin.\n\n💊 İlaç adı / fotoğrafı: \n🏠 Açık adresim: \n📍 Konumumu da gönderiyorum."}
-  function href(yer){return"https://wa.me/905515315234?text="+encodeURIComponent(msg(yer))}
-  function tick(){
-    var b=document.querySelectorAll(".ezsos");if(!b.length)return;
-    var il=(document.getElementById("toIl")||{}).value||"",mh=((document.getElementById("toMh")||{}).value||"").replace(/ Mah(allesi)?\b.*$/i,"").trim();
-    var yer=il?(mh&&mh.indexOf(",")<0?mh+", "+il:il):(P||"");var key=il+"|"+mh;
-    if(key===cur&&b.length===tick.n)return;cur=key;tick.n=b.length;
-    [].forEach.call(b,function(a){a.href=href(yer)});
-    if(P&&il&&h1n){h1n.nodeValue=h1n.nodeValue.replace(tick.last||P,il);tick.last=il;
-      if(sub){var esc=P.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");sub.textContent=sub0.replace(new RegExp(esc+"'[dt][ae]","g"),loc(il)).split(P).join(il)}}
-  }
-  tick();setInterval(tick,800);
+  if(!document.querySelector(".hero .ezsos"))return;
+  var h1=document.querySelector(".hero h1"),sub=document.querySelector(".hero .sub");if(!h1||!sub)return;
+  var TR={"ç":"c","ğ":"g","ı":"i","İ":"i","ö":"o","ş":"s","ü":"u","Ç":"c","Ğ":"g","Ö":"o","Ş":"s","Ü":"u"};
+  function slug(n){return n.replace(/[çğıİöşüÇĞÖŞÜ]/g,function(c){return TR[c]}).toLowerCase().replace(/[^a-z0-9]/g,"")}
+  var cache={},cur=null;
+  function apply(d,url){if(!d)return;h1.innerHTML=d.h1;sub.innerHTML=d.sub;if(d.t)document.title=d.t;try{if(location.pathname!==url)history.replaceState(null,"",url+location.hash)}catch(e){}}
+  function go(il){var C=window.K360||{},D=C.D||{};if(D[il]&&D[il].il)return;var url="/"+slug(il)+"-eczane-kurye/";
+    if(cache[url]){apply(cache[url],url);return}
+    fetch(url,{credentials:"same-origin"}).then(function(r){if(!r.ok)throw 0;return r.text()}).then(function(t){
+      var doc=new DOMParser().parseFromString(t,"text/html"),a=doc.querySelector(".hero h1"),b=doc.querySelector(".hero .sub"),ti=doc.querySelector("title");
+      if(!a||!b)return;cache[url]={h1:a.innerHTML,sub:b.innerHTML,t:ti&&ti.textContent};
+      if(cur===il)apply(cache[url],url)}).catch(function(){})}
+  function tick(){var il=(document.getElementById("toIl")||{}).value||"";if(il&&il!==cur){cur=il;go(il)}}
+  setTimeout(function(){cur=(document.getElementById("toIl")||{}).value||"";setInterval(tick,700)},1800);
+})();
+
+/* WhatsApp düğmeleri: önce fiyat hesaplama (net müşteri). Fiyat sonucu düğmesi ve "farklı isteğim var" doğrudan WhatsApp'a gider. */
+(function(){
+  function ok(a){return a.id==="waBtn"||a.closest(".kx-other")||a.closest(".cmsg")||a.closest(".cform")}
+  var toast=null,tt=0;
+  function say(t){if(!toast){toast=document.createElement("div");toast.className="kx-toast";toast.setAttribute("role","status");document.body.appendChild(toast)}toast.textContent=t;toast.classList.add("on");clearTimeout(tt);tt=setTimeout(function(){toast.classList.remove("on")},4200)}
+  document.addEventListener("click",function(e){var a=e.target.closest&&e.target.closest('a[href*="wa.me"]');if(!a||ok(a))return;
+    e.preventDefault();e.stopPropagation();var h=document.getElementById("hesapla");
+    if(!h){location.href="/#hesapla";return}
+    h.scrollIntoView({behavior:"smooth",block:"start"});var c=h.querySelector(".calc");if(c){c.classList.remove("kx-flash");void c.offsetWidth;c.classList.add("kx-flash")}
+    say("Önce kurye ücretini görün 👇 Fiyat çıkınca tek tuşla WhatsApp'tan gönderin.")},true);
 })();
