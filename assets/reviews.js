@@ -19,10 +19,10 @@ var R=[
 {n:"Fatih Tosunoğlu",g:"Yerel Rehber · 10 yorum",t:"İnsanın ne zaman ihtiyac duyacagi belli olmuyor. Teşekkürler"}
 ];
 var lang=(document.documentElement.lang||"tr").slice(0,2);
-var L={tr:{h:"Google yorumları",s:"Google'da 5 yıldızlı müşteri yorumları",p:"Önceki",x:"Sonraki"},
-en:{h:"Google reviews",s:"5-star customer reviews on Google (original Turkish)",p:"Previous",x:"Next"},
-ar:{h:"تقييمات Google",s:"تقييمات العملاء على Google (باللغة التركية)",p:"السابق",x:"التالي"}}[lang]||null;
-L=L||{h:"Google yorumları",s:"Google'da 5 yıldızlı müşteri yorumları",p:"Önceki",x:"Sonraki"};
+var L={tr:{h:"Teslimattan sonra yazılanlar",s:"Son yorumlardan bir seçki",p:"Önceki",x:"Sonraki"},
+en:{h:"Written after delivery",s:"A selection of recent reviews (in Turkish)",p:"Previous",x:"Next"},
+ar:{h:"كُتبت بعد التسليم",s:"مختارات من أحدث التقييمات (بالتركية)",p:"السابق",x:"التالي"}}[lang]||null;
+L=L||{h:"Teslimattan sonra yazılanlar",s:"Son yorumlardan bir seçki",p:"Önceki",x:"Sonraki"};
 var ecz=/eczane|ilac|pharmacy/i.test(location.pathname);
 var list=R.slice().sort(function(a,b){return ecz?((b.e?1:0)-(a.e?1:0)):((a.e?1:0)-(b.e?1:0))});
 var css=".kxrv{margin-top:10px;direction:ltr}.kxrv-hd{display:flex;align-items:center;gap:10px;margin:0 0 10px}.kxrv-st{color:#f5b301;font-size:18px;letter-spacing:1px}.kxrv-hd b{font-size:16px;color:var(--navy,#14293f)}.kxrv-hd small{display:block;color:var(--mute,#4f6076);font-size:13px}.kxrv-tr{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;padding:2px 2px 8px;-webkit-overflow-scrolling:touch;scrollbar-width:none}.kxrv-tr::-webkit-scrollbar{display:none}.kxrv-c{flex:0 0 86%;max-width:360px;scroll-snap-align:start;background:var(--card,#fff);border:1px solid var(--line,#dbe4ee);border-radius:16px;padding:14px 16px;box-sizing:border-box}@media(min-width:720px){.kxrv-c{flex-basis:calc(33.333% - 8px)}}.kxrv-u{display:flex;align-items:center;gap:10px;margin-bottom:6px}.kxrv-a{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:16px;flex:0 0 38px}.kxrv-n{font-weight:700;color:var(--navy,#14293f);font-size:15px;line-height:1.2}.kxrv-g{font-size:12px;color:var(--mute,#4f6076)}.kxrv-g:before{content:'★ ';color:#e8620a}.kxrv-c .kxrv-st{font-size:15px}.kxrv-t{margin:6px 0 0;font-size:15px;line-height:1.5;color:var(--tx,#14293f)}.kxrv-gl{float:right;font-size:12px;font-weight:700;color:#4285f4}.kxrv-nv{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:4px}.kxrv-nv button{width:34px;height:34px;border-radius:50%;border:1px solid var(--line,#dbe4ee);background:var(--card,#fff);color:var(--navy,#14293f);font-size:18px;cursor:pointer;line-height:1}.kxrv-d{display:flex;gap:5px}.kxrv-d i{width:7px;height:7px;border-radius:50%;background:var(--line,#dbe4ee)}.kxrv-d i.on{background:var(--acc,#ff7a1a)}";
@@ -31,7 +31,7 @@ function esc(s){return s.replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&
 function init(){
 var box=document.getElementById("kxReviews");if(!box)return;
 var st=document.createElement("style");st.textContent=css;document.head.appendChild(st);
-var h='<div class="kxrv" aria-label="'+esc(L.h)+'"><div class="kxrv-hd"><span class="kxrv-st" aria-hidden="true">★★★★★</span><div><b>'+esc(L.h)+'</b><small>'+esc(L.s)+'</small></div></div><div class="kxrv-tr" tabindex="0">';
+var h='<div class="kxrv" aria-label="'+esc(L.h)+'"><div class="kxrv-hd"><div><b>'+esc(L.h)+'</b><small>'+esc(L.s)+'</small></div></div><div class="kxrv-tr" tabindex="0">';
 list.forEach(function(r,i){var c=colors[i%colors.length];
 h+='<article class="kxrv-c"><div class="kxrv-u"><span class="kxrv-a" style="background:'+c+'" aria-hidden="true">'+esc(r.n.charAt(0).toLocaleUpperCase("tr"))+'</span><div><div class="kxrv-n">'+esc(r.n)+'</div>'+(r.g?'<div class="kxrv-g">'+esc(r.g)+'</div>':'')+'</div></div><span class="kxrv-gl">Google</span><span class="kxrv-st" aria-label="5/5">★★★★★</span><p class="kxrv-t" lang="tr">'+esc(r.t)+'</p></article>';});
 h+='</div><div class="kxrv-nv"><button type="button" class="kxrv-p" aria-label="'+esc(L.p)+'">‹</button><div class="kxrv-d"></div><button type="button" class="kxrv-x" aria-label="'+esc(L.x)+'">›</button></div></div>';
