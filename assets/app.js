@@ -836,7 +836,7 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
 
 /* Eczane sayfaları: teslim ilçesi seçilince o ilçenin eczane sayfası açıklaması (sayfa yenilenmeden) */
 (function(){
-  if(!document.querySelector(".hero .ezsos"))return;
+  if(!document.querySelector(".hero .ezsos"))return;if((document.documentElement.lang||"tr").slice(0,2)!=="tr")return;
   var h1=document.querySelector(".hero h1"),sub=document.querySelector(".hero .sub");if(!h1||!sub)return;
   var TR={"ç":"c","ğ":"g","ı":"i","İ":"i","ö":"o","ş":"s","ü":"u","Ç":"c","Ğ":"g","Ö":"o","Ş":"s","Ü":"u"};
   function slug(n){return n.replace(/[çğıİöşüÇĞÖŞÜ]/g,function(c){return TR[c]}).toLowerCase().replace(/[^a-z0-9]/g,"")}
@@ -861,7 +861,7 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
     e.preventDefault();e.stopPropagation();var wb=document.getElementById("waBtn");if(wb&&wb.offsetParent&&/[?&]text=/.test(wb.href)){wb.click();return}var h=document.getElementById("hesapla");
     if(!h){location.href="/#hesapla";return}
     h.scrollIntoView({behavior:"smooth",block:"start"});var c=h.querySelector(".calc");if(c){c.classList.remove("kx-flash");void c.offsetWidth;c.classList.add("kx-flash")}
-    say("Önce kurye ücretini görün 👇 Fiyat çıkınca tek tuşla WhatsApp'tan gönderin.")},true);
+    say(_t("Önce kurye ücretini görün 👇 Fiyat çıkınca tek tuşla WhatsApp'tan gönderin."))},true);
 })();
 
 /* Fiyat hesaplanınca üstteki "ACİL İLAÇ LAZIM" düğmesi "KURYEYİ ÇAĞIR · ₺fiyat" olur, yeşile döner ve doğrudan fiyatlı WhatsApp mesajını açar. */
@@ -875,7 +875,7 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
   function sync(){var r=ready(),pr=r?price():"",key=r+"|"+pr;if(key===last)return;last=key;
     heroes().forEach(function(a){var st=a.querySelector(".ezsos-tx strong"),sm=a.querySelector(".ezsos-tx small"),go=a.querySelector(".ezsos-go");
       if(!a.__o)a.__o={s:st&&st.innerHTML,m:sm&&sm.innerHTML,g:go&&go.innerHTML};
-      if(r){a.classList.add("ezready");if(st)st.textContent="KURYEYİ ÇAĞIR";if(sm){sm.textContent="";if(pr){var bb=document.createElement("b");bb.className="ezpr";bb.textContent=pr;sm.appendChild(bb)}sm.appendChild(document.createTextNode(" WhatsApp'tan tek tuşla gönderin"))}if(go)go.innerHTML=WA;a.setAttribute("aria-label","Kuryeyi çağır, WhatsApp'tan gönder")}
+      if(r){a.classList.add("ezready");if(st)st.textContent=_t("KURYEYİ ÇAĞIR");if(sm){sm.textContent="";if(pr){var bb=document.createElement("b");bb.className="ezpr";bb.textContent=pr;sm.appendChild(bb)}sm.appendChild(document.createTextNode(_t(" WhatsApp'tan tek tuşla gönderin")))}if(go)go.innerHTML=WA;a.setAttribute("aria-label",_t("Kuryeyi çağır, WhatsApp'tan gönder"))}
       else{a.classList.remove("ezready");if(st&&a.__o.s!=null)st.innerHTML=a.__o.s;if(sm&&a.__o.m!=null)sm.innerHTML=a.__o.m;if(go&&a.__o.g!=null)go.innerHTML=a.__o.g;a.removeAttribute("aria-label")}})}
   document.addEventListener("click",function(e){var a=e.target.closest&&e.target.closest("a.ezsos");if(!a||a===wb||a.closest("#hesapla")||!ready())return;e.preventDefault();e.stopPropagation();wb.click()},true);
   new MutationObserver(sync).observe(wb,{attributes:true,attributeFilter:["href"]});
