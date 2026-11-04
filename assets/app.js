@@ -890,7 +890,7 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
 
 /* WhatsApp düğmeleri: önce fiyat hesaplama (net müşteri); fiyat hesaplandıysa tüm WhatsApp düğmeleri fiyatlı mesajı açar. Fiyat sonucu düğmesi ve "farklı isteğim var" doğrudan WhatsApp'a gider. */
 (function(){
-  function ok(a){return a.id==="waBtn"||a.closest(".kx-other")||a.closest(".cmsg")||a.closest(".cform")}
+  function ok(a){return a.id==="waBtn"||a.closest(".ezdirect")||a.closest(".kx-other")||a.closest(".cmsg")||a.closest(".cform")}
   var toast=null,tt=0;
   function say(t){if(!toast){toast=document.createElement("div");toast.className="kx-toast";toast.setAttribute("role","status");document.body.appendChild(toast)}toast.textContent=t;toast.classList.add("on");clearTimeout(tt);tt=setTimeout(function(){toast.classList.remove("on")},4200)}
   document.addEventListener("click",function(e){var a=e.target.closest&&e.target.closest('a[href*="wa.me"]');if(!a||ok(a))return;
