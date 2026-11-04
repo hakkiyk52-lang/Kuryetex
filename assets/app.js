@@ -244,10 +244,20 @@ function txn(){if(cur&&cur.np)return _t("Eczane teslimi mahalle bölgesine göre
       var pe2=$("price");cancelAnimationFrame(raf);pe2.className="price";pe2.textContent=tl(ip);var reqM=tmv==="custom"?(function(){if(!(tmc&&tmc.value))return 999;var h=tmc.value.split(":"),tg=new Date();tg.setHours(+h[0],+h[1],0,0);var mm=(tg-new Date())/60000;return mm<0?999:mm})():(tmv.indexOf(_t("60 dakika"))===0?60:tmv.indexOf(_t("90 dakika"))===0?90:tmv===_t("2 saat")?120:999);
       var needM=ikm/85*60;$("kgnote").textContent=(xnote()?xnote()+". ":"")+txn()+(nf2?" "+_t("Gece farkı (00:00–07:00): +")+tl(nf2)+".":"");
       $("pnote").textContent=(exC.txt?exC.txt+" ":"")+(nf2?_t("🌙 Gece farkı dahildir (00:00–07:00): +")+tl(nf2)+". ":"")+_t("Şehirler arası tahmini fiyattır; araç cinsine, yüke ve güzergâha göre kesin fiyat WhatsApp'ta netleşir.")+(reqM<needM?_t(" Seçtiğiniz süre bu mesafe için çok kısa olabilir (yolculuk yaklaşık ")+Math.round(needM/30)/2+" saat); uygunluğu WhatsApp'ta netleştiririz.":"");
-      var m2="Merhaba, kuryetex.com.tr üzerinden şehirler arası gönderi için sipariş vermek istiyorum.\n\nHizmet: "+hl2+"\nAlım noktası: "+from.value+"\nTeslim noktası: "+to.value;
-      if(cur.size&&sizeName)m2+="\nGönderi boyutu: "+sizeName;if(cur.kg)m2+="\nAğırlık: "+(parseFloat(String(kg.value).replace(",","."))||0)+" kg";
-      m2+="\nTeslim süresi: "+tmText()+"\nTahmini mesafe: ~"+Math.round(ikm/10)*10+" km\nSistemdeki fiyat: "+tl(ip)+" (şehirler arası tahmini"+(tx2?", teslim süresi farkı "+txs(tx2):"")+(nf2?", gece farkı +"+tl(nf2):"")+")";m2+=exC.msg;
-      $("waBtn").href="https://wa.me/"+C.PHONE+"?text="+encodeURIComponent(m2);res.style.display="block";res.scrollIntoView({behavior:"smooth",block:"nearest"});return}
+      var bmC=function(){var ln=[],fA=kxAdr(from),tA=kxAdr(to),S="━━━━━━━━━━━━";
+        var mp=function(el,a){var q=a+", "+el.value;return /^CITY:/.test(el.dataset.d||"")?"https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(q.replace(/\s+/g," ").trim()):kxMap(q)};
+        ln.push("🚚 ŞEHİRLER ARASI KURYE SİPARİŞİ – "+hl2,S);
+        ln.push("🅰️ Alım: "+from.value);ln.push("🅱️ Teslim: "+to.value);
+        if(cur.size&&sizeName)ln.push("📐 Boyut: "+sizeName);if(cur.kg)ln.push("⚖️ Ağırlık: "+(w||0)+" kg");
+        ln.push("⏱️ Teslim süresi: "+tmText());ln.push("📏 Tahmini mesafe: ~"+Math.round(ikm/10)*10+" km");
+        ln.push("💰 Fiyat: "+tl(ip)+" (şehirler arası tahmini)");
+        var fx=[];if(sx)fx.push("koli ebat +"+tl(sx));if(wx)fx.push("ağırlık +"+tl(wx));if(nf2)fx.push("gece +"+tl(nf2));if(fx.length)ln.push("   (dahil: "+fx.join(", ")+")");
+        if(exC.txt)ln.push("ℹ️ "+exC.txt);
+        ln.push(S,"📝 Gönderi / not: ","👤 Teslim alacak kişi / tel: ",S);
+        ln.push("🏠 Alım adresi: "+(fA||""));ln.push(from.dataset.ll?"🗺️ Alım konumu: https://maps.google.com/?q="+from.dataset.ll:fA?"🗺️ Alım haritası: "+mp(from,fA):"🗺️ Alım konumu: (WhatsApp'tan gönderilecek)");
+        ln.push("🏠 Teslim adresi: "+(tA||""));ln.push(to.dataset.ll?"🗺️ Teslim konumu: https://maps.google.com/?q="+to.dataset.ll:tA?"🗺️ Teslim haritası: "+mp(to,tA):"🗺️ Teslim konumu: (WhatsApp'tan gönderilecek)");
+        ln.push("","✅ Onaylıyorum");return ln.join("\n")};
+      $("waBtn").href="https://wa.me/"+C.PHONE+"?text="+encodeURIComponent(bmC());$("waBtn").__kxMsg=bmC;res.style.display="block";res.scrollIntoView({behavior:"smooth",block:"nearest"});return}
     var pa=ptOf(from)||mahPt(from),pb=ptOf(to)||mahPt(to),a=pa||C.D[fa],b=pb||C.D[tb],km,raw,ar=air(a,b);
     var sdA=(C.D[fa]||a||{}).side,sdB=(C.D[tb]||b||{}).side,xs=!!(sdA&&sdB&&sdA!==sdB),same=(fa===tb&&!pa&&!pb)||ar<0.3;
     km=same?3:Math.max(C.MAH_KM_MIN||3,ar*C.ROAD+(xs?C.BRIDGE_KM:0));raw=tier(km);
