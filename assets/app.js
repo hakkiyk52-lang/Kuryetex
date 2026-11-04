@@ -300,7 +300,7 @@ function txn(){if(cur&&cur.np)return _t("Eczane teslimi mahalle bölgesine göre
   document.querySelectorAll("[data-pick]").forEach(function(a){a.addEventListener("click",function(){setSel(to,a.getAttribute("data-pick"));reset()})});
 })();
 (function(){document.querySelectorAll(".ofm").forEach(function(f){f.addEventListener("submit",function(e){e.preventDefault();var d=new FormData(f);var m="Merhaba, "+f.getAttribute("data-svc")+" siparişi vermek istiyorum.\nAlım adresi: "+d.get("a")+"\nTeslim adresi: "+d.get("t")+(d.get("p")?"\nTelefon: "+d.get("p"):"")+(d.get("n")?"\nNot: "+d.get("n"):"");window.gtag&&(gtag("event","whatsapp_click",{link_url:"siparis_formu"}),gtag("event","conversion",{send_to:"AW-18485547755/Irh_CIbG-JIdEOulzO5E"}));window.open("https://wa.me/"+window.K360.PHONE+"?text="+encodeURIComponent(m),"_blank")})})})();
-(function(){document.querySelectorAll(".cform").forEach(function(f){var msg=f.querySelector(".cmsg");f.addEventListener("submit",function(e){e.preventDefault();
+(function(){document.querySelectorAll(".cform:not(.sform)").forEach(function(f){var msg=f.querySelector(".cmsg");f.addEventListener("submit",function(e){e.preventDefault();
  var fd=new FormData(f);if(fd.get("_honey"))return;if(!fd.get("Firma")||!fd.get("Yetkili")||!fd.get("Telefon")){msg.className="cmsg err";msg.textContent=_t("Lütfen firma adı, yetkili adı ve telefon alanlarını doldurun.");return}
  var btn=f.querySelector("button");btn.disabled=true;btn.textContent=_t("Gönderiliyor…");fd.set("_subject","Kuryetex kurumsal üyelik başvurusu: "+fd.get("Firma"));fd.set("_captcha","false");fd.set("_template","table");
  var text="Kurumsal üyelik başvurusu\n";fd.forEach(function(v,k){if(k.charAt(0)!=="_"&&v)text+=k+": "+v+"\n"});
