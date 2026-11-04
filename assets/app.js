@@ -228,7 +228,7 @@ function txn(){if(cur&&cur.np)return _t("Eczane teslimi mahalle bölgesine göre
         ln.push(kxL("💊 İlaç bilgisi: ","💊 Medicine info: ","💊 معلومات الدواء: ")+(il||kxL("(WhatsApp'tan iletilecek)","(will be sent on WhatsApp)","(سيتم إرسالها عبر واتساب)")));
         ln.push(S);
         ln.push(kxL("🏠 Açık adres: ","🏠 Full address: ","🏠 العنوان الكامل: ")+(adr?adr+", "+tv:""));
-        ln.push(ll?kxL("🗺️ Konum: ","🗺️ Location: ","🗺️ الموقع: ")+"https://maps.google.com/?q="+ll:kxL("📍 Konumumu WhatsApp'tan gönderiyorum.","📍 I'm sending my location on WhatsApp.","📍 سأرسل موقعي عبر واتساب."));if(pE)ln.push("",kxL("✅ Onaylıyorum","✅ I confirm","✅ أؤكد"));
+        ln.push(ll?kxL("🗺️ Konum: ","🗺️ Location: ","🗺️ الموقع: ")+"https://maps.google.com/?q="+ll:adr?kxL("🗺️ Harita: ","🗺️ Map: ","🗺️ الخريطة: ")+kxMap(adr+", "+tv):kxL("📍 Konumumu WhatsApp'tan gönderiyorum.","📍 I'm sending my location on WhatsApp.","📍 سأرسل موقعي عبر واتساب."));if(pE)ln.push("",kxL("✅ Onaylıyorum","✅ I confirm","✅ أؤكد"));
         return ln.join("\n")};
       $("waBtn").href="https://wa.me/"+C.PHONE+"?text="+encodeURIComponent(bmE());$("waBtn").__kxMsg=bmE;res.style.display="block";res.scrollIntoView({behavior:"smooth",block:"nearest"});return}
     var fa=val(from),tb=val(to);
@@ -274,12 +274,13 @@ function txn(){if(cur&&cur.np)return _t("Eczane teslimi mahalle bölgesine göre
     var fx=[];if(sx)fx.push("koli ebat +"+tl(sx));if(wx)fx.push("ağırlık +"+tl(wx));if(nf)fx.push("gece +"+tl(nf));if(rz)fx.push(rzn.toLocaleLowerCase("tr")+" +"+tl(rz));if(fx.length)ln.push("   (dahil: "+fx.join(", ")+")");
     if(exN.txt)ln.push("ℹ️ "+exN.txt);
     ln.push(S,"📝 Gönderi / not: ","👤 Teslim alacak kişi / tel: ",S);
-    ln.push("🏠 Alım adresi: "+(fA||""));ln.push(from.dataset.ll?"🗺️ Alım konumu: https://maps.google.com/?q="+from.dataset.ll:"🗺️ Alım konumu: (WhatsApp'tan gönderilecek)");
-    ln.push("🏠 Teslim adresi: "+(tA||""));ln.push(to.dataset.ll?"🗺️ Teslim konumu: https://maps.google.com/?q="+to.dataset.ll:"🗺️ Teslim konumu: (WhatsApp'tan gönderilecek)");if(p!==null)ln.push("","✅ Onaylıyorum");
+    ln.push("🏠 Alım adresi: "+(fA||""));ln.push(from.dataset.ll?"🗺️ Alım konumu: https://maps.google.com/?q="+from.dataset.ll:fA?"🗺️ Alım haritası: "+kxMap(fA+", "+from.value):"🗺️ Alım konumu: (WhatsApp'tan gönderilecek)");
+    ln.push("🏠 Teslim adresi: "+(tA||""));ln.push(to.dataset.ll?"🗺️ Teslim konumu: https://maps.google.com/?q="+to.dataset.ll:tA?"🗺️ Teslim haritası: "+kxMap(tA+", "+to.value):"🗺️ Teslim konumu: (WhatsApp'tan gönderilecek)");if(p!==null)ln.push("","✅ Onaylıyorum");
     return ln.join("\n")};
     $("waBtn").href="https://wa.me/"+C.PHONE+"?text="+encodeURIComponent(bmG());$("waBtn").__kxMsg=bmG;
     res.style.display="block";res.scrollIntoView({behavior:"smooth",block:"nearest"});
   }
+  function kxMap(q){return "https://www.google.com/maps/search/?api=1&query="+encodeURIComponent((function(x){return /İstanbul|Kocaeli|Tekirdağ/i.test(x)?x:x+", İstanbul"})(q.replace(/\s+/g," ").trim()))}
   function kxAdr(el){var a=document.getElementById(el.id+"Adr");return a&&a.value?a.value.trim():""}
   function kxL(tr,en,ar){var lg=(document.documentElement.lang||"tr").slice(0,2);return lg==="tr"?tr:tr.replace(/\s+$/,"")+" / "+(lg==="ar"?ar:en).replace(/^[^A-Za-z\u0600-\u06FF]+/,"")}
   document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("#waBtn");if(b&&b.__kxMsg)b.href="https://wa.me/"+C.PHONE+"?text="+encodeURIComponent(b.__kxMsg())},true);
