@@ -238,8 +238,8 @@ function txn(){if(cur&&cur.np)return _t("Eczane teslimi mahalle bölgesine göre
     function xnote(){var a=[];if(cur.size&&sizeName)a.push(sx?_t("Koli ebat farkı: +")+tl(sx):_t("Evrak / küçük: ek ücret yok"));if(cur.kg)a.push(wx?_t("5 kg üzeri: +")+tl(wx)+" ("+Math.ceil(w-C.FREE_KG)+" kg × "+tl(C.KG_FEE)+")":_t("5 kg'a kadar ek ücret yok"));return a.join(" · ")}
     if(/^CITY:/.test(fa)||/^CITY:/.test(tb)){
       function ica(km){var A=C.ICA;if(km<=A[0][0])return A[0][1];for(var i=1;i<A.length;i++)if(km<=A[i][0])return A[i-1][1]+(A[i][1]-A[i-1][1])*(km-A[i-1][0])/(A[i][0]-A[i-1][0]);return A[A.length-1][1]}
-      var codeOf=function(v){return /^CITY:/.test(v)?v.slice(5):(C.D[v]?"34":null)};
-      var ca=codeOf(fa),cb=codeOf(tb),mm=(ILM&&ILM.m)||{},ikm,ip;
+      var codeOf=function(v){return /^CITY:/.test(v)?v.slice(5):(C.D[v]?((C.D[v].il&&C.ILKOD&&C.ILKOD[C.D[v].il])||"34"):null)};
+      var ca=codeOf(fa),cb=codeOf(tb),mm=(ILM&&ILM.m)||{},ikm,ip;if(ca!=="34"&&cb!=="34"){errEl.textContent=_t("Alım ve teslim noktalarından biri İstanbul olmalı. İstanbul dışındaki iki nokta arasında hizmetimiz yok.");res.style.display="none";return}
       if(ca===cb){ikm=15;ip=800}else{ikm=(mm[ca]&&mm[ca][cb])||300;var oth=ca==="34"?cb:(cb==="34"?ca:null);ip=(oth&&C.PXC&&C.PXC[oth])||ica(ikm)}
       ip=Math.round(ip/500)*500;var dn2=(ca&&ca!=="34"&&cb==="34")?(C.CEVRE_DONUS||1000):0;ip+=dn2;var tx2=tmExtra(ip);ip+=tx2+sx+wx;var exC=extras(41.03,28.98,ip);var nf2=nightFee();ip+=nf2;ip+=exC.tot;
       var hl2=cur.l.replace(/^\S+\s/,"");$("route").textContent=from.value+" → "+to.value;$("km").textContent=_t("Şehirler arası · yaklaşık ")+Math.round(ikm/10)*10+_t(" km (karayolu, tahmini)");$("svcname").textContent=cur.l;$("detail").textContent=_t("Teslim: ")+tmText();$("kgnote").textContent="";
@@ -260,7 +260,7 @@ function txn(){if(cur&&cur.np)return _t("Eczane teslimi mahalle bölgesine göre
         ln.push("🏠 Teslim adresi: "+(tA||""));ln.push(to.dataset.ll?"🗺️ Teslim konumu: https://maps.google.com/?q="+to.dataset.ll:tA?"🗺️ Teslim haritası: "+mp(to,tA):"🗺️ Teslim konumu: (WhatsApp'tan gönderilecek)");
         ln.push("","✅ Onaylıyorum");return ln.join("\n")};
       $("waBtn").href="https://api.whatsapp.com/send?phone="+C.PHONE+"&text="+encodeURIComponent(bmC());$("waBtn").__kxMsg=bmC;res.style.display="block";res.scrollIntoView({behavior:"smooth",block:"nearest"});return}
-    var pa=ptOf(from)||mahPt(from),pb=ptOf(to)||mahPt(to),a=pa||C.D[fa],b=pb||C.D[tb],km,raw,ar=air(a,b);
+    if(C.D[fa]&&C.D[fa].il&&C.D[tb]&&C.D[tb].il){errEl.textContent=_t("Alım ve teslim noktalarından biri İstanbul olmalı. İstanbul dışındaki iki nokta arasında hizmetimiz yok.");res.style.display="none";return}var pa=ptOf(from)||mahPt(from),pb=ptOf(to)||mahPt(to),a=pa||C.D[fa],b=pb||C.D[tb],km,raw,ar=air(a,b);
     var sdA=(C.D[fa]||a||{}).side,sdB=(C.D[tb]||b||{}).side,xs=!!(sdA&&sdB&&sdA!==sdB),same=(fa===tb&&!pa&&!pb)||ar<0.3;
     km=same?3:Math.max(C.MAH_KM_MIN||3,ar*C.ROAD+(xs?C.BRIDGE_KM:0));raw=tier(km);
     if(!same&&C.FAR&&(C.FAR.indexOf(fa)>-1||C.FAR.indexOf(tb)>-1))raw=Math.max(raw,km*C.FAR_RATE);
