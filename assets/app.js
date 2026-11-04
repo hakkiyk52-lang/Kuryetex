@@ -221,7 +221,9 @@ function txn(){if(cur&&cur.np)return _t("Eczane teslimi mahalle bölgesine göre
       var bmE=function(){var ln=[],adr=kxAdr(to),ll=to.dataset.ll,S="━━━━━━━━━━━━";
         ln.push(kxL("🚨 ACİL İLAÇ – KURYE ÇAĞRISI","🚨 URGENT MEDICINE – COURIER REQUEST","🚨 دواء عاجل – طلب مندوب"),S);
         ln.push(kxL("📍 Mahalle: ","📍 Neighbourhood: ","📍 الحي: ")+tv);
-        ln.push(pE?kxL("💰 Kurye ücreti: ","💰 Courier fee: ","💰 أجرة المندوب: ")+tl(pE)+(nfE?kxL(" (gece farkı dahil)"," (night fee incl.)"," (شامل رسوم الليل)"):""):kxL("💰 Kurye ücreti: WhatsApp'ta netleşecek","💰 Courier fee: to be confirmed","💰 الأجرة: يتم تأكيدها"));
+        ln.push(pE?kxL("💰 Kurye ücreti: ","💰 Courier fee: ","💰 أجرة المندوب: ")+tl(pE)+(nfE?kxL(" (gece farkı dahil)"," (night fee incl.)"," (شامل رسوم الليل)"):"")+kxL(" + ilaç ücreti"," + medicine cost"," + ثمن الدواء"):kxL("💰 Kurye ücreti: WhatsApp'ta netleşecek","💰 Courier fee: to be confirmed","💰 الأجرة: يتم تأكيدها"));
+        ln.push(kxL("💊 İlaç ücreti: eczane fişine göre","💊 Medicine cost: as per pharmacy receipt","💊 ثمن الدواء: حسب إيصال الصيدلية"));
+        ln.push(kxL("💳 Ödeme: ilaç + kurye ücreti teslimde kapıda nakit veya IBAN","💳 Payment: medicine + courier fee on delivery, cash or bank transfer","💳 الدفع: الدواء + الأجرة عند التسليم نقداً أو تحويل"));
         if(exE.txt)ln.push("ℹ️ "+exE.txt);
         ln.push(S);
         var il=(document.getElementById("toIlac")||{}).value;il=il?il.trim():"";
