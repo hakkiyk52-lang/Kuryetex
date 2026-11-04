@@ -225,8 +225,8 @@ function txn(){if(cur&&cur.np)return _t("Eczane teslimi mahalle bölgesine göre
         if(zk)ln.push(kxL("🏷️ Bölge: ","🏷️ Zone: ","🏷️ المنطقة: ")+zn[zk]);
         if(exE.txt)ln.push("ℹ️ "+exE.txt);
         ln.push(S);
-        ln.push(kxL("💊 İlaç adı / fotoğrafı: ","💊 Medicine name / photo: ","💊 اسم الدواء / صورته: "));
-        ln.push(kxL("👤 Teslim alacak kişi / tel: ","👤 Recipient name / phone: ","👤 اسم المستلم / الهاتف: "));
+        var il=(document.getElementById("toIlac")||{}).value;il=il?il.trim():"";
+        ln.push(kxL("💊 İlaç bilgisi: ","💊 Medicine info: ","💊 معلومات الدواء: ")+(il||kxL("(WhatsApp'tan iletilecek)","(will be sent on WhatsApp)","(سيتم إرسالها عبر واتساب)")));
         ln.push(S);
         ln.push(kxL("🏠 Açık adres: ","🏠 Full address: ","🏠 العنوان الكامل: ")+(adr?adr+", "+tv:""));
         ln.push(ll?kxL("🗺️ Konum: ","🗺️ Location: ","🗺️ الموقع: ")+"https://maps.google.com/?q="+ll:kxL("📍 Konumumu WhatsApp'tan gönderiyorum.","📍 I'm sending my location on WhatsApp.","📍 سأرسل موقعي عبر واتساب."));
