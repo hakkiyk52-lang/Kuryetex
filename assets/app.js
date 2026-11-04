@@ -221,14 +221,14 @@ function txn(){if(cur&&cur.np)return _t("Eczane teslimi mahalle bölgesine göre
       var bmE=function(){var ln=[],adr=kxAdr(to),ll=to.dataset.ll,S="━━━━━━━━━━━━";
         ln.push(kxL("🚨 ACİL İLAÇ – KURYE ÇAĞRISI","🚨 URGENT MEDICINE – COURIER REQUEST","🚨 دواء عاجل – طلب مندوب"),S);
         ln.push(kxL("📍 Mahalle: ","📍 Neighbourhood: ","📍 الحي: ")+tv);
-        ln.push(pE?kxL("💰 Kurye ücreti: ","💰 Courier fee: ","💰 أجرة المندوب: ")+tl(pE)+(nfE?kxL(" (gece farkı dahil)"," (night fee incl.)"," (شامل رسوم الليل)"):"")+kxL(" ✅ müşteri onayladı"," ✅ confirmed"," ✅ تم التأكيد"):kxL("💰 Kurye ücreti: WhatsApp'ta netleşecek","💰 Courier fee: to be confirmed","💰 الأجرة: يتم تأكيدها"));
+        ln.push(pE?kxL("💰 Kurye ücreti: ","💰 Courier fee: ","💰 أجرة المندوب: ")+tl(pE)+(nfE?kxL(" (gece farkı dahil)"," (night fee incl.)"," (شامل رسوم الليل)"):""):kxL("💰 Kurye ücreti: WhatsApp'ta netleşecek","💰 Courier fee: to be confirmed","💰 الأجرة: يتم تأكيدها"));
         if(exE.txt)ln.push("ℹ️ "+exE.txt);
         ln.push(S);
         var il=(document.getElementById("toIlac")||{}).value;il=il?il.trim():"";
         ln.push(kxL("💊 İlaç bilgisi: ","💊 Medicine info: ","💊 معلومات الدواء: ")+(il||kxL("(WhatsApp'tan iletilecek)","(will be sent on WhatsApp)","(سيتم إرسالها عبر واتساب)")));
         ln.push(S);
         ln.push(kxL("🏠 Açık adres: ","🏠 Full address: ","🏠 العنوان الكامل: ")+(adr?adr+", "+tv:""));
-        ln.push(ll?kxL("🗺️ Konum: ","🗺️ Location: ","🗺️ الموقع: ")+"https://maps.google.com/?q="+ll:kxL("📍 Konumumu WhatsApp'tan gönderiyorum.","📍 I'm sending my location on WhatsApp.","📍 سأرسل موقعي عبر واتساب."));
+        ln.push(ll?kxL("🗺️ Konum: ","🗺️ Location: ","🗺️ الموقع: ")+"https://maps.google.com/?q="+ll:kxL("📍 Konumumu WhatsApp'tan gönderiyorum.","📍 I'm sending my location on WhatsApp.","📍 سأرسل موقعي عبر واتساب."));if(pE)ln.push("",kxL("✅ Onaylıyorum","✅ I confirm","✅ أؤكد"));
         return ln.join("\n")};
       $("waBtn").href="https://wa.me/"+C.PHONE+"?text="+encodeURIComponent(bmE());$("waBtn").__kxMsg=bmE;res.style.display="block";res.scrollIntoView({behavior:"smooth",block:"nearest"});return}
     var fa=val(from),tb=val(to);
@@ -270,12 +270,12 @@ function txn(){if(cur&&cur.np)return _t("Eczane teslimi mahalle bölgesine göre
     ln.push("🅰️ Alım: "+from.value);ln.push("🅱️ Teslim: "+to.value);
     if(cur.size&&sizeName)ln.push("📐 Boyut: "+sizeName);if(cur.kg)ln.push("⚖️ Ağırlık: "+(w||0)+" kg");
     ln.push("⏱️ Teslim süresi: "+tmText());ln.push("📏 Tahmini mesafe: "+km.toFixed(1).replace(".",",")+" km");
-    ln.push("💰 Fiyat: "+(p!==null?tl(p)+" ✅ sitedeki fiyat":_t("WhatsApp'ta netleşecek")));
+    ln.push("💰 Fiyat: "+(p!==null?tl(p):_t("WhatsApp'ta netleşecek")));
     var fx=[];if(sx)fx.push("koli ebat +"+tl(sx));if(wx)fx.push("ağırlık +"+tl(wx));if(nf)fx.push("gece +"+tl(nf));if(rz)fx.push(rzn.toLocaleLowerCase("tr")+" +"+tl(rz));if(fx.length)ln.push("   (dahil: "+fx.join(", ")+")");
     if(exN.txt)ln.push("ℹ️ "+exN.txt);
     ln.push(S,"📝 Gönderi / not: ","👤 Teslim alacak kişi / tel: ",S);
     ln.push("🏠 Alım adresi: "+(fA||""));ln.push(from.dataset.ll?"🗺️ Alım konumu: https://maps.google.com/?q="+from.dataset.ll:"🗺️ Alım konumu: (WhatsApp'tan gönderilecek)");
-    ln.push("🏠 Teslim adresi: "+(tA||""));ln.push(to.dataset.ll?"🗺️ Teslim konumu: https://maps.google.com/?q="+to.dataset.ll:"🗺️ Teslim konumu: (WhatsApp'tan gönderilecek)");
+    ln.push("🏠 Teslim adresi: "+(tA||""));ln.push(to.dataset.ll?"🗺️ Teslim konumu: https://maps.google.com/?q="+to.dataset.ll:"🗺️ Teslim konumu: (WhatsApp'tan gönderilecek)");if(p!==null)ln.push("","✅ Onaylıyorum");
     return ln.join("\n")};
     $("waBtn").href="https://wa.me/"+C.PHONE+"?text="+encodeURIComponent(bmG());$("waBtn").__kxMsg=bmG;
     res.style.display="block";res.scrollIntoView({behavior:"smooth",block:"nearest"});
