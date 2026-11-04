@@ -230,7 +230,7 @@ function txn(){if(cur&&cur.np)return _t("Eczane teslimi mahalle bölgesine göre
         ln.push(kxL("🏠 Açık adres: ","🏠 Full address: ","🏠 العنوان الكامل: ")+(adr?adr+", "+tv:""));
         ln.push(ll?kxL("🗺️ Konum: ","🗺️ Location: ","🗺️ الموقع: ")+"https://maps.google.com/?q="+ll:adr?kxL("🗺️ Harita: ","🗺️ Map: ","🗺️ الخريطة: ")+kxMap(adr+", "+tv):kxL("📍 Konumumu WhatsApp'tan gönderiyorum.","📍 I'm sending my location on WhatsApp.","📍 سأرسل موقعي عبر واتساب."));if(pE)ln.push("",kxL("✅ Onaylıyorum","✅ I confirm","✅ أؤكد"));
         return ln.join("\n")};
-      $("waBtn").href="https://wa.me/"+C.PHONE+"?text="+encodeURIComponent(bmE());$("waBtn").__kxMsg=bmE;res.style.display="block";res.scrollIntoView({behavior:"smooth",block:"nearest"});return}
+      $("waBtn").href="https://api.whatsapp.com/send?phone="+C.PHONE+"&text="+encodeURIComponent(bmE());$("waBtn").__kxMsg=bmE;res.style.display="block";res.scrollIntoView({behavior:"smooth",block:"nearest"});return}
     var fa=val(from),tb=val(to);
     var w=0,wx=0,sx=cur.size&&size>=0?C.SIZE_EXTRA[size]:0;if(cur.kg){w=parseFloat(String(kg.value).replace(",","."));if(!(w>=0))w=0;wx=w>C.FREE_KG?Math.ceil((w-C.FREE_KG)/C.KG_STEP)*C.KG_FEE:0}
     function xnote(){var a=[];if(cur.size&&sizeName)a.push(sx?_t("Koli ebat farkı: +")+tl(sx):_t("Evrak / küçük: ek ücret yok"));if(cur.kg)a.push(wx?_t("5 kg üzeri: +")+tl(wx)+" ("+Math.ceil(w-C.FREE_KG)+" kg × "+tl(C.KG_FEE)+")":_t("5 kg'a kadar ek ücret yok"));return a.join(" · ")}
@@ -257,7 +257,7 @@ function txn(){if(cur&&cur.np)return _t("Eczane teslimi mahalle bölgesine göre
         ln.push("🏠 Alım adresi: "+(fA||""));ln.push(from.dataset.ll?"🗺️ Alım konumu: https://maps.google.com/?q="+from.dataset.ll:fA?"🗺️ Alım haritası: "+mp(from,fA):"🗺️ Alım konumu: (WhatsApp'tan gönderilecek)");
         ln.push("🏠 Teslim adresi: "+(tA||""));ln.push(to.dataset.ll?"🗺️ Teslim konumu: https://maps.google.com/?q="+to.dataset.ll:tA?"🗺️ Teslim haritası: "+mp(to,tA):"🗺️ Teslim konumu: (WhatsApp'tan gönderilecek)");
         ln.push("","✅ Onaylıyorum");return ln.join("\n")};
-      $("waBtn").href="https://wa.me/"+C.PHONE+"?text="+encodeURIComponent(bmC());$("waBtn").__kxMsg=bmC;res.style.display="block";res.scrollIntoView({behavior:"smooth",block:"nearest"});return}
+      $("waBtn").href="https://api.whatsapp.com/send?phone="+C.PHONE+"&text="+encodeURIComponent(bmC());$("waBtn").__kxMsg=bmC;res.style.display="block";res.scrollIntoView({behavior:"smooth",block:"nearest"});return}
     var pa=ptOf(from)||mahPt(from),pb=ptOf(to)||mahPt(to),a=pa||C.D[fa],b=pb||C.D[tb],km,raw,ar=air(a,b);
     var sdA=(C.D[fa]||a||{}).side,sdB=(C.D[tb]||b||{}).side,xs=!!(sdA&&sdB&&sdA!==sdB),same=(fa===tb&&!pa&&!pb)||ar<0.3;
     km=same?3:Math.max(C.MAH_KM_MIN||3,ar*C.ROAD+(xs?C.BRIDGE_KM:0));raw=tier(km);
@@ -287,13 +287,13 @@ function txn(){if(cur&&cur.np)return _t("Eczane teslimi mahalle bölgesine göre
     ln.push("🏠 Alım adresi: "+(fA||""));ln.push(from.dataset.ll?"🗺️ Alım konumu: https://maps.google.com/?q="+from.dataset.ll:fA?"🗺️ Alım haritası: "+kxMap(fA+", "+from.value):"🗺️ Alım konumu: (WhatsApp'tan gönderilecek)");
     ln.push("🏠 Teslim adresi: "+(tA||""));ln.push(to.dataset.ll?"🗺️ Teslim konumu: https://maps.google.com/?q="+to.dataset.ll:tA?"🗺️ Teslim haritası: "+kxMap(tA+", "+to.value):"🗺️ Teslim konumu: (WhatsApp'tan gönderilecek)");if(p!==null)ln.push("","✅ Onaylıyorum");
     return ln.join("\n")};
-    $("waBtn").href="https://wa.me/"+C.PHONE+"?text="+encodeURIComponent(bmG());$("waBtn").__kxMsg=bmG;
+    $("waBtn").href="https://api.whatsapp.com/send?phone="+C.PHONE+"&text="+encodeURIComponent(bmG());$("waBtn").__kxMsg=bmG;
     res.style.display="block";res.scrollIntoView({behavior:"smooth",block:"nearest"});
   }
   function kxMap(q){return "https://www.google.com/maps/search/?api=1&query="+encodeURIComponent((function(x){return /İstanbul|Kocaeli|Tekirdağ/i.test(x)?x:x+", İstanbul"})(q.replace(/\s+/g," ").trim()))}
   function kxAdr(el){var a=document.getElementById(el.id+"Adr");return a&&a.value?a.value.trim():""}
   function kxL(tr,en,ar){var lg=(document.documentElement.lang||"tr").slice(0,2);return lg==="tr"?tr:tr.replace(/\s+$/,"")+" / "+(lg==="ar"?ar:en).replace(/^[^A-Za-z\u0600-\u06FF]+/,"")}
-  document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("#waBtn");if(b&&b.__kxMsg)b.href="https://wa.me/"+C.PHONE+"?text="+encodeURIComponent(b.__kxMsg())},true);
+  document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("#waBtn");if(b&&b.__kxMsg)b.href="https://api.whatsapp.com/send?phone="+C.PHONE+"&text="+encodeURIComponent(b.__kxMsg())},true);
   var cb=$("calcBtn");if(cb)cb.addEventListener("click",compute);
   document.querySelectorAll("[data-pick]").forEach(function(a){a.addEventListener("click",function(){setSel(to,a.getAttribute("data-pick"));reset()})});
 })();
