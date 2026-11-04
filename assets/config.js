@@ -1,6 +1,8 @@
 /* Fiyat ayarları: buradaki değerleri kendi tarifenize göre değiştirin */
 window.K360={
  "PHONE": "905515315234",
+ "ECZ_CEVRE": 1200,
+ "CEVRE_DONUS": 1000,
  "ANCHORS": [
   [
    3,
