@@ -1,3 +1,4 @@
+window.__kxM={"Sokak, bina ve kapı no (isteğe bağlı)": ["Street, building and door no (optional)", "الشارع والمبنى ورقم الباب (اختياري)"], "sokak ve kapı no (isteğe bağlı)": ["street and door no (optional)", "الشارع ورقم الباب (اختياري)"], "📍 Konumunuzdan bulundu. Bina ve kapı numarasını kontrol edip düzeltebilirsiniz.": ["📍 Found from your location. Please check the building and door number.", "📍 تم تحديده من موقعك. يرجى التحقق من رقم المبنى والباب."]};function kxT(x){var lg=(document.documentElement.lang||"tr").slice(0,2),m=window.__kxM[x];return lg==="tr"||!m?x:(lg==="ar"?m[1]:m[0])}
 // Kuryetex hesaplayıcısı: "Nereden / Nereye" için ilçe seçimi + mahalle listesi (Eczane Kuryem'deki gibi)
 // Var olan #from / #to alanlarını gizli tutar; seçim yapılınca onların value ve data-d değerlerini doldurur,
 // böylece fiyat hesabı aynı şekilde çalışır. "Şehir dışı / adres yaz" ile eski arama alanı açılır.
@@ -33,6 +34,7 @@
     var w=document.createElement("div");w.className="ip";
     w.innerHTML='<div class="ip-r"><select class="ip-il" id="'+el.id+'Il" aria-label="'+word+' ilçe"><option value="">'+T("İlçe seçin")+'</option>'+["İstanbul","Kocaeli","Tekirdağ"].map(function(g){return'<optgroup label="'+g+'">'+names.filter(function(n){return(D[n].il||"İstanbul")===g}).map(function(n){return'<option>'+n+'</option>'}).join("")+'</optgroup>'}).join("")+'</select>'+
       '<div class="ac ip-ac"><input type="text" class="ip-mh" id="'+el.id+'Mh" disabled autocomplete="off" spellcheck="false" placeholder="'+T("Önce ilçe seçin")+'" aria-label="'+word+' mahalle" role="combobox" aria-expanded="false"><ul class="acl" role="listbox"></ul></div></div>'+
+      '<input type="text" class="ip-adr" id="'+el.id+'Adr" autocomplete="street-address" maxlength="160" placeholder="'+kxT("Sokak, bina ve kapı no (isteğe bağlı)")+'" aria-label="'+word+' '+kxT("sokak ve kapı no (isteğe bağlı)")+'"><div class="ip-adh" hidden></div>'+
       '<button type="button" class="ip-alt">'+T("Başka şehir, sokak adresi ya da haritadan seçmek için tıklayın")+'</button>';
     acWrap.parentNode.insertBefore(w,acWrap);acWrap.classList.add("ip-hide");if(lab)lab.setAttribute("for",el.id+"Il");
     var sel=w.querySelector(".ip-il"),inp=w.querySelector(".ip-mh"),box=w.querySelector(".acl"),alt=w.querySelector(".ip-alt"),list=[],cur=[],hi=-1,il="";
@@ -67,13 +69,13 @@
     lb.addEventListener("click",function(){if(!navigator.geolocation){lsay(T("Konum bu cihazda kullanılamıyor; ilçe ve mahalleyi listeden seçin."));return}
       lsay(T("Konumunuz alınıyor…"));lb.disabled=true;
       navigator.geolocation.getCurrentPosition(function(ps){nearMah(ps.coords.latitude,ps.coords.longitude).then(function(r){lb.disabled=false;
-          if(r&&el.__ipSet&&el.__ipSet(r.il,r.mah+" Mah, "+r.il,r.mah)){qsync();lsay(T("📍 Konumunuza göre seçildi: ")+r.mah+", "+r.il+T(". Farklıysa değiştirebilirsiniz."))}
+          if(r&&el.__ipSet&&el.__ipSet(r.il,r.mah+" Mah, "+r.il,r.mah)){window.__kxGeo&&__kxGeo(el,ps.coords.latitude,ps.coords.longitude);qsync();lsay(T("📍 Konumunuza göre seçildi: ")+r.mah+", "+r.il+T(". Farklıysa değiştirebilirsiniz."))}
           else lsay(T("Konumunuza yakın bir mahalle bulunamadı; ilçe ve mahalleyi listeden seçin."))})},
         function(){lb.disabled=false;lsay(T("Konum izni verilmedi; ilçe ve mahalleyi listeden seçin."))},{enableHighAccuracy:true,timeout:10000,maximumAge:60000})});
 
     function stale(){var r=document.getElementById("result");if(r)r.style.display="none";var e=document.getElementById("cerr");if(e)e.textContent="";
       var t=document.getElementById("tmc");if(t)t.dispatchEvent(new Event("input"))} // hesaplayıcının adım görünürlüğünü günceller
-    function setOrig(v,d){if(el.__prefix&&v&&v.indexOf(el.__prefix)!==0)v=el.__prefix+", "+v;el.value=v;el.dataset.d=d;delete el.dataset.ll;stale();el.classList.remove("bad");field.classList.remove("bad");sel.classList.remove("bad")}
+    function setOrig(v,d){if(el.__prefix&&v&&v.indexOf(el.__prefix)!==0)v=el.__prefix+", "+v;el.value=v;el.dataset.d=d;delete el.dataset.ll;var _a=document.getElementById(el.id+"Adr");if(_a&&_a.dataset.auto){_a.value="";delete _a.dataset.auto;var _h=_a.nextElementSibling;if(_h)_h.hidden=true}stale();el.classList.remove("bad");field.classList.remove("bad");sel.classList.remove("bad")}
     function show(){if(!il){box.style.display="none";return}var q=nz(inp.value);hi=-1;
       cur=list.filter(function(m){var k=nz(m);return!q||k.indexOf(q)===0||k.indexOf(" "+q)>-1});
       box.innerHTML=cur.length?cur.map(function(m,i){return'<li role="option" data-i="'+i+'"><span>'+lbl(m)+'</span><em>'+il+'</em></li>'}).join(""):'<li class="none">'+T("Bu ilçede böyle bir mahalle yok.")+'</li>';
@@ -126,7 +128,7 @@
     function gset(v){var t=T("Kurye kapınıza gelsin!");GT.forEach(function(x){if(x[0].test(v))t=x[1]});gb.textContent=t;var e=(v||"").trim().split(/\s+/)[0];gi.textContent=e&&!/[a-zçğıöşü0-9]/i.test(e)?e:"🏍️"}
     function gloc(el,word){if(!navigator.geolocation){gsay(T("Konum bu cihazda kullanılamıyor; ilçe ve mahalleyi aşağıdan seçin."));return}gsay(T("Konumunuz alınıyor…"));
       navigator.geolocation.getCurrentPosition(function(ps){nearMah(ps.coords.latitude,ps.coords.longitude).then(function(r){
-        if(r&&el.__ipSet&&el.__ipSet(r.il,r.mah+" Mah, "+r.il,r.mah))gsay("📍 "+T(word)+T(" konumunuza göre seçildi: ")+r.mah+", "+r.il+T(". Farklıysa aşağıdan değiştirin."));
+        if(r&&el.__ipSet&&el.__ipSet(r.il,r.mah+" Mah, "+r.il,r.mah)&&(!window.__kxGeo||__kxGeo(el,ps.coords.latitude,ps.coords.longitude)))gsay("📍 "+T(word)+T(" konumunuza göre seçildi: ")+r.mah+", "+r.il+T(". Farklıysa aşağıdan değiştirin."));
         else gsay(T("Konumunuza yakın bir mahalle bulunamadı; ilçe ve mahalleyi aşağıdan seçin."))})},
         function(){gsay(T("Konum izni verilmedi; ilçe ve mahalleyi aşağıdan seçin."))},{enableHighAccuracy:true,timeout:10000,maximumAge:60000})}
     g.querySelector(".nb-go").onclick=function(){gloc(from,"Alım noktası")};
@@ -135,7 +137,7 @@
     function say(t){hint.textContent=t;hint.hidden=!t}
     near.onclick=function(){if(!navigator.geolocation){say(T("Konum bu cihazda kullanılamıyor; mahallenizi aşağıdan seçin."));return}say(T("Konumunuz alınıyor…"));
       navigator.geolocation.getCurrentPosition(function(ps){var lat=ps.coords.latitude,lon=ps.coords.longitude;if(!window.__ekNearestMah){say("");return}
-        window.__ekNearestMah(lat,lon).then(function(r){if(r&&to.__ipSet&&to.__ipSet(r.il,r.mah+" Mah, "+r.il,r.mah))say(T("📍 Teslim mahallesi konumunuza göre seçildi: ")+r.mah+", "+r.il+T(". Farklıysa aşağıdan değiştirin."));else say(T("Konumunuza yakın bir mahalle bulunamadı; mahallenizi aşağıdan seçin."))})},
+        window.__ekNearestMah(lat,lon).then(function(r){if(r&&to.__ipSet&&to.__ipSet(r.il,r.mah+" Mah, "+r.il,r.mah)&&(!window.__kxGeo||__kxGeo(to,lat,lon)))say(T("📍 Teslim mahallesi konumunuza göre seçildi: ")+r.mah+", "+r.il+T(". Farklıysa aşağıdan değiştirin."));else say(T("Konumunuza yakın bir mahalle bulunamadı; mahallenizi aşağıdan seçin."))})},
         function(){say(T("Konum izni verilmedi; mahallenizi aşağıdan seçin."))},{enableHighAccuracy:true,timeout:10000})};
     function other(on){calcBox.classList.toggle("kx-is-other",on);ot.hidden=!on;if(on)ot.scrollIntoView({block:"nearest"})}
     own.onclick=function(){other(true)};ot.querySelector(".kx-other-back").onclick=function(){other(false)};
@@ -146,4 +148,21 @@
   function init(){enhance(document.getElementById("from"),"Alım");enhance(document.getElementById("to"),"Teslim");ecz()}
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",function(){setTimeout(init,0)});else setTimeout(init,0);
   window.__ipInit2=init;
+})();
+
+(function(){
+  function T(x){return window._t?window._t(x):x}
+  window.__kxGeo=function(el,lat,lon){
+    el.dataset.ll=(+lat).toFixed(5)+","+(+lon).toFixed(5);
+    var a=document.getElementById(el.id+"Adr");if(!a)return true;var h=a.nextElementSibling;
+    if(a.value&&!a.dataset.auto)return true;
+    var ctl=window.AbortController?new AbortController():null;if(ctl)setTimeout(function(){ctl.abort()},6000);
+    fetch("https://nominatim.openstreetmap.org/reverse?format=jsonv2&zoom=18&addressdetails=1&accept-language=tr&lat="+lat+"&lon="+lon,ctl?{signal:ctl.signal}:{}).then(function(r){return r.json()}).then(function(j){
+      var ad=j&&j.address||{},road=ad.road||ad.pedestrian||ad.footway||"",no=ad.house_number||"";
+      if(!road)return;if(a.value&&!a.dataset.auto)return;
+      a.value=road+(no?" No:"+no:"");a.dataset.auto="1";
+      if(h){h.textContent=kxT("📍 Konumunuzdan bulundu. Bina ve kapı numarasını kontrol edip düzeltebilirsiniz.");h.hidden=false}
+    }).catch(function(){});
+    return true};
+  document.addEventListener("input",function(e){var t=e.target;if(t&&t.classList&&t.classList.contains("ip-adr")){delete t.dataset.auto;var h=t.nextElementSibling;if(h&&h.classList.contains("ip-adh"))h.hidden=true}},true);
 })();
