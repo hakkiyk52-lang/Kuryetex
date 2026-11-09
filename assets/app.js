@@ -46,15 +46,19 @@ window.__hv=true;window.__rs={};window.__RF=function(k,f){if(window.__hv&&!docum
   var items=[];names.forEach(function(n){items.push({k:nz(n),l:n+", "+(C.D[n].il||"İstanbul"),t:_t("İlçe"),d:n,r:0})});
   (C.SEM||[]).forEach(function(s){items.push({k:nz(s[0]),l:s[0]+", "+s[1],t:"Mahalle",d:s[1],r:1})});
   var ILM=null,ilmLoading=false;
-  function addILM(J){ILM=J;J.c.forEach(function(cc){var code=cc[0],nm=cc[1];var LOC=(C.ILKOD&&Object.keys(C.ILKOD).map(function(k){return C.ILKOD[k]}))||["34","41"];if(LOC.indexOf(code)<0)items.push({k:nz(nm),l:nm,t:_t("Şehirler arası · il"),d:"CITY:"+code,r:2,c:code});
+  function addILM(J){ILM=J;J.c.forEach(function(cc){var code=cc[0],nm=cc[1];var LOC=(C.ILKOD&&Object.keys(C.ILKOD).map(function(k){return C.ILKOD[k]}))||["34","41"];if(LOC.indexOf(code)<0&&!ILL)items.push({k:nz(nm),l:nm,t:_t("Şehirler arası · il"),d:"CITY:"+code,r:2,c:code});
     (J.d[code]||[]).forEach(function(ic){var ilce=ic[0];
       if(code==="34"){if(!C.D[ilce])return;ic[1].forEach(function(m){items.push({k:nz(m[0]),l:m[0]+", "+ilce,t:_t("Mahalle · ")+m[1],d:ilce,r:1})});return}
       if(code!=="34"&&C.D[ilce]&&C.D[ilce].il){ic[1].forEach(function(m){items.push({k:nz(m[0]),l:m[0]+", "+ilce,t:_t("Mahalle · ")+m[1],d:ilce,r:1})});return}
-      var il=ilce+", "+nm;items.push({k:nz(ilce),l:il,t:_t("İlçe"),d:"CITY:"+code,r:3,c:code,i:ilce});
+      var il=ilce+", "+nm;if(!ILL)items.push({k:nz(ilce),l:il,t:_t("İlçe"),d:"CITY:"+code,r:3,c:code,i:ilce});
       ic[1].forEach(function(m){items.push({k:nz(m[0]),l:m[0]+", "+il,t:_t("Mahalle · ")+m[1],d:"CITY:"+code,r:4,c:code,i:ilce})})})});
     var ae=document.activeElement;if(ae&&(ae===from||ae===to)&&ae.value&&!ae.dataset.d)ae.dispatchEvent(new Event("input"))}
+  var ILL=0,illQ=null;
+  function loadIL(cb){if(ILL){cb&&cb();return}if(illQ){cb&&illQ.push(cb);return}illQ=cb?[cb]:[];fetch("/assets/data/iller.json").then(function(r){return r.json()}).then(function(J){if(!ILL){ILL=1;J.c.forEach(function(cc){var code=cc[0],nm=cc[1];items.push({k:nz(nm),l:nm,t:_t("Şehirler arası · il"),d:"CITY:"+code,r:2,c:code});(J.d[code]||[]).forEach(function(ilce){items.push({k:nz(ilce),l:ilce+", "+nm,t:_t("İlçe"),d:"CITY:"+code,r:3,c:code,i:ilce})})})}
+    var q=illQ;illQ=null;q.forEach(function(f){f()});var ae=document.activeElement;if(ae&&(ae===from||ae===to)&&ae.value&&!ae.dataset.d)ae.dispatchEvent(new Event("input"))}).catch(function(){var q=illQ;illQ=null;q.forEach(function(f){f()})})}
+  window.__kxCity=function(el,code,name){loadIL(function(){el.value=name;el.dispatchEvent(new Event("input"));el.dataset.d="CITY:"+code;reset();loadILM()})};
   function loadILM(){if(ILM||ilmLoading)return;if(window.__ILM){addILM(window.__ILM);return}ilmLoading=true;fetch("/assets/data/ilmah.json").then(function(r){return r.json()}).then(addILM).catch(function(){ilmLoading=false})}
-  [from,to].forEach(function(el){el.addEventListener("focus",loadILM);el.addEventListener("input",loadILM)});
+  [from,to].forEach(function(el){el.addEventListener("focus",function(){loadIL();loadILM()});el.addEventListener("input",function(){loadIL();loadILM()})});
   window.__kxLoadILM=loadILM;
   function val(el){return el.dataset.d||""}
   function hasMah(el){var d=el.dataset.d||"";if(!d||/^CITY:/.test(d)||el.dataset.ll)return true;var f=(el.value||"").split(",")[0].replace(/ Mah\.?\s*$/i,"").trim();return !!f&&nz(f)!==nz(d)}
@@ -95,7 +99,7 @@ window.__hv=true;window.__rs={};window.__RF=function(k,f){if(window.__hv&&!docum
       items.forEach(function(x){if(x.r===3&&x.k.indexOf(q)===0){add(x);items.forEach(function(y){if(y.r===4&&y.c===x.c&&y.i===x.i)add(y)})}});
       items.forEach(function(x){if(x.r===4&&x.k.indexOf(q)===0)add(x)});
       items.forEach(function(x){if(x.r>=2&&x.k.indexOf(q)>0)add(x)});
-      list=list.slice(0,14);(geoRes[el.id]||[]).forEach(function(g){if(g.q===q)list.push({x:{l:g.l,t:g.t,pt:g.pt,r:5}})});
+      list=list.slice(0,20);(geoRes[el.id]||[]).forEach(function(g){if(g.q===q)list.push({x:{l:g.l,t:g.t,pt:g.pt,r:5}})});
       if(q.length>=3)geoAsk(q);
       if(!list.length){box.innerHTML='<li class="none">Sonuç bulunamadı. Yakın bir ilçe adı yazmayı deneyin.</li>';box.style.display="block";return}
       list.forEach(function(o,idx){var li=document.createElement("li");li.setAttribute("role","option");li.innerHTML="<span></span><em></em>";li.firstChild.textContent=o.x.l;li.lastChild.textContent=o.x.t;if(o.x.r===1||o.x.r===4)li.className="sub";if(o.x.pt)li.className="adr";
@@ -106,6 +110,7 @@ window.__hv=true;window.__rs={};window.__RF=function(k,f){if(window.__hv&&!docum
     function pick(x){box.style.display="none";if(x.pt){if(!setPt(el,x.pt[0],x.pt[1],x.l)){el.value=x.l;el.dataset.d=""}return}el.value=x.l;el.dataset.d=x.d;delete el.dataset.ll;reset()}
     el.addEventListener("input",function(){el.dataset.d="";delete el.dataset.ll;geoRes[el.id]=[];show();reset()});
     el.addEventListener("focus",function(){if(el.value&&!el.dataset.d)show()});
+    document.addEventListener("pointerdown",function(e){if(box.style.display==="block"&&!el.parentNode.contains(e.target))box.style.display="none"},{passive:true});
     el.addEventListener("blur",function(){setTimeout(function(){box.style.display="none"},120);if(!el.dataset.d){var q=nz(el.value.trim());var m=items.filter(function(x){return x.r===0&&x.k===q})[0];if(m){pick(m)}}});
     el.addEventListener("keydown",function(e){var lis=box.querySelectorAll("li[role=option]");if(!lis.length)return;
       if(e.key==="ArrowDown"||e.key==="ArrowUp"){e.preventDefault();cur=(cur+(e.key==="ArrowDown"?1:-1)+lis.length)%lis.length;lis.forEach(function(l,i){l.classList.toggle("on",i===cur)})}

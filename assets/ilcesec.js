@@ -60,7 +60,7 @@ function kxDeny(er,fb){var c=er&&er.code;if(c===2||c===3)return kxT("Konum alın
     qi.addEventListener("focus",function(){lift(qi)});inp.addEventListener("focus",function(){lift(inp)});
     qi.addEventListener("keydown",function(e){if(e.key==="Enter"&&qc.length){e.preventDefault();qpick(qc[0])}else if(e.key==="Escape"){qhide();qi.blur()}});
     qb.addEventListener("mousedown",function(e){e.preventDefault()});
-    qb.addEventListener("click",function(e){if(e.target.closest("li[data-loc]")){qhide();qi.blur();lb.click();return}if(e.target.closest("li[data-cty]")&&qb.__cty){var c=qb.__cty;qhide();qi.blur();if(acWrap.classList.contains("ip-hide"))alt.click();el.value=c[1];el.dataset.d="CITY:"+c[0];stale();el.blur();return}var li=e.target.closest("li[data-i]");if(li)qpick(qc[+li.getAttribute("data-i")])});
+    qb.addEventListener("click",function(e){if(e.target.closest("li[data-loc]")){qhide();qi.blur();lb.click();return}if(e.target.closest("li[data-cty]")&&qb.__cty){var c=qb.__cty;qhide();qi.blur();if(acWrap.classList.contains("ip-hide"))alt.click();if(window.__kxCity)window.__kxCity(el,c[0],c[1]);else{el.value=c[1];el.dataset.d="CITY:"+c[0]}stale();return}var li=e.target.closest("li[data-i]");if(li)qpick(qc[+li.getAttribute("data-i")])});
     qi.addEventListener("blur",function(){setTimeout(function(){qhide();qi.value=sel.value||""},150)});
     sel.addEventListener("change",function(){setTimeout(qsync,0)});
     if(window.MutationObserver)new MutationObserver(qsync).observe(sel,{attributes:true,attributeFilter:["class"]});
@@ -75,8 +75,8 @@ function kxDeny(er,fb){var c=er&&er.code;if(c===2||c===3)return kxT("Konum alın
     cw.addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;var k=b.getAttribute("data-k"),c=b.getAttribute("data-c");
       if(k==="i"){if(acWrap.classList.contains("ip-hide")===false)alt.click();sel.value=c;sel.dispatchEvent(new Event("change",{bubbles:true}));qsync();return}
       if(acWrap.classList.contains("ip-hide"))alt.click();
-      if(k==="o"){el.placeholder=T("Şehir adı yazın (örn. Bursa)");window.__kxLoadILM&&window.__kxLoadILM();el.focus();return}
-      el.value=b.textContent;el.dataset.d="CITY:"+c;window.__kxLoadILM&&window.__kxLoadILM();stale();el.blur()});
+      if(k==="o"){el.value="";el.dataset.d="";el.placeholder=T("Şehir adı yazın (örn. Bursa)");el.focus();return}
+      if(window.__kxCity)window.__kxCity(el,c,b.textContent);else{el.value=b.textContent;el.dataset.d="CITY:"+c}stale()});
     function lsay(t){lh.textContent=t;lh.hidden=!t}
     lb.addEventListener("click",function(){if(!navigator.geolocation){lsay(T("Konum bu cihazda kullanılamıyor; ilçe ve mahalleyi listeden seçin."));return}
       lsay(T("Konumunuz alınıyor…"));lb.disabled=true;
