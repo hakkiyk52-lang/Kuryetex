@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8"><script>try{var c=localStorage.getItem("k360calm");if(c==="1"||(c===null&&(matchMedia("(pointer:coarse)").matches||innerWidth<900)))document.documentElement.setAttribute("data-calm","1")}catch(e){}</script>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>KuryeTEX Yönetim</title>
+<style>
+:root{--m:#0b2f6b;--t:#f07c1b;--y:#1f9d55;--r:#c0392b}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:#f3f6fb;color:#13233f}
+header{background:var(--m);color:#fff;padding:16px 20px;border-bottom:4px solid var(--t);font-weight:700;font-size:18px}
+main{max-width:440px;margin:0 auto;padding:20px}
+.k{background:#fff;border-radius:16px;padding:20px;box-shadow:0 4px 18px rgba(11,47,107,.08);margin-bottom:16px}
+h2{margin:0 0 12px;font-size:18px}
+input,select{width:100%;padding:14px;font-size:17px;border:1px solid #c9d3e3;border-radius:10px;margin:6px 0 12px}
+button{width:100%;padding:18px;font-size:19px;font-weight:700;border:0;border-radius:12px;color:#fff;background:var(--m);cursor:pointer}
+button:disabled{opacity:.6}
+.durum{font-size:22px;font-weight:800;text-align:center;padding:18px;border-radius:12px;margin-bottom:14px}
+.acik{background:#e6f6ec;color:var(--y)}.kapali{background:#f1f3f7;color:#5b6b85}
+.ac{background:var(--y)}.kapat{background:var(--r);margin-top:10px}
+.not{font-size:14px;color:#5b6b85;line-height:1.45}.h{color:var(--r);font-weight:600;min-height:20px}
+label{font-weight:600;font-size:15px}
+</style>
+</head>
+<body>
+<header>KuryeTEX · Yönetim</header>
+<main>
+  <div class="k" id="giris">
+    <h2>Giriş</h2>
+    <input id="sifre" type="password" placeholder="Yönetim şifresi" autocomplete="current-password">
+    <button id="gir">Giriş yap</button>
+    <p class="h" id="h1"></p>
+  </div>
+
+  <div class="k" id="panel" hidden>
+    <h2>Yağış farkı</h2>
+    <div class="durum kapali" id="durum">…</div>
+    <label for="pct">Fark oranı</label>
+    <select id="pct"><option value="13">%13 – yağışlı hava</option><option value="15">%15 – yoğun yağış</option></select>
+    <label for="saat">Ne kadar açık kalsın?</label>
+    <select id="saat"><option value="3">3 saat sonra kendiliğinden kapansın</option><option value="6" selected>6 saat sonra kendiliğinden kapansın</option><option value="12">12 saat sonra kendiliğinden kapansın</option><option value="0">Ben kapatana kadar açık kalsın</option></select>
+    <button class="ac" id="ac">Yağış farkını AÇ</button>
+    <button class="kapat" id="kapat">Yağış farkını KAPAT</button>
+    <p class="h" id="h2"></p>
+    <p class="not">Açıkken sitedeki bütün fiyat hesaplamalarına bu fark eklenir. Müşteri fiyatın altında "Bu fiyata yağışlı hava nedeniyle %13 fark eklenmiştir" notunu görür. Değişiklik 1 dakika içinde sitede görünür.<br>Otomatik hava durumu kontrolü bundan bağımsız olarak çalışmaya devam eder.</p>
+  </div>
+</main>
+<script>
+(function(){
+  var $=function(i){return document.getElementById(i)},S="";
+  try{S=sessionStorage.getItem("kx_s")||""}catch(e){}
+  function api(b){return fetch("/api/yagis",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(Object.assign({sifre:S},b))}).then(function(r){return r.json().then(function(j){if(!r.ok)throw new Error(j.hata||"Hata");return j})})}
+  function goster(j){var d=$("durum");
+    if(j.on){var s="AÇIK · %"+j.pct;if(j.until){var t=new Date(j.until);s+=" · "+("0"+t.getHours()).slice(-2)+":"+("0"+t.getMinutes()).slice(-2)+"'de kapanacak"}d.textContent=s;d.className="durum acik";$("pct").value=String(j.pct)}
+    else{d.textContent="KAPALI";d.className="durum kapali"}}
+  function gir(){S=$("sifre").value||S;$("h1").textContent="";$("gir").disabled=true;
+    api({sadeceOku:true}).then(function(j){try{sessionStorage.setItem("kx_s",S)}catch(e){}$("giris").hidden=true;$("panel").hidden=false;goster(j)})
+    .catch(function(e){$("h1").textContent=e.message;try{sessionStorage.removeItem("kx_s")}catch(x){}}).then(function(){$("gir").disabled=false})}
+  function degistir(on){$("h2").textContent="";$("ac").disabled=$("kapat").disabled=true;
+    api({on:on,pct:+$("pct").value,saat:+$("saat").value}).then(goster).catch(function(e){$("h2").textContent=e.message})
+    .then(function(){$("ac").disabled=$("kapat").disabled=false})}
+  $("gir").onclick=gir;$("sifre").onkeydown=function(e){if(e.key==="Enter")gir()};
+  $("ac").onclick=function(){degistir(true)};$("kapat").onclick=function(){degistir(false)};
+  if(S)gir();
+})();
+</script>
+</body>
+</html>

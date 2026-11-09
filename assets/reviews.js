@@ -1,5 +1,11 @@
 (function(){
 var R=[
+{n:"Cüneyt Varup",g:"Yerel Rehber · 12 yorum",t:"Cok hizli bir sekilde iletisim kurup istedigim teslimati gerceklestirdiler. İletişimleri muazzamdı. Paket kusursuz bir sekilde elime ulasti."},
+{n:"Oğuz Özvarlık",g:"Yerel Rehber · 73 yorum",e:1,t:"Gaziantep ten İstanbul iş gezisi için geldim. Gece alerjim tuttu. Firmadan ilaç istedim 30 dk gibi bir sürede getirdiler."},
+{n:"Armiiies Arman",g:"İstanbul bölgesinde 10 yorum",e:1,t:"Çok profesyonel ve hızlı çalışıyorlar. Kuryede çok kibardı ilaçların fişinin fotosunu bile çekip atıyorlar."},
+{n:"Sıla Selma Başer",t:"Kapıda ödeme yaptım, güvenilir ve çok anlayışlı insanlardı. Sistem için teşekkürler"},
+{n:"Erkut Tahtali",g:"Yerel Rehber · 54 yorum",t:"Çok iyi. Hemen istediğim sipariş 10 dakika sürmeden elime geçti."},
+{n:"Hasan Hatipoglu",g:"İstanbul bölgesinde 17 yorum",t:"10 numara 5 yıldız"},
 {n:"Sena Peker",g:"Yerel Rehber · 69 yorum",e:1,t:"Hemen yardımcı oldular, Nöbetçi Eczaneden Bakırköy ev adresine yarım saat içerisinde teslim ettiler çok teşekkür ederim önemli bir eksiğe çare olmuşlar"},
 {n:"Berre Şahin",e:1,t:"Annem için acil ilaç gerekiyordu sağolsun arkadaşlar hemen ilgilenip ilacımızı getirdiler. Çok teşekkür ederiz çok memnun kaldık"},
 {n:"Çagri Ozture",e:1,t:"İlginiz alakanız için çok teşekkür ederim.Gece vakti hızır gibi yetişip ihtiyacım olan ilaçları bana 20 dakikada getirdiniz.Çok sağolun.İyi çalışmalar"},
@@ -49,5 +55,6 @@ mark();
 var rm=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;
 if(!rm){setInterval(function(){if(!paused&&!document.hidden){var vis=tr.getBoundingClientRect();if(vis.bottom>0&&vis.top<innerHeight){var maxi=Math.round((tr.scrollWidth-tr.clientWidth)/(step()||1));go(cur>=maxi?0:cur+1);}}},4500);}
 }
-if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",init);else init();
+function lazy(){var b=document.getElementById("kxReviews");if(!b)return;if("IntersectionObserver" in window){var io=new IntersectionObserver(function(es){if(es[0].isIntersecting){io.disconnect();init()}},{rootMargin:"500px 0px"});io.observe(b)}else init()}
+if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",lazy);else lazy();
 })();
