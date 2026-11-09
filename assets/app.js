@@ -68,8 +68,7 @@ window.__hv=true;window.__rs={};window.__RF=function(k,f){if(window.__hv&&!docum
   // ---- hava durumu / resmî tatil / yoğunluk farkı
   var WXC={};
   function istNow(){var d=new Date(Date.now()+(180+new Date().getTimezoneOffset())*60000);return{ymd:d.getFullYear()+"-"+("0"+(d.getMonth()+1)).slice(-2)+"-"+("0"+d.getDate()).slice(-2),h:d.getHours()}}
-  function wxLvl(j){var c=j&&j.current;if(!c)return 0;var w=+c.weather_code,pr=+c.precipitation||0;
-    if([65,67,82,95,96,99,73,75,77,86].indexOf(w)>-1||pr>=2)return 2;if([51,53,55,56,57,61,63,66,71,80,81,85].indexOf(w)>-1||pr>=0.2)return 1;return 0}
+  function wxLvl(j){var c=j&&j.current;if(!c)return 0;var w=+c.weather_code,pr=+c.precipitation||0;if(pr>=2.5||([63,65,67,81,82,95,96,99,73,75,86].indexOf(w)>-1&&pr>=1))return 2;return 0}
   var MANW=null;fetch("/api/yagis").then(function(r){return r.json()}).then(function(j){MANW=j;if(j&&j.on&&res&&res.style.display==="block")compute()}).catch(function(){});
   function wxGet(lat,lon){var W=C.WX;if(!W||!W.on||!lat)return 0;if(window.__WXTEST!=null)return window.__WXTEST;var k=(Math.round(lat*5)/5)+","+(Math.round(lon*5)/5),o=WXC[k];
     if(o&&Date.now()-o.t<9e5)return o.l;if(o&&o.busy)return o.l||0;WXC[k]={t:0,l:o?o.l:0,busy:1};
