@@ -172,7 +172,7 @@ window.K360={
  "BRIDGE_KM": 5,
  "EXPRESS_EXTRA": 0,
  "TIME_STEP": 150,
- "ARAC_MULT": 2.5,
+ "ARAC_MULT": 2,
  "CITIES": [
   [
    "Yalova",

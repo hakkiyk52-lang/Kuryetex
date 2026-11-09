@@ -171,9 +171,9 @@ window.__hv=true;window.__rs={};window.__RF=function(k,f){if(window.__hv&&!docum
    {k:"paket-servis-kurye",l:_t("🍔 Paket servis (restoran)"),t:"calc",size:1,kg:0},
    {k:"eczane-kurye",l:_t("💊 Eczane (ilaç teslimi)"),t:"calc",size:0,kg:0,tm:0,np:1,tv:_t("90 dakika (Express teslim)")},
    {k:"express-kurye",l:_t("⚡ Express kurye"),t:"calc",size:1,kg:1,tm:0,tv:_t("90 dakika (Express teslim)")},
-   {k:"aracli-kurye",l:_t("🚚 Araçlı kurye"),t:"calc",size:0,kg:0,mult:C.ARAC_MULT||2.5},
+   {k:"aracli-kurye",l:_t("🚚 Araçlı kurye"),t:"calc",size:0,kg:0,mult:C.ARAC_MULT||2},
    {k:"vip-kurye",l:_t("👑 VIP kurye"),t:"calc",size:1,kg:1,tm:0,tv:_t("60 dakika (VIP teslim)")},
-   {k:"sofor-vale",l:_t("🔑 Vale / şoför hizmeti"),t:"calc",size:0,kg:0,mult:C.ARAC_MULT||2.5},
+   {k:"sofor-vale",l:_t("🔑 Vale / şoför hizmeti"),t:"calc",size:0,kg:0,mult:C.ARAC_MULT||2},
    {k:"ucak-kargo-teslim",l:_t("✈️ Uçak kargo teslim"),t:"calc",size:1,kg:1},
    {k:"otobus-kargo-teslim",l:_t("🚌 Otobüs kargo teslim"),t:"calc",size:1,kg:1}];
   var tmb=document.querySelectorAll("#tm button"),tmcW=$("tmcWrap"),tmc=$("tmc"),tmv=_t("Normal teslim (2–2,5 saat)");
