@@ -629,51 +629,7 @@ function txn(){if(cur&&cur.np)return _t("Eczane teslimi mahalle bölgesine göre
   if(!red&&"IntersectionObserver" in window){new IntersectionObserver(function(en){if(en[0].isIntersecting){if(!raf){tm=performance.now()-MOVE;raf=requestAnimationFrame(frame)}}else{cancelAnimationFrame(raf);raf=0}}).observe(s)}
 };if(document.readyState==="complete")setTimeout(__go,60);else addEventListener("load",function(){setTimeout(__go,60)})})();
 
-/* ===== 3B koli ===== */
-(function(){
-  var sec=document.querySelector("[data-box]");if(!sec)return;
-  var st=sec.querySelector(".bx-stage"),bx=sec.querySelector(".bx"),btns=[].slice.call(sec.querySelectorAll(".bx-btns button")),info=sec.querySelector(".bx-info"),C=window.K360||{},
-  SZ=[[120,26,90,_t("Evrak / küçük paket"),_t("Ek ücret yok")],[130,100,110,_t("Orta koli"),null],[170,140,140,_t("Büyük koli"),null]],
-  rx=-22,ry=32,drag=false,lx=0,ly=0,spin=true,raf=0;
-  function tlf(n){return "₺"+String(n).replace(/\B(?=(\d{3})+(?!\d))/g,".")}
-  function build(i){var w=SZ[i][0],h=SZ[i][1],d=SZ[i][2];bx.style.width=w+"px";bx.style.height=h+"px";bx.innerHTML="";
-    [["f",w,h,"translateZ("+d/2+"px)","Kuryetex"],["b",w,h,"rotateY(180deg) translateZ("+d/2+"px)",""],["r",d,h,"rotateY(90deg) translateZ("+w/2+"px)",""],["l",d,h,"rotateY(-90deg) translateZ("+w/2+"px)",""],["tp",w,d,"rotateX(90deg) translateZ("+h/2+"px)",""],["bt",w,d,"rotateX(-90deg) translateZ("+h/2+"px)",""]].forEach(function(f){var e=document.createElement("i");e.className=f[0];e.style.width=f[1]+"px";e.style.height=f[2]+"px";e.style.left="50%";e.style.top="50%";e.style.marginLeft=-f[1]/2+"px";e.style.marginTop=-f[2]/2+"px";e.style.transform=f[3];e.textContent=f[4];bx.appendChild(e)});
-    var ex=i===0?"Ek ücret yok":"+"+tlf((C.SIZE_EXTRA||[0,75,100])[i])+_t(" ek ücret");info.innerHTML="<b>"+SZ[i][3]+"</b> · "+ex+"<br><small>Görsel boyutlar yaklaşıktır; emin değilseniz WhatsApp'tan fotoğrafını gönderin.</small>"}
-  function paint(){bx.style.transform="rotateX("+rx+"deg) rotateY("+ry+"deg)"}
-  function loop(){if(!bx.isConnected)return;if(spin&&!drag)ry+=.45;paint();raf=requestAnimationFrame(loop)}
-  btns.forEach(function(b,i){b.addEventListener("click",function(){btns.forEach(function(x){x.setAttribute("aria-pressed","false")});b.setAttribute("aria-pressed","true");build(i)})});
-  st.addEventListener("pointerdown",function(e){drag=true;spin=false;lx=e.clientX;ly=e.clientY;st.classList.add("g");try{st.setPointerCapture(e.pointerId)}catch(x){}});
-  st.addEventListener("pointermove",function(e){if(!drag)return;ry+=(e.clientX-lx)*.6;rx=Math.max(-80,Math.min(80,rx-(e.clientY-ly)*.5));lx=e.clientX;ly=e.clientY});
-  var up=function(){drag=false;st.classList.remove("g")};st.addEventListener("pointerup",up);st.addEventListener("pointercancel",up);
-  build(1);btns[1].setAttribute("aria-pressed","true");
-  if("IntersectionObserver" in window){new IntersectionObserver(function(en){if(en[0].isIntersecting){if(!raf)raf=requestAnimationFrame(loop)}else{cancelAnimationFrame(raf);raf=0}}).observe(st)}else loop();
-})();
-
 /* ===== Mini oyun ===== */
-(function(){
-  var g=document.querySelector("[data-game]");if(!g)return;
-  var D=["Kadıköy","Beşiktaş","Şişli","Üsküdar","Bakırköy","Ataşehir","Fatih","Maltepe","Sarıyer","Pendik"],E=["🏠","🏢","🏥","🏬","🏡"],
-  tm=g.querySelector(".g-time"),sc=g.querySelector(".g-score"),hs=g.querySelector(".g-houses"),area=g.querySelector(".g-area"),end=g.querySelector(".g-end"),play=g.querySelector(".g-play"),
-  score=0,left=30,timer=0,target="",box=null,run=false,best=0;
-  try{best=+localStorage.getItem("k360best")||0}catch(e){}
-  function fx(k,v){if(window.__fx){if(k)window.__fx.snd(k);if(v)window.__fx.vib(v)}}
-  function round(){var pool=D.slice().sort(function(){return Math.random()-.5}).slice(0,3);target=pool[Math.floor(Math.random()*3)];
-    hs.innerHTML=pool.map(function(n,i){return '<div class="g-h" data-n="'+n+'"><i>'+E[(i+score)%E.length]+"</i>"+n+"</div>"}).join("");
-    area.innerHTML='<div class="g-box">📦 → '+target+"</div>";box=area.firstChild;bind()}
-  function under(x,y){var l=document.elementsFromPoint(x,y);for(var i=0;i<l.length;i++){if(l[i].classList&&l[i].classList.contains("g-h"))return l[i]}return null}
-  function bind(){var ox=0,oy=0,dr=false;
-    box.addEventListener("pointerdown",function(e){if(!run)return;dr=true;ox=e.clientX;oy=e.clientY;box.classList.add("d");try{box.setPointerCapture(e.pointerId)}catch(x){}fx("tap",8)});
-    box.addEventListener("pointermove",function(e){if(!dr)return;box.style.transform="translate("+(e.clientX-ox)+"px,"+(e.clientY-oy)+"px) rotate("+((e.clientX-ox)/18)+"deg)";[].forEach.call(hs.children,function(h){h.classList.remove("hot")});var h=under(e.clientX,e.clientY);if(h)h.classList.add("hot")});
-    function up(e){if(!dr)return;dr=false;box.classList.remove("d");var h=under(e.clientX,e.clientY);[].forEach.call(hs.children,function(x){x.classList.remove("hot")});
-      if(!h){box.style.transition="transform .25s";box.style.transform="";setTimeout(function(){box.style.transition=""},260);return}
-      if(h.getAttribute("data-n")===target){score++;sc.textContent=score;h.classList.add("ok");fx("ok",[15,30,15]);setTimeout(function(){if(run)round()},260)}
-      else{h.classList.add("no");fx("bad",[40,40,40]);setTimeout(function(){h.classList.remove("no")},400);box.style.transition="transform .25s";box.style.transform="";setTimeout(function(){box.style.transition=""},260)}}
-    box.addEventListener("pointerup",up);box.addEventListener("pointercancel",up)}
-  function finish(){run=false;clearInterval(timer);if(score>best){best=score;try{localStorage.setItem("k360best",best)}catch(e){}}
-    area.innerHTML="";hs.innerHTML="";end.style.display="block";end.querySelector(".g-res").innerHTML="Süre doldu! <b>"+score+"</b> paket teslim ettin."+(best?" En iyi skorun: <b>"+best+"</b>.":"");fx("ok",[20,40,20]);play.style.display="none"}
-  play.addEventListener("click",function(){score=0;left=30;sc.textContent=0;tm.textContent=left;end.style.display="none";run=true;play.style.display="none";round();timer=setInterval(function(){left--;tm.textContent=left;if(left<=0)finish()},1000)});
-  end.querySelector(".g-again").addEventListener("click",function(){end.style.display="none";play.style.display="";play.click()});
-})();
 ;(function(){if(window.__hs)return;window.__hs=1;function go(){var e=document.getElementById("basvuru");if(!e)return;var y=e.getBoundingClientRect().top+(window.pageYOffset||0)-132;window.scrollTo({top:y,behavior:"instant"})}
 function multi(){[0,150,400,900,1800].forEach(function(t){setTimeout(go,t)})}
 document.addEventListener("click",function(ev){var a=ev.target.closest&&ev.target.closest('a[href*="#basvuru"]');if(a)multi()},true);
@@ -691,7 +647,7 @@ document.addEventListener("submit",function(e){var f=e.target;if(!f.matches||!f.
  var m=f.querySelector(".cmsg");if(m){m.className="cmsg err";m.textContent=_t("Kırmızı ile işaretli alanları doldurun.")}
  window.__goBad(bad[0]);try{bad[0].focus({preventScroll:true})}catch(x){}},true)})();
 ;(function(){var d=document.documentElement;
-function auto(){try{var c=localStorage.getItem("k360calm");if(c===null){var n=navigator,cn=n.connection||{};if((n.deviceMemory&&n.deviceMemory<=2)||(n.hardwareConcurrency&&n.hardwareConcurrency<=3)||cn.saveData||/2g|3g/.test(cn.effectiveType||""))c="1"}return c==="1"}catch(e){return false}}
+function auto(){try{var c=localStorage.getItem("k360calm");if(c===null){var n=navigator,cn=n.connection||{};if((window.matchMedia&&matchMedia("(pointer:coarse)").matches)||innerWidth<900||(n.deviceMemory&&n.deviceMemory<=2)||(n.hardwareConcurrency&&n.hardwareConcurrency<=3)||cn.saveData||/2g|3g/.test(cn.effectiveType||""))c="1"}return c==="1"}catch(e){return false}}
 window.__calm=function(on,save){if(on)d.setAttribute("data-calm","1");else d.removeAttribute("data-calm");if(save){try{localStorage.setItem("k360calm",on?"1":"0")}catch(e){}}
  [].forEach.call(document.querySelectorAll("svg"),function(s){if(s.closest&&s.closest(".xpl,#hizmetler"))return;try{on?s.pauseAnimations():s.unpauseAnimations()}catch(e){}});
  var b=document.getElementById("fxCalm");if(b){b.setAttribute("aria-pressed",on?"true":"false");var _D=window.__D||{},L=on?"🔋 Tasarruf modu: Açık":"🔋 Tasarruf modu: Kapalı";b.textContent=_D[L]||L}
@@ -782,8 +738,7 @@ function set(){var lb=document.querySelector(".langbar"),tk=document.querySelect
  if(lb){lb.style.setProperty("--lb1",hsl(h,62,52));lb.style.setProperty("--lb2",hsl(h+38,66,58))}
  if(tk){tk.style.setProperty("--tk1",hsl(h+24,92,74));tk.style.setProperty("--tk2",hsl(h+52,92,68))}
  var m=document.querySelector('meta[name=theme-color]');if(m)m.content=hsl(h,62,52)}
-var ls=0;function step(ms){if(!document.hidden&&!H.hasAttribute("data-calm")){if(last)h+=(ms-last)/1000*360/PER;if(ms-ls>70){ls=ms;set()}}last=ms;requestAnimationFrame(step)}
-set();requestAnimationFrame(step)})();
+set()})();
 /* === Sağdaki ikonlar: sürükle-at, yere düşsün, yerinde kalsın === */
 ;(function(){if(window.__flyInit)return;window.__flyInit=1;var K="k360fly",S={};try{S=JSON.parse(localStorage.getItem(K)||"{}")||{}}catch(e){}
 function key(el){return el.classList.contains("ecob")?"eco":el.classList.contains("fabc")?"call":"wa"}

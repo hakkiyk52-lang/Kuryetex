@@ -17,6 +17,7 @@ function kxDeny(er,fb){var c=er&&er.code;if(c===2||c===3)return kxT("Konum alın
     return Z.p[z]||null};
   function ilm(cb){if(ILM)return cb(ILM);if(window.__ILM){ILM=window.__ILM;return cb(ILM)}wait.push(cb);if(wait.length>1)return;
     fetch("/assets/data/ilmah.json").then(function(r){return r.json()}).then(function(j){ILM=window.__ILM=j;wait.forEach(function(f){f(j)});wait=[]}).catch(function(){})}
+  function withM(il,cb){var E=window.EKZ,K=window.K360||{},DD=K.D||{};if(E&&E.d&&E.d[il]&&!(DD[il]&&DD[il].il)){cb(E.d[il][1].map(function(m){return m+" Mah"}).sort(function(x,y){return x.localeCompare(y,"tr")}));return}ilm(function(J){cb(mahs(il,J))})}
   function mahs(il,J){var K=window.K360||{},DD=K.D||{},code=((K.ILKOD||{})[(DD[il]&&DD[il].il)||"İstanbul"])||"34",L=(J.d[code]||[]).filter(function(x){return x[0]===il})[0];return L?L[1].map(function(m){return m[0]}):[]}
 
   var MC=null;function nearMah(lat,lon){if(window.__ekNearestMah)return window.__ekNearestMah(lat,lon);
@@ -87,7 +88,7 @@ function kxDeny(er,fb){var c=er&&er.code;if(c===2||c===3)return kxT("Konum alın
     sel.addEventListener("change",function(){il=sel.value;inp.value="";list=[];
       if(!il){inp.disabled=true;inp.placeholder=T("Önce ilçe seçin");setOrig("","");return}
       setOrig(il,il);inp.disabled=false;inp.placeholder=T("Mahalle seçin (zorunlu)");
-      ilm(function(J){list=mahs(il,J);if(document.activeElement===inp)show()})});
+      withM(il,function(L){list=L;if(document.activeElement===inp)show()})});
     inp.addEventListener("focus",show);inp.addEventListener("input",function(){if(il)setOrig(il,il);show()});
     inp.addEventListener("keydown",function(e){var li=box.querySelectorAll("li[data-i]");
       if(e.key==="ArrowDown"||e.key==="ArrowUp"){if(!li.length)return;e.preventDefault();hi=(hi+(e.key==="ArrowDown"?1:-1)+li.length)%li.length;li.forEach(function(x,i){x.classList.toggle("on",i===hi)});li[hi].scrollIntoView({block:"nearest"})}
@@ -100,10 +101,10 @@ function kxDeny(er,fb){var c=er&&er.code;if(c===2||c===3)return kxT("Konum alın
       if(open){el.value="";el.dataset.d="";stale();el.focus()}else{sel.value="";sel.dispatchEvent(new Event("change"))}});
     // dışarıdan (eczane seçimi) ilçe + etiket atama
     el.__ipSet=function(d,label,shown){if(!D[d])return false;if(!acWrap.classList.contains("ip-hide"))alt.click();
-      sel.value=d;il=d;inp.disabled=false;ilm(function(J){list=mahs(il,J)});inp.value=shown||"";setOrig(label,d);qsync();return true};
+      sel.value=d;il=d;inp.disabled=false;withM(il,function(L){list=L});inp.value=shown||"";setOrig(label,d);qsync();return true};
     el.__ipNear=function(lat,lon){var bn=null,bk=1e9;Object.keys(D).forEach(function(n){var p=D[n];if(p&&p.lat!=null){var k=Math.hypot(p.lat-lat,(p.lon-lon)*.76);if(k<bk){bk=k;bn=n}}});return bn};
     // sayfa önceden bir ilçe seçtiyse (ilçe sayfaları) listeye yansıt
-    function sync(){var d=el.dataset.d||"";if(d&&D[d]&&sel.value!==d){sel.value=d;il=d;inp.disabled=false;inp.placeholder=T("Mahalle seçin (zorunlu)");ilm(function(J){list=mahs(il,J)})}qsync()}
+    function sync(){var d=el.dataset.d||"";if(d&&D[d]&&sel.value!==d){sel.value=d;il=d;inp.disabled=false;inp.placeholder=T("Mahalle seçin (zorunlu)");withM(il,function(L){list=L})}qsync()}
     sync();setTimeout(sync,400);setTimeout(sync,1500);
   }
 
