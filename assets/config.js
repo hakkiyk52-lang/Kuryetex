@@ -1,10 +1,6 @@
 /* Fiyat ayarları: buradaki değerleri kendi tarifenize göre değiştirin */
 window.K360={
  "PHONE": "905515315234",
- "KDV": 20,
- "TF_VIP": 0.4,
- "TF_DAY": 0.15,
- "ECZ_SAAT": {"m": [500, 600, 800], "k": [600, 700, 900], "u": [700, 800, 1000]},
  "ECZ_CEVRE": 1200,
  "CEVRE_DONUS": 1000,
  "ANCHORS": [
@@ -149,7 +145,7 @@ window.K360={
   "Şarköy": "u"
  },
  "ROUND": 50,
- "MIN_FEE": 500,
+ "MIN_FEE": 580,
  "MIN_CROSS": 780,
  "EZ_NEAR_KM": 10,
  "NIGHT_FEE": 0,
@@ -3204,9 +3200,12 @@ window.K360={
    "Üsküdar"
   ]
  ],
- "TIER_BASE": 500,
- "TIER_GRID": 580,
- "TIERS": [[5, 27], [8, 30],
+ "TIER_BASE": 580,
+ "TIERS": [
+  [
+   8,
+   30
+  ],
   [
    20,
    22
