@@ -1,6 +1,10 @@
 /* Fiyat ayarları: buradaki değerleri kendi tarifenize göre değiştirin */
 window.K360={
  "PHONE": "905515315234",
+ "KDV": 20,
+ "TF_VIP": 0.4,
+ "TF_DAY": 0.15,
+ "ECZ_SAAT": {"m": [500, 600, 800], "k": [600, 700, 900], "u": [700, 800, 1000]},
  "ECZ_CEVRE": 1200,
  "CEVRE_DONUS": 1000,
  "ANCHORS": [

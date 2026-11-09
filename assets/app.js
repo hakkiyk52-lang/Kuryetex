@@ -55,6 +55,7 @@ window.__hv=true;window.__rs={};window.__RF=function(k,f){if(window.__hv&&!docum
     var ae=document.activeElement;if(ae&&(ae===from||ae===to)&&ae.value&&!ae.dataset.d)ae.dispatchEvent(new Event("input"))}
   function loadILM(){if(ILM||ilmLoading)return;if(window.__ILM){addILM(window.__ILM);return}ilmLoading=true;fetch("/assets/data/ilmah.json").then(function(r){return r.json()}).then(addILM).catch(function(){ilmLoading=false})}
   [from,to].forEach(function(el){el.addEventListener("focus",loadILM);el.addEventListener("input",loadILM)});
+  window.__kxLoadILM=loadILM;
   function val(el){return el.dataset.d||""}
   function hasMah(el){var d=el.dataset.d||"";if(!d||/^CITY:/.test(d)||el.dataset.ll)return true;var f=(el.value||"").split(",")[0].replace(/ Mah\.?\s*$/i,"").trim();return !!f&&nz(f)!==nz(d)}
   var MC=null;fetch("/assets/data/mahcoord.json").then(function(r){return r.json()}).then(function(j){MC=j}).catch(function(){});
@@ -70,12 +71,12 @@ window.__hv=true;window.__rs={};window.__RF=function(k,f){if(window.__hv&&!docum
     if(o&&Date.now()-o.t<9e5)return o.l;if(o&&o.busy)return o.l||0;WXC[k]={t:0,l:o?o.l:0,busy:1};
     fetch("https://api.open-meteo.com/v1/forecast?latitude="+lat.toFixed(2)+"&longitude="+lon.toFixed(2)+"&current=precipitation,weather_code&timezone=Europe%2FIstanbul").then(function(r){return r.json()}).then(function(j){var l=wxLvl(j),old=WXC[k].l;WXC[k]={t:Date.now(),l:l};if(l!==old&&res&&res.style.display==="block")compute()}).catch(function(){WXC[k]={t:Date.now(),l:0}});
     return WXC[k].l}
-  function extras(lat,lon,base){var it=[],W=C.WX||{},T=C.TATIL||{},E=C.ETKINLIK||{},S=C.SURGE||{},n=istNow();
+  function extras(lat,lon,base,nn){var it=[],W=C.WX||{},T=C.TATIL||{},E=C.ETKINLIK||{},S=C.SURGE||{},n=istNow();
     var l=wxGet(lat,lon);if(MANW&&MANW.on){var ml=MANW.pct===15?2:1;if(ml>l)l=ml}if(l===2)it.push([_t("yoğun yağış"),W.heavy||15]);else if(l===1)it.push([_t("yağışlı hava"),W.mid||13]);
     (T.gunler||[]).forEach(function(g){if(g[0]!==n.ymd)return;var t=g[1];if((t==="ab"||t==="ar")&&n.h<13)return;var b=t==="b"||t==="ab";it.push([b?_t("bayram"):_t("resmî tatil"),b?(T.b||15):(T.r||13)])});
     (E.gunler||[]).forEach(function(g){if(g[0]===n.ymd)it.push([g[1],E.pct||15])});
     if(S.on)it.push([(S.txt||_t("yoğunluk")).toLocaleLowerCase("tr"),S.pct||15]);
-    if(C.NIGHT_PCT){var hh;if(typeof tmv!=="undefined"&&tmv==="custom"&&tmc&&tmc.value)hh=+tmc.value.split(":")[0];else hh=n.h;var na=C.NIGHT_START||0,nb=C.NIGHT_END||7;if(na<nb?(hh>=na&&hh<nb):(hh>=na||hh<nb))it.push([_t("gece saati"),C.NIGHT_PCT])}
+    if(C.NIGHT_PCT&&!nn){var hh;if(typeof tmv!=="undefined"&&tmv==="custom"&&tmc&&tmc.value)hh=+tmc.value.split(":")[0];else hh=n.h;var na=C.NIGHT_START||0,nb=C.NIGHT_END||7;if(na<nb?(hh>=na&&hh<nb):(hh>=na||hh<nb))it.push([_t("gece saati"),C.NIGHT_PCT])}
     if(!it.length||!base)return{tot:0,txt:"",msg:""};
     var pct=0;it.forEach(function(x){pct=Math.max(pct,x[1])});if(it.length>1)pct=C.EXTRA_CAP_PCT||15;
     var tot=Math.max(50,Math.round(base*pct/100/50)*50),nm=it.map(function(x){return x[0]}),why=nm.length>1?nm.slice(0,-1).join(", ")+_t(" ve ")+nm[nm.length-1]:nm[0];
@@ -170,13 +171,13 @@ window.__hv=true;window.__rs={};window.__RF=function(k,f){if(window.__hv&&!docum
    {k:"sofor-vale",l:_t("🔑 Vale / şoför hizmeti"),t:"calc",size:0,kg:0,mult:C.ARAC_MULT||2.5},
    {k:"ucak-kargo-teslim",l:_t("✈️ Uçak kargo teslim"),t:"calc",size:1,kg:1},
    {k:"otobus-kargo-teslim",l:_t("🚌 Otobüs kargo teslim"),t:"calc",size:1,kg:1}];
-  var tmb=document.querySelectorAll("#tm button"),tmcW=$("tmcWrap"),tmc=$("tmc"),tmv=_t("Gün içi teslim (2,5–3 saat)");
+  var tmb=document.querySelectorAll("#tm button"),tmcW=$("tmcWrap"),tmc=$("tmc"),tmv=_t("Normal teslim (2–2,5 saat)");
   function setTm(v){tmv=v;tmb.forEach(function(x){x.setAttribute("aria-pressed",x.getAttribute("data-t")===v?"true":"false")});if(tmcW)tmcW.style.display=v==="custom"?"block":"none"}
   tmb.forEach(function(b){b.addEventListener("click",function(){setTm(b.getAttribute("data-t"));reset()})});if(tmc)tmc.addEventListener("input",reset);
   var lastTx=0;
   function tmExtra(base){var m;if(cur&&cur.np)return lastTx=0;if(tmv==="custom"){if(!(tmc&&tmc.value))return lastTx=0;var h=tmc.value.split(":"),n=new Date(),tgt=new Date();tgt.setHours(+h[0],+h[1],0,0);m=(tgt-n)/60000;if(m<0)return lastTx=0}
     else m=tmv.indexOf(_t("60 dakika"))===0?60:tmv.indexOf(_t("90 dakika"))===0?90:tmv===_t("2 saat")?120:999;
-    var f=m<=60?(C.TF_VIP||.2):m<=90?0:m<=120?-(C.TF_2H||.1):-(C.TF_DAY||.2);
+    var f=m<=60?(C.TF_VIP||.4):m<=90?0:-(C.TF_DAY||.15);
     return lastTx=Math.round((base||0)*f/50)*50}
   function txs(x){return x>0?"+"+tl(x):x<0?"−"+tl(-x):tl(0)}
   function nightFee(){var F=C.NIGHT_FEE||0;if(!F)return 0;var h;if(tmv==="custom"&&tmc&&tmc.value){h=+tmc.value.split(":")[0]}else{h=new Date(Date.now()+(180+new Date().getTimezoneOffset())*60000).getHours()}var a=C.NIGHT_START||0,b=C.NIGHT_END||7;return (a<b?(h>=a&&h<b):(h>=a||h<b))?F:0}
@@ -190,7 +191,7 @@ function txn(){if(cur&&cur.np)return _t("Eczane teslimi mahalle bölgesine göre
   function stage(){if(typeof from==="undefined"||!from||!to)return;var s1=true,s2=true,s3=!!cur&&(cur.np||!!val(from))&&!!val(to);
     [[from.closest(".field"),s1],[to.closest(".field"),s2],[$("rowSize"),s3],[$("rowKg"),s3],[$("rowTm"),s3],[$("moreopt"),s3],[$("calcBtn"),s3]].forEach(function(m){var e=m[0];if(!e)return;var hid=e.classList.contains("stg-hide");if(m[1]&&hid){e.classList.remove("stg-hide");e.classList.add("stg-in")}else if(!m[1]&&!hid)e.classList.add("stg-hide")})}
   setTimeout(stage,0);setTimeout(stage,400);
-  function applySvc(s){cur=s;if(s&&tmb.length){if(s.k==="vip-kurye")setTm(_t("60 dakika (VIP teslim)"));else if(s.k==="express-kurye")setTm(_t("90 dakika (Express teslim)"));else if(tmv===_t("60 dakika (VIP teslim)")||tmv===_t("90 dakika (Express teslim)"))setTm(_t("Gün içi teslim (2,5–3 saat)"))}svcsel.value=s?s.l:"";var r1=$("rowSize"),r2=$("rowKg");if(r1)r1.style.display=s&&s.size?"":"none";if(r2)r2.style.display=s&&s.kg?"":"none";
+  function applySvc(s){cur=s;if(s&&tmb.length){if(s.k==="vip-kurye")setTm(_t("60 dakika (VIP teslim)"));else if(s.k==="express-kurye")setTm(_t("90 dakika (Express teslim)"));else if(tmv===_t("60 dakika (VIP teslim)")||tmv===_t("90 dakika (Express teslim)"))setTm(_t("Normal teslim (2–2,5 saat)"))}svcsel.value=s?s.l:"";var r1=$("rowSize"),r2=$("rowKg");if(r1)r1.style.display=s&&s.size?"":"none";if(r2)r2.style.display=s&&s.kg?"":"none";
     var rt=$("rowTm"),d=$("moreopt"),noTm=!!(s&&s.tm===0);if(noTm)setTm(s.tv);if(rt)rt.style.display=noTm?"none":"";
     if(d){var any=!noTm||!!(s&&(s.size||s.kg));d.style.display=any?"":"none";var sm=d.querySelector("summary");if(sm&&sm.firstChild){var p=[];if(!noTm)p.push(_t("süre"));if(s&&s.size)p.push(_t("koli"));if(s&&s.kg)p.push(_t("ağırlık"));var lb=p.length>1?p.slice(0,-1).join(", ")+_t(" ve ")+p[p.length-1]:p[0]||"";sm.firstChild.nodeValue=(noTm?"📦 ":"⏱️ ")+(p.length===1&&!noTm?"Teslim süresini seçin ":lb.charAt(0).toUpperCase()+lb.slice(1)+_t(" seçenekleri "))}d.open=any}
     reset()}
@@ -202,6 +203,11 @@ function txn(){if(cur&&cur.np)return _t("Eczane teslimi mahalle bölgesine göre
   btns.forEach(function(b){b.addEventListener("click",function(){btns.forEach(function(x){x.setAttribute("aria-pressed","false")});b.setAttribute("aria-pressed","true");sizeName=b.getAttribute("data-s");size=+b.getAttribute("data-x");reset()})});
   kg.addEventListener("input",reset);
   function tl(n){return "₺" + n.toLocaleString("tr-TR")}
+  function rq(el){var ll=el.dataset.ll;if(ll)return ll;var v=(el.value||"").replace(/\s+/g," ").trim();return /İstanbul|Kocaeli|Tekirdağ/i.test(v)||/^CITY:/.test(el.dataset.d||"")?v:v+", İstanbul"}
+  function rotaLink(){var k=$("km");if(!k)return;var a=document.createElement("a");a.className="rotal";a.target="_blank";a.rel="nofollow noopener";a.href="https://www.google.com/maps/dir/?api=1&travelmode=driving&origin="+encodeURIComponent(rq(from))+"&destination="+encodeURIComponent(rq(to));a.textContent=_t("Rotayı Google Haritalar'da gör ›");k.appendChild(document.createTextNode(" "));k.appendChild(a)}
+  function kdvP(p){return Math.round(p*(1+(C.KDV||20)/100))}
+  function kdvShow(p,ez){var pe=$("price");if(!pe)return;var k=$("kdvnote");if(!k){k=document.createElement("p");k.id="kdvnote";k.className="kdvn";pe.parentNode.insertBefore(k,pe.nextSibling)}if(!p){k.hidden=true;return}k.hidden=false;k.innerHTML="<span>"+_t("KDV hariç fiyattır.")+"</span> <b>"+_t("Fatura isterseniz KDV dahil (%")+(C.KDV||20)+"): "+tl(kdvP(p))+"</b>"+(ez?"<small>"+_t("KDV yalnızca kurye ücretine eklenir; ilaç ücreti eczane fişine göredir.")+"</small>":"")}
+  function kdvLn(p){return p?"🧾 "+_t("Fatura isterseniz KDV dahil (%")+(C.KDV||20)+"): "+tl(kdvP(p)):""}
   function air(a, b){var R=6371,rad=Math.PI/180,dLat=(b.lat-a.lat)*rad,dLon=(b.lon-a.lon)*rad;var h=Math.sin(dLat/2)*Math.sin(dLat/2)+Math.cos(a.lat*rad)*Math.cos(b.lat*rad)*Math.sin(dLon/2)*Math.sin(dLon/2);return 2*R*Math.asin(Math.sqrt(h))}
   function tarife(km,A){A=A||C.ANCHORS;var i;if(km<=A[0][0])return A[0][1];for(i=1;i<A.length;i++){if(km<=A[i][0])return A[i-1][1]+(A[i][1]-A[i-1][1])*(km-A[i-1][0])/(A[i][0]-A[i-1][0]);}var u=A[A.length-2],l=A[A.length-1];return l[1]+(l[1]-u[1])/(l[0]-u[0])*(km-l[0])}
   function compute(){
@@ -214,16 +220,17 @@ function txn(){if(cur&&cur.np)return _t("Eczane teslimi mahalle bölgesine göre
       var isCev=!!(C.D[td]&&C.D[td].il);if(!isCev&&!(td&&(window.EKZ||{d:{}}).d[td])&&window.EKZ){var nzE=function(x){return String(x||"").toLocaleLowerCase("tr-TR").replace(/ mah(allesi)?\.?$/,"").replace(/[^a-zçğıöşü0-9]/g,"")};tv.split(",").map(nzE).forEach(function(q){if(td&&EKZ.d[td])return;for(var dk in EKZ.d)if(nzE(dk)===q){td=dk;to.dataset.d=dk}})}
       if(!isCev&&!(window.EKZ&&EKZ.d[td])){errEl.textContent=window.EKZ?_t("Lütfen teslim mahallesini listeden seçin; fiyatı hemen gösterelim."):_t("Fiyat tablosu yükleniyor, lütfen birkaç saniye sonra tekrar Fiyat Hesapla'ya basın.");res.style.display="none";if(window.__bad){window.__bad(document.getElementById("toMh")||to,_t("Mahalle seçin"));window.__goBad&&window.__goBad(document.querySelector("#hesapla .bad"))}return}
       var zp=isCev?(C.ECZ_CEVRE||1200):(window.__ekZonePrice?window.__ekZonePrice(to):null);if(!zp)zp=EKZ.p[EKZ.d[td][0]]||null;var Zp=(window.EKZ||{}).p||{},zn={m:_t("Merkezi bölge"),k:_t("Ara bölge"),u:_t("Kırsal bölge"),c:_t("Çevre il")+" ("+C.D[td].il+")"},zk=null;if(isCev)zk="c";else for(var kk in Zp)if(Zp[kk]===zp)zk=kk;
-      var nfE=zp?nightFee():0,dE=C.D[td]||{},exE=zp?extras(dE.lat,dE.lon,zp):{tot:0,txt:"",msg:""},pE=zp?zp+nfE+exE.tot:null;
+      var ES=C.ECZ_SAAT,slE=-1;if(!isCev&&zk&&ES&&ES[zk]){var hE=istNow().h;slE=hE<7?2:hE>=22?1:0;zp=ES[zk][slE]}
+      var nfE=0,dE=C.D[td]||{},exE=zp?extras(dE.lat,dE.lon,zp,1):{tot:0,txt:"",msg:""},pE=zp?zp+nfE+exE.tot:null;
       $("route").textContent=_t("Teslim: ")+tv;$("km").textContent=zk?_t("Bölge: ")+zn[zk]:_t("Bölge: WhatsApp'ta netleşir");$("svcname").textContent=cur.l;$("detail").textContent=_t("Teslim: ")+tmText();
       $("kgnote").textContent=_t("Eczaneyi ve nöbetçi eczaneyi biz buluruz; ilacı temin edip getiririz. Ilaç ve kurye ücretini kapıda tek seferde ödersiniz.")+(nfE?" "+_t("Gece farkı (00:00–07:00): +")+tl(nfE)+".":"")+"";
-      var peE=$("price");cancelAnimationFrame(raf);if(pE){peE.className="price";peE.textContent=tl(pE);$("pnote").textContent=(exE.txt?exE.txt+" ":"")+(nfE?_t("🌙 Gece farkı dahildir (00:00–07:00): +")+tl(nfE)+". ":"")+(isCev?_t("İstanbul dışındaki çevre illerde eczane kurye ücreti en az ")+tl(C.ECZ_CEVRE||1200)+_t("’dir. Kesin fiyat sipariş sırasında netleşir."):_t("Kurye ücreti teslim mahallesine göre belirlenir. Kesin fiyat sipariş sırasında netleşir."))}
+      var peE=$("price");cancelAnimationFrame(raf);if(pE){peE.className="price";peE.textContent=tl(pE);$("pnote").textContent=(exE.txt?exE.txt+" ":"")+(nfE?_t("🌙 Gece farkı dahildir (00:00–07:00): +")+tl(nfE)+". ":"")+(isCev?_t("İstanbul dışındaki çevre illerde eczane kurye ücreti en az ")+tl(C.ECZ_CEVRE||1200)+_t("’dir. Kesin fiyat sipariş sırasında netleşir."):(slE>-1?_t("Eczane kurye ücreti saate göre sabittir")+" ("+zn[zk]+"): 07:00–22:00 "+tl(ES[zk][0])+" · 22:00–24:00 "+tl(ES[zk][1])+" · 00:00–07:00 "+tl(ES[zk][2])+".":_t("Kurye ücreti teslim mahallesine göre belirlenir. Kesin fiyat sipariş sırasında netleşir.")))}
       else{peE.className="price ask";peE.textContent=_t("Fiyat WhatsApp'ta netleşir");$("pnote").textContent=_t("Bu bölge için kurye ücretini WhatsApp'tan hemen bildiririz.")}
       var bmE=function(){var ln=[],adr=kxAdr(to),ll=to.dataset.ll,S="━━━━━━━━━━━━";
         ln.push(kxL("🚨 ACİL İLAÇ – KURYE ÇAĞRISI","🚨 URGENT MEDICINE – COURIER REQUEST","🚨 دواء عاجل – طلب مندوب"),S);
         ln.push(kxL("📍 Mahalle: ","📍 Neighbourhood: ","📍 الحي: ")+tv);
         ln.push(pE?kxL("💰 Kurye ücreti: ","💰 Courier fee: ","💰 أجرة المندوب: ")+tl(pE)+(nfE?kxL(" (gece farkı dahil)"," (night fee incl.)"," (شامل رسوم الليل)"):"")+kxL(" + ilaç ücreti"," + medicine cost"," + ثمن الدواء"):kxL("💰 Kurye ücreti: WhatsApp'ta netleşecek","💰 Courier fee: to be confirmed","💰 الأجرة: يتم تأكيدها"));
-        ln.push(kxL("💊 İlaç ücreti: eczane fişine göre","💊 Medicine cost: as per pharmacy receipt","💊 ثمن الدواء: حسب إيصال الصيدلية"));
+        if(pE)ln.push(kdvLn(pE));ln.push(kxL("💊 İlaç ücreti: eczane fişine göre","💊 Medicine cost: as per pharmacy receipt","💊 ثمن الدواء: حسب إيصال الصيدلية"));
         ln.push(kxL("💳 Ödeme: ilaç + kurye ücreti teslimde kapıda nakit veya IBAN","💳 Payment: medicine + courier fee on delivery, cash or bank transfer","💳 الدفع: الدواء + الأجرة عند التسليم نقداً أو تحويل"));
         if(exE.txt)ln.push("ℹ️ "+exE.txt);
         ln.push(S);
@@ -233,7 +240,7 @@ function txn(){if(cur&&cur.np)return _t("Eczane teslimi mahalle bölgesine göre
         ln.push(kxL("🏠 Açık adres: ","🏠 Full address: ","🏠 العنوان الكامل: ")+(adr?adr+", "+tv:""));
         ln.push(ll?kxL("🗺️ Konum: ","🗺️ Location: ","🗺️ الموقع: ")+"https://maps.google.com/?q="+ll:adr?kxL("🗺️ Harita: ","🗺️ Map: ","🗺️ الخريطة: ")+kxMap(adr+", "+tv):kxL("📍 Konumumu WhatsApp'tan gönderiyorum.","📍 I'm sending my location on WhatsApp.","📍 سأرسل موقعي عبر واتساب."));if(pE)ln.push("",kxL("✅ Onaylıyorum","✅ I confirm","✅ أؤكد"));
         return ln.join("\n")};
-      $("waBtn").href="https://api.whatsapp.com/send?phone="+C.PHONE+"&text="+encodeURIComponent(bmE());$("waBtn").__kxMsg=bmE;res.style.display="block";res.scrollIntoView({behavior:"smooth",block:"nearest"});return}
+      kdvShow(pE,1);$("waBtn").href="https://api.whatsapp.com/send?phone="+C.PHONE+"&text="+encodeURIComponent(bmE());$("waBtn").__kxMsg=bmE;res.style.display="block";res.scrollIntoView({behavior:"smooth",block:"nearest"});return}
     var fa=val(from),tb=val(to);
     var w=0,wx=0,sx=cur.size&&size>=0?C.SIZE_EXTRA[size]:0;if(cur.kg){w=parseFloat(String(kg.value).replace(",","."));if(!(w>=0))w=0;wx=w>C.FREE_KG?Math.ceil((w-C.FREE_KG)/C.KG_STEP)*C.KG_FEE:0}
     function xnote(){var a=[];if(cur.size&&sizeName)a.push(sx?_t("Koli ebat farkı: +")+tl(sx):_t("Evrak / küçük: ek ücret yok"));if(cur.kg)a.push(wx?_t("5 kg üzeri: +")+tl(wx)+" ("+Math.ceil(w-C.FREE_KG)+" kg × "+tl(C.KG_FEE)+")":_t("5 kg'a kadar ek ücret yok"));return a.join(" · ")}
@@ -241,9 +248,9 @@ function txn(){if(cur&&cur.np)return _t("Eczane teslimi mahalle bölgesine göre
       function ica(km){var A=C.ICA;if(km<=A[0][0])return A[0][1];for(var i=1;i<A.length;i++)if(km<=A[i][0])return A[i-1][1]+(A[i][1]-A[i-1][1])*(km-A[i-1][0])/(A[i][0]-A[i-1][0]);return A[A.length-1][1]}
       var codeOf=function(v){return /^CITY:/.test(v)?v.slice(5):(C.D[v]?((C.D[v].il&&C.ILKOD&&C.ILKOD[C.D[v].il])||"34"):null)};
       var ca=codeOf(fa),cb=codeOf(tb),mm=(ILM&&ILM.m)||{},ikm,ip;if(ca!=="34"&&cb!=="34"){errEl.textContent=_t("Alım ve teslim noktalarından biri İstanbul olmalı. İstanbul dışındaki iki nokta arasında hizmetimiz yok.");res.style.display="none";return}
-      if(ca===cb){ikm=15;ip=800}else{ikm=(mm[ca]&&mm[ca][cb])||300;var oth=ca==="34"?cb:(cb==="34"?ca:null);ip=(oth&&C.PXC&&C.PXC[oth])||ica(ikm)}
+      if(ca===cb){ikm=15;ip=800}else{ikm=(mm[ca]&&mm[ca][cb])||(function(){var nm=(ca==="34"?to:from).value.split(",")[0].trim(),k=0;(C.CITIES||[]).forEach(function(c){if(!k&&c[1].indexOf(nm)===0)k=c[4]});return k})()||300;var oth=ca==="34"?cb:(cb==="34"?ca:null);ip=(oth&&C.PXC&&C.PXC[oth])||ica(ikm)}
       ip=Math.round(ip/500)*500;var dn2=(ca&&ca!=="34"&&cb==="34")?(C.CEVRE_DONUS||1000):0;ip+=dn2;var tx2=tmExtra(ip);ip+=tx2+sx+wx;var exC=extras(41.03,28.98,ip);var nf2=nightFee();ip+=nf2;ip+=exC.tot;
-      var hl2=cur.l.replace(/^\S+\s/,"");$("route").textContent=from.value+" → "+to.value;$("km").textContent=_t("Şehirler arası · yaklaşık ")+Math.round(ikm/10)*10+_t(" km (karayolu, tahmini)");$("svcname").textContent=cur.l;$("detail").textContent=_t("Teslim: ")+tmText();$("kgnote").textContent="";
+      var hl2=cur.l.replace(/^\S+\s/,"");$("route").textContent=from.value+" → "+to.value;$("km").textContent=_t("Şehirler arası · yaklaşık ")+Math.round(ikm/10)*10+_t(" km (karayolu, tahmini)");rotaLink();$("svcname").textContent=cur.l;$("detail").textContent=_t("Teslim: ")+tmText();$("kgnote").textContent="";
       var pe2=$("price");cancelAnimationFrame(raf);pe2.className="price";pe2.textContent=tl(ip);var reqM=tmv==="custom"?(function(){if(!(tmc&&tmc.value))return 999;var h=tmc.value.split(":"),tg=new Date();tg.setHours(+h[0],+h[1],0,0);var mm=(tg-new Date())/60000;return mm<0?999:mm})():(tmv.indexOf(_t("60 dakika"))===0?60:tmv.indexOf(_t("90 dakika"))===0?90:tmv===_t("2 saat")?120:999);
       var needM=ikm/85*60;$("kgnote").textContent=(xnote()?xnote()+". ":"")+txn()+(nf2?" "+_t("Gece farkı (00:00–07:00): +")+tl(nf2)+".":"");
       $("pnote").textContent=(dn2?_t("Başka ilden İstanbul’a alım farkı (+")+tl(dn2)+_t(") dahildir. "):"")+(exC.txt?exC.txt+" ":"")+(nf2?_t("🌙 Gece farkı dahildir (00:00–07:00): +")+tl(nf2)+". ":"")+_t("Şehirler arası tahmini fiyattır; araç cinsine, yüke ve güzergâha göre kesin fiyat WhatsApp'ta netleşir.")+(reqM<needM?_t(" Seçtiğiniz süre bu mesafe için çok kısa olabilir (yolculuk yaklaşık ")+Math.round(needM/30)/2+" saat); uygunluğu WhatsApp'ta netleştiririz.":"");
@@ -253,14 +260,14 @@ function txn(){if(cur&&cur.np)return _t("Eczane teslimi mahalle bölgesine göre
         ln.push("🅰️ Alım: "+from.value);ln.push("🅱️ Teslim: "+to.value);
         if(cur.size&&sizeName)ln.push("📐 Boyut: "+sizeName);if(cur.kg)ln.push("⚖️ Ağırlık: "+(w||0)+" kg");
         ln.push("⏱️ Teslim süresi: "+tmText());ln.push("📏 Tahmini mesafe: ~"+Math.round(ikm/10)*10+" km");
-        ln.push("💰 Fiyat: "+tl(ip)+" (şehirler arası tahmini)");
+        ln.push("💰 Fiyat: "+tl(ip)+" (şehirler arası tahmini, KDV hariç)");ln.push(kdvLn(ip));
         var fx=[];if(dn2)fx.push("il dışından alım +"+tl(dn2));if(sx)fx.push("koli ebat +"+tl(sx));if(wx)fx.push("ağırlık +"+tl(wx));if(nf2)fx.push("gece +"+tl(nf2));if(fx.length)ln.push("   (dahil: "+fx.join(", ")+")");
         if(exC.txt)ln.push("ℹ️ "+exC.txt);
         ln.push(S,"📝 Gönderi / not: ","👤 Teslim alacak kişi / tel: ",S);
         ln.push("🏠 Alım adresi: "+(fA||""));ln.push(from.dataset.ll?"🗺️ Alım konumu: https://maps.google.com/?q="+from.dataset.ll:fA?"🗺️ Alım haritası: "+mp(from,fA):"🗺️ Alım konumu: (WhatsApp'tan gönderilecek)");
         ln.push("🏠 Teslim adresi: "+(tA||""));ln.push(to.dataset.ll?"🗺️ Teslim konumu: https://maps.google.com/?q="+to.dataset.ll:tA?"🗺️ Teslim haritası: "+mp(to,tA):"🗺️ Teslim konumu: (WhatsApp'tan gönderilecek)");
         ln.push("","✅ Onaylıyorum");return ln.join("\n")};
-      $("waBtn").href="https://api.whatsapp.com/send?phone="+C.PHONE+"&text="+encodeURIComponent(bmC());$("waBtn").__kxMsg=bmC;res.style.display="block";res.scrollIntoView({behavior:"smooth",block:"nearest"});return}
+      kdvShow(ip);$("waBtn").href="https://api.whatsapp.com/send?phone="+C.PHONE+"&text="+encodeURIComponent(bmC());$("waBtn").__kxMsg=bmC;res.style.display="block";res.scrollIntoView({behavior:"smooth",block:"nearest"});return}
     if(C.D[fa]&&C.D[fa].il&&C.D[tb]&&C.D[tb].il){errEl.textContent=_t("Alım ve teslim noktalarından biri İstanbul olmalı. İstanbul dışındaki iki nokta arasında hizmetimiz yok.");res.style.display="none";return}var pa=ptOf(from)||mahPt(from),pb=ptOf(to)||mahPt(to),a=pa||C.D[fa],b=pb||C.D[tb],km,raw,ar=air(a,b);
     var sdA=(C.D[fa]||a||{}).side,sdB=(C.D[tb]||b||{}).side,xs=!!(sdA&&sdB&&sdA!==sdB),same=(fa===tb&&!pa&&!pb)||ar<0.3;
     km=same?3:Math.max(C.MAH_KM_MIN||3,ar*C.ROAD+(xs?C.BRIDGE_KM:0));raw=tier(km);
@@ -268,10 +275,10 @@ function txn(){if(cur&&cur.np)return _t("Eczane teslimi mahalle bölgesine göre
     var p=null;window.__ezX=false;
     var ext=0;if(cur.t==="calc"){var B0=C.TIER_BASE||580,base=raw<=B0?B0:B0+Math.round((raw-B0)/C.ROUND)*C.ROUND;p=cur.mult?Math.round(base*cur.mult/C.ROUND)*C.ROUND:base+(cur.add||0);var tx0=tmExtra(p);if(tx0<0)p+=tx0;else ext+=tx0;ext+=sx+wx}
     if(p!==null){p=Math.max(p,xs?(C.MIN_CROSS||780):(C.MIN_FEE||580));p+=ext}
-    var rz=0,rzn="";if(p!==null&&window.__ekZonePrice&&tmv!==_t("Gün içi teslim (2,5–3 saat)")){var zb=(window.EKZ||{}).p||{},za=window.__ekZonePrice(from),zt=window.__ekZonePrice(to);[za,zt].forEach(function(z){if(z&&zb.m&&z-zb.m>rz)rz=z-zb.m});if(rz){rzn=rz>=((zb.u||780)-(zb.m||580))?_t("Kırsal bölge farkı"):_t("Ara bölge farkı");p+=rz}}var dn=0;if(p!==null&&C.D[fa]&&C.D[fa].il&&!(C.D[tb]&&C.D[tb].il)){dn=C.CEVRE_DONUS||1000;p+=dn}var exN=p!==null?extras(a.lat,a.lon,p):{tot:0,txt:"",msg:""};var nf=p!==null?nightFee():0;if(nf)p+=nf;p=p!==null?p+exN.tot:p;
+    var rz=0,rzn="";if(p!==null&&window.__ekZonePrice&&tmv!==_t("Normal teslim (2–2,5 saat)")){var zb=(window.EKZ||{}).p||{},za=window.__ekZonePrice(from),zt=window.__ekZonePrice(to);[za,zt].forEach(function(z){if(z&&zb.m&&z-zb.m>rz)rz=z-zb.m});if(rz){rzn=rz>=((zb.u||780)-(zb.m||580))?_t("Kırsal bölge farkı"):_t("Ara bölge farkı");p+=rz}}var dn=0;if(p!==null&&C.D[fa]&&C.D[fa].il&&!(C.D[tb]&&C.D[tb].il)){dn=C.CEVRE_DONUS||1000;p+=dn}var exN=p!==null?extras(a.lat,a.lon,p):{tot:0,txt:"",msg:""};var nf=p!==null?nightFee():0;if(nf)p+=nf;p=p!==null?p+exN.tot:p;
     var hl=cur.l.replace(/^\S+\s/,"");
     $("route").textContent=from.value+" → "+to.value;
-    $("km").textContent=_t("Mesafe: ")+km.toFixed(1).replace(".",",")+_t(" km (tahmini)");
+    $("km").textContent=_t("Mesafe: ")+km.toFixed(1).replace(".",",")+_t(" km (tahmini)");rotaLink();
     $("svcname").textContent=cur.l;
     var det=[];if(cur.size&&sizeName)det.push(sizeName);if(cur.kg)det.push((w||0)+" kg");det.push(_t("Teslim: ")+tmText());$("detail").textContent=det.join(" · ");
     $("kgnote").textContent=(xnote()?xnote()+". ":"")+txn()+(rz?" "+rzn+": +"+tl(rz)+".":"")+(nf?" "+_t("Gece farkı (00:00–07:00): +")+tl(nf)+".":"")+"";
@@ -283,14 +290,14 @@ function txn(){if(cur&&cur.np)return _t("Eczane teslimi mahalle bölgesine göre
     ln.push("🅰️ Alım: "+from.value);ln.push("🅱️ Teslim: "+to.value);
     if(cur.size&&sizeName)ln.push("📐 Boyut: "+sizeName);if(cur.kg)ln.push("⚖️ Ağırlık: "+(w||0)+" kg");
     ln.push("⏱️ Teslim süresi: "+tmText());ln.push("📏 Tahmini mesafe: "+km.toFixed(1).replace(".",",")+" km");
-    ln.push("💰 Fiyat: "+(p!==null?tl(p):_t("WhatsApp'ta netleşecek")));
+    ln.push("💰 Fiyat: "+(p!==null?tl(p)+" (KDV hariç)":_t("WhatsApp'ta netleşecek")));if(p!==null)ln.push(kdvLn(p));
     var fx=[];if(dn)fx.push("il dışından alım +"+tl(dn));if(sx)fx.push("koli ebat +"+tl(sx));if(wx)fx.push("ağırlık +"+tl(wx));if(nf)fx.push("gece +"+tl(nf));if(rz)fx.push(rzn.toLocaleLowerCase("tr")+" +"+tl(rz));if(fx.length)ln.push("   (dahil: "+fx.join(", ")+")");
     if(exN.txt)ln.push("ℹ️ "+exN.txt);
     ln.push(S,"📝 Gönderi / not: ","👤 Teslim alacak kişi / tel: ",S);
     ln.push("🏠 Alım adresi: "+(fA||""));ln.push(from.dataset.ll?"🗺️ Alım konumu: https://maps.google.com/?q="+from.dataset.ll:fA?"🗺️ Alım haritası: "+kxMap(fA+", "+from.value):"🗺️ Alım konumu: (WhatsApp'tan gönderilecek)");
     ln.push("🏠 Teslim adresi: "+(tA||""));ln.push(to.dataset.ll?"🗺️ Teslim konumu: https://maps.google.com/?q="+to.dataset.ll:tA?"🗺️ Teslim haritası: "+kxMap(tA+", "+to.value):"🗺️ Teslim konumu: (WhatsApp'tan gönderilecek)");if(p!==null)ln.push("","✅ Onaylıyorum");
     return ln.join("\n")};
-    $("waBtn").href="https://api.whatsapp.com/send?phone="+C.PHONE+"&text="+encodeURIComponent(bmG());$("waBtn").__kxMsg=bmG;
+    kdvShow(p);$("waBtn").href="https://api.whatsapp.com/send?phone="+C.PHONE+"&text="+encodeURIComponent(bmG());$("waBtn").__kxMsg=bmG;
     res.style.display="block";res.scrollIntoView({behavior:"smooth",block:"nearest"});
   }
   function kxMap(q){return "https://www.google.com/maps/search/?api=1&query="+encodeURIComponent((function(x){return /İstanbul|Kocaeli|Tekirdağ/i.test(x)?x:x+", İstanbul"})(q.replace(/\s+/g," ").trim()))}

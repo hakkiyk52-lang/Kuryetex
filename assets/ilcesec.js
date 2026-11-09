@@ -68,6 +68,15 @@ function kxDeny(er,fb){var c=er&&er.code;if(c===2||c===3)return kxT("Konum alın
     var lb=document.createElement("button");lb.type="button";lb.className="ip-loc";lb.textContent=T("📍 Konumumu kullan");
     var lh=document.createElement("p");lh.className="ip-loch";lh.hidden=true;
     lb.textContent=word==="Teslim"?T("📍 Konumuma gelsin"):T("📍 Konumum");field.classList.add("ip-f");if(lab&&lab.parentNode===field)field.insertBefore(lb,lab.nextSibling);else w.insertBefore(lb,alt);w.insertBefore(lh,alt);
+    // --- şehir dışı hızlı seçim (Bursa, İzmit, Tekirdağ…) ---
+    var cw=document.createElement("div");cw.className="ip-cty";
+    cw.innerHTML='<span>'+T("Şehir dışı:")+'</span>'+[["c","16","Bursa"],["i","İzmit","İzmit"],["i","Süleymanpaşa","Tekirdağ"],["c","54","Sakarya"],["c","06","Ankara"],["c","35","İzmir"]].filter(function(c){return c[0]==="c"||D[c[1]]}).map(function(c){return'<button type="button" data-k="'+c[0]+'" data-c="'+c[1]+'">'+c[2]+'</button>'}).join("")+'<button type="button" data-k="o">'+T("Diğer il")+' ›</button>';
+    w.insertBefore(cw,alt);
+    cw.addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;var k=b.getAttribute("data-k"),c=b.getAttribute("data-c");
+      if(k==="i"){if(acWrap.classList.contains("ip-hide")===false)alt.click();sel.value=c;sel.dispatchEvent(new Event("change",{bubbles:true}));qsync();return}
+      if(acWrap.classList.contains("ip-hide"))alt.click();
+      if(k==="o"){el.placeholder=T("Şehir adı yazın (örn. Bursa)");window.__kxLoadILM&&window.__kxLoadILM();el.focus();return}
+      el.value=b.textContent;el.dataset.d="CITY:"+c;window.__kxLoadILM&&window.__kxLoadILM();stale();el.blur()});
     function lsay(t){lh.textContent=t;lh.hidden=!t}
     lb.addEventListener("click",function(){if(!navigator.geolocation){lsay(T("Konum bu cihazda kullanılamıyor; ilçe ve mahalleyi listeden seçin."));return}
       lsay(T("Konumunuz alınıyor…"));lb.disabled=true;

@@ -49,5 +49,6 @@ mark();
 var rm=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;
 if(!rm){setInterval(function(){if(!paused&&!document.hidden){var vis=tr.getBoundingClientRect();if(vis.bottom>0&&vis.top<innerHeight){var maxi=Math.round((tr.scrollWidth-tr.clientWidth)/(step()||1));go(cur>=maxi?0:cur+1);}}},4500);}
 }
-if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",init);else init();
+function lazy(){var b=document.getElementById("kxReviews");if(!b)return;if("IntersectionObserver" in window){var io=new IntersectionObserver(function(es){if(es[0].isIntersecting){io.disconnect();init()}},{rootMargin:"500px 0px"});io.observe(b)}else init()}
+if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",lazy);else lazy();
 })();
