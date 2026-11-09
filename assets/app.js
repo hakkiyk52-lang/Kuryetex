@@ -196,7 +196,7 @@ function txn(){if(cur&&cur.np)return _t("Eczane teslimi mahalle bölgesine göre
   function stage(){if(typeof from==="undefined"||!from||!to)return;var s1=true,s2=true,s3=!!cur&&(cur.np||!!val(from))&&!!val(to);
     [[from.closest(".field"),s1],[to.closest(".field"),s2],[$("rowSize"),s3],[$("rowKg"),s3],[$("rowTm"),s3],[$("moreopt"),s3],[$("calcBtn"),s3]].forEach(function(m){var e=m[0];if(!e)return;var hid=e.classList.contains("stg-hide");if(m[1]&&hid){e.classList.remove("stg-hide");e.classList.add("stg-in")}else if(!m[1]&&!hid)e.classList.add("stg-hide")})}
   setTimeout(stage,0);setTimeout(stage,400);
-  function applySvc(s){cur=s;if(s&&tmb.length){if(s.k==="vip-kurye")setTm(_t("60 dakika (VIP teslim)"));else if(s.k==="express-kurye")setTm(_t("90 dakika (Express teslim)"));else if(tmv===_t("60 dakika (VIP teslim)")||tmv===_t("90 dakika (Express teslim)"))setTm(_t("Normal teslim (2–2,5 saat)"))}svcsel.value=s?s.l:"";var r1=$("rowSize"),r2=$("rowKg");if(r1)r1.style.display=s&&s.size?"":"none";if(r2)r2.style.display=s&&s.kg?"":"none";
+  function applySvc(s){cur=s;if(s&&tmb.length){if(s.k==="vip-kurye")setTm(_t("60 dakika (VIP teslim)"));else if(s.k==="express-kurye")setTm(_t("90 dakika (Express teslim)"));else if(tmv===_t("60 dakika (VIP teslim)")||tmv===_t("90 dakika (Express teslim)"))setTm(_t("Normal teslim (2–2,5 saat)"))}svcsel.value=s?s.l:"";try{document.dispatchEvent(new CustomEvent("kxsvc",{detail:s}))}catch(e){}var r1=$("rowSize"),r2=$("rowKg");if(r1)r1.style.display=s&&s.size?"":"none";if(r2)r2.style.display=s&&s.kg?"":"none";
     var rt=$("rowTm"),d=$("moreopt"),noTm=!!(s&&s.tm===0);if(noTm)setTm(s.tv);if(rt)rt.style.display=noTm?"none":"";
     if(d){var any=!noTm||!!(s&&(s.size||s.kg));d.style.display=any?"":"none";var sm=d.querySelector("summary");if(sm&&sm.firstChild){var p=[];if(!noTm)p.push(_t("süre"));if(s&&s.size)p.push(_t("koli"));if(s&&s.kg)p.push(_t("ağırlık"));var lb=p.length>1?p.slice(0,-1).join(", ")+_t(" ve ")+p[p.length-1]:p[0]||"";sm.firstChild.nodeValue=(noTm?"📦 ":"⏱️ ")+(p.length===1&&!noTm?"Teslim süresini seçin ":lb.charAt(0).toUpperCase()+lb.slice(1)+_t(" seçenekleri "))}d.open=any}
     reset()}
@@ -886,3 +886,19 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
   var res=document.getElementById("result");if(res)new MutationObserver(sync).observe(res,{attributes:true,attributeFilter:["style","class"]});
   setInterval(sync,1200);sync();
 })();
+
+(function(){var M={"eczane-kurye":"eczane-kurye-eczaneden-teslim","aracli-kurye":"aracli-kurye-koli-teslim","evrak-kurye":"kapida-teslim-kurye-istanbul","express-kurye":"moto-kurye-istanbul-teslimat","motor-kurye":"moto-kurye-bogaz-istanbul","otobus-kargo-teslim":"otobus-kargo-teslim-kurye","paket-servis-kurye":"kurye-paket-teslim-eminonu","sofor-vale":"sofor-vale-hizmeti","ucak-kargo-teslim":"ucak-kargo-teslim-kurye","vip-kurye":"moto-kurye-gun-batimi-istanbul"},u=0;
+function mark(ev){var t=ev.target;if(t&&t.closest&&t.closest("#hesapla .field"))u=1}
+document.addEventListener("pointerdown",mark,true);document.addEventListener("keydown",mark,true);
+document.addEventListener("kxsvc",function(e){if(!u)return;var s=e.detail,sec=document.getElementById("hesapla"),w=sec&&sec.querySelector(".wrap");if(!w)return;
+var hd=[].slice.call(w.children).filter(function(c){return c.matches(".eyebrow,h2,p.lead")}),f=w.querySelector(".svcban"),n=s&&M[s.k];
+if(!n){if(f)f.remove();hd.forEach(function(c){c.style.display=""});return}
+if(!f){f=document.createElement("figure");f.className="svcban";f.innerHTML='<img alt="" decoding="async" width="800" height="450"><figcaption></figcaption>';w.insertBefore(f,w.firstChild)}
+var im=f.querySelector("img");im.src="/assets/img/md/"+n+".webp";im.alt=s.l+" – Kuryetex";f.querySelector("figcaption").textContent=s.l;
+hd.forEach(function(c){c.style.display="none"})})})();
+(function(){[].forEach.call(document.querySelectorAll(".kxsl"),function(w){var tr=w.querySelector(".kxsl-tr");if(!tr)return;var paused=0;function st(){var f=tr.firstElementChild;return f?f.getBoundingClientRect().width+12:300}
+function go(d){var max=tr.scrollWidth-tr.clientWidth-4;tr.scrollTo({left:d>0&&tr.scrollLeft>=max?0:Math.max(0,tr.scrollLeft+d*st())})}
+w.querySelector(".kxsl-p").onclick=function(){paused=1;go(-1)};w.querySelector(".kxsl-n").onclick=function(){paused=1;go(1)};
+tr.addEventListener("pointerdown",function(){paused=1},{passive:true});tr.addEventListener("touchstart",function(){paused=1},{passive:true});
+if(matchMedia("(prefers-reduced-motion:reduce)").matches)return;var vis=0;if("IntersectionObserver"in window)new IntersectionObserver(function(e){vis=e[0].isIntersecting}).observe(tr);
+setInterval(function(){if(vis&&!paused&&!document.hidden)go(1)},3200)})})();
