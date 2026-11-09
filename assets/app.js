@@ -99,7 +99,7 @@ window.__hv=true;window.__rs={};window.__RF=function(k,f){if(window.__hv&&!docum
       items.forEach(function(x){if(x.r===3&&x.k.indexOf(q)===0){add(x);items.forEach(function(y){if(y.r===4&&y.c===x.c&&y.i===x.i)add(y)})}});
       items.forEach(function(x){if(x.r===4&&x.k.indexOf(q)===0)add(x)});
       items.forEach(function(x){if(x.r>=2&&x.k.indexOf(q)>0)add(x)});
-      list=list.slice(0,20);(geoRes[el.id]||[]).forEach(function(g){if(g.q===q)list.push({x:{l:g.l,t:g.t,pt:g.pt,r:5}})});
+      list=list.slice(0,40);(geoRes[el.id]||[]).forEach(function(g){if(g.q===q)list.push({x:{l:g.l,t:g.t,pt:g.pt,r:5}})});
       if(q.length>=3)geoAsk(q);
       if(!list.length){box.innerHTML='<li class="none">Sonuç bulunamadı. Yakın bir ilçe adı yazmayı deneyin.</li>';box.style.display="block";return}
       list.forEach(function(o,idx){var li=document.createElement("li");li.setAttribute("role","option");li.innerHTML="<span></span><em></em>";li.firstChild.textContent=o.x.l;li.lastChild.textContent=o.x.t;if(o.x.r===1||o.x.r===4)li.className="sub";if(o.x.pt)li.className="adr";
