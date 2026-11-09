@@ -122,7 +122,7 @@ function kxDeny(er,fb){var c=er&&er.code;if(c===2||c===3)return kxT("Konum alın
     var f=from.closest(".field"),tf=to.closest(".field"),tlab=tf&&tf.querySelector("label"),tlab0=tlab?tlab.innerHTML:"";
     var w=document.createElement("div");w.className="kx-ez";w.hidden=true;
     w.innerHTML='<div class="kx-ez-hd"><span class="kx-ez-ic" aria-hidden="true">💊</span><div><b>'+T("Eczaneyi biz buluruz")+'</b><small>'+T("Mahallenizi seçin, ilacı alıp getirelim.")+'</small></div></div>'+
-      '<div class="nb-2"><button type="button" class="nb-go">'+T("📍 Konumu kullan")+'</button><button type="button" class="nb-go2">'+T("Farklı isteğim var")+'</button></div><p class="kx-ez-h" hidden></p>';
+      '<div class="nb-2"><button type="button" class="nb-go">'+T("📍 Konumu kullan")+'</button><button type="button" class="nb-go2">'+T("Farklı isteğim var")+'</button></div><button type="button" class="kx-ezf">'+T("🏥 Farklı bir eczaneden talep ediyorum")+'</button><p class="kx-ez-h" hidden></p>';
     f.parentNode.insertBefore(w,f);
     var ot=document.createElement("div");ot.className="kx-other";ot.hidden=true;
     ot.innerHTML='<p class="kx-other-t">'+T("Farklı bir isteğiniz mi var?")+'</p><p>'+T("İlacınız başka bir şehirde mi, birden fazla ilaç ya da özel bir ürün mü gerekiyor? WhatsApp'tan yazın, size hemen yardımcı olalım.")+'</p>'+
@@ -150,9 +150,12 @@ function kxDeny(er,fb){var c=er&&er.code;if(c===2||c===3)return kxT("Konum alın
       navigator.geolocation.getCurrentPosition(function(ps){var lat=ps.coords.latitude,lon=ps.coords.longitude;if(!window.__ekNearestMah){say("");return}
         window.__ekNearestMah(lat,lon).then(function(r){if(r&&to.__ipSet&&to.__ipSet(r.il,r.mah+" Mah, "+r.il,r.mah)&&(!window.__kxGeo||__kxGeo(to,lat,lon)))say(T("📍 Teslim mahallesi konumunuza göre seçildi: ")+r.mah+", "+r.il+T(". Farklıysa aşağıdan değiştirin."));else say(T("Konumunuza yakın bir mahalle bulunamadı; mahallenizi aşağıdan seçin."))})},
         function(er){say(kxDeny(er,T("Konum izni verilmedi; mahallenizi aşağıdan seçin.")))},{enableHighAccuracy:true,timeout:10000})};
+    var flab=f&&f.querySelector("label"),flab0=flab?flab.innerHTML:"",ezb=w.querySelector(".kx-ezf"),ezOn=false;
+    function ezf(on){ezOn=on;if(f)f.style.display=on?"":"none";if(flab)flab.innerHTML=on?T("1. İlaç hangi eczaneden alınacak? (ilçe ve mahalle)"):flab0;ezb.textContent=on?T("✕ Vazgeç, eczaneyi siz bulun"):T("🏥 Farklı bir eczaneden talep ediyorum");ezb.classList.toggle("on",on);if(window.__kxEzFrom)window.__kxEzFrom(on);if(on)f.scrollIntoView({block:"nearest"})}
+    ezb.onclick=function(){ezf(!ezOn)};document.addEventListener("kxsvc",function(){if(ezOn)ezf(false)});
     function other(on){calcBox.classList.toggle("kx-is-other",on);ot.hidden=!on;if(on)ot.scrollIntoView({block:"nearest"})}
     own.onclick=function(){other(true)};ot.querySelector(".kx-other-back").onclick=function(){other(false)};
-    var last=null;function tick(){var v=svc.value||"",tm=document.getElementById("toMh"),ez=/eczane|ilaç|ilac|pharmacy|medicine|صيدلية|الأدوية/i.test(v);if(tm&&!tm.disabled&&!/^CITY:/.test((document.getElementById("to")||{dataset:{}}).dataset.d||"")){var ph=T("Mahalle seçin (zorunlu)");if(tm.placeholder!==ph)tm.placeholder=ph}if(v===last)return;last=v;var on=/eczane|ilaç|ilac|pharmacy|medicine|صيدلية|الأدوية/i.test(v);w.hidden=!on;g.hidden=on;calcBox.classList.toggle("kx-svc",!!v);if(!on){other(false);gset(v)}
+    var last=null;function tick(){var v=svc.value||"",tm=document.getElementById("toMh"),ez=/eczane|ilaç|ilac|pharmacy|medicine|صيدلية|الأدوية/i.test(v);if(tm&&!tm.disabled&&!/^CITY:/.test((document.getElementById("to")||{dataset:{}}).dataset.d||"")){var ph=T("Mahalle seçin (zorunlu)");if(tm.placeholder!==ph)tm.placeholder=ph}if(v===last)return;last=v;var on=/eczane|ilaç|ilac|pharmacy|medicine|صيدلية|الأدوية/i.test(v);w.hidden=!on;g.hidden=on;calcBox.classList.toggle("kx-svc",!!v);if(ezOn){ezOn=false;ezb.classList.remove("on");ezb.textContent=T("🏥 Farklı bir eczaneden talep ediyorum");if(flab)flab.innerHTML=flab0}if(!on){other(false);gset(v)}
       if(f)f.style.display=on?"none":"";var ts=document.getElementById("toIl");
       if(tlab)tlab.innerHTML=on?tlab0.replace(/^\s*\d+\.\s*(Nereye gidecek\?|Deliver to\?|إلى أين يتم التوصيل؟)/,T("2. İlaç nereye gelecek? (ilçe ve mahalle)")):tlab0}tick();calcBox.classList.add("kx-ready");setInterval(tick,300);
   }
