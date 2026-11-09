@@ -149,7 +149,7 @@ window.K360={
   "Şarköy": "u"
  },
  "ROUND": 50,
- "MIN_FEE": 580,
+ "MIN_FEE": 500,
  "MIN_CROSS": 780,
  "EZ_NEAR_KM": 10,
  "NIGHT_FEE": 0,
@@ -3204,12 +3204,9 @@ window.K360={
    "Üsküdar"
   ]
  ],
- "TIER_BASE": 580,
- "TIERS": [
-  [
-   8,
-   30
-  ],
+ "TIER_BASE": 500,
+ "TIER_GRID": 580,
+ "TIERS": [[5, 27], [8, 30],
   [
    20,
    22
