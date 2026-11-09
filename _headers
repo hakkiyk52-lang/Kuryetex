@@ -16,3 +16,9 @@
 
 /assets/video/*
   Cache-Control: public, max-age=604800
+
+https://:version.kuryetex.pages.dev/*
+  X-Robots-Tag: noindex, nofollow
+
+https://kuryetex.pages.dev/*
+  X-Robots-Tag: noindex, nofollow
