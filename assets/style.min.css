@@ -349,3 +349,4 @@ main>section.sec:not(#hesapla),main>.sec:not(#hesapla),footer{content-visibility
 .ip .ip-alt{display:none!important}
 
 #pnote:empty{display:none!important}
+.kxgrid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin-top:14px}.kxfig{margin:0;background:#fff;border:1px solid #dbe4ee;border-radius:16px;overflow:hidden}.kxfig img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover}.kxfig.tall img{aspect-ratio:3/4;object-fit:cover;object-position:top}.kxfig figcaption{padding:10px 14px;font-size:.88rem;font-weight:700;color:#1f3c88}.rhimg{margin:18px 0;border-radius:16px;overflow:hidden}.rhimg img{display:block;width:100%;height:auto}.rhimg figcaption{font-size:.85rem;color:#5b6b80;padding:6px 2px}
