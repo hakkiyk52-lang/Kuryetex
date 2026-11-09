@@ -153,8 +153,8 @@ window.K360={
  "MIN_CROSS": 780,
  "EZ_NEAR_KM": 10,
  "NIGHT_FEE": 0,
- "NIGHT_START": 0,
- "NIGHT_END": 7,
+ "NIGHT_START": 21,
+ "NIGHT_END": 8,
  "SIZE_EXTRA": [
   0,
   75,
@@ -172,7 +172,7 @@ window.K360={
  "BRIDGE_KM": 5,
  "EXPRESS_EXTRA": 0,
  "TIME_STEP": 150,
- "ARAC_MULT": 2.5,
+ "ARAC_MULT": 2,
  "CITIES": [
   [
    "Yalova",
@@ -3328,5 +3328,5 @@ window.K360={
   ]
  },
  "EXTRA_CAP_PCT": 15,
- "NIGHT_PCT": 15
+ "NIGHT_PCT": 25
 };
