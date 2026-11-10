@@ -3224,14 +3224,15 @@ window.K360={
   "Tekirdağ": "59"
  },
  "WX": {
-  "on": true,
+  "on": false,
   "mid": 13,
   "heavy": 15
  },
  "TATIL": {
+  "_not": "Otomatik tatil kapalı (kullanıcı isteği, 10.11.2026). Tekrar açmak için gunler_kapali -> gunler.",
   "r": 13,
   "b": 15,
-  "gunler": [
+  "gunler": [], "gunler_kapali": [
    [
     "2027-01-01",
     "r",
@@ -3321,7 +3322,7 @@ window.K360={
  },
  "ETKINLIK": {
   "pct": 15,
-  "gunler": [
+  "gunler": [], "gunler_kapali": [
    [
     "2026-11-01",
     "İstanbul Maratonu"
@@ -3329,5 +3330,5 @@ window.K360={
   ]
  },
  "EXTRA_CAP_PCT": 15,
- "NIGHT_PCT": 25
+ "NIGHT_PCT_KAPALI": 20, "NIGHT_PCT": 0
 };

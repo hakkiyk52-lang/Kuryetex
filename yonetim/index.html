@@ -12,9 +12,10 @@ header{background:var(--m);color:#fff;padding:16px 20px;border-bottom:4px solid 
 main{max-width:440px;margin:0 auto;padding:20px}
 .k{background:#fff;border-radius:16px;padding:20px;box-shadow:0 4px 18px rgba(11,47,107,.08);margin-bottom:16px}
 h2{margin:0 0 12px;font-size:18px}
-input,select{width:100%;padding:14px;font-size:17px;border:1px solid #c9d3e3;border-radius:10px;margin:6px 0 12px}
+input,select,textarea{width:100%;padding:14px;font-size:17px;border:1px solid #c9d3e3;border-radius:10px;margin:6px 0 12px}
 button{width:100%;padding:18px;font-size:19px;font-weight:700;border:0;border-radius:12px;color:#fff;background:var(--m);cursor:pointer}
 button:disabled{opacity:.6}
+.li{display:flex;gap:10px;align-items:center;border-top:1px solid #e3e9f2;padding:10px 0;font-size:14px}.li img{width:64px;height:48px;object-fit:cover;border-radius:6px}.li span{flex:1}.li button{width:auto;padding:8px 12px;font-size:14px;background:var(--r)}
 .durum{font-size:22px;font-weight:800;text-align:center;padding:18px;border-radius:12px;margin-bottom:14px}
 .acik{background:#e6f6ec;color:var(--y)}.kapali{background:#f1f3f7;color:#5b6b85}
 .ac{background:var(--y)}.kapat{background:var(--r);margin-top:10px}
@@ -36,15 +37,72 @@ label{font-weight:600;font-size:15px}
     <h2>Yağış farkı</h2>
     <div class="durum kapali" id="durum">…</div>
     <label for="pct">Fark oranı</label>
-    <select id="pct"><option value="13">%13 – yağışlı hava</option><option value="15">%15 – yoğun yağış</option></select>
+    <select id="pct"><option value="15">%15 – yoğun hava şartları</option></select>
     <label for="saat">Ne kadar açık kalsın?</label>
     <select id="saat"><option value="3">3 saat sonra kendiliğinden kapansın</option><option value="6" selected>6 saat sonra kendiliğinden kapansın</option><option value="12">12 saat sonra kendiliğinden kapansın</option><option value="0">Ben kapatana kadar açık kalsın</option></select>
     <button class="ac" id="ac">Yağış farkını AÇ</button>
     <button class="kapat" id="kapat">Yağış farkını KAPAT</button>
     <p class="h" id="h2"></p>
-    <p class="not">Açıkken sitedeki bütün fiyat hesaplamalarına bu fark eklenir. Müşteri fiyatın altında "Bu fiyata yağışlı hava nedeniyle %13 fark eklenmiştir" notunu görür. Değişiklik 1 dakika içinde sitede görünür.<br>Otomatik hava durumu kontrolü bundan bağımsız olarak çalışmaya devam eder.</p>
+    <p class="not">Açıkken sitedeki bütün fiyat hesaplamalarına bu fark eklenir. Müşteri fiyatın altında "Yoğun hava şartları: +%15" notunu görür. Değişiklik 1 dakika içinde sitede görünür.<br>Otomatik yağış kontrolü kapalı; fark yalnızca siz açınca uygulanır.</p>
   </div>
 
+
+  <div class="k ek" hidden>
+    <h2>Fiyat farkı (gece, tatil, yoğunluk)</h2>
+    <div class="durum kapali" id="tDurum">…</div>
+    <label for="tAd">Neden? (müşteri fiyatın altında bunu görür)</label>
+    <select id="tAd"><option>Gece saati</option><option>Resmî tatil</option><option>Bayram</option><option>Maraton / etkinlik</option><option>Yoğunluk</option></select>
+    <label for="tSaat">Ne kadar açık kalsın?</label>
+    <select id="tSaat"><option value="0">Ben kapatana kadar</option><option value="6">6 saat</option><option value="11">11 saat (ör. 21:00–08:00)</option><option value="12">12 saat</option><option value="24">24 saat</option><option value="48">48 saat</option></select>
+    <div style="display:flex;gap:8px"><button class="ac pb" data-p="15">+%15</button><button class="ac pb" data-p="20">+%20</button><button class="ac pb" data-p="25">+%25</button></div>
+    <button class="kapat" id="tKapat">Farkı KAPAT</button>
+    <p class="h" id="hT"></p>
+    <p class="not">Gece farkı artık otomatik değil: akşam bu bölümden "Gece saati" seçip +%20'ye basın, sabah kapatın (ya da 11 saat seçin, kendisi kapansın). Yağış farkıyla aynı anda açıksa yüksek olan uygulanır.</p>
+  </div>
+
+  <div class="k ek" hidden>
+    <h2>Duyuru şeridi</h2>
+    <div class="durum kapali" id="dDurum">…</div>
+    <label for="dMetin">Duyuru metni</label>
+    <textarea id="dMetin" rows="3" maxlength="220" placeholder="Ör. Bayram boyunca 7/24 nöbetçi eczane hizmetimiz açık."></textarea>
+    <label for="dTur">Renk</label>
+    <select id="dTur"><option value="bilgi">Lacivert (bilgi)</option><option value="uyari">Turuncu (uyarı)</option></select>
+    <label for="dSaat">Ne kadar kalsın?</label>
+    <select id="dSaat"><option value="0">Ben kaldırana kadar</option><option value="6">6 saat</option><option value="24">24 saat</option><option value="72">3 gün</option><option value="168">1 hafta</option></select>
+    <button class="ac" id="dAc">Duyuruyu YAYINLA</button>
+    <button class="kapat" id="dKapat">Duyuruyu KALDIR</button>
+    <p class="h" id="hD"></p>
+    <p class="not">Sitenin tüm sayfalarının en üstünde görünür. Ziyaretçi × ile kapatabilir.</p>
+  </div>
+
+  <div class="k ek" hidden>
+    <h2>Teslimat fotoğrafı ekle</h2>
+    <label for="fDosya">Görsel (kolajınız)</label>
+    <input id="fDosya" type="file" accept="image/*">
+    <img id="fOn" alt="" style="display:none;width:100%;border-radius:10px;margin:4px 0 10px">
+    <label for="fSayfa">Hangi sayfaya?</label>
+    <input id="fSayfa" list="sayfalar" placeholder="Ör. besiktas yazın, listeden seçin" autocomplete="off">
+    <datalist id="sayfalar"></datalist>
+    <label for="fA">Kısa açıklama</label>
+    <input id="fA" maxlength="160" placeholder="Ör. Beşiktaş → Maslak, içecek teslimi">
+    <button class="ac" id="fYukle">Fotoğrafı YÜKLE</button>
+    <p class="h" id="hF"></p>
+    <p class="not">Görsel otomatik küçültülür, sayfanın "Son teslimatlarımızdan" bölümünde en üste eklenir. Google bu açıklamayı okur; ilçe ve hizmeti yazın.</p>
+    <div id="fListe"></div>
+  </div>
+
+  <div class="k ek" hidden>
+    <h2>Google yorumu ekle</h2>
+    <label for="yN">Müşterinin adı (Google'daki gibi)</label>
+    <input id="yN" maxlength="60" placeholder="Ör. Muhammed Isa">
+    <label for="yT">Yorum metni</label>
+    <textarea id="yT" rows="4" maxlength="900" placeholder="Yorumu buraya yazın ya da yapıştırın"></textarea>
+    <label style="display:flex;gap:8px;align-items:center;font-weight:600"><input id="yE" type="checkbox" style="width:auto;margin:0"> Eczane / ilaç yorumu</label>
+    <button class="ac" id="yEkle" style="margin-top:12px">Yorumu EKLE</button>
+    <p class="h" id="hY"></p>
+    <p class="not">5 yıldızlı olarak sitedeki yorumların en başında görünür.</p>
+    <div id="yListe"></div>
+  </div>
   <div class="k" id="bing" hidden>
     <h2>Bing / ChatGPT'ye bildir</h2>
     <button id="bildir">Tüm sayfaları Bing'e bildir</button>
@@ -61,7 +119,7 @@ label{font-weight:600;font-size:15px}
     if(j.on){var s="AÇIK · %"+j.pct;if(j.until){var t=new Date(j.until);s+=" · "+("0"+t.getHours()).slice(-2)+":"+("0"+t.getMinutes()).slice(-2)+"'de kapanacak"}d.textContent=s;d.className="durum acik";$("pct").value=String(j.pct)}
     else{d.textContent="KAPALI";d.className="durum kapali"}}
   function gir(){S=$("sifre").value||S;$("h1").textContent="";$("gir").disabled=true;
-    api({sadeceOku:true}).then(function(j){try{sessionStorage.setItem("kx_s",S)}catch(e){}$("giris").hidden=true;$("panel").hidden=false;$("bing").hidden=false;goster(j)})
+    api({sadeceOku:true}).then(function(j){try{sessionStorage.setItem("kx_s",S)}catch(e){}$("giris").hidden=true;$("panel").hidden=false;$("bing").hidden=false;[].forEach.call(document.querySelectorAll(".ek"),function(e){e.hidden=false});ekBasla();goster(j)})
     .catch(function(e){$("h1").textContent=e.message;try{sessionStorage.removeItem("kx_s")}catch(x){}}).then(function(){$("gir").disabled=false})}
   function degistir(on){$("h2").textContent="";$("ac").disabled=$("kapat").disabled=true;
     api({on:on,pct:+$("pct").value,saat:+$("saat").value}).then(goster).catch(function(e){$("h2").textContent=e.message})
@@ -72,6 +130,33 @@ label{font-weight:600;font-size:15px}
     fetch("/api/indexnow",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({sifre:S})}).then(function(r){return r.text().then(function(t){try{return JSON.parse(t)}catch(e){return {hata:"Sunucu yanıtı: "+r.status+" "+t.slice(0,120)}}})})
     .then(function(j){if(j.ok){h.style.color="#1f9d55";h.textContent="✓ "+j.adet+" sayfa bildirildi ("+(j.motor||"Bing")+")."}else h.textContent=j.hata||"Hata"})
     .catch(function(){h.textContent="Bağlantı hatası"}).then(function(){$("bildir").disabled=false})};
+
+  function A(u,b){return fetch(u,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(Object.assign({sifre:S},b))}).then(function(r){return r.text().then(function(t){var j;try{j=JSON.parse(t)}catch(e){throw new Error("Sunucu yanıtı: "+r.status)}if(j.hata)throw new Error(j.hata);return j})})}
+  function saat(u){if(!u)return"";var t=new Date(u);return" · "+t.toLocaleDateString("tr-TR",{day:"numeric",month:"short"})+" "+("0"+t.getHours()).slice(-2)+":"+("0"+t.getMinutes()).slice(-2)+"'de kapanır"}
+  function esc(x){return String(x||"").replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+  function ayarGoster(j){var t=j.tatil||{},d=j.duyuru||{};
+    $("tDurum").textContent=t.on?"AÇIK · "+t.ad+" +%"+(t.pct||15)+saat(t.until):"KAPALI";$("tDurum").className="durum "+(t.on?"acik":"kapali");
+    $("dDurum").textContent=d.on?"YAYINDA"+saat(d.until):"YOK";$("dDurum").className="durum "+(d.on?"acik":"kapali");if(d.on){$("dMetin").value=d.metin;$("dTur").value=d.tur}
+    $("yListe").innerHTML=(j.yorumlar||[]).map(function(y){return'<div class="li"><span><b>'+esc(y.n)+'</b> – '+esc(y.t.slice(0,60))+'…</span><button data-y="'+y.id+'">Sil</button></div>'}).join("")}
+  function fotoGoster(L){$("fListe").innerHTML=(L||[]).slice(0,30).map(function(x){return'<div class="li"><img src="/api/foto?id='+x.id+'" alt=""><span>'+esc(x.a)+'<br><small>'+esc(x.sayfa)+'</small></span><button data-f="'+x.id+'">Sil</button></div>'}).join("")}
+  function is(btns,h,p){btns.forEach(function(b){$(b).disabled=true});$(h).style.color="";$(h).textContent="";return p.catch(function(e){$(h).style.color="";$(h).textContent=e.message}).then(function(){btns.forEach(function(b){$(b).disabled=false})})}
+  function ok(h,m){$(h).style.color="#1f9d55";$(h).textContent="✓ "+m}
+  var ekOk=0;function ekBasla(){if(ekOk)return;ekOk=1;
+    A("/api/ayar",{islem:"oku"}).then(ayarGoster).catch(function(e){$("hT").textContent=e.message});
+    fetch("/api/foto?liste=1").then(function(r){return r.json()}).then(fotoGoster).catch(function(){});
+    fetch("/sitemap.xml").then(function(r){return r.text()}).then(function(x){var m=x.match(/<loc>[^<]+<\/loc>/g)||[];$("sayfalar").innerHTML=m.map(function(l){var p=l.replace(/<\/?loc>/g,"").replace(/^https?:\/\/[^/]+/,"");return'<option value="'+p+'">'}).join("")}).catch(function(){});
+  }
+  [].forEach.call(document.querySelectorAll(".pb"),function(b){b.onclick=function(){is(["tKapat"],"hT",A("/api/ayar",{islem:"tatil",on:true,ad:$("tAd").value,pct:+b.getAttribute("data-p"),saat:+$("tSaat").value}).then(function(j){ayarGoster(j);ok("hT","Açıldı. 1 dakika içinde sitede.")}))}});
+  $("tKapat").onclick=function(){is(["tKapat"],"hT",A("/api/ayar",{islem:"tatil",on:false}).then(function(j){ayarGoster(j);ok("hT","Kapatıldı.")}))};
+  $("dAc").onclick=function(){is(["dAc","dKapat"],"hD",A("/api/ayar",{islem:"duyuru",on:true,metin:$("dMetin").value,tur:$("dTur").value,saat:+$("dSaat").value}).then(function(j){ayarGoster(j);ok("hD","Yayında. 1 dakika içinde sitede.")}))};
+  $("dKapat").onclick=function(){is(["dAc","dKapat"],"hD",A("/api/ayar",{islem:"duyuru",on:false}).then(function(j){ayarGoster(j);$("dMetin").value="";ok("hD","Kaldırıldı.")}))};
+  $("yEkle").onclick=function(){is(["yEkle"],"hY",A("/api/ayar",{islem:"yorum_ekle",n:$("yN").value,t:$("yT").value,e:$("yE").checked}).then(function(j){ayarGoster(j);$("yN").value=$("yT").value="";$("yE").checked=false;ok("hY","Eklendi.")}))};
+  $("yListe").onclick=function(e){var id=e.target.getAttribute("data-y");if(!id||!confirm("Bu yorum silinsin mi?"))return;A("/api/ayar",{islem:"yorum_sil",id:id}).then(ayarGoster).catch(function(er){$("hY").textContent=er.message})};
+  $("fListe").onclick=function(e){var id=e.target.getAttribute("data-f");if(!id||!confirm("Bu fotoğraf silinsin mi?"))return;A("/api/foto",{islem:"sil",id:id}).then(function(j){fotoGoster(j.liste)}).catch(function(er){$("hF").textContent=er.message})};
+  var FD=null;
+  $("fDosya").onchange=function(){var f=this.files&&this.files[0];FD=null;$("fOn").style.display="none";if(!f)return;var img=new Image();img.onload=function(){var w=img.naturalWidth,h=img.naturalHeight,k=Math.min(1,1400/w);w=Math.round(w*k);h=Math.round(h*k);var c=document.createElement("canvas");c.width=w;c.height=h;c.getContext("2d").drawImage(img,0,0,w,h);var q=.8,u=c.toDataURL("image/webp",q);if(u.indexOf("data:image/webp")!==0)u=c.toDataURL("image/jpeg",.82);while(u.length>1.4e6&&q>.4){q-=.1;u=c.toDataURL("image/webp",q)}FD={data:u,w:w,h:h};$("fOn").src=u;$("fOn").style.display="block";URL.revokeObjectURL(img.src)};img.src=URL.createObjectURL(f)};
+  $("fYukle").onclick=function(){if(!FD){$("hF").textContent="Önce bir görsel seçin.";return}if(!$("fSayfa").value){$("hF").textContent="Sayfayı seçin.";return}
+    is(["fYukle"],"hF",A("/api/foto",{islem:"ekle",sayfa:$("fSayfa").value,a:$("fA").value,data:FD.data,w:FD.w,h:FD.h}).then(function(j){fotoGoster(j.liste);ok("hF","Yüklendi. Sayfada görünüyor.");FD=null;$("fDosya").value="";$("fOn").style.display="none";$("fA").value=""}))};
   if(S)gir();
 })();
 </script>
