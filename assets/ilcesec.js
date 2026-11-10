@@ -17,7 +17,7 @@ function kxDeny(er,fb){var c=er&&er.code;if(c===2||c===3)return kxT("Konum alın
     return Z.p[z]||null};
   function ilm(cb){if(ILM)return cb(ILM);if(window.__ILM){ILM=window.__ILM;return cb(ILM)}wait.push(cb);if(wait.length>1)return;
     fetch("/assets/data/ilmah.json").then(function(r){return r.json()}).then(function(j){ILM=window.__ILM=j;wait.forEach(function(f){f(j)});wait=[]}).catch(function(){})}
-  function withM(il,cb){var E=window.EKZ,K=window.K360||{},DD=K.D||{};if(E&&E.d&&E.d[il]&&!(DD[il]&&DD[il].il)){cb(E.d[il][1].map(function(m){return m+" Mah"}).sort(function(x,y){return x.localeCompare(y,"tr")}));return}ilm(function(J){cb(mahs(il,J))})}
+  function withM(il,cb){var E=window.EKZ,K=window.K360||{},DD=K.D||{};if(E&&E.d&&E.d[il]&&!(DD[il]&&DD[il].il)){cb(E.d[il][1].map(function(m){return m.split("|")[0]+" Mah"}).sort(function(x,y){return x.localeCompare(y,"tr")}));return}ilm(function(J){cb(mahs(il,J))})}
   function mahs(il,J){var K=window.K360||{},DD=K.D||{},code=((K.ILKOD||{})[(DD[il]&&DD[il].il)||"İstanbul"])||"34",L=(J.d[code]||[]).filter(function(x){return x[0]===il})[0];return L?L[1].map(function(m){return m[0]}):[]}
 
   var MC=null;function nearMah(lat,lon){if(window.__ekNearestMah)return window.__ekNearestMah(lat,lon);
