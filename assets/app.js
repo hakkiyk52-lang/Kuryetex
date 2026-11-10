@@ -193,6 +193,14 @@ window.__hv=true;window.__rs={};window.__RF=function(k,f){if(window.__hv&&!docum
     var lab=document.createElement("div");lab.className="kxw-l";lab.innerHTML="<span>"+_t("Saat")+"</span><span>"+_t("Dakika")+"</span>";
     var w=document.createElement("div");w.className="kxw";var cH=col(24,1),cM=col(60,5),sep=document.createElement("div");sep.className="kxw-sep";sep.textContent=":";w.appendChild(cH);w.appendChild(sep);w.appendChild(cM);
     I.parentNode.insertBefore(lab,I.nextSibling);lab.parentNode.insertBefore(w,lab.nextSibling);
+    var ok=document.createElement("button");ok.type="button";ok.textContent="✓ "+_t("Tamam");ok.style.cssText="width:100%;margin-top:8px;padding:12px;border:0;border-radius:12px;background:#0f8a5f;color:#fff;font:inherit;font-weight:800;font-size:17px;cursor:pointer";
+    var sm=document.createElement("div");sm.style.cssText="display:none;align-items:center;justify-content:space-between;gap:10px;padding:12px 14px;border-radius:12px;background:#e9f7f1;border:1.5px solid #9fd8c0;font-weight:800;color:#13233f";
+    sm.innerHTML='<span class="kxs"></span><button type="button" style="border:0;background:none;color:#0f8a5f;font:inherit;font-weight:800;text-decoration:underline;cursor:pointer;padding:4px">'+_t("Değiştir")+'</button>';
+    var Q=document.querySelector(".tmq"),INF=$("tmcInfo"),aft=INF||Q||w;aft.parentNode.insertBefore(ok,aft.nextSibling);ok.parentNode.insertBefore(sm,ok.nextSibling);
+    function fold(c){[lab,w,Q,ok].forEach(function(e){if(e)e.style.display=c?"none":""});sm.style.display=c?"flex":"none";if(c)sm.querySelector(".kxs").textContent="🕒 "+(tmc.value||"")+(INF&&INF.textContent?" · "+INF.textContent.split(" · ")[0]:"")}
+    ok.addEventListener("click",function(){read();fold(true);var b=$("calcBtn");if(b)b.scrollIntoView({behavior:"smooth",block:"center"})});
+    sm.querySelector("button").addEventListener("click",function(){fold(false)});
+    [].forEach.call(document.querySelectorAll('#tm button[data-t="custom"]'),function(b){b.addEventListener("click",function(){fold(false)})});
     function idx(c){return Math.max(0,Math.min(c.children.length-5,Math.round(c.scrollTop/IH)))}
     function mark(c){var k=idx(c);[].forEach.call(c.children,function(d,j){d.classList.toggle("on",j===k+2)});return +c.children[k+2].getAttribute("data-v")}
     function read(){var v=pad(mark(cH))+":"+pad(mark(cM));if(tmc.value!==v){tmc.value=v;tmInfo();reset()}}
@@ -927,3 +935,7 @@ if(matchMedia("(prefers-reduced-motion:reduce)").matches)return;var vis=0;if("In
 setInterval(function(){if(vis&&!paused&&!document.hidden)go(1)},3200)})})();
 
 (function(){var c=document.getElementById("aboneChk");if(!c)return;if(/[?&]abone=1/.test(location.search))c.checked=true;var lab=c.closest(".abone-chk");document.addEventListener("kxsvc",function(e){var s=e.detail;if(lab)lab.style.display=s&&s.np?"none":""});c.addEventListener("change",function(){var r=document.getElementById("result");if(r&&r.style.display!=="none"){var b=document.getElementById("calcBtn");b&&b.click()}})})();
+// mahalle/ilçe listesi açıkken diğer alanların "Konumum" düğmesi listenin üstüne binmesin
+(function(){var t;document.addEventListener("focusin",function(e){var x=e.target;if(!x||!x.closest||x.tagName!=="INPUT")return;var c=x.closest(".calc");if(!c)return;clearTimeout(t);c.classList.add("kxf");[].forEach.call(c.querySelectorAll(".kxfo"),function(f){f.classList.remove("kxfo")});var f=x.closest(".field");if(f)f.classList.add("kxfo")});
+document.addEventListener("focusout",function(e){var x=e.target;var c=x&&x.closest&&x.closest(".calc");if(!c)return;clearTimeout(t);t=setTimeout(function(){if(!c.contains(document.activeElement)||document.activeElement.tagName!=="INPUT")c.classList.remove("kxf")},250)});
+var st=document.createElement("style");st.textContent=".kxf .field:not(.kxfo) .ip-loc{visibility:hidden!important;pointer-events:none}";document.head.appendChild(st)})();
