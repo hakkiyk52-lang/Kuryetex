@@ -70,7 +70,7 @@ label{font-weight:600;font-size:15px}
   $("ac").onclick=function(){degistir(true)};$("kapat").onclick=function(){degistir(false)};
   $("bildir").onclick=function(){var h=$("h3");h.style.color="";h.textContent="Gönderiliyor…";$("bildir").disabled=true;
     fetch("/api/indexnow",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({sifre:S})}).then(function(r){return r.text().then(function(t){try{return JSON.parse(t)}catch(e){return {hata:"Sunucu yanıtı: "+r.status+" "+t.slice(0,120)}}})})
-    .then(function(j){if(j.ok){h.style.color="#1f9d55";h.textContent="✓ "+j.adet+" sayfa Bing'e bildirildi."}else h.textContent=j.hata||"Hata"})
+    .then(function(j){if(j.ok){h.style.color="#1f9d55";h.textContent="✓ "+j.adet+" sayfa bildirildi ("+(j.motor||"Bing")+")."}else h.textContent=j.hata||"Hata"})
     .catch(function(){h.textContent="Bağlantı hatası"}).then(function(){$("bildir").disabled=false})};
   if(S)gir();
 })();

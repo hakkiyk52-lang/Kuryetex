@@ -20,10 +20,16 @@ async function calis({ request, env }) {
   if (!sm.ok) return json({ hata: "Site haritası okunamadı" }, 200);
   const urls = [...(await sm.text()).matchAll(/<loc>([^<]+)<\/loc>/g)].map(m => m[1].trim()).slice(0, 10000);
   if (!urls.length) return json({ hata: "Site haritasında sayfa yok" }, 200);
-  const r = await fetch("https://api.indexnow.org/indexnow", {
-    method: "POST", headers: { "Content-Type": "application/json; charset=utf-8" },
-    body: JSON.stringify({ host: HOST, key: KEY, keyLocation: "https://" + HOST + "/" + KEY + ".txt", urlList: urls }) });
-  if (r.status === 200 || r.status === 202) return json({ ok: true, adet: urls.length });
-  const t = (await r.text()).slice(0, 200);
-  return json({ hata: "Bing yanıtı: " + r.status + " " + t }, 200);
+  // Önce doğrudan Bing, sonra Yandex, en son genel IndexNow adresi denenir (motorlar bildirimleri birbirleriyle paylaşır)
+  const body = JSON.stringify({ host: HOST, key: KEY, keyLocation: "https://" + HOST + "/" + KEY + ".txt", urlList: urls });
+  const hedefler = [["Bing", "https://www.bing.com/indexnow"], ["Yandex", "https://yandex.com/indexnow"], ["IndexNow", "https://api.indexnow.org/indexnow"]];
+  const notlar = [];
+  for (const [ad, url] of hedefler) {
+    try {
+      const r = await fetch(url, { method: "POST", headers: { "Content-Type": "application/json; charset=utf-8" }, body });
+      if (r.status === 200 || r.status === 202) return json({ ok: true, adet: urls.length, motor: ad });
+      notlar.push(ad + ": " + r.status);
+    } catch (e) { notlar.push(ad + ": bağlanamadı"); }
+  }
+  return json({ hata: "Şu an kabul edilmedi (" + notlar.join(", ") + "). Birkaç saat sonra tekrar deneyin." }, 200);
 }
