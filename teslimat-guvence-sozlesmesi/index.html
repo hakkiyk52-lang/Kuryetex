@@ -72,7 +72,7 @@ var mod=document.getElementById("gMod"),on=document.getElementById("gOn"),onY=do
 function ac(){mod.hidden=false;document.body.classList.add("imza-acik");uy.textContent="";requestAnimationFrame(function(){lw=c.getBoundingClientRect().width;fit()})}
 function kapa(){mod.hidden=true;document.body.classList.remove("imza-acik")}
 document.getElementById("gAc").addEventListener("click",ac);
-document.getElementById("gTamam").addEventListener("click",function(){if(!drawn){uy.textContent="Lütfen imzanızı atın.";return}on.src=c.toDataURL("image/png");on.hidden=false;onY.hidden=true;ok=true;kapa()});
+document.getElementById("gTamam").addEventListener("click",function(){if(!drawn){uy.textContent="Lütfen imzanızı atın.";return}on.src=c.toDataURL("image/png");on.hidden=false;onY.hidden=true;ok=true;kapa();setTimeout(function(){f.querySelector('button[type="submit"]').scrollIntoView({behavior:"smooth",block:"center"})},150)});
 mod.addEventListener("click",function(e){if(e.target===mod)kapa()});
 addEventListener("resize",function(){if(mod.hidden)return;var w=c.getBoundingClientRect().width;if(Math.abs(w-lw)>1){lw=w;fit()}});
 function pt(e){var r=c.getBoundingClientRect();return[e.clientX-r.left,e.clientY-r.top]}
