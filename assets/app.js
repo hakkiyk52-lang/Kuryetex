@@ -197,10 +197,18 @@ window.__hv=true;window.__rs={};window.__RF=function(k,f){if(window.__hv&&!docum
     var sm=document.createElement("div");sm.style.cssText="display:none;align-items:center;justify-content:space-between;gap:10px;padding:12px 14px;border-radius:12px;background:#e9f7f1;border:1.5px solid #9fd8c0;font-weight:800;color:#13233f";
     sm.innerHTML='<span class="kxs"></span><button type="button" style="border:0;background:none;color:#0f8a5f;font:inherit;font-weight:800;text-decoration:underline;cursor:pointer;padding:4px">'+_t("Değiştir")+'</button>';
     var Q=document.querySelector(".tmq"),INF=$("tmcInfo"),aft=INF||Q||w;aft.parentNode.insertBefore(ok,aft.nextSibling);ok.parentNode.insertBefore(sm,ok.nextSibling);
-    function fold(c){[lab,w,Q,ok].forEach(function(e){if(e)e.style.display=c?"none":""});sm.style.display=c?"flex":"none";if(c)sm.querySelector(".kxs").textContent="🕒 "+(tmc.value||"")+(INF&&INF.textContent?" · "+INF.textContent.split(" · ")[0]:"")}
+    function fold(c){[lab,w,Q,ok,typeof cx!=="undefined"?cx:null].forEach(function(e){if(e)e.style.display=c?"none":""});sm.style.display=c?"flex":"none";if(c)sm.querySelector(".kxs").textContent="🕒 "+(tmc.value||"")+(INF&&INF.textContent?" · "+INF.textContent.split(" · ")[0]:"")}
+    // vazgeç: seçiciyi kapat, önceki süre seçimine dön
+    var prev=null;[].forEach.call(document.querySelectorAll('#tm button'),function(b){b.addEventListener("click",function(){if(b.getAttribute("data-t")!=="custom")prev=b},true)});
+    var pre=document.querySelector('#tm button[aria-pressed="true"]');if(pre&&pre.getAttribute("data-t")!=="custom")prev=pre;
+    var cx=document.createElement("button");cx.type="button";cx.textContent="✕ "+_t("Vazgeç");cx.style.cssText="width:100%;margin-top:8px;padding:11px;border:1.5px solid #c9d3e3;border-radius:12px;background:#fff;color:#13233f;font:inherit;font-weight:800;font-size:16px;cursor:pointer";
+    ok.parentNode.insertBefore(cx,ok.nextSibling);
+    function cancel(){tmc.value="";var b=prev||document.querySelector('#tm button[data-t^="Normal"]')||document.querySelector('#tm button');if(b)b.click();fold(false)}
+    cx.addEventListener("click",cancel);
+    var W=$("tmcWrap");document.addEventListener("click",function(e){if(!W||W.style.display==="none"||sm.style.display==="flex")return;if(W.contains(e.target)||!e.target.closest||e.target.closest("#tm")||!e.target.closest("main,#hesapla,.calc"))return;if(e.target.closest&&e.target.closest("#calcBtn")&&tmc.value){read();fold(true);return}cancel()},true);
     ok.addEventListener("click",function(){read();fold(true);var b=$("calcBtn");if(b)b.scrollIntoView({behavior:"smooth",block:"center"})});
     sm.querySelector("button").addEventListener("click",function(){fold(false)});
-    [].forEach.call(document.querySelectorAll('#tm button[data-t="custom"]'),function(b){b.addEventListener("click",function(){fold(false)})});
+    [].forEach.call(document.querySelectorAll('#tm button[data-t="custom"]'),function(b){b.addEventListener("click",function(){fold(false);setTimeout(function(){if(!tmc.value&&w.offsetParent)read()},80)})});
     function idx(c){return Math.max(0,Math.min(c.children.length-5,Math.round(c.scrollTop/IH)))}
     function mark(c){var k=idx(c);[].forEach.call(c.children,function(d,j){d.classList.toggle("on",j===k+2)});return +c.children[k+2].getAttribute("data-v")}
     function read(){var v=pad(mark(cH))+":"+pad(mark(cM));if(tmc.value!==v){tmc.value=v;tmInfo();reset()}}
