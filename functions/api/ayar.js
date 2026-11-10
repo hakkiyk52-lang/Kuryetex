@@ -39,7 +39,7 @@ export async function onRequestPost({ request, env }) {
   const s = await ham(env);
   const saatSonra = h => (h > 0 ? Date.now() + Math.min(240, h) * 3600e3 : 0);
   if (b.islem === "tatil") {
-    s.tatil = { on: !!b.on, ad: temiz(b.ad, 40) || "Resmî tatil", until: b.on ? saatSonra(+b.saat || 0) : 0 };
+    s.tatil = { on: !!b.on, ad: temiz(b.ad, 40) || "Resmî tatil", pct: [15, 20, 25].indexOf(+b.pct) > -1 ? +b.pct : 15, until: b.on ? saatSonra(+b.saat || 0) : 0 };
   } else if (b.islem === "duyuru") {
     const metin = temiz(b.metin, 220);
     if (b.on && !metin) return json({ hata: "Duyuru metni boş olamaz." }, 200);

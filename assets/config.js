@@ -3330,5 +3330,5 @@ window.K360={
   ]
  },
  "EXTRA_CAP_PCT": 15,
- "NIGHT_PCT": 25
+ "NIGHT_PCT_KAPALI": 20, "NIGHT_PCT": 0
 };
