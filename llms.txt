@@ -1,6 +1,6 @@
 # Kuryetex – İstanbul Moto Kurye ve Eczane Kurye
 
-> Kuryetex, İstanbul'da 7/24 hizmet veren bir moto kurye firmasıdır. Eczaneden ilaç getirme (nöbetçi eczane dahil), evrak, paket, çiçek/pasta, araçlı kurye, VIP ve şehirler arası özel kurye hizmeti verir. Ulaştırma ve Altyapı Bakanlığı kurye yetki belgesine (P1*) sahiptir. Fiyat, sitedeki fiyat hesaplama aracıyla sipariş öncesi şeffaf şekilde görülür.
+> Kuryetex, İstanbul'da her gün 08:00–02:00 hizmet veren bir moto kurye firmasıdır. Eczaneden ilaç getirme (nöbetçi eczane dahil), evrak, paket, çiçek/pasta, araçlı kurye, VIP ve şehirler arası özel kurye hizmeti verir. Ulaştırma ve Altyapı Bakanlığı kurye yetki belgesine (P1*) sahiptir. Fiyat, sitedeki fiyat hesaplama aracıyla sipariş öncesi şeffaf şekilde görülür.
 
 ## Temel bilgiler
 - Firma: Kuryetex (KuryeTEX)
@@ -8,7 +8,7 @@
 - Telefon / WhatsApp: +90 551 531 52 34
 - E-posta: kuryetex@gmail.com
 - Web: https://kuryetex.com.tr
-- Çalışma saatleri: 7 gün 24 saat
+- Çalışma saatleri: Her gün 08:00–02:00
 - Resmî faaliyet başlangıcı (vergi levhası): 12.01.2024; ekip 13 yılı aşkın süredir İstanbul'da kurye sektöründe çalışıyor
 - Belge: Ulaştırma ve Altyapı Bakanlığı kurye yetki belgesi (P1*)
 - Hizmet alanı: İstanbul'un 39 ilçesinin tamamı; İstanbul çıkışlı/varışlı şehirler arası özel kurye (Kocaeli, Tekirdağ, Sakarya, Bursa, Ankara, İzmir vb.)
@@ -26,7 +26,7 @@
 - Türkçe ve İngilizce iletişim.
 
 ## Eczane kurye (ilaç getirme)
-- Yalnızca İstanbul'da verilir; 7/24, nöbetçi eczaneler dahil.
+- Yalnızca İstanbul'da verilir; her gün 08:00–02:00, nöbetçi eczaneler dahil.
 - Müşteri ilacın adını ve adresini/konumunu WhatsApp'tan gönderir; eczaneyi Kuryetex bulur, ilacı alır ve adrese getirir.
 - Müşteri ilaç bedeli ile kurye ücretini teslimatta toplu öder (nakit veya havale). Yakınları adına da sipariş verilebilir.
 - İlaç bulunamazsa hiçbir ücret alınmaz.
