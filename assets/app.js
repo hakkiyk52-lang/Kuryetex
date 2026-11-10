@@ -251,8 +251,8 @@ var lastFl=0;function txn(){if(cur&&cur.np)return _t("Eczane teslimi mahalle bö
   function rq(el){var ll=el.dataset.ll;if(ll)return ll;var v=(el.value||"").replace(/\s+/g," ").trim();return /İstanbul|Kocaeli|Tekirdağ/i.test(v)||/^CITY:/.test(el.dataset.d||"")?v:v+", İstanbul"}
   function rotaLink(){var k=$("km");if(!k)return;var a=document.createElement("a");a.className="rotal";a.target="_blank";a.rel="nofollow noopener";a.href="https://www.google.com/maps/dir/?api=1&travelmode=driving&origin="+encodeURIComponent(rq(from))+"&destination="+encodeURIComponent(rq(to));a.textContent=_t("Rotayı Google Haritalar'da gör ›");k.appendChild(document.createTextNode(" "));k.appendChild(a)}
   function kdvP(p){return Math.round(p*(1+(C.KDV||20)/100))}
-  function kdvShow(p,ez){var pe=$("price");if(!pe)return;var k=$("kdvnote");if(!k){k=document.createElement("p");k.id="kdvnote";k.className="kdvn";pe.parentNode.insertBefore(k,pe.nextSibling)}if(!p){k.hidden=true;return}k.hidden=false;k.innerHTML="<span>"+_t("KDV hariç fiyattır.")+"</span> <b>"+_t("KDV dahil fiyat (%")+(C.KDV||20)+"): "+tl(kdvP(p))+"</b>"+(ez?"<small>"+_t("KDV yalnızca kurye ücretine eklenir; ilaç ücreti eczane fişine göredir.")+"</small>":"")}
-  function kdvLn(p){return p?"🧾 "+_t("KDV dahil fiyat (%")+(C.KDV||20)+"): "+tl(kdvP(p)):""}
+  function kdvShow(p,ez){var pe=$("price");if(!pe)return;var k=$("kdvnote");if(!k){k=document.createElement("p");k.id="kdvnote";k.className="kdvn";pe.parentNode.insertBefore(k,pe.nextSibling)}if(!p){k.hidden=true;return}k.hidden=false;k.innerHTML="<span>"+_t("Fiyata KDV dahildir.")+"</span>"+(ez?"<small>"+_t("İlaç ücreti eczane fişine göredir.")+"</small>":"")}
+  function kdvLn(p){return""}
   function air(a, b){var R=6371,rad=Math.PI/180,dLat=(b.lat-a.lat)*rad,dLon=(b.lon-a.lon)*rad;var h=Math.sin(dLat/2)*Math.sin(dLat/2)+Math.cos(a.lat*rad)*Math.cos(b.lat*rad)*Math.sin(dLon/2)*Math.sin(dLon/2);return 2*R*Math.asin(Math.sqrt(h))}
   function tarife(km,A){A=A||C.ANCHORS;var i;if(km<=A[0][0])return A[0][1];for(i=1;i<A.length;i++){if(km<=A[i][0])return A[i-1][1]+(A[i][1]-A[i-1][1])*(km-A[i-1][0])/(A[i][0]-A[i-1][0]);}var u=A[A.length-2],l=A[A.length-1];return l[1]+(l[1]-u[1])/(l[0]-u[0])*(km-l[0])}
   function compute(){
@@ -305,7 +305,7 @@ var lastFl=0;function txn(){if(cur&&cur.np)return _t("Eczane teslimi mahalle bö
         ln.push("🅰️ Alım: "+from.value);ln.push("🅱️ Teslim: "+to.value);
         if(cur.size&&sizeName)ln.push("📐 Boyut: "+sizeName);if(cur.kg)ln.push("⚖️ Ağırlık: "+(w||0)+" kg");
         ln.push("⏱️ Teslim: VIP kurye (süre WhatsApp'ta netleşir)");ln.push("📏 Tahmini mesafe: ~"+Math.round(ikm/10)*10+" km");
-        ln.push("💰 Fiyat: "+tl(ip)+" (şehirler arası tahmini, KDV hariç)");ln.push(kdvLn(ip));
+        ln.push("💰 Fiyat: "+tl(ip)+" (şehirler arası tahmini, KDV dahil)");
         var fx=[];if(sx)fx.push("koli ebat +"+tl(sx));if(wx)fx.push("ağırlık +"+tl(wx));if(nf2)fx.push("gece +"+tl(nf2));if(fx.length)ln.push("   (dahil: "+fx.join(", ")+")");
         if(exC.txt)ln.push("ℹ️ "+exC.txt);
         ln.push(S,"📝 Gönderi / not: ","👤 Teslim alacak kişi / tel: ",S);
@@ -335,7 +335,7 @@ var lastFl=0;function txn(){if(cur&&cur.np)return _t("Eczane teslimi mahalle bö
     ln.push((cur.ezf?"🏥 Alınacak eczane: ":"🅰️ Alım: ")+from.value);ln.push("🅱️ Teslim: "+to.value);if(cur.ezf){ln.push("💊 İlaç bilgisi: (WhatsApp'tan iletilecek)");ln.push("💳 İlaç ücreti eczane fişine göre, kapıda ödenir")}
     if(cur.size&&sizeName)ln.push("📐 Boyut: "+sizeName);if(cur.kg)ln.push("⚖️ Ağırlık: "+(w||0)+" kg");
     ln.push("⏱️ Teslim süresi: "+tmText());ln.push("📏 Tahmini mesafe: "+km.toFixed(1).replace(".",",")+" km");
-    ln.push("💰 Fiyat: "+(p!==null?tl(p)+" (KDV hariç)":_t("WhatsApp'ta netleşecek")));if(window.__kxAb&&$("aboneChk")&&$("aboneChk").checked)ln.push(_t("Abone müşteri (%25 indirim uygulandı)"));if(p!==null)ln.push(kdvLn(p));
+    ln.push("💰 Fiyat: "+(p!==null?tl(p)+" (KDV dahil)":_t("WhatsApp'ta netleşecek")));if(window.__kxAb&&$("aboneChk")&&$("aboneChk").checked)ln.push(_t("Abone müşteri (%25 indirim uygulandı)"));
     var fx=[];if(sx)fx.push("koli ebat +"+tl(sx));if(wx)fx.push("ağırlık +"+tl(wx));if(nf)fx.push("gece +"+tl(nf));if(rz)fx.push(rzn.toLocaleLowerCase("tr")+" +"+tl(rz));if(fx.length)ln.push("   (dahil: "+fx.join(", ")+")");
     if(exN.txt)ln.push("ℹ️ "+exN.txt);
     ln.push(S,"📝 Gönderi / not: ","👤 Teslim alacak kişi / tel: ",S);
