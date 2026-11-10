@@ -184,11 +184,25 @@ window.__hv=true;window.__rs={};window.__RF=function(k,f){if(window.__hv&&!docum
   function tmM(){var v=tmc&&tmc.value;if(!/^\d{2}:\d{2}$/.test(v||""))return null;var h=v.split(":"),n=new Date(),t=new Date();t.setHours(+h[0],+h[1],0,0);var m=(t-n)/60000;if(m<0)m+=1440;return m}
   function tmInfo(){var I=$("tmcInfo");if(!I)return;var m=tmM();if(m==null){I.textContent="";return}var hr=Math.floor(m/60),mi=Math.round(m%60),k=tmK(m),f=tmF(m);
     I.textContent=(hr?hr+" "+_t("saat")+" ":"")+(mi?mi+" "+_t("dk")+" ":"")+_t("sonra")+" · "+(k>=0?_t("normal fiyattan ek indirim: %")+Math.round(TF_EK[k][0]*100)+" ("+_t("en az ")+TF_EK[k][1]+" TL)":f>0?"VIP +%"+Math.round(f*100):f<0?"%"+Math.round(-f*100)+" "+_t("indirim"):_t("standart fiyat"))}
+  // alarm kurar gibi kaydırmalı saat seçici (saat + 5 dakikalık dakika)
   (function(){var I=$("tmcIn");if(!I||!tmc)return;function pad(x){return("0"+x).slice(-2)}
-    function set(v){tmc.value=v;tmInfo();reset()}
-    I.addEventListener("input",function(){var d=I.value.replace(/\D/g,"").slice(0,4);if(d.length===3&&+d[0]>2)d="0"+d;var out=d.length>2?d.slice(0,2)+":"+d.slice(2):d;if(I.value!==out)I.value=out;
-      if(d.length===4){var hh=+d.slice(0,2),mm=+d.slice(2);if(hh<24&&mm<60){set(pad(hh)+":"+pad(mm));I.style.borderColor="";return}I.style.borderColor="#c0392b"}set("")});
-    [].forEach.call(document.querySelectorAll(".tmq button"),function(b){b.addEventListener("click",function(){var t=new Date(Date.now()+(+b.getAttribute("data-h"))*3600e3+4*60000);t.setMinutes(Math.ceil(t.getMinutes()/5)*5,0,0);var v=pad(t.getHours())+":"+pad(t.getMinutes());I.value=v;set(v)})})})();
+    I.style.display="none";var IH=44,st=document.createElement("style");
+    st.textContent=".kxw{display:flex;justify-content:center;gap:18px;position:relative;margin:6px 0 4px;user-select:none}.kxw:before{content:'';position:absolute;left:8%;right:8%;top:"+IH*2+"px;height:"+IH+"px;border-radius:12px;background:rgba(15,138,95,.10);border:1.5px solid rgba(15,138,95,.35);pointer-events:none}.kxw-c{height:"+IH*5+"px;width:90px;overflow-y:scroll;scroll-snap-type:y mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch;-webkit-mask-image:linear-gradient(transparent,#000 30%,#000 70%,transparent);mask-image:linear-gradient(transparent,#000 30%,#000 70%,transparent)}.kxw-c::-webkit-scrollbar{display:none}.kxw-c div{height:"+IH+"px;line-height:"+IH+"px;text-align:center;font-size:30px;font-weight:600;scroll-snap-align:center;color:#9aa7b8;font-variant-numeric:tabular-nums}.kxw-c div.on{color:#13233f;font-size:36px}.kxw-c .sp{scroll-snap-align:none}.kxw-l{display:flex;justify-content:center;gap:18px;font-size:13px;font-weight:700;color:#5b6b85}.kxw-l span{width:90px;text-align:center}.kxw-sep{align-self:center;font-size:32px;font-weight:700;color:#13233f}";
+    document.head.appendChild(st);
+    function col(n,step){var c=document.createElement("div");c.className="kxw-c";var h='<div class="sp"></div><div class="sp"></div>';for(var i=0;i<n;i+=step)h+="<div data-v=\""+i+"\">"+pad(i)+"</div>";c.innerHTML=h+'<div class="sp"></div><div class="sp"></div>';return c}
+    var lab=document.createElement("div");lab.className="kxw-l";lab.innerHTML="<span>"+_t("Saat")+"</span><span>"+_t("Dakika")+"</span>";
+    var w=document.createElement("div");w.className="kxw";var cH=col(24,1),cM=col(60,5),sep=document.createElement("div");sep.className="kxw-sep";sep.textContent=":";w.appendChild(cH);w.appendChild(sep);w.appendChild(cM);
+    I.parentNode.insertBefore(lab,I.nextSibling);lab.parentNode.insertBefore(w,lab.nextSibling);
+    function idx(c){return Math.max(0,Math.min(c.children.length-5,Math.round(c.scrollTop/IH)))}
+    function mark(c){var k=idx(c);[].forEach.call(c.children,function(d,j){d.classList.toggle("on",j===k+2)});return +c.children[k+2].getAttribute("data-v")}
+    function read(){var v=pad(mark(cH))+":"+pad(mark(cM));if(tmc.value!==v){tmc.value=v;tmInfo();reset()}}
+    function go(c,val,step,smooth){var k=Math.round(val/step);c.scrollTo({top:k*IH,behavior:smooth?"smooth":"auto"})}
+    function setT(d,smooth){var m=Math.ceil(d.getMinutes()/5)*5;if(m===60){d=new Date(d.getTime()+(60-d.getMinutes())*60000);m=0}go(cH,d.getHours(),1,smooth);go(cM,m,5,smooth);setTimeout(read,smooth?400:30)}
+    [cH,cM].forEach(function(c){var t;c.addEventListener("scroll",function(){mark(c);clearTimeout(t);t=setTimeout(read,140)},{passive:true});
+      c.addEventListener("click",function(e){var v=e.target.getAttribute&&e.target.getAttribute("data-v");if(v!=null)go(c,+v,c===cH?1:5,true)})});
+    var done=0;function init(){if(done||!w.offsetParent)return;done=1;setT(new Date(Date.now()+3*3600e3),false)}
+    [].forEach.call(document.querySelectorAll("#tm button"),function(b){b.addEventListener("click",function(){setTimeout(init,30)})});setTimeout(init,300);
+    [].forEach.call(document.querySelectorAll(".tmq button"),function(b){b.addEventListener("click",function(){done=1;setT(new Date(Date.now()+(+b.getAttribute("data-h"))*3600e3+4*60000),true)})})})();
   function tmExtra(base){var m;if(cur&&cur.np)return lastTx=0;if(tmv==="custom"){m=tmM();if(m==null)return lastTx=0}
     else m=tmv.indexOf(_t("60 dakika"))===0?60:tmv.indexOf(_t("90 dakika"))===0?90:tmv===_t("2 saat")?120:150;
     var f=tmF(m),tx=Math.round((base||0)*f/50)*50,k=tmv==="custom"?tmK(m):-1;if(k>=0){var pn=(base||0)+tx;tx-=Math.round(Math.max(pn*TF_EK[k][0],TF_EK[k][1])/10)*10}

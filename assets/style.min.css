@@ -364,3 +364,4 @@ main>section.sec:not(#hesapla),main>.sec:not(#hesapla),footer{content-visibility
 .kvkk-ok input{width:24px!important;height:24px;flex:0 0 24px;margin-top:0}
 .kx-ezf{display:block;width:100%;margin:10px 0 0;padding:10px 12px;border:1.5px dashed #1f3c88;border-radius:12px;background:#fff;color:#1f3c88;font-weight:700;font-size:.92rem;cursor:pointer;text-align:center}.kx-ezf.on{border-style:solid;background:#eef2fb}
 .kx-ezf{color:#d62828;border:2px solid #d62828;background:#fff5f5;font-size:1rem}.kx-ezf.on{color:#1f3c88;border:2px solid #1f3c88;background:#eef2fb}
+.acl{z-index:60!important}
