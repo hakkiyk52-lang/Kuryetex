@@ -70,6 +70,7 @@ window.__hv=true;window.__rs={};window.__RF=function(k,f){if(window.__hv&&!docum
   function istNow(){var d=new Date(Date.now()+(180+new Date().getTimezoneOffset())*60000);return{ymd:d.getFullYear()+"-"+("0"+(d.getMonth()+1)).slice(-2)+"-"+("0"+d.getDate()).slice(-2),h:d.getHours()}}
   function wxLvl(j){var c=j&&j.current;if(!c)return 0;var w=+c.weather_code,pr=+c.precipitation||0;if(pr>=2.5||([63,65,67,81,82,95,96,99,73,75,86].indexOf(w)>-1&&pr>=1))return 2;return 0}
   var MANW=null;fetch("/api/yagis").then(function(r){return r.json()}).then(function(j){MANW=j;if(j&&j.on&&res&&res.style.display==="block")compute()}).catch(function(){});
+  var MANT=null;function setT(j){MANT=j&&j.tatil;if(MANT&&MANT.on&&res&&res.style.display==="block")compute()}if(window.__kxAyar)setT(window.__kxAyar);else document.addEventListener("kxayar",function(){setT(window.__kxAyar)});
   function wxGet(lat,lon){var W=C.WX;if(!W||!W.on||!lat)return 0;if(window.__WXTEST!=null)return window.__WXTEST;var k=(Math.round(lat*5)/5)+","+(Math.round(lon*5)/5),o=WXC[k];
     if(o&&Date.now()-o.t<9e5)return o.l;if(o&&o.busy)return o.l||0;WXC[k]={t:0,l:o?o.l:0,busy:1};
     fetch("https://api.open-meteo.com/v1/forecast?latitude="+lat.toFixed(2)+"&longitude="+lon.toFixed(2)+"&current=precipitation,weather_code&timezone=Europe%2FIstanbul").then(function(r){return r.json()}).then(function(j){var l=wxLvl(j),old=WXC[k].l;WXC[k]={t:Date.now(),l:l};if(l!==old&&res&&res.style.display==="block")compute()}).catch(function(){WXC[k]={t:Date.now(),l:0}});
@@ -78,7 +79,7 @@ window.__hv=true;window.__rs={};window.__RF=function(k,f){if(window.__hv&&!docum
     var l=wxGet(lat,lon);if(MANW&&MANW.on){var ml=MANW.pct===15?2:1;if(ml>l)l=ml}if(l>0)it.push([_t("yoğun hava şartları"),W.heavy||15]);
     (T.gunler||[]).forEach(function(g){if(g[0]!==n.ymd)return;var t=g[1];if((t==="ab"||t==="ar")&&n.h<13)return;var b=t==="b"||t==="ab";it.push([b?_t("bayram"):_t("resmî tatil"),b?(T.b||15):(T.r||13)])});
     (E.gunler||[]).forEach(function(g){if(g[0]===n.ymd)it.push([g[1],E.pct||15])});
-    if(S.on)it.push([(S.txt||_t("yoğunluk")).toLocaleLowerCase("tr"),S.pct||15]);
+    if(S.on)it.push([(S.txt||_t("yoğunluk")).toLocaleLowerCase("tr"),S.pct||15]);if(MANT&&MANT.on)it.push([String(MANT.ad||_t("resmî tatil")).toLocaleLowerCase("tr"),15]);
     var ngt=0;if(C.NIGHT_PCT&&!nn){var hh;if(typeof tmv!=="undefined"&&tmv==="custom"&&tmc&&tmc.value)hh=+tmc.value.split(":")[0];else hh=n.h;var na=C.NIGHT_START||0,nb=C.NIGHT_END||7;if(na<nb?(hh>=na&&hh<nb):(hh>=na||hh<nb))ngt=C.NIGHT_PCT}
     if((!it.length&&!ngt)||!base)return{tot:0,txt:"",msg:""};var pct=0;it.forEach(function(x){pct=Math.max(pct,x[1])});if(it.length>1)pct=C.EXTRA_CAP_PCT||15;var tot=Math.round(base*(pct+ngt)/100/25)*25,pr=[];if(ngt)pr.push(_t("Gece saati (21:00–08:00): +%")+ngt);if(it.length){var nm=it.map(function(x){return x[0]});pr.push(nm.join(", ").replace(/^./,function(c){return c.toLocaleUpperCase("tr")})+": +%"+pct)}var txt=pr.join(" · ")+" (+"+tl(tot)+").";return{tot:tot,txt:txt,msg:"\n"+_t("Not: ")+txt}}
   function tier(km){var T=C.TIERS,p=C.TIER_BASE||580;for(var i=0;i<T.length;i++){var f=T[i][0],t=i+1<T.length?T[i+1][0]:1e9;if(km>f)p+=(Math.min(km,t)-f)*T[i][1]}return p}
