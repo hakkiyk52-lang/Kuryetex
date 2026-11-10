@@ -637,7 +637,7 @@ body{padding-top:34px}
 .eyebrow{color:var(--blue)}
 
 /* animasyonları kapat / sade mod */
-html[data-calm] *:not(.xpl *):not(#hizmetler *):not(.ecob):not(.ecot):not(.ezsos):not(.ezsos-ic i):not(.ezhand):not(.ezrip):not(.ezopen i),html[data-calm] *::before,html[data-calm] *::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+html[data-calm] *:not(.xpl *):not(html[data-calmauto] .roam *):not(#hizmetler *):not(.ecob):not(.ecot):not(.ezsos):not(.ezsos-ic i):not(.ezhand):not(.ezrip):not(.ezopen i),html[data-calm] *::before,html[data-calm] *::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
 html[data-calm] .reveal{opacity:1!important;transform:none!important}
 .fold{margin-top:18px}
 .fold>summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;gap:8px;min-height:48px;padding:0 22px;border-radius:999px;background:var(--card);border:2px solid var(--pm1);color:var(--pm1);font-weight:800}
@@ -691,7 +691,7 @@ html[dir=rtl] .ecob .bt{margin-right:0;margin-left:4px}
 @keyframes wk{0%,6%{transform:translate(-50px,0)}10%,18%{transform:translate(-4px,0)}22%{transform:translate(-4px,0)}30%{transform:translate(-4px,30vh)}34%,100%{transform:translate(-50px,30vh)}}
 @keyframes wsm{0%,10%{opacity:0}12%,18%{opacity:1}20%,100%{opacity:0}}
 html[dir=rtl] .roam .rd{left:auto;right:-6px}html[dir=rtl] .roam .ru{right:auto;left:-6px}html[dir=rtl] .roam .wkx{left:auto;right:-4px}
-html[data-calm] .roam,body.mapping .roam,body.busy .roam{display:none!important}
+html[data-calm]:not([data-calmauto]) .roam,body.mapping .roam,body.busy .roam{display:none!important}
 @media(prefers-reduced-motion:reduce){.roam{display:none}}
 .roam .wkx{font-size:22px;left:-9px}.roam .wsm{left:10px;top:-13px;font-size:14px}
 @keyframes wk{0%,6%{transform:translate(-50px,0)}10%,22%{transform:translate(0,0)}30%{transform:translate(0,30vh)}34%,100%{transform:translate(-50px,30vh)}}
