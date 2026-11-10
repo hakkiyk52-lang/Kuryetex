@@ -7,7 +7,7 @@ const json = (o, status = 200) => new Response(JSON.stringify(o), {
 
 export async function onRequestPost(ctx) {
   try { return await calis(ctx); }
-  catch (e) { return json({ hata: "Sunucu hatası: " + (e && e.message || e) }, 500); }
+  catch (e) { return json({ hata: "Sunucu hatası: " + (e && e.message || e) }, 200); }
 }
 
 async function calis({ request, env }) {
@@ -17,13 +17,13 @@ async function calis({ request, env }) {
   // Site haritasını sitenin kendi dosyalarından oku (kendi alan adına istek atmak Cloudflare'de takılabiliyor)
   const smUrl = new URL("/sitemap.xml", request.url);
   const sm = env.ASSETS ? await env.ASSETS.fetch(smUrl) : await fetch(smUrl);
-  if (!sm.ok) return json({ hata: "Site haritası okunamadı" }, 502);
+  if (!sm.ok) return json({ hata: "Site haritası okunamadı" }, 200);
   const urls = [...(await sm.text()).matchAll(/<loc>([^<]+)<\/loc>/g)].map(m => m[1].trim()).slice(0, 10000);
-  if (!urls.length) return json({ hata: "Site haritasında sayfa yok" }, 502);
+  if (!urls.length) return json({ hata: "Site haritasında sayfa yok" }, 200);
   const r = await fetch("https://api.indexnow.org/indexnow", {
     method: "POST", headers: { "Content-Type": "application/json; charset=utf-8" },
     body: JSON.stringify({ host: HOST, key: KEY, keyLocation: "https://" + HOST + "/" + KEY + ".txt", urlList: urls }) });
   if (r.status === 200 || r.status === 202) return json({ ok: true, adet: urls.length });
   const t = (await r.text()).slice(0, 200);
-  return json({ hata: "Bing yanıtı: " + r.status + " " + t }, 502);
+  return json({ hata: "Bing yanıtı: " + r.status + " " + t }, 200);
 }
