@@ -173,17 +173,60 @@ window.__hv=true;window.__rs={};window.__RF=function(k,f){if(window.__hv&&!docum
    {k:"ucak-kargo-teslim",l:_t("✈️ Uçak kargo teslim"),t:"calc",size:1,kg:1},
    {k:"otobus-kargo-teslim",l:_t("🚌 Otobüs kargo teslim"),t:"calc",size:1,kg:1}];
   var tmb=document.querySelectorAll("#tm button"),tmcW=$("tmcWrap"),tmc=$("tmc"),tmv=_t("Normal teslim (2–2,5 saat)");
-  function setTm(v){tmv=v;tmb.forEach(function(x){x.setAttribute("aria-pressed",x.getAttribute("data-t")===v?"true":"false")});if(tmcW)tmcW.style.display=v==="custom"?"block":"none"}
-  tmb.forEach(function(b){b.addEventListener("click",function(){setTm(b.getAttribute("data-t"));reset()})});if(tmc)tmc.addEventListener("input",reset);
+  function setTm(v){tmv=v;tmb.forEach(function(x){x.setAttribute("aria-pressed",x.getAttribute("data-t")===v?"true":"false")});if(tmcW)tmcW.style.display=v==="custom"?"block":"none";if(v==="custom")tmInfo()}
+  tmb.forEach(function(b){b.addEventListener("click",function(){setTm(b.getAttribute("data-t"));reset()})});if(tmc){tmc.addEventListener("input",reset);tmc.addEventListener("change",reset)}
   var lastTx=0;
-  function tmExtra(base){var m;if(cur&&cur.np)return lastTx=0;if(tmv==="custom"){if(!(tmc&&tmc.value))return lastTx=0;var h=tmc.value.split(":"),n=new Date(),tgt=new Date();tgt.setHours(+h[0],+h[1],0,0);m=(tgt-n)/60000;if(m<0)m+=1440}
+  // teslim süresine göre oran: 60 dk VIP, 90 dk standart, sonrası %15; 3 saatten itibaren her ek saatte +%5 (en fazla %30)
+  function tmF(m){m=Math.ceil(m);if(m<=60)return C.TF_VIP||.4;if(m<=90)return 0;return -(C.TF_DAY||.15)}
+  // 3 saat ve sonrası: normal fiyattan ek indirim (yüzde ya da en az tutar, hangisi büyükse)
+  var TF_EK=C.TF_EK||[[.05,80],[.10,160],[.15,240],[.20,300]];
+  function tmK(m){m=Math.ceil(m);return m<180?-1:Math.min(TF_EK.length-1,Math.floor((m-180)/60))}
+  function tmM(){var v=tmc&&tmc.value;if(!/^\d{2}:\d{2}$/.test(v||""))return null;var h=v.split(":"),n=new Date(),t=new Date();t.setHours(+h[0],+h[1],0,0);var m=(t-n)/60000;if(m<0)m+=1440;return m}
+  function tmInfo(){var I=$("tmcInfo");if(!I)return;var m=tmM();if(m==null){I.textContent="";return}var hr=Math.floor(m/60),mi=Math.round(m%60),k=tmK(m),f=tmF(m);
+    I.textContent=(hr?hr+" "+_t("saat")+" ":"")+(mi?mi+" "+_t("dk")+" ":"")+_t("sonra")+" · "+(k>=0?_t("normal fiyattan ek indirim: %")+Math.round(TF_EK[k][0]*100)+" ("+_t("en az ")+TF_EK[k][1]+" TL)":f>0?"VIP +%"+Math.round(f*100):f<0?"%"+Math.round(-f*100)+" "+_t("indirim"):_t("standart fiyat"))}
+  // alarm kurar gibi kaydırmalı saat seçici (saat + 5 dakikalık dakika)
+  (function(){var I=$("tmcIn");if(!I||!tmc)return;function pad(x){return("0"+x).slice(-2)}
+    I.style.display="none";var IH=44,st=document.createElement("style");
+    st.textContent=".kxw{display:flex;justify-content:center;gap:18px;position:relative;margin:6px 0 4px;user-select:none}.kxw:before{content:'';position:absolute;left:8%;right:8%;top:"+IH*2+"px;height:"+IH+"px;border-radius:12px;background:rgba(15,138,95,.10);border:1.5px solid rgba(15,138,95,.35);pointer-events:none}.kxw-c{height:"+IH*5+"px;width:90px;overflow-y:scroll;scroll-snap-type:y mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch;-webkit-mask-image:linear-gradient(transparent,#000 30%,#000 70%,transparent);mask-image:linear-gradient(transparent,#000 30%,#000 70%,transparent)}.kxw-c::-webkit-scrollbar{display:none}.kxw-c div{height:"+IH+"px;line-height:"+IH+"px;text-align:center;font-size:30px;font-weight:600;scroll-snap-align:center;color:#9aa7b8;font-variant-numeric:tabular-nums}.kxw-c div.on{color:#13233f;font-size:36px}.kxw-c .sp{scroll-snap-align:none}.kxw-l{display:flex;justify-content:center;gap:18px;font-size:13px;font-weight:700;color:#5b6b85}.kxw-l span{width:90px;text-align:center}.kxw-sep{align-self:center;font-size:32px;font-weight:700;color:#13233f}";
+    document.head.appendChild(st);
+    function col(n,step){var c=document.createElement("div");c.className="kxw-c";var h='<div class="sp"></div><div class="sp"></div>';for(var i=0;i<n;i+=step)h+="<div data-v=\""+i+"\">"+pad(i)+"</div>";c.innerHTML=h+'<div class="sp"></div><div class="sp"></div>';return c}
+    var lab=document.createElement("div");lab.className="kxw-l";lab.innerHTML="<span>"+_t("Saat")+"</span><span>"+_t("Dakika")+"</span>";
+    var w=document.createElement("div");w.className="kxw";var cH=col(24,1),cM=col(60,5),sep=document.createElement("div");sep.className="kxw-sep";sep.textContent=":";w.appendChild(cH);w.appendChild(sep);w.appendChild(cM);
+    I.parentNode.insertBefore(lab,I.nextSibling);lab.parentNode.insertBefore(w,lab.nextSibling);
+    var ok=document.createElement("button");ok.type="button";ok.textContent="✓ "+_t("Tamam");ok.style.cssText="width:100%;margin-top:8px;padding:12px;border:0;border-radius:12px;background:#0f8a5f;color:#fff;font:inherit;font-weight:800;font-size:17px;cursor:pointer";
+    var sm=document.createElement("div");sm.style.cssText="display:none;align-items:center;justify-content:space-between;gap:10px;padding:12px 14px;border-radius:12px;background:#e9f7f1;border:1.5px solid #9fd8c0;font-weight:800;color:#13233f";
+    sm.innerHTML='<span class="kxs"></span><button type="button" style="border:0;background:none;color:#0f8a5f;font:inherit;font-weight:800;text-decoration:underline;cursor:pointer;padding:4px">'+_t("Değiştir")+'</button>';
+    var Q=document.querySelector(".tmq"),INF=$("tmcInfo"),aft=INF||Q||w;aft.parentNode.insertBefore(ok,aft.nextSibling);ok.parentNode.insertBefore(sm,ok.nextSibling);
+    function fold(c){[lab,w,Q,ok,typeof cx!=="undefined"?cx:null].forEach(function(e){if(e)e.style.display=c?"none":""});sm.style.display=c?"flex":"none";if(c)sm.querySelector(".kxs").textContent="🕒 "+(tmc.value||"")+(INF&&INF.textContent?" · "+INF.textContent.split(" · ")[0]:"")}
+    // vazgeç: seçiciyi kapat, önceki süre seçimine dön
+    var prev=null;[].forEach.call(document.querySelectorAll('#tm button'),function(b){b.addEventListener("click",function(){if(b.getAttribute("data-t")!=="custom")prev=b},true)});
+    var pre=document.querySelector('#tm button[aria-pressed="true"]');if(pre&&pre.getAttribute("data-t")!=="custom")prev=pre;
+    var cx=document.createElement("button");cx.type="button";cx.textContent="✕ "+_t("Vazgeç");cx.style.cssText="width:100%;margin-top:8px;padding:11px;border:1.5px solid #c9d3e3;border-radius:12px;background:#fff;color:#13233f;font:inherit;font-weight:800;font-size:16px;cursor:pointer";
+    ok.parentNode.insertBefore(cx,ok.nextSibling);
+    function cancel(){tmc.value="";var b=prev||document.querySelector('#tm button[data-t^="Normal"]')||document.querySelector('#tm button');if(b)b.click();fold(false)}
+    cx.addEventListener("click",cancel);
+    var W=$("tmcWrap");document.addEventListener("click",function(e){if(!W||W.style.display==="none"||sm.style.display==="flex")return;if(W.contains(e.target)||!e.target.closest||e.target.closest("#tm")||!e.target.closest("main,#hesapla,.calc"))return;if(e.target.closest&&e.target.closest("#calcBtn")&&tmc.value){read();fold(true);return}cancel()},true);
+    ok.addEventListener("click",function(){read();fold(true);var b=$("calcBtn");if(b)b.scrollIntoView({behavior:"smooth",block:"center"})});
+    sm.querySelector("button").addEventListener("click",function(){fold(false)});
+    [].forEach.call(document.querySelectorAll('#tm button[data-t="custom"]'),function(b){b.addEventListener("click",function(){fold(false);setTimeout(function(){if(!tmc.value&&w.offsetParent)read()},80)})});
+    function idx(c){return Math.max(0,Math.min(c.children.length-5,Math.round(c.scrollTop/IH)))}
+    function mark(c){var k=idx(c);[].forEach.call(c.children,function(d,j){d.classList.toggle("on",j===k+2)});return +c.children[k+2].getAttribute("data-v")}
+    function read(){var v=pad(mark(cH))+":"+pad(mark(cM));if(tmc.value!==v){tmc.value=v;tmInfo();reset()}}
+    function go(c,val,step,smooth){var k=Math.round(val/step);c.scrollTo({top:k*IH,behavior:smooth?"smooth":"auto"})}
+    function setT(d,smooth){var m=Math.ceil(d.getMinutes()/5)*5;if(m===60){d=new Date(d.getTime()+(60-d.getMinutes())*60000);m=0}go(cH,d.getHours(),1,smooth);go(cM,m,5,smooth);setTimeout(read,smooth?400:30)}
+    [cH,cM].forEach(function(c){var t;c.addEventListener("scroll",function(){mark(c);clearTimeout(t);t=setTimeout(read,140)},{passive:true});
+      c.addEventListener("click",function(e){var v=e.target.getAttribute&&e.target.getAttribute("data-v");if(v!=null)go(c,+v,c===cH?1:5,true)})});
+    var done=0;function init(){if(done||!w.offsetParent)return;done=1;setT(new Date(Date.now()+3*3600e3),false)}
+    [].forEach.call(document.querySelectorAll("#tm button"),function(b){b.addEventListener("click",function(){setTimeout(init,30)})});setTimeout(init,300);
+    [].forEach.call(document.querySelectorAll(".tmq button"),function(b){b.addEventListener("click",function(){done=1;setT(new Date(Date.now()+(+b.getAttribute("data-h"))*3600e3+4*60000),true)})})})();
+  function tmExtra(base){var m;if(cur&&cur.np)return lastTx=0;if(tmv==="custom"){m=tmM();if(m==null)return lastTx=0}
     else m=tmv.indexOf(_t("60 dakika"))===0?60:tmv.indexOf(_t("90 dakika"))===0?90:tmv===_t("2 saat")?120:150;
-    var f=m<=60?(C.TF_VIP||.4):m<=90?0:Math.ceil(m)>=300?-(C.TF_PLAN||.25):-(C.TF_DAY||.15);
-    return lastTx=Math.round((base||0)*f/50)*50}
+    var f=tmF(m),tx=Math.round((base||0)*f/50)*50,k=tmv==="custom"?tmK(m):-1;if(k>=0){var pn=(base||0)+tx;tx-=Math.round(Math.max(pn*TF_EK[k][0],TF_EK[k][1])/10)*10}
+    return lastTx=tx}
   function txs(x){return x>0?"+"+tl(x):x<0?"−"+tl(-x):tl(0)}
   function nightFee(){var F=C.NIGHT_FEE||0;if(!F)return 0;var h;if(tmv==="custom"&&tmc&&tmc.value){h=+tmc.value.split(":")[0]}else{h=new Date(Date.now()+(180+new Date().getTimezoneOffset())*60000).getHours()}var a=C.NIGHT_START||0,b=C.NIGHT_END||7;return (a<b?(h>=a&&h<b):(h>=a||h<b))?F:0}
 var lastFl=0;function txn(){if(cur&&cur.np)return _t("Eczane teslimi mahalle bölgesine göre hesaplanır.");if(lastFl)return _t("Kısa mesafede en uygun fiyat uygulanır.");return lastTx>0?_t("Hızlı teslim farkı: ")+txs(lastTx)+".":lastTx<0?_t("Geç teslim indirimi: ")+txs(lastTx)+".":_t("Express (90 dk) standart fiyat.")}
-  function tmText(){if(cur&&cur.np)return _t("30–45 dakika (hava şartlarına bağlı)");return tmv==="custom"?(tmc&&tmc.value?_t("Saat ")+tmc.value+" (belirli saat)":""):tmv}
+  function tmText(){if(cur&&cur.np)return _t("30–45 dakika (hava şartlarına bağlı)");return tmv==="custom"?(tmc&&tmc.value?_t("Saat ")+tmc.value+" (seçilen saat)":""):tmv}
   var cur=null,size=-1,sizeName="",raf=0,shown=0;
   var res=$("result"),errEl=$("cerr");
 
@@ -208,8 +251,8 @@ var lastFl=0;function txn(){if(cur&&cur.np)return _t("Eczane teslimi mahalle bö
   function rq(el){var ll=el.dataset.ll;if(ll)return ll;var v=(el.value||"").replace(/\s+/g," ").trim();return /İstanbul|Kocaeli|Tekirdağ/i.test(v)||/^CITY:/.test(el.dataset.d||"")?v:v+", İstanbul"}
   function rotaLink(){var k=$("km");if(!k)return;var a=document.createElement("a");a.className="rotal";a.target="_blank";a.rel="nofollow noopener";a.href="https://www.google.com/maps/dir/?api=1&travelmode=driving&origin="+encodeURIComponent(rq(from))+"&destination="+encodeURIComponent(rq(to));a.textContent=_t("Rotayı Google Haritalar'da gör ›");k.appendChild(document.createTextNode(" "));k.appendChild(a)}
   function kdvP(p){return Math.round(p*(1+(C.KDV||20)/100))}
-  function kdvShow(p,ez){var pe=$("price");if(!pe)return;var k=$("kdvnote");if(!k){k=document.createElement("p");k.id="kdvnote";k.className="kdvn";pe.parentNode.insertBefore(k,pe.nextSibling)}if(!p){k.hidden=true;return}k.hidden=false;k.innerHTML="<span>"+_t("KDV hariç fiyattır.")+"</span> <b>"+_t("KDV dahil fiyat (%")+(C.KDV||20)+"): "+tl(kdvP(p))+"</b>"+(ez?"<small>"+_t("KDV yalnızca kurye ücretine eklenir; ilaç ücreti eczane fişine göredir.")+"</small>":"")}
-  function kdvLn(p){return p?"🧾 "+_t("KDV dahil fiyat (%")+(C.KDV||20)+"): "+tl(kdvP(p)):""}
+  function kdvShow(p,ez){var pe=$("price");if(!pe)return;var k=$("kdvnote");if(!k){k=document.createElement("p");k.id="kdvnote";k.className="kdvn";pe.parentNode.insertBefore(k,pe.nextSibling)}if(!p){k.hidden=true;return}k.hidden=false;k.innerHTML="<span>"+_t("Fiyata KDV dahildir.")+"</span>"+(ez?"<small>"+_t("İlaç ücreti eczane fişine göredir.")+"</small>":"")}
+  function kdvLn(p){return""}
   function air(a, b){var R=6371,rad=Math.PI/180,dLat=(b.lat-a.lat)*rad,dLon=(b.lon-a.lon)*rad;var h=Math.sin(dLat/2)*Math.sin(dLat/2)+Math.cos(a.lat*rad)*Math.cos(b.lat*rad)*Math.sin(dLon/2)*Math.sin(dLon/2);return 2*R*Math.asin(Math.sqrt(h))}
   function tarife(km,A){A=A||C.ANCHORS;var i;if(km<=A[0][0])return A[0][1];for(i=1;i<A.length;i++){if(km<=A[i][0])return A[i-1][1]+(A[i][1]-A[i-1][1])*(km-A[i-1][0])/(A[i][0]-A[i-1][0]);}var u=A[A.length-2],l=A[A.length-1];return l[1]+(l[1]-u[1])/(l[0]-u[0])*(km-l[0])}
   function compute(){
@@ -262,7 +305,7 @@ var lastFl=0;function txn(){if(cur&&cur.np)return _t("Eczane teslimi mahalle bö
         ln.push("🅰️ Alım: "+from.value);ln.push("🅱️ Teslim: "+to.value);
         if(cur.size&&sizeName)ln.push("📐 Boyut: "+sizeName);if(cur.kg)ln.push("⚖️ Ağırlık: "+(w||0)+" kg");
         ln.push("⏱️ Teslim: VIP kurye (süre WhatsApp'ta netleşir)");ln.push("📏 Tahmini mesafe: ~"+Math.round(ikm/10)*10+" km");
-        ln.push("💰 Fiyat: "+tl(ip)+" (şehirler arası tahmini, KDV hariç)");ln.push(kdvLn(ip));
+        ln.push("💰 Fiyat: "+tl(ip)+" (şehirler arası tahmini, KDV dahil)");
         var fx=[];if(sx)fx.push("koli ebat +"+tl(sx));if(wx)fx.push("ağırlık +"+tl(wx));if(nf2)fx.push("gece +"+tl(nf2));if(fx.length)ln.push("   (dahil: "+fx.join(", ")+")");
         if(exC.txt)ln.push("ℹ️ "+exC.txt);
         ln.push(S,"📝 Gönderi / not: ","👤 Teslim alacak kişi / tel: ",S);
@@ -292,7 +335,7 @@ var lastFl=0;function txn(){if(cur&&cur.np)return _t("Eczane teslimi mahalle bö
     ln.push((cur.ezf?"🏥 Alınacak eczane: ":"🅰️ Alım: ")+from.value);ln.push("🅱️ Teslim: "+to.value);if(cur.ezf){ln.push("💊 İlaç bilgisi: (WhatsApp'tan iletilecek)");ln.push("💳 İlaç ücreti eczane fişine göre, kapıda ödenir")}
     if(cur.size&&sizeName)ln.push("📐 Boyut: "+sizeName);if(cur.kg)ln.push("⚖️ Ağırlık: "+(w||0)+" kg");
     ln.push("⏱️ Teslim süresi: "+tmText());ln.push("📏 Tahmini mesafe: "+km.toFixed(1).replace(".",",")+" km");
-    ln.push("💰 Fiyat: "+(p!==null?tl(p)+" (KDV hariç)":_t("WhatsApp'ta netleşecek")));if(window.__kxAb&&$("aboneChk")&&$("aboneChk").checked)ln.push(_t("Abone müşteri (%25 indirim uygulandı)"));if(p!==null)ln.push(kdvLn(p));
+    ln.push("💰 Fiyat: "+(p!==null?tl(p)+" (KDV dahil)":_t("WhatsApp'ta netleşecek")));if(window.__kxAb&&$("aboneChk")&&$("aboneChk").checked)ln.push(_t("Abone müşteri (%25 indirim uygulandı)"));
     var fx=[];if(sx)fx.push("koli ebat +"+tl(sx));if(wx)fx.push("ağırlık +"+tl(wx));if(nf)fx.push("gece +"+tl(nf));if(rz)fx.push(rzn.toLocaleLowerCase("tr")+" +"+tl(rz));if(fx.length)ln.push("   (dahil: "+fx.join(", ")+")");
     if(exN.txt)ln.push("ℹ️ "+exN.txt);
     ln.push(S,"📝 Gönderi / not: ","👤 Teslim alacak kişi / tel: ",S);
@@ -900,3 +943,7 @@ if(matchMedia("(prefers-reduced-motion:reduce)").matches)return;var vis=0;if("In
 setInterval(function(){if(vis&&!paused&&!document.hidden)go(1)},3200)})})();
 
 (function(){var c=document.getElementById("aboneChk");if(!c)return;if(/[?&]abone=1/.test(location.search))c.checked=true;var lab=c.closest(".abone-chk");document.addEventListener("kxsvc",function(e){var s=e.detail;if(lab)lab.style.display=s&&s.np?"none":""});c.addEventListener("change",function(){var r=document.getElementById("result");if(r&&r.style.display!=="none"){var b=document.getElementById("calcBtn");b&&b.click()}})})();
+// mahalle/ilçe listesi açıkken diğer alanların "Konumum" düğmesi listenin üstüne binmesin
+(function(){var t;document.addEventListener("focusin",function(e){var x=e.target;if(!x||!x.closest||x.tagName!=="INPUT")return;var c=x.closest(".calc");if(!c)return;clearTimeout(t);c.classList.add("kxf");[].forEach.call(c.querySelectorAll(".kxfo"),function(f){f.classList.remove("kxfo")});var f=x.closest(".field");if(f)f.classList.add("kxfo")});
+document.addEventListener("focusout",function(e){var x=e.target;var c=x&&x.closest&&x.closest(".calc");if(!c)return;clearTimeout(t);t=setTimeout(function(){if(!c.contains(document.activeElement)||document.activeElement.tagName!=="INPUT")c.classList.remove("kxf")},250)});
+var st=document.createElement("style");st.textContent=".kxf .field:not(.kxfo) .ip-loc{visibility:hidden!important;pointer-events:none}";document.head.appendChild(st)})();
