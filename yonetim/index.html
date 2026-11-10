@@ -44,6 +44,13 @@ label{font-weight:600;font-size:15px}
     <p class="h" id="h2"></p>
     <p class="not">Açıkken sitedeki bütün fiyat hesaplamalarına bu fark eklenir. Müşteri fiyatın altında "Bu fiyata yağışlı hava nedeniyle %13 fark eklenmiştir" notunu görür. Değişiklik 1 dakika içinde sitede görünür.<br>Otomatik hava durumu kontrolü bundan bağımsız olarak çalışmaya devam eder.</p>
   </div>
+
+  <div class="k" id="bing" hidden>
+    <h2>Bing / ChatGPT'ye bildir</h2>
+    <button id="bildir">Tüm sayfaları Bing'e bildir</button>
+    <p class="h" id="h3"></p>
+    <p class="not">Sitedeki bütün sayfaları Bing'e (ChatGPT ve Copilot da Bing'i kullanır) "taranmaya hazır" diye bildirir. Site değiştiğinde ayda 1–2 kez basmanız yeterli.</p>
+  </div>
 </main>
 <script>
 (function(){
@@ -54,13 +61,17 @@ label{font-weight:600;font-size:15px}
     if(j.on){var s="AÇIK · %"+j.pct;if(j.until){var t=new Date(j.until);s+=" · "+("0"+t.getHours()).slice(-2)+":"+("0"+t.getMinutes()).slice(-2)+"'de kapanacak"}d.textContent=s;d.className="durum acik";$("pct").value=String(j.pct)}
     else{d.textContent="KAPALI";d.className="durum kapali"}}
   function gir(){S=$("sifre").value||S;$("h1").textContent="";$("gir").disabled=true;
-    api({sadeceOku:true}).then(function(j){try{sessionStorage.setItem("kx_s",S)}catch(e){}$("giris").hidden=true;$("panel").hidden=false;goster(j)})
+    api({sadeceOku:true}).then(function(j){try{sessionStorage.setItem("kx_s",S)}catch(e){}$("giris").hidden=true;$("panel").hidden=false;$("bing").hidden=false;goster(j)})
     .catch(function(e){$("h1").textContent=e.message;try{sessionStorage.removeItem("kx_s")}catch(x){}}).then(function(){$("gir").disabled=false})}
   function degistir(on){$("h2").textContent="";$("ac").disabled=$("kapat").disabled=true;
     api({on:on,pct:+$("pct").value,saat:+$("saat").value}).then(goster).catch(function(e){$("h2").textContent=e.message})
     .then(function(){$("ac").disabled=$("kapat").disabled=false})}
   $("gir").onclick=gir;$("sifre").onkeydown=function(e){if(e.key==="Enter")gir()};
   $("ac").onclick=function(){degistir(true)};$("kapat").onclick=function(){degistir(false)};
+  $("bildir").onclick=function(){var h=$("h3");h.style.color="";h.textContent="Gönderiliyor…";$("bildir").disabled=true;
+    fetch("/api/indexnow",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({sifre:S})}).then(function(r){return r.json()})
+    .then(function(j){if(j.ok){h.style.color="#1f9d55";h.textContent="✓ "+j.adet+" sayfa Bing'e bildirildi."}else h.textContent=j.hata||"Hata"})
+    .catch(function(){h.textContent="Bağlantı hatası"}).then(function(){$("bildir").disabled=false})};
   if(S)gir();
 })();
 </script>
