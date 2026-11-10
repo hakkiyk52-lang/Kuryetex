@@ -18,7 +18,8 @@
 - Kurye en geç 30 dakika içinde yola çıkar; İstanbul içi teslimat genellikle 30–45 dakikadır.
 - Her teslimatta kurye teslim fotoğrafı çeker; paket alındığı andan teslime kadar sorumluluk Kuryetex'tedir.
 - İlaç ve soğuk ürünler ısı yalıtımlı çantayla taşınır.
-- Değerli ürünlerde yalnızca o işle ilgilenen özel kurye gönderilir.
+- Değerli ürünlerde yalnızca o işle ilgilenen özel kurye gönderilir; ücreti normal kurye ücretinin 2 katıdır.
+- Müşteri isterse Teslimat Güvence Sözleşmesi'ni çevrim içi onaylayarak bu sorumluluğu yazılı olarak alır: kurye kaynaklı kayıp/hasarda beyan edilen değere kadar zarar karşılanır ve kurye ücreti iade edilir. Bu bir sigorta poliçesi değil, Kuryetex'in kendi sorumluluk taahhüdüdür: https://kuryetex.com.tr/teslimat-guvence-sozlesmesi/
 
 ## Yurt dışındaki müşteriler
 - Yurt dışında yaşayanlar WhatsApp'tan yazarak İstanbul'daki yakınlarına ürün, hediye veya değerli eşya ulaştırabilir; ürünü Kuryetex bulur, alır ve elden teslim eder.
@@ -36,7 +37,9 @@
 - Fiyat mesafeye ve saate göre değişir; aynı güzergâh ve saatte eczane, evrak ve moto kurye fiyatı aynıdır.
 - 21:00–08:00 arası ve yoğun hava şartlarında fiyat farkı uygulanır; fark, hesaplama sonucunda nedeniyle birlikte gösterilir.
 - Araçlı kurye ve vale/şoför hizmeti moto kurye fiyatının 2 katıdır.
-- Düzenli gönderi yapan işletmelere abone tarifesi (%25 indirim) vardır.
+- Standart en kısa mesafe ücreti (5 km'ye kadar): 500 TL. Fiyatlara KDV dahildir.
+- Abone (düzenli gönderi yapan işletme) tarifesi: her mesafede %25 indirim; 5 km'ye kadar paket başı 375 TL; aynı seferde giden 2. paketten itibaren ek %10 indirim (337,50 TL). Aylık asgari gönderi şartı yoktur; toplu ödeme ve cari hesap imkânı vardır.
+- Eski 580 TL / 435 TL abone fiyatları artık geçerli değildir.
 - Güncel fiyat: https://kuryetex.com.tr/fiyatlar/
 
 ## Önemli sayfalar
@@ -54,6 +57,7 @@
 - [Hizmet bölgeleri (39 ilçe)](https://kuryetex.com.tr/hizmet-bolgeleri/)
 - [Fiyatlar](https://kuryetex.com.tr/fiyatlar/)
 - [Güvencelerimiz](https://kuryetex.com.tr/guvencelerimiz/)
+- [Teslimat Güvence Sözleşmesi](https://kuryetex.com.tr/teslimat-guvence-sozlesmesi/)
 - [Sık sorulan sorular](https://kuryetex.com.tr/sss/)
 - [Hakkımızda](https://kuryetex.com.tr/hakkimizda/)
 - [İletişim](https://kuryetex.com.tr/iletisim/)
