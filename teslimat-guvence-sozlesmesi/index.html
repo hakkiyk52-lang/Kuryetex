@@ -75,7 +75,7 @@ if(!fd.get("Sözleşme onayı"))return err("Devam etmek için sözleşmeyi onayl
 if(!fd.get("KVKK onayı"))return err("Devam etmek için KVKK Aydınlatma Metni'ni onaylayın.");
 if(!fd.get("İmza sahibi"))return err("Lütfen adınızı soyadınızı yazın.");
 if(!drawn)return err("Lütfen imza alanına imzanızı atın.");
-f.querySelector('[name="Onay zamanı"]').value=new Date().toLocaleString("tr-TR");
+f.querySelector('[name="_next"]').value=location.origin+location.pathname+"?onay=1#onay";f.querySelector('[name="Onay zamanı"]').value=new Date().toLocaleString("tr-TR");
 f.querySelector('[name="_subject"]').value="Teslimat Güvence Sözleşmesi onayı – "+fd.get("Gönderici");
 f.querySelector('[name="_cc"]').value=fd.get("E-posta")||"";if(!fd.get("E-posta"))f.querySelector('[name="_cc"]').disabled=true;
 var b=f.querySelector('button[type="submit"]');b.disabled=true;b.textContent="Gönderiliyor…";
