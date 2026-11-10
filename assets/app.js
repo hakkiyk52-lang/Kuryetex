@@ -173,20 +173,26 @@ window.__hv=true;window.__rs={};window.__RF=function(k,f){if(window.__hv&&!docum
    {k:"ucak-kargo-teslim",l:_t("✈️ Uçak kargo teslim"),t:"calc",size:1,kg:1},
    {k:"otobus-kargo-teslim",l:_t("🚌 Otobüs kargo teslim"),t:"calc",size:1,kg:1}];
   var tmb=document.querySelectorAll("#tm button"),tmcW=$("tmcWrap"),tmc=$("tmc"),tmv=_t("Normal teslim (2–2,5 saat)");
-  function setTm(v){tmv=v;tmb.forEach(function(x){x.setAttribute("aria-pressed",x.getAttribute("data-t")===v?"true":"false")});if(tmcW)tmcW.style.display=v==="custom"?"block":"none";if(v==="custom")tmFill()}
+  function setTm(v){tmv=v;tmb.forEach(function(x){x.setAttribute("aria-pressed",x.getAttribute("data-t")===v?"true":"false")});if(tmcW)tmcW.style.display=v==="custom"?"block":"none";if(v==="custom")tmInfo()}
   tmb.forEach(function(b){b.addEventListener("click",function(){setTm(b.getAttribute("data-t"));reset()})});if(tmc){tmc.addEventListener("input",reset);tmc.addEventListener("change",reset)}
   var lastTx=0;
   // teslim süresine göre oran: 60 dk VIP, 90 dk standart, sonrası %15; 3 saatten itibaren her ek saatte +%5 (en fazla %30)
-  function tmF(m){m=Math.ceil(m);if(m<=60)return C.TF_VIP||.4;if(m<=90)return 0;if(m<180)return -(C.TF_DAY||.15);return -Math.min(C.TF_MAX||.30,(C.TF_DAY||.15)+.05*Math.floor((m-180)/60))}
-  function tmFill(){if(!tmc||tmc.tagName!=="SELECT")return;var keep=tmc.value,n=new Date(),t=new Date(n.getTime()+60*60000);t.setSeconds(0,0);var mm=t.getMinutes();t.setMinutes(mm<=30?30:60);var h='<option value="">'+_t("Saat seçin")+'</option>';
-    for(var i=0;i<46;i++){var d=new Date(t.getTime()+i*30*60000),v=("0"+d.getHours()).slice(-2)+":"+("0"+d.getMinutes()).slice(-2),m=(d-n)/60000,f=tmF(m),hr=Math.floor(m/60),mi=Math.round(m%60);
-      var ne=(d.getDate()!==n.getDate()?_t("yarın")+" ":"")+v,ka=hr?hr+" "+_t("sa")+(mi>=15?" "+mi+" "+_t("dk"):""):mi+" "+_t("dk"),tx=f>0?"VIP +%"+Math.round(f*100):f<0?"%"+Math.round(-f*100)+" "+_t("indirim"):_t("standart");
-      h+='<option value="'+v+'">'+ne+" · "+ka+" "+_t("sonra")+" · "+tx+"</option>"}
-    tmc.innerHTML=h;if(keep)tmc.value=keep}
-  function tmExtra(base){var m;if(cur&&cur.np)return lastTx=0;if(tmv==="custom"){if(!(tmc&&tmc.value))return lastTx=0;var h=tmc.value.split(":"),n=new Date(),tgt=new Date();tgt.setHours(+h[0],+h[1],0,0);m=(tgt-n)/60000;if(m<0)m+=1440}
+  function tmF(m){m=Math.ceil(m);if(m<=60)return C.TF_VIP||.4;if(m<=90)return 0;return -(C.TF_DAY||.15)}
+  // 3 saat ve sonrası: normal fiyattan ek indirim (yüzde ya da en az tutar, hangisi büyükse)
+  var TF_EK=C.TF_EK||[[.05,80],[.10,160],[.15,240],[.20,300]];
+  function tmK(m){m=Math.ceil(m);return m<180?-1:Math.min(TF_EK.length-1,Math.floor((m-180)/60))}
+  function tmM(){var v=tmc&&tmc.value;if(!/^\d{2}:\d{2}$/.test(v||""))return null;var h=v.split(":"),n=new Date(),t=new Date();t.setHours(+h[0],+h[1],0,0);var m=(t-n)/60000;if(m<0)m+=1440;return m}
+  function tmInfo(){var I=$("tmcInfo");if(!I)return;var m=tmM();if(m==null){I.textContent="";return}var hr=Math.floor(m/60),mi=Math.round(m%60),k=tmK(m),f=tmF(m);
+    I.textContent=(hr?hr+" "+_t("saat")+" ":"")+(mi?mi+" "+_t("dk")+" ":"")+_t("sonra")+" · "+(k>=0?_t("normal fiyattan ek indirim: %")+Math.round(TF_EK[k][0]*100)+" ("+_t("en az ")+TF_EK[k][1]+" TL)":f>0?"VIP +%"+Math.round(f*100):f<0?"%"+Math.round(-f*100)+" "+_t("indirim"):_t("standart fiyat"))}
+  (function(){var I=$("tmcIn");if(!I||!tmc)return;function pad(x){return("0"+x).slice(-2)}
+    function set(v){tmc.value=v;tmInfo();reset()}
+    I.addEventListener("input",function(){var d=I.value.replace(/\D/g,"").slice(0,4);if(d.length===3&&+d[0]>2)d="0"+d;var out=d.length>2?d.slice(0,2)+":"+d.slice(2):d;if(I.value!==out)I.value=out;
+      if(d.length===4){var hh=+d.slice(0,2),mm=+d.slice(2);if(hh<24&&mm<60){set(pad(hh)+":"+pad(mm));I.style.borderColor="";return}I.style.borderColor="#c0392b"}set("")});
+    [].forEach.call(document.querySelectorAll(".tmq button"),function(b){b.addEventListener("click",function(){var t=new Date(Date.now()+(+b.getAttribute("data-h"))*3600e3+4*60000);t.setMinutes(Math.ceil(t.getMinutes()/5)*5,0,0);var v=pad(t.getHours())+":"+pad(t.getMinutes());I.value=v;set(v)})})})();
+  function tmExtra(base){var m;if(cur&&cur.np)return lastTx=0;if(tmv==="custom"){m=tmM();if(m==null)return lastTx=0}
     else m=tmv.indexOf(_t("60 dakika"))===0?60:tmv.indexOf(_t("90 dakika"))===0?90:tmv===_t("2 saat")?120:150;
-    var f=tmF(m);
-    return lastTx=Math.round((base||0)*f/50)*50}
+    var f=tmF(m),tx=Math.round((base||0)*f/50)*50,k=tmv==="custom"?tmK(m):-1;if(k>=0){var pn=(base||0)+tx;tx-=Math.round(Math.max(pn*TF_EK[k][0],TF_EK[k][1])/10)*10}
+    return lastTx=tx}
   function txs(x){return x>0?"+"+tl(x):x<0?"−"+tl(-x):tl(0)}
   function nightFee(){var F=C.NIGHT_FEE||0;if(!F)return 0;var h;if(tmv==="custom"&&tmc&&tmc.value){h=+tmc.value.split(":")[0]}else{h=new Date(Date.now()+(180+new Date().getTimezoneOffset())*60000).getHours()}var a=C.NIGHT_START||0,b=C.NIGHT_END||7;return (a<b?(h>=a&&h<b):(h>=a||h<b))?F:0}
 var lastFl=0;function txn(){if(cur&&cur.np)return _t("Eczane teslimi mahalle bölgesine göre hesaplanır.");if(lastFl)return _t("Kısa mesafede en uygun fiyat uygulanır.");return lastTx>0?_t("Hızlı teslim farkı: ")+txs(lastTx)+".":lastTx<0?_t("Geç teslim indirimi: ")+txs(lastTx)+".":_t("Express (90 dk) standart fiyat.")}
