@@ -219,9 +219,9 @@ window.__hv=true;window.__rs={};window.__RF=function(k,f){if(window.__hv&&!docum
     var done=0;function init(){if(done||!w.offsetParent)return;done=1;setT(new Date(Date.now()+3*3600e3),false)}
     [].forEach.call(document.querySelectorAll("#tm button"),function(b){b.addEventListener("click",function(){setTimeout(init,30)})});setTimeout(init,300);
     [].forEach.call(document.querySelectorAll(".tmq button"),function(b){b.addEventListener("click",function(){done=1;setT(new Date(Date.now()+(+b.getAttribute("data-h"))*3600e3+4*60000),true)})})})();
-  function tmExtra(base){var m;if(cur&&cur.np)return lastTx=0;if(tmv==="custom"){m=tmM();if(m==null)return lastTx=0}
+  var lastM=null;function tmExtra(base){var m;lastM=null;if(cur&&cur.np)return lastTx=0;if(tmv==="custom"){m=tmM();if(m==null)return lastTx=0}
     else m=tmv.indexOf(_t("60 dakika"))===0?60:tmv.indexOf(_t("90 dakika"))===0?90:tmv===_t("2 saat")?120:150;
-    var f=tmF(m),tx=Math.round((base||0)*f/50)*50,k=tmv==="custom"?tmK(m):-1;if(k>=0){var pn=(base||0)+tx;tx-=Math.round(Math.max(pn*TF_EK[k][0],TF_EK[k][1])/10)*10}
+    lastM=Math.ceil(m);var f=tmF(m),tx=Math.round((base||0)*f/50)*50,k=tmv==="custom"?tmK(m):-1;if(k>=0){var pn=(base||0)+tx;tx-=Math.round(Math.max(pn*TF_EK[k][0],TF_EK[k][1])/10)*10}
     return lastTx=tx}
   function txs(x){return x>0?"+"+tl(x):x<0?"−"+tl(-x):tl(0)}
   function nightFee(){var F=C.NIGHT_FEE||0;if(!F)return 0;var h;if(tmv==="custom"&&tmc&&tmc.value){h=+tmc.value.split(":")[0]}else{h=new Date(Date.now()+(180+new Date().getTimezoneOffset())*60000).getHours()}var a=C.NIGHT_START||0,b=C.NIGHT_END||7;return (a<b?(h>=a&&h<b):(h>=a||h<b))?F:0}
@@ -318,8 +318,8 @@ var lastFl=0;function txn(){if(cur&&cur.np)return _t("Eczane teslimi mahalle bö
     km=same?3:Math.max(C.MAH_KM_MIN||3,ar*C.ROAD+(xs?C.BRIDGE_KM:0));raw=tier(km);
     if(!same&&C.FAR&&(C.FAR.indexOf(fa)>-1||C.FAR.indexOf(tb)>-1))raw=Math.max(raw,km*C.FAR_RATE);
     var p=null;window.__ezX=false;
-    var ext=0;if(cur.t==="calc"){var B0=C.TIER_BASE||580,G=C.TIER_GRID||B0,base=raw<=B0?B0:Math.max(B0,G+Math.round((raw-G)/C.ROUND)*C.ROUND);p=cur.mult?Math.round(base*cur.mult/C.ROUND)*C.ROUND:base+(cur.add||0);var tx0=tmExtra(p);if(tx0<0)p+=tx0;else ext+=tx0;ext+=sx+wx}
-    lastFl=0;if(p!==null){var pf=xs?(C.MIN_CROSS||780):(C.MIN_FEE||500);if(typeof tx0==="number"&&tx0<0){var pb=p-tx0;lastTx=Math.max(p,pf)-Math.max(pb,pf);if(!lastTx)lastFl=1}p=Math.max(p,pf);p+=ext}
+    var ext=0;if(cur.t==="calc"){var B0=C.TIER_BASE||580,G=C.TIER_GRID||B0,base=raw<=B0?B0:Math.max(B0,G+Math.round((raw-G)/C.ROUND)*C.ROUND);p=cur.mult?Math.round(base*cur.mult/C.ROUND)*C.ROUND:base+(cur.add||0);var pb0=p,tx0=tmExtra(p);if(tx0<0)p+=tx0;else ext+=tx0;ext+=sx+wx}
+    lastFl=0;if(p!==null){var pf=xs?(C.MIN_CROSS||780):(C.MIN_FEE||500);if(typeof tx0==="number"&&tx0<0){var pb=p-tx0;lastTx=Math.max(p,pf)-Math.max(pb,pf);if(!lastTx)lastFl=1}p=Math.max(p,pf);if(typeof pb0==="number"&&lastM!=null&&lastM<=90){var kN=Math.max(Math.round(pb0*(1-(C.TF_DAY||.15))/50)*50,pf);if(lastM<=60){var need=kN+200-tx0;if(p<need)p=need}else if(p<kN+100)p=kN+100}p+=ext}
     var rz=0,rzn="";if(p!==null&&window.__ekZonePrice){var zb=(window.EKZ||{}).p||{},za=window.__ekZonePrice(from),zt=window.__ekZonePrice(to);[za,zt].forEach(function(z){if(z&&zb.m&&z-zb.m>rz)rz=z-zb.m});if(rz){rzn=rz>=((zb.u||780)-(zb.m||580))?_t("Kırsal bölge farkı"):_t("Ara bölge farkı");p+=rz}}var dn=0;if(p!==null&&C.D[fa]&&C.D[fa].il&&!(C.D[tb]&&C.D[tb].il)){dn=C.CEVRE_DONUS||1000;p+=dn}var exN=p!==null?extras(a.lat,a.lon,p):{tot:0,txt:"",msg:""};var nf=p!==null?nightFee():0;if(nf)p+=nf;p=p!==null?p+exN.tot:p;var ab=0,abc=$("aboneChk");if(p!==null&&abc&&abc.checked){ab=Math.round(p*0.25/5)*5;p-=ab}window.__kxAb=ab;
     var hl=cur.l.replace(/^\S+\s/,"");
     $("route").textContent=from.value+" → "+to.value;
