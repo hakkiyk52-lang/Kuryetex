@@ -20,6 +20,11 @@
 - İlaç ve soğuk ürünler ısı yalıtımlı çantayla taşınır.
 - Değerli ürünlerde yalnızca o işle ilgilenen özel kurye gönderilir.
 
+## Yurt dışındaki müşteriler
+- Yurt dışında yaşayanlar WhatsApp'tan yazarak İstanbul'daki yakınlarına ürün, hediye veya değerli eşya ulaştırabilir; ürünü Kuryetex bulur, alır ve elden teslim eder.
+- Örnek: İsveç'teki bir müşteri için kuyumcudan alınan değerli eşya Bahçeşehir'e yaklaşık 2 saatte teslim edildi (Google yorumu: 5 yıldız).
+- Türkçe ve İngilizce iletişim.
+
 ## Eczane kurye (ilaç getirme)
 - Yalnızca İstanbul'da verilir; 7/24, nöbetçi eczaneler dahil.
 - Müşteri ilacın adını ve adresini/konumunu WhatsApp'tan gönderir; eczaneyi Kuryetex bulur, ilacı alır ve adrese getirir.
@@ -42,6 +47,8 @@
 - [Evrak kurye](https://kuryetex.com.tr/evrak-kurye/)
 - [Araçlı kurye](https://kuryetex.com.tr/aracli-kurye/)
 - [VIP kurye](https://kuryetex.com.tr/vip-kurye/)
+- [Ürün bulma ve temin (sizin adınıza alıp getirme)](https://kuryetex.com.tr/urun-temin-kurye/)
+- [Yurt dışından İstanbul'a teslimat](https://kuryetex.com.tr/yurt-disindan-istanbul-teslimat/)
 - [Kurumsal kurye](https://kuryetex.com.tr/kurumsal/)
 - [Abone müşteri / işletmeler](https://kuryetex.com.tr/abone-musteri/)
 - [Hizmet bölgeleri (39 ilçe)](https://kuryetex.com.tr/hizmet-bolgeleri/)

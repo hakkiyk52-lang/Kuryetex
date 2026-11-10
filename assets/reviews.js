@@ -1,5 +1,6 @@
 (function(){
 var R=[
+{n:"Muhammed Isa",g:"Yurt dışından müşteri · İngilizce yorumdan çeviri",t:"Kesinlikle muhteşem bir hizmet! İstanbul'da Kuryetex'i paket göndermek için seçtim ve her şey sadece 2 saat içinde sorunsuz ve profesyonelce halledildi! Süper hızlı, güvenilir ve verimli. Son derece memnun kaldım. Şiddetle tavsiye ederim!"},
 {n:"Cüneyt Varup",g:"Yerel Rehber · 12 yorum",t:"Cok hizli bir sekilde iletisim kurup istedigim teslimati gerceklestirdiler. İletişimleri muazzamdı. Paket kusursuz bir sekilde elime ulasti."},
 {n:"Oğuz Özvarlık",g:"Yerel Rehber · 73 yorum",e:1,t:"Gaziantep ten İstanbul iş gezisi için geldim. Gece alerjim tuttu. Firmadan ilaç istedim 30 dk gibi bir sürede getirdiler."},
 {n:"Armiiies Arman",g:"İstanbul bölgesinde 10 yorum",e:1,t:"Çok profesyonel ve hızlı çalışıyorlar. Kuryede çok kibardı ilaçların fişinin fotosunu bile çekip atıyorlar."},
