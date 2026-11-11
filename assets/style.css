@@ -1273,7 +1273,7 @@ html.focusing .langbar,html.focusing .tick,html.focusing header.top{opacity:0!im
 .calc .kx-ez .nb-go2{background:#fff!important;color:#c2410c!important;border:1.5px solid #ffc49a!important}
 .calc .kx-ez .kx-ez-h{background:#eef5ff!important;color:#1b4fa8!important;margin-top:8px;padding:8px 10px}
 
-.ip-f>.ip-loc{z-index:50}
+.ip-f>.ip-loc{z-index:5}
 
 .ip-loc{display:none!important}
 .ip .acl li.adr,.ip .acl li.adr:nth-child(n){background:#fff8f2!important;border-left-color:#ff7a1a!important;color:#c2410c!important;font-weight:800}
