@@ -1,6 +1,6 @@
 (function(){
 var R=[
-{n:"Muhammed Isa",g:"Yurt dışından müşteri · İngilizce yorumdan çeviri",t:"Kesinlikle muhteşem bir hizmet! İstanbul'da Kuryetex'i paket göndermek için seçtim ve her şey sadece 2 saat içinde sorunsuz ve profesyonelce halledildi! Süper hızlı, güvenilir ve verimli. Son derece memnun kaldım. Şiddetle tavsiye ederim!"},
+{n:"Muhammed Isa",g:"Yerel Rehber",l:"en",t:"Absolutely amazing service! I chose Kuryetex to send a package in Istanbul and everything was handled smoothly and professionally in just 2 hours! Super fast, reliable and efficient. Extremely satisfied. Highly recommend!"},
 {n:"Cüneyt Varup",g:"Yerel Rehber · 12 yorum",t:"Cok hizli bir sekilde iletisim kurup istedigim teslimati gerceklestirdiler. İletişimleri muazzamdı. Paket kusursuz bir sekilde elime ulasti."},
 {n:"Oğuz Özvarlık",g:"Yerel Rehber · 73 yorum",e:1,t:"Gaziantep ten İstanbul iş gezisi için geldim. Gece alerjim tuttu. Firmadan ilaç istedim 30 dk gibi bir sürede getirdiler."},
 {n:"Armiiies Arman",g:"İstanbul bölgesinde 10 yorum",e:1,t:"Çok profesyonel ve hızlı çalışıyorlar. Kuryede çok kibardı ilaçların fişinin fotosunu bile çekip atıyorlar."},
@@ -41,7 +41,7 @@ var box=document.getElementById("kxReviews");if(!box)return;
 var st=document.createElement("style");st.textContent=css;document.head.appendChild(st);
 var h='<div class="kxrv" aria-label="'+esc(L.h)+'"><div class="kxrv-hd"><div><b>'+esc(L.h)+'</b><small>'+esc(L.s)+'</small></div></div><div class="kxrv-tr" tabindex="0">';
 list.forEach(function(r,i){var c=colors[i%colors.length];
-h+='<article class="kxrv-c"><div class="kxrv-u"><span class="kxrv-a" style="background:'+c+'" aria-hidden="true">'+esc(r.n.charAt(0).toLocaleUpperCase("tr"))+'</span><div><div class="kxrv-n">'+esc(r.n)+'</div>'+(r.g?'<div class="kxrv-g">'+esc(r.g)+'</div>':'')+'</div></div><span class="kxrv-gl">Google</span><span class="kxrv-st" aria-label="5/5">★★★★★</span><p class="kxrv-t" lang="tr">'+esc(r.t)+'</p></article>';});
+h+='<article class="kxrv-c"><div class="kxrv-u"><span class="kxrv-a" style="background:'+c+'" aria-hidden="true">'+esc(r.n.charAt(0).toLocaleUpperCase("tr"))+'</span><div><div class="kxrv-n">'+esc(r.n)+'</div>'+(r.g?'<div class="kxrv-g">'+esc(r.g)+'</div>':'')+'</div></div><span class="kxrv-gl">Google</span><span class="kxrv-st" aria-label="5/5">★★★★★</span><p class="kxrv-t" lang="'+(r.l||"tr")+'">'+esc(r.t)+'</p></article>';});
 h+='</div><div class="kxrv-nv"><button type="button" class="kxrv-p" aria-label="'+esc(L.p)+'">‹</button><div class="kxrv-d"></div><button type="button" class="kxrv-x" aria-label="'+esc(L.x)+'">›</button></div></div>';
 box.innerHTML=h;
 var tr=box.querySelector(".kxrv-tr"),cards=tr.children,dots=box.querySelector(".kxrv-d"),n=cards.length,cur=0,paused=false;
