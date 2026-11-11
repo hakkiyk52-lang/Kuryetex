@@ -779,9 +779,9 @@ for(var i=0;i<ins.length;i++){var el=ins[i];if(el.__clr)continue;var t=(el.type|
  b.addEventListener("pointerdown",function(e){e.preventDefault()});
  b.addEventListener("click",function(e){e.preventDefault();e.stopPropagation();var x=this.__in;x.value="";if(/Iq$/.test(x.id)){var sl=document.getElementById(x.id.replace(/Iq$/,"Il"));if(sl&&sl.value){sl.value="";sl.dispatchEvent(new Event("change",{bubbles:true}))}}x.dispatchEvent(new Event("input",{bubbles:true}));x.dispatchEvent(new Event("change",{bubbles:true}));upd(x);try{x.focus()}catch(_){}})}
 function upd(x){var b=x.parentNode.querySelector(".clrx");if(b&&b.__in===x)b.classList.toggle("on",!!x.value)}
-if(!window.__clrInit){window.__clrInit=1;document.addEventListener("input",function(e){if(e.target.__clr)upd(e.target)},true);setInterval(function(){var a=document.querySelectorAll(".clrin");for(var k=0;k<a.length;k++)upd(a[k])},600)}
+if(!window.__clrInit){window.__clrInit=1;document.addEventListener("input",function(e){if(e.target.__clr)upd(e.target)},true);document.addEventListener("change",function(e){if(e.target.__clr)upd(e.target)},true);setInterval(function(){if(document.hidden)return;var a=document.querySelectorAll(".clrin");for(var k=0;k<a.length;k++)upd(a[k])},2500)}
 for(var j=0;j<ins.length;j++)if(ins[j].__clr)upd(ins[j]);}
-scan();window.__clrScan=scan;setInterval(scan,1000);})();
+scan();window.__clrScan=scan;document.addEventListener("focusin",scan,true);setInterval(function(){if(!document.hidden)scan()},4000);})();
 /* === Üst şerit ve kayan yazı bandı: renk tonu sürekli ve çok yavaş kayar (adım yok, sert geçiş yok) === */
 ;(function(){if(window.__lbInit)return;window.__lbInit=1;var H=document.documentElement,h=12,last=0,PER=180;
 function hsl(h,s,l){h=((h%360)+360)%360;return'hsl('+h.toFixed(1)+','+s+'%,'+l+'%)'}
@@ -855,11 +855,13 @@ function step(dt){var now=performance.now();
  A.forEach(function(o){o.v=Math.max(4,Math.min(48,o.v));o.s+=o.v*dt});
  if(A.length>1)for(var k=0;k<3;k++)for(var j=0;j<A.length;j++){var p=A[j],q=A[(j+1)%A.length],gg=((q.s-p.s)%L+L)%L;if(gg<GAP){var d=(GAP-gg)/2;q.s+=d;p.s-=d}}
  A.forEach(function(o){var P=at(o.s);put(o,P[0],P[1],P[2])})}
-function off(){return document.hidden||(H.hasAttribute("data-calm")&&!H.hasAttribute("data-calmauto"))||H.classList.contains("focusing")||getComputedStyle(R).display==="none"}
-function tick(ms){raf=0;if(off()){lt=0;return}var dt=lt?Math.min(.05,(ms-lt)/1000):0;lt=ms;step(dt);raf=requestAnimationFrame(tick)}
+var rHid=0,busy=0;addEventListener("pointerdown",function(e){if(!(e.target&&e.target.classList&&e.target.classList.contains("kxcar")))busy=performance.now()+700},{capture:true,passive:true});addEventListener("keydown",function(){busy=performance.now()+700},{capture:true,passive:true});
+function off(){return document.hidden||(H.hasAttribute("data-calm")&&!H.hasAttribute("data-calmauto"))||H.classList.contains("focusing")||rHid}
+function tick(ms){raf=0;if(off()){lt=0;return}if(ms<busy){lt=0;raf=requestAnimationFrame(tick);return}var dt=lt?Math.min(.05,(ms-lt)/1000):0;lt=ms;step(dt);raf=requestAnimationFrame(tick)}
 function go(){if(!raf){lt=0;raf=requestAnimationFrame(tick)}}
-requestAnimationFrame(function(){geo();step(0);go()});addEventListener("resize",function(){geo();step(0)});document.addEventListener("visibilitychange",go);
-new MutationObserver(go).observe(H,{attributes:true,attributeFilter:["data-calm","data-calmauto","class"]});setInterval(function(){geo();go()},2000)})();
+function chk(){rHid=getComputedStyle(R).display==="none"?1:0}
+requestAnimationFrame(function(){chk();geo();step(0);go()});addEventListener("resize",function(){chk();geo();step(0)});document.addEventListener("visibilitychange",go);
+new MutationObserver(function(){chk();go()}).observe(H,{attributes:true,attributeFilter:["data-calm","data-calmauto","class"]});setInterval(function(){if(document.hidden)return;chk();geo();go()},5000)})();
 
 /* === Mobilde uzun yazılar: "Devamını oku" (içerik DOM'da kalır) === */
 ;(function(){if(window.__foldInit)return;window.__foldInit=1;
@@ -892,7 +894,7 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
       if(!a||!b)return;cache[url]={h1:a.innerHTML,sub:b.innerHTML,t:ti&&ti.textContent};
       if(cur===il)apply(cache[url],url)}).catch(function(){})}
   function tick(){var il=(document.getElementById("toIl")||{}).value||"";if(il&&il!==cur){cur=il;go(il)}}
-  setTimeout(function(){cur=(document.getElementById("toIl")||{}).value||"";setInterval(tick,700)},1800);
+  setTimeout(function(){cur=(document.getElementById("toIl")||{}).value||"";document.addEventListener("change",function(e){if(e.target&&e.target.id==="toIl")tick()},true);setInterval(tick,2000)},1800);
 })();
 
 /* WhatsApp düğmeleri: önce fiyat hesaplama (net müşteri); fiyat hesaplandıysa tüm WhatsApp düğmeleri fiyatlı mesajı açar. Fiyat sonucu düğmesi ve "farklı isteğim var" doğrudan WhatsApp'a gider. */
@@ -923,7 +925,7 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
   document.addEventListener("click",function(e){var a=e.target.closest&&e.target.closest("a.ezsos");if(!a||a===wb||a.closest("#hesapla")||!ready())return;e.preventDefault();e.stopPropagation();wb.click()},true);
   new MutationObserver(sync).observe(wb,{attributes:true,attributeFilter:["href"]});
   var res=document.getElementById("result");if(res)new MutationObserver(sync).observe(res,{attributes:true,attributeFilter:["style","class"]});
-  setInterval(sync,1200);sync();
+  setInterval(function(){if(!document.hidden)sync()},2500);sync();
 })();
 
 (function(){var M={"eczane-kurye":"eczane-kurye-eczaneden-teslim","aracli-kurye":"aracli-kurye-koli-teslim","evrak-kurye":"kapida-teslim-kurye-istanbul","express-kurye":"moto-kurye-istanbul-teslimat","motor-kurye":"moto-kurye-bogaz-istanbul","otobus-kargo-teslim":"otobus-kargo-teslim-kurye","paket-servis-kurye":"kurye-paket-teslim-eminonu","sofor-vale":"sofor-vale-hizmeti","ucak-kargo-teslim":"ucak-kargo-teslim-kurye","vip-kurye":"moto-kurye-gun-batimi-istanbul"},u=0;
