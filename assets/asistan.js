@@ -5,7 +5,7 @@ var demo=/^(onizleme\.|localhost|127\.)/.test(location.hostname);
 if(demo)go();else fetch("/api/asistan").then(function(r){return r.json()}).then(function(j){if(j&&j.on)go()}).catch(function(){});
 function go(){
 var WA="905515315234",msgs=[],busy=false,views=[];
-var css=".kxas-b{position:fixed;left:14px;bottom:96px;z-index:9990;opacity:1!important;visibility:visible!important;border:0;border-radius:999px;background:#1f3c88;color:#fff;font:600 14px system-ui,sans-serif;padding:12px 16px;min-height:44px;box-shadow:0 8px 24px -8px rgba(0,0,0,.4);cursor:pointer}"+
+var css=".kxas-b{position:fixed;left:14px;bottom:96px;z-index:58;opacity:1!important;visibility:visible!important;border:0;border-radius:999px;background:#1f3c88;color:#fff;font:600 14px system-ui,sans-serif;padding:12px 16px;min-height:44px;box-shadow:0 8px 24px -8px rgba(0,0,0,.4);cursor:pointer}"+
 ".kxas-p{position:fixed;inset:0;z-index:9999;display:flex;flex-direction:column;background:#faf9f5;color:#1f1e1d}.kxas-p[hidden]{display:none!important}"+
 ".kxas-p,.kxas-in{font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:#1f1e1d}"+
 ".kxas-h{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border-bottom:1px solid #e8e6dc}.kxas-h b{font-size:16px;font-weight:600}.kxas-h small{display:block;color:#73726c;font-size:12px}"+
@@ -19,12 +19,16 @@ var css=".kxas-b{position:fixed;left:14px;bottom:96px;z-index:9990;opacity:1!imp
 ".kxas-box textarea{flex:1;border:0!important;outline:0;resize:none;background:transparent!important;box-shadow:none!important;font:inherit;color:inherit;max-height:160px;min-height:28px;padding:6px 0!important;margin:0;line-height:1.5}"+
 ".kxas-s{flex:none;width:40px;height:40px;min-height:40px;border:0;border-radius:12px;background:#e8620a;color:#fff;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0}.kxas-s:disabled{background:#e8c9b3;cursor:default}"+
 ".kxas-n{font-size:12px;color:#73726c;text-align:center;margin-top:6px}"+
-".kxas-in{margin-top:16px;background:#faf9f5;border:1px solid #e8e6dc;border-radius:16px;overflow:hidden}.kxas-in .kxas-h{padding:12px 14px}.kxas-in .kxas-m{max-height:340px;padding:4px 14px}.kxas-in .kxas-m:empty{display:none}.kxas-in .kxas-f{padding:10px}"+
-".kxas-c{display:flex;flex-wrap:wrap;gap:6px;padding:10px 14px 0}.kxas-c button{border:1px solid #dedcd1;background:#fff;color:#1f1e1d;border-radius:999px;padding:6px 12px;min-height:36px;font:14px system-ui,sans-serif;cursor:pointer}"+
+".kxas-in{margin-top:16px;background:#fff;border:2px solid #1f3c88;border-radius:18px;overflow:hidden;box-shadow:0 12px 30px -14px rgba(31,60,136,.5)}"+
+".kxas-in .kxas-h{background:#1f3c88;color:#fff;border:0;padding:14px 16px;justify-content:flex-start;gap:12px}.kxas-in .kxas-h b{font-size:17px;font-weight:700;color:#fff}.kxas-in .kxas-h small{color:#dbe4f7;font-size:13px}"+
+".kxas-ic{flex:none;width:44px;height:44px;border-radius:14px;background:#e8620a;display:flex;align-items:center;justify-content:center;font-size:24px}"+
+".kxas-dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:#22c55e;margin-right:6px;animation:kxp 1.6s infinite}@keyframes kxp{0%{box-shadow:0 0 0 0 rgba(34,197,94,.6)}70%{box-shadow:0 0 0 8px rgba(34,197,94,0)}100%{box-shadow:0 0 0 0 rgba(34,197,94,0)}}"+
+".kxas-in .kxas-m{max-height:340px;padding:4px 14px}.kxas-in .kxas-a{background:#eef2fb;color:#1f3c88;border-radius:16px;padding:10px 13px;width:fit-content;max-width:92%}.kxas-in .kxas-f{padding:10px 12px 12px}.kxas-in .kxas-box{border:1.5px solid #c7d2ea}"+
+".kxas-c{display:flex;flex-wrap:wrap;gap:7px;padding:4px 14px 0}.kxas-c button{border:1.5px solid #e8620a;background:#fff7f0;color:#b4470a;border-radius:999px;padding:7px 12px;min-height:38px;font:600 14px system-ui,sans-serif;cursor:pointer}"+
 ".kxas-dots span{display:inline-block;width:7px;height:7px;margin-right:4px;border-radius:50%;background:#b4470a;animation:kxd 1s infinite}.kxas-dots span:nth-child(2){animation-delay:.15s}.kxas-dots span:nth-child(3){animation-delay:.3s}@keyframes kxd{0%,80%{opacity:.25}40%{opacity:1}}";
 var st=document.createElement("style");st.textContent=css;document.head.appendChild(st);
 var ecz=/eczane|ilac|nobetci/.test(location.pathname);
-var HELLO=ecz?"Merhaba! İlaç siparişi, nöbetçi eczane, ödeme ve teslim hakkında sorularınızı yanıtlayabilirim.":"Merhaba! Kurye, eczane ve fiyat hesaplama hakkında sorularınızı yanıtlayabilirim. Size nasıl yardımcı olayım?";
+var HELLO=ecz?"Merhaba! İlaç siparişi, nöbetçi eczane, ödeme ya da teslim… Aklınıza takılanı hemen sorun. 👋":"Merhaba! Fiyat, teslim süresi ya da ödeme… Aklınıza takılanı hemen sorun. 👋";
 var CHIPS=ecz?["İlaç fiyatını öğrenebilir miyim?","Ödemeyi nasıl yapıyorum?","Gece ilaç getirir misiniz?"]:["Fiyat neye göre değişir?","Ne kadar sürede gelir?","Ödeme nasıl yapılır?"];
 var FORM='<form class="kxas-f"><div class="kxas-box"><textarea rows="1" placeholder="Bir şey sorun…" aria-label="Mesajınız" maxlength="800"></textarea><button type="submit" class="kxas-s" aria-label="Gönder" disabled>↑</button></div><div class="kxas-n">Kurye ücretini hesaplayıcı belirler. Acil sağlık durumunda 112\'yi arayın.</div></form>';
 
@@ -50,8 +54,8 @@ function send(t,v){t=(t||"").trim();if(!t||busy)return;v.I.value="";if(!v.M.chil
 var res=document.getElementById("result");
 if(res&&res.parentNode){
   var box=document.createElement("div");box.className="kxas-in";
-  box.innerHTML='<div class="kxas-h"><div><b>'+(ecz?"İlaç siparişiyle ilgili sorunuz mu var?":"Sorunuz mu var?")+'</b><small>Kuryetex asistanına buradan yazın</small></div></div><div class="kxas-c">'+CHIPS.map(function(c){return'<button type="button">'+c+'</button>'}).join("")+'</div><div class="kxas-m" aria-live="polite"></div>'+FORM;
-  res.parentNode.insertBefore(box,res.nextSibling);view(box);
+  box.innerHTML='<div class="kxas-h"><div class="kxas-ic" aria-hidden="true">🤖</div><div><b>Yapay zekâ asistanımıza sorun</b><small><span class="kxas-dot"></span>Kuryetex asistanına buradan yazın · anında cevap</small></div></div><div class="kxas-m" aria-live="polite"></div><div class="kxas-c">'+CHIPS.map(function(c){return'<button type="button">'+c+'</button>'}).join("")+'</div>'+FORM;
+  res.parentNode.insertBefore(box,res.nextSibling);var bv=view(box);add(bv,HELLO,"kxas-a");
 }
 /* 2) Her sayfada yüzen buton + tam ekran sohbet */
 {
