@@ -954,3 +954,5 @@ setInterval(function(){if(vis&&!paused&&!document.hidden)go(1)},3200)})})();
 document.addEventListener("focusout",function(e){var x=e.target;var c=x&&x.closest&&x.closest(".calc");if(!c)return;clearTimeout(t);t=setTimeout(function(){if(!c.contains(document.activeElement)||document.activeElement.tagName!=="INPUT")c.classList.remove("kxf")},250)});
 var st=document.createElement("style");st.textContent=".kxf .field:not(.kxfo) .ip-loc{visibility:hidden!important;pointer-events:none}";document.head.appendChild(st)})();
 ;(function(){var h=(new Date().getUTCHours()+3)%24;if(h>=8||h<2)[].forEach.call(document.querySelectorAll(".ezopen[hidden]"),function(p){p.hidden=false})})();
+
+;(function(){/*uye_bar_lbl*/try{if(!localStorage.getItem("kxUye"))return}catch(e){return}[].forEach.call(document.querySelectorAll('a[data-ev="uye_bar"]'),function(x){x.lastChild.textContent="Hesabım"})})();
