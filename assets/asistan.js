@@ -5,7 +5,7 @@ var demo=/^(onizleme\.|localhost|127\.)/.test(location.hostname);
 if(demo)go();else fetch("/api/asistan").then(function(r){return r.json()}).then(function(j){if(j&&j.on)go()}).catch(function(){});
 function go(){
 var WA="905515315234",msgs=[],busy=false,views=[];
-var css=".kxas-b{position:fixed;left:14px;bottom:96px;z-index:60;border:0;border-radius:999px;background:#1f3c88;color:#fff;font:600 14px system-ui,sans-serif;padding:12px 16px;min-height:44px;box-shadow:0 8px 24px -8px rgba(0,0,0,.4);cursor:pointer}"+
+var css=".kxas-b{position:fixed;left:14px;bottom:96px;z-index:9990;opacity:1!important;visibility:visible!important;border:0;border-radius:999px;background:#1f3c88;color:#fff;font:600 14px system-ui,sans-serif;padding:12px 16px;min-height:44px;box-shadow:0 8px 24px -8px rgba(0,0,0,.4);cursor:pointer}"+
 ".kxas-p{position:fixed;inset:0;z-index:9999;display:flex;flex-direction:column;background:#faf9f5;color:#1f1e1d}.kxas-p[hidden]{display:none!important}"+
 ".kxas-p,.kxas-in{font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:#1f1e1d}"+
 ".kxas-h{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border-bottom:1px solid #e8e6dc}.kxas-h b{font-size:16px;font-weight:600}.kxas-h small{display:block;color:#73726c;font-size:12px}"+
@@ -53,8 +53,8 @@ if(res&&res.parentNode){
   box.innerHTML='<div class="kxas-h"><div><b>'+(ecz?"İlaç siparişiyle ilgili sorunuz mu var?":"Sorunuz mu var?")+'</b><small>Kuryetex asistanına buradan yazın</small></div></div><div class="kxas-c">'+CHIPS.map(function(c){return'<button type="button">'+c+'</button>'}).join("")+'</div><div class="kxas-m" aria-live="polite"></div>'+FORM;
   res.parentNode.insertBefore(box,res.nextSibling);view(box);
 }
-/* 2) Hesaplayıcı olmayan sayfalarda yüzen buton + tam ekran sohbet */
-if(!res){
+/* 2) Her sayfada yüzen buton + tam ekran sohbet */
+{
   var b=document.createElement("button");b.type="button";b.className="kxas-b";b.textContent="💬 Asistana sor";b.setAttribute("aria-label","Kuryetex asistanına soru sor");document.body.appendChild(b);
   var p=document.createElement("div");p.className="kxas-p";p.hidden=true;p.setAttribute("role","dialog");p.setAttribute("aria-label","Kuryetex asistanı");
   p.innerHTML='<div class="kxas-h"><div><b>Kuryetex Asistanı</b><small>Yapay zekâ destekli müşteri asistanı</small></div><button type="button" class="kxas-x" aria-label="Kapat">×</button></div><div class="kxas-m" aria-live="polite"></div>'+FORM;

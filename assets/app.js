@@ -770,9 +770,10 @@ function back(d){clearTimeout(tm);tm=setTimeout(function(){tm=0;if(isBox(documen
 document.addEventListener("focusin",function(e){if(isBox(e.target))hide()},true);
 document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("#calcBtn,form button[type=submit],form [type=submit],#basvuru button,#basvuru .btn");if(b&&H.classList.contains("focusing")){var a=document.activeElement;if(isBox(a))try{a.blur()}catch(_){}back()}},true);
 document.addEventListener("submit",function(){if(H.classList.contains("focusing"))back()},true);
-document.addEventListener("pointerdown",function(e){if(!H.classList.contains("focusing")&&!B.classList.contains("typing"))return;var t=e.target;if(t&&t.closest&&t.closest(CTRL))return;var a=document.activeElement;if(isBox(a))try{a.blur()}catch(_){}back(250)},true);
-document.addEventListener("focusout",function(e){if(isBox(e.target))back(600)},true);
-if(window.visualViewport){var vh0=visualViewport.height;visualViewport.addEventListener("resize",function(){var h=visualViewport.height;if(h>vh0-80&&H.classList.contains("focusing")&&!B.classList.contains("calcing")){var a=document.activeElement;if(isBox(a))try{a.blur()}catch(_){}back(200)}if(h>vh0)vh0=h})}})();
+var ZONE=".calc,#result,.kxas-in,.hcwrap,.hcalc,#hesapla .card,.acl,[role=listbox]";
+document.addEventListener("pointerdown",function(e){if(!H.classList.contains("focusing")&&!B.classList.contains("typing"))return;var t=e.target;if(t&&t.closest&&(t.closest(ZONE)||t.closest(CTRL)))return;var a=document.activeElement;if(isBox(a))try{a.blur()}catch(_){}back(150)},true);
+if("IntersectionObserver" in window){var zs=document.querySelectorAll(".calc");if(zs.length){var vis={};var io=new IntersectionObserver(function(en){en.forEach(function(x){vis[x.target.__zi]=x.isIntersecting});var any=false;for(var k in vis)if(vis[k])any=true;if(!any&&H.classList.contains("focusing")){var a=document.activeElement;if(isBox(a))try{a.blur()}catch(_){}back(100)}},{threshold:0});[].forEach.call(zs,function(z,i){z.__zi=i;io.observe(z)})}}
+})();
 /* === Yazı kutularına temizle (×) düğmesi === */
 ;(function(){var L=(document.documentElement.lang||"tr").slice(0,2),lab=L==="en"?"Clear":L==="ar"?"مسح":"Temizle";
 function scan(){var ins=document.querySelectorAll("input,textarea");
