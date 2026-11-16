@@ -1383,3 +1383,4 @@ html body button.nb-go2{color:#b4470a!important;border-color:#c2410c!important}
 .dlist{gap:10px}.dlist a{min-height:44px;display:inline-flex;align-items:center;padding:10px 16px}
 footer,body footer{content-visibility:visible!important;contain-intrinsic-size:none!important}
 main>.sec:has(.dgroup),.sec:has(.dgroup),footer{content-visibility:visible!important;contain-intrinsic-size:none!important}
+.ezsos-ic b[data-e]::before{content:attr(data-e)}.ezopen[hidden]{display:none!important}
