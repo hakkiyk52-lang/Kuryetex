@@ -81,7 +81,7 @@ async function yonetim(env, b) {
     const uyeler = [];
     for (const tel of liste.slice(0, 300)) {
       const u = JSON.parse(await env.AYAR.get("uye:" + tel) || "null");
-      if (u) uyeler.push(Object.assign(disaAc(u), { eposta: u.eposta || "", ilce: u.ilce || "", vkn: u.vkn || "", vd: u.vd || "", adres: u.adres || "", elleOran: u.oran || 0 }));
+      if (u) uyeler.push(Object.assign(disaAc(u), { eposta: u.eposta || "", ilce: u.ilce || "", vkn: u.vkn || "", vd: u.vd || "", adres: u.adres || "", hacim: u.hacim || "", odeme: u.odeme || "", elleOran: u.oran || 0 }));
     }
     return json({ ok: true, uyeler });
   }
@@ -150,7 +150,7 @@ export async function onRequestPost({ request, env }) {
     const u = {
       tel, ad, tur, durum: "bekliyor", kayit: new Date().toISOString(),
       eposta: temiz(b.eposta, 80), firma: temiz(b.firma, 80), vkn: temiz(b.vkn, 20), vd: temiz(b.vd, 50),
-      adres: temiz(b.adres, 200), ilce: temiz(b.ilce, 40),
+      adres: temiz(b.adres, 200), ilce: temiz(b.ilce, 40), hacim: temiz(b.hacim, 40), odeme: temiz(b.odeme, 40),
       tuz, hash: await hashle(sifre, tuz), toplam: 0, ay: "", ayGonderi: 0, gecenAy: 0, oran: 0
     };
     await env.AYAR.put(anahtar, JSON.stringify(u));
