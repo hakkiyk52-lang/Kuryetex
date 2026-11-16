@@ -48,9 +48,17 @@ async function tokenCoz(env, tok) {
 }
 // Gönderi kademesi (işletme): geçen ay ile bu aydan büyük olan belirler.
 function kademe(n) { return n >= 30 ? 25 : n >= 20 ? 20 : n >= 10 ? 15 : 10; }
+function ayKey(d) { return d.toISOString().slice(0, 7); }
+function oncekiAy() { const d = new Date(); d.setUTCDate(1); d.setUTCMonth(d.getUTCMonth() - 1); return ayKey(d); }
+// Ay değiştiyse sayaçları kaydır: geçen ayın sayısı "gecenAy"a geçer.
+function ayDevir(u) {
+  const ay = ayKey(new Date());
+  if (u.ay !== ay) { u.gecenAy = u.ay === oncekiAy() ? (u.ayGonderi || 0) : 0; u.ay = ay; u.ayGonderi = 0; }
+  return u;
+}
 function disaAc(u) {
-  const ay = new Date().toISOString().slice(0, 7);
-  const buAy = (u.ay === ay ? u.ayGonderi : 0) || 0;
+  ayDevir(u);
+  const buAy = u.ayGonderi || 0;
   let oran = 0;
   if (u.durum === "onayli") {
     if (u.oran) oran = u.oran;                                   // yöneticinin elle verdiği oran
@@ -60,6 +68,40 @@ function disaAc(u) {
   }
   return { ad: u.ad, tel: u.tel, tur: u.tur, turAd: TURLER[u.tur], firma: u.firma || "", durum: u.durum,
     oran, buAy, gecenAy: u.gecenAy || 0, toplam: u.toplam || 0, kayit: u.kayit };
+}
+
+// ---- Yönetim paneli işlemleri (şifre: YONETIM_SIFRE) ----
+async function yonetim(env, b) {
+  if (!env.YONETIM_SIFRE || String(b.sifre || "") !== String(env.YONETIM_SIFRE)) {
+    await new Promise(r => setTimeout(r, 800));
+    return json({ ok: false, hata: "Şifre yanlış." }, 401);
+  }
+  const liste = JSON.parse(await env.AYAR.get("uyeler") || "[]");
+  if (b.islem === "admin_liste") {
+    const uyeler = [];
+    for (const tel of liste.slice(0, 300)) {
+      const u = JSON.parse(await env.AYAR.get("uye:" + tel) || "null");
+      if (u) uyeler.push(Object.assign(disaAc(u), { eposta: u.eposta || "", ilce: u.ilce || "", vkn: u.vkn || "", vd: u.vd || "", adres: u.adres || "", elleOran: u.oran || 0 }));
+    }
+    return json({ ok: true, uyeler });
+  }
+  const tel = String(b.tel || "").replace(/\D/g, "");
+  const anahtar = "uye:" + tel;
+  const u = JSON.parse(await env.AYAR.get(anahtar) || "null");
+  if (!u) return json({ ok: false, hata: "Üye bulunamadı." });
+  ayDevir(u);
+  if (b.islem === "admin_onay") u.durum = b.on === false ? "bekliyor" : "onayli";
+  else if (b.islem === "admin_gonderi") {
+    const n = Math.max(-5, Math.min(20, Math.round(+b.adet) || 1));
+    u.ayGonderi = Math.max(0, (u.ayGonderi || 0) + n); u.toplam = Math.max(0, (u.toplam || 0) + n);
+  } else if (b.islem === "admin_oran") u.oran = Math.max(0, Math.min(50, Math.round(+b.oran) || 0));
+  else if (b.islem === "admin_sil") {
+    await env.AYAR.delete(anahtar);
+    await env.AYAR.put("uyeler", JSON.stringify(liste.filter(x => x !== tel)));
+    return json({ ok: true, silindi: true });
+  } else return json({ ok: false, hata: "Bilinmeyen işlem." });
+  await env.AYAR.put(anahtar, JSON.stringify(u));
+  return json({ ok: true, uye: Object.assign(disaAc(u), { elleOran: u.oran || 0 }) });
 }
 
 export async function onRequestGet({ request, env }) {
@@ -75,6 +117,7 @@ export async function onRequestPost({ request, env }) {
   if (!env.AYAR) return json({ ok: false, hata: "Üyelik sistemi şu an kapalı." });
   let b = {};
   try { b = await request.json(); } catch (e) {}
+  if (String(b.islem || "").startsWith("admin_")) return yonetim(env, b);
   const tel = telNorm(b.tel);
   const sifre = String(b.sifre || "");
   if (!tel) return json({ ok: false, hata: "Geçerli bir cep telefonu yazın (05xx xxx xx xx)." });

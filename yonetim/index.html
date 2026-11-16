@@ -109,6 +109,27 @@ label{font-weight:600;font-size:15px}
     <p class="h" id="h3"></p>
     <p class="not">Sitedeki bütün sayfaları Bing'e (ChatGPT ve Copilot da Bing'i kullanır) "taranmaya hazır" diye bildirir. Site değiştiğinde ayda 1–2 kez basmanız yeterli.</p>
   </div>
+<div class="k ek" id="uyeK" hidden><h2>Üyeler</h2><p class="not" style="margin-top:0">Yeni üye "Onay bekliyor" olarak gelir. <b>Onayla</b>'ya basınca indirimi açılır. Her tamamlanan siparişte <b>+1 gönderi</b>'ye basın; işletme kademesi (%10/15/20/25) ve bireysel %10 kendiliğinden hesaplanır.</p><button class="kapat" id="uyeYenile" style="margin-top:4px">Listeyi yenile</button><p class="h" id="uyeH"></p><div id="uyeL"></div></div>
+<style>.uy{border:1px solid #e3e8ef;border-radius:14px;padding:12px;margin-top:12px;background:#fff}.uy .ust{display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap}.uy b.r{font-size:.8rem;padding:3px 10px;border-radius:99px}.uy .bek{background:#fff4d6;color:#8a5a00}.uy .onl{background:#e3f7ea;color:#0b7a3b}.uy small{display:block;color:#5b6b7f;margin-top:4px;line-height:1.4}.uy .bt{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}.uy .bt button,.uy .bt select{width:auto;margin:0;padding:9px 12px;font-size:.9rem;border-radius:10px}.uy .bt .sil{background:#fde8e8;color:#b42318}</style>
+<script>
+(function(){var $=function(i){return document.getElementById(i)};function S(){try{return sessionStorage.getItem("kx_s")||""}catch(e){return""}}
+function A(b){return fetch("/api/uye",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(Object.assign({sifre:S()},b))}).then(function(r){return r.json()}).then(function(j){if(!j.ok)throw new Error(j.hata||"Hata");return j})}
+function e(x){return String(x||"").replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function kart(u){var on=u.durum==="onayli",tel="0"+String(u.tel).slice(2);
+ var ozet=u.tur==="isletme"?("Bu ay "+u.buAy+" · geçen ay "+u.gecenAy+" gönderi"):("Toplam "+u.toplam+" gönderi");
+ var o=[0,5,10,15,20,25,30].map(function(v){return'<option value="'+v+'"'+(u.elleOran===v?" selected":"")+'>'+(v?"Elle %"+v:"Oran: otomatik")+'</option>'}).join("");
+ return'<div class="uy" data-tel="'+u.tel+'"><div class="ust"><div><b>'+e(u.ad)+'</b> · '+e(u.turAd)+(u.firma?' · '+e(u.firma):'')+'</div><b class="r '+(on?"onl":"bek")+'">'+(on?"✅ Onaylı · %"+u.oran:"⏳ Onay bekliyor")+'</b></div>'
+ +'<small><a href="tel:'+tel+'">'+tel+'</a> · <a href="https://wa.me/'+u.tel+'" target="_blank" rel="noopener">WhatsApp</a>'+(u.eposta?' · '+e(u.eposta):'')+'<br>'+ozet+(u.vkn?'<br>Vergi/TC: '+e(u.vkn)+' · '+e(u.vd)+(u.ilce?' · '+e(u.ilce):'')+(u.adres?'<br>'+e(u.adres):''):'')+'<br>Kayıt: '+new Date(u.kayit).toLocaleDateString("tr-TR")+'</small>'
+ +'<div class="bt">'+(on?'<button class="kapat" data-i="geri">Onayı kaldır</button>':'<button class="ac" data-i="onay">Onayla</button>')+'<button class="ac" data-i="arti">+1 gönderi</button><button class="kapat" data-i="eksi">−1</button><select data-i="oran">'+o+'</select><button class="sil" data-i="sil">Sil</button></div></div>'}
+function yukle(){$("uyeH").textContent="Yükleniyor…";A({islem:"admin_liste"}).then(function(j){$("uyeH").textContent=j.uyeler.length?j.uyeler.length+" üye":"Henüz üye yok.";var l=j.uyeler.slice().sort(function(a,b){return(a.durum==="onayli")-(b.durum==="onayli")});$("uyeL").innerHTML=l.map(kart).join("")}).catch(function(x){$("uyeH").textContent=x.message})}
+$("uyeYenile").onclick=yukle;
+$("uyeL").addEventListener("click",function(ev){var b=ev.target.closest("button[data-i]");if(!b)return;var k=b.closest(".uy"),tel=k.dataset.tel,i=b.dataset.i,q;
+ if(i==="sil"){if(!confirm("Bu üyeyi silmek istiyor musunuz?"))return;q={islem:"admin_sil"}}else if(i==="onay")q={islem:"admin_onay",on:true};else if(i==="geri")q={islem:"admin_onay",on:false};else q={islem:"admin_gonderi",adet:i==="arti"?1:-1};
+ q.tel=tel;b.disabled=true;A(q).then(function(j){if(j.silindi)k.remove();else k.outerHTML=kart(j.uye)}).catch(function(x){alert(x.message);b.disabled=false})});
+$("uyeL").addEventListener("change",function(ev){var s=ev.target;if(s.dataset.i!=="oran")return;var k=s.closest(".uy");A({islem:"admin_oran",tel:k.dataset.tel,oran:+s.value}).then(function(j){k.outerHTML=kart(j.uye)}).catch(function(x){alert(x.message)})});
+var mo=new MutationObserver(function(){if(!$("uyeK").hidden){mo.disconnect();yukle()}});mo.observe($("uyeK"),{attributes:true,attributeFilter:["hidden"]});
+})();
+</script>
 </main>
 <script>
 (function(){
