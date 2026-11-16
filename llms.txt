@@ -79,3 +79,12 @@
 - Foursquare: https://app.foursquare.com/share/venue/6aeba6ebe533615c71378cc3
 - Instagram: https://www.instagram.com/kuryetex/
 - Pinterest: https://www.pinterest.com/kuryetex/
+
+## Yaka ve dil sayfaları (Kasım 2026)
+- Anadolu Yakası moto kurye: https://kuryetex.com.tr/anadolu-yakasi-kurye/
+- Avrupa Yakası moto kurye: https://kuryetex.com.tr/avrupa-yakasi-kurye/
+- Anadolu Yakası eczane kurye: https://kuryetex.com.tr/anadolu-yakasi-eczane-kurye/
+- Avrupa Yakası eczane kurye: https://kuryetex.com.tr/avrupa-yakasi-eczane-kurye/
+- Pharmacy delivery Istanbul (English): https://kuryetex.com.tr/en/eczane-kurye/ — district pages, e.g. https://kuryetex.com.tr/en/goztepe-eczane-kurye/, https://kuryetex.com.tr/en/kadikoy-eczane-kurye/, https://kuryetex.com.tr/en/fatih-eczane-kurye/
+- توصيل الأدوية في إسطنبول (Arabic): https://kuryetex.com.tr/ar/eczane-kurye/
+- Van courier Istanbul (English): https://kuryetex.com.tr/en/aracli-kurye/
