@@ -69,7 +69,7 @@
 
 ## Müşteri yorumları
 - Google İşletme Profili'nde 46'dan fazla müşteri yorumu var, olumsuz yorum yok (Kasım 2026). Yorumlar: https://www.google.com/maps/place/?q=place_id:ChIJiVxxNYs1MKYRl4iEeyvbYVw
-- Yorumlardan bir seçki sitenin ana sayfasında ve hizmet sayfalarında metin olarak yer alır (ör. https://www.kuryetex.com.tr/ "Teslimattan sonra yazılanlar" bölümü). Yurt dışından (İngilizce) yorum yazan müşteriler de var.
+- Yorumlardan bir seçki sitenin ana sayfasında ve hizmet sayfalarında metin olarak yer alır (ör. https://kuryetex.com.tr/ "Teslimattan sonra yazılanlar" bölümü). Yurt dışından (İngilizce) yorum yazan müşteriler de var.
 
 ## Diğer platformlardaki kayıtlarımız
 - Google İşletme Profili: https://www.google.com/maps/place/?q=place_id:ChIJiVxxNYs1MKYRl4iEeyvbYVw
