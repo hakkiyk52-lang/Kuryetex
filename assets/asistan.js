@@ -2,7 +2,8 @@
 (function(){
 if(window.__kxAs)return;window.__kxAs=1;
 var demo=/^(onizleme\.|localhost|127\.)/.test(location.hostname);
-if(demo)go();else fetch("/api/asistan").then(function(r){return r.json()}).then(function(j){if(j&&j.on)go()}).catch(function(){});
+function idle(f){var run=function(){("requestIdleCallback" in window)?requestIdleCallback(f,{timeout:4000}):setTimeout(f,2500)};if(document.readyState==="complete")run();else addEventListener("load",run)}
+if(demo)idle(go);else fetch("/api/asistan").then(function(r){return r.json()}).then(function(j){if(j&&j.on)go()}).catch(function(){});
 function go(){
 var WA="905515315234",msgs=[],busy=false,views=[];
 var css=".kxas-b{position:fixed;left:14px;bottom:96px;z-index:58;opacity:1!important;visibility:visible!important;border:0;border-radius:999px;background:#1f3c88;color:#fff;font:600 14px system-ui,sans-serif;padding:12px 16px;min-height:44px;box-shadow:0 8px 24px -8px rgba(0,0,0,.4);cursor:pointer}"+
