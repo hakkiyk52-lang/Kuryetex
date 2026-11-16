@@ -321,13 +321,13 @@ var lastFl=0;function txn(){if(cur&&cur.np)return _t("Eczane teslimi mahalle bö
     var p=null;window.__ezX=false;
     var ext=0;if(cur.t==="calc"){var B0=C.TIER_BASE||580,G=C.TIER_GRID||B0,base=raw<=B0?B0:Math.max(B0,G+Math.round((raw-G)/C.ROUND)*C.ROUND);p=cur.mult?Math.round(base*cur.mult/C.ROUND)*C.ROUND:base+(cur.add||0);var pb0=p,tx0=tmExtra(p);if(tx0<0)p+=tx0;else ext+=tx0;ext+=sx+wx}
     lastFl=0;if(p!==null){var pf=xs?(C.MIN_CROSS||780):(C.MIN_FEE||500);if(typeof tx0==="number"&&tx0<0){var pb=p-tx0;lastTx=Math.max(p,pf)-Math.max(pb,pf);if(!lastTx)lastFl=1}p=Math.max(p,pf);if(typeof pb0==="number"&&lastM!=null&&lastM<=90){var kN=Math.max(Math.round(pb0*(1-(C.TF_DAY||.15))/50)*50,pf);if(lastM<=60){var need=kN+200-tx0;if(p<need)p=need}else if(p<kN+100)p=kN+100}p+=ext}
-    var rz=0,rzn="";if(p!==null&&window.__ekZonePrice){var zb=(window.EKZ||{}).p||{},za=window.__ekZonePrice(from),zt=window.__ekZonePrice(to);[za,zt].forEach(function(z){if(z&&zb.m&&z-zb.m>rz)rz=z-zb.m});if(rz){rzn=rz>=((zb.u||780)-(zb.m||580))?_t("Kırsal bölge farkı"):_t("Ara bölge farkı");p+=rz}}var dn=0;if(p!==null&&C.D[fa]&&C.D[fa].il&&!(C.D[tb]&&C.D[tb].il)){dn=C.CEVRE_DONUS||1000;p+=dn}var exN=p!==null?extras(a.lat,a.lon,p):{tot:0,txt:"",msg:""};var nf=p!==null?nightFee():0;if(nf)p+=nf;p=p!==null?p+exN.tot:p;var ab=0,abc=$("aboneChk");if(p!==null&&abc&&abc.checked){ab=Math.round(p*0.25/5)*5;p-=ab}window.__kxAb=ab;
+    var rz=0,rzn="";if(p!==null&&window.__ekZonePrice){var zb=(window.EKZ||{}).p||{},za=window.__ekZonePrice(from),zt=window.__ekZonePrice(to);[za,zt].forEach(function(z){if(z&&zb.m&&z-zb.m>rz)rz=z-zb.m});if(rz){rzn=rz>=((zb.u||780)-(zb.m||580))?_t("Kırsal bölge farkı"):_t("Ara bölge farkı");p+=rz}}var dn=0;if(p!==null&&C.D[fa]&&C.D[fa].il&&!(C.D[tb]&&C.D[tb].il)){dn=C.CEVRE_DONUS||1000;p+=dn}var exN=p!==null?extras(a.lat,a.lon,p):{tot:0,txt:"",msg:""};var nf=p!==null?nightFee():0;if(nf)p+=nf;p=p!==null?p+exN.tot:p;var ab=0,uo=window.__kxUyeOran||0;if(p!==null&&uo>0){ab=Math.round(p*uo/100/5)*5;p-=ab}window.__kxAb=ab;
     var hl=cur.l.replace(/^\S+\s/,"");
     $("route").textContent=from.value+" → "+to.value;
     $("km").textContent=_t("Mesafe: ")+km.toFixed(1).replace(".",",")+_t(" km (tahmini)");rotaLink();
     $("svcname").textContent=cur.l;
     var det=[];if(cur.size&&sizeName)det.push(sizeName);if(cur.kg)det.push((w||0)+" kg");det.push(_t("Teslim: ")+tmText());$("detail").textContent=det.join(" · ");
-    $("kgnote").textContent=(cur.ezf?_t("İlacı belirttiğiniz eczaneden alıp getiririz; ilaç ücreti kapıda ayrıca ödenir. "):"")+(xnote()?xnote()+". ":"")+(cur.ezf?"":txn())+(rz?" "+rzn+": +"+tl(rz)+".":"")+(nf?" "+_t("Gece farkı (00:00–07:00): +")+tl(nf)+".":"")+(ab?" "+_t("Abone indirimi (%25): −")+tl(ab)+".":"")+"";
+    $("kgnote").textContent=(cur.ezf?_t("İlacı belirttiğiniz eczaneden alıp getiririz; ilaç ücreti kapıda ayrıca ödenir. "):"")+(xnote()?xnote()+". ":"")+(cur.ezf?"":txn())+(rz?" "+rzn+": +"+tl(rz)+".":"")+(nf?" "+_t("Gece farkı (00:00–07:00): +")+tl(nf)+".":"")+(ab?" "+_t("Üye fiyatı: %")+uo+_t(" indirim uygulandı."):"")+"";
     var pe=$("price");
     if(p!==null){pe.className="price";cancelAnimationFrame(raf);var s0=0,t0=performance.now();(function step(now){var t=Math.min(1,(now-t0)/500);pe.textContent=tl(Math.round(s0+(p-s0)*(1-Math.pow(1-t,3))));if(t<1)raf=requestAnimationFrame(step)})(t0);$("pnote").textContent=(rz?rzn+" (+"+tl(rz)+") dahildir. ":"")+(exN.txt?exN.txt+" ":"")+(nf?_t("🌙 Gece farkı dahildir (00:00–07:00): +")+tl(nf)+". ":"")+_t("Tahmini fiyattır. Kesin fiyat sipariş sırasında netleşir.")}
     else{pe.className="price ask";pe.textContent=_t("Fiyat WhatsApp'ta netleşir");$("pnote").textContent=_t("Bu hizmetin fiyatı mesafe, saat ve gönderiye göre belirlenir. Bilgileriniz hazır mesajla bize ulaşacak.")}
@@ -336,7 +336,7 @@ var lastFl=0;function txn(){if(cur&&cur.np)return _t("Eczane teslimi mahalle bö
     ln.push((cur.ezf?"🏥 Alınacak eczane: ":"🅰️ Alım: ")+from.value);ln.push("🅱️ Teslim: "+to.value);if(cur.ezf){ln.push("💊 İlaç bilgisi: (WhatsApp'tan iletilecek)");ln.push("💳 İlaç ücreti eczane fişine göre, kapıda ödenir")}
     if(cur.size&&sizeName)ln.push("📐 Boyut: "+sizeName);if(cur.kg)ln.push("⚖️ Ağırlık: "+(w||0)+" kg");
     ln.push("⏱️ Teslim süresi: "+tmText());ln.push("📏 Tahmini mesafe: "+km.toFixed(1).replace(".",",")+" km");
-    ln.push("💰 Fiyat: "+(p!==null?tl(p)+" (KDV dahil)":_t("WhatsApp'ta netleşecek")));if(window.__kxAb&&$("aboneChk")&&$("aboneChk").checked)ln.push(_t("Abone müşteri (%25 indirim uygulandı)"));
+    ln.push("💰 Fiyat: "+(p!==null?tl(p)+" (KDV dahil)":_t("WhatsApp'ta netleşecek")));if(window.__kxAb&&window.__kxUye){var U=window.__kxUye;ln.push("👤 Üye: "+U.ad+(U.firma?" ("+U.firma+")":"")+" – "+U.turAd+", %"+U.oran+" indirim uygulandı");ln.push("📞 Üye tel: 0"+String(U.tel).slice(2))}
     var fx=[];if(sx)fx.push("koli ebat +"+tl(sx));if(wx)fx.push("ağırlık +"+tl(wx));if(nf)fx.push("gece +"+tl(nf));if(rz)fx.push(rzn.toLocaleLowerCase("tr")+" +"+tl(rz));if(fx.length)ln.push("   (dahil: "+fx.join(", ")+")");
     if(exN.txt)ln.push("ℹ️ "+exN.txt);
     ln.push(S,"📝 Gönderi / not: ","👤 Teslim alacak kişi / tel: ",S);
@@ -948,7 +948,7 @@ tr.addEventListener("pointerdown",function(){paused=1},{passive:true});tr.addEve
 if(matchMedia("(prefers-reduced-motion:reduce)").matches)return;var vis=0;if("IntersectionObserver"in window)new IntersectionObserver(function(e){vis=e[0].isIntersecting}).observe(tr);
 setInterval(function(){if(vis&&!paused&&!document.hidden)go(1)},3200)})})();
 
-(function(){var c=document.getElementById("aboneChk");if(!c)return;if(/[?&]abone=1/.test(location.search))c.checked=true;var lab=c.closest(".abone-chk");document.addEventListener("kxsvc",function(e){var s=e.detail;if(lab)lab.style.display=s&&s.np?"none":""});c.addEventListener("change",function(){var r=document.getElementById("result");if(r&&r.style.display!=="none"){var b=document.getElementById("calcBtn");b&&b.click()}})})();
+
 // mahalle/ilçe listesi açıkken diğer alanların "Konumum" düğmesi listenin üstüne binmesin
 (function(){var t;document.addEventListener("focusin",function(e){var x=e.target;if(!x||!x.closest||x.tagName!=="INPUT")return;var c=x.closest(".calc");if(!c)return;clearTimeout(t);c.classList.add("kxf");[].forEach.call(c.querySelectorAll(".kxfo"),function(f){f.classList.remove("kxfo")});var f=x.closest(".field");if(f)f.classList.add("kxfo")});
 document.addEventListener("focusout",function(e){var x=e.target;var c=x&&x.closest&&x.closest(".calc");if(!c)return;clearTimeout(t);t=setTimeout(function(){if(!c.contains(document.activeElement)||document.activeElement.tagName!=="INPUT")c.classList.remove("kxf")},250)});
@@ -956,3 +956,15 @@ var st=document.createElement("style");st.textContent=".kxf .field:not(.kxfo) .i
 ;(function(){var h=(new Date().getUTCHours()+3)%24;if(h>=8||h<2)[].forEach.call(document.querySelectorAll(".ezopen[hidden]"),function(p){p.hidden=false})})();
 
 ;(function(){/*uye_bar_lbl*/try{if(!localStorage.getItem("kxUye"))return}catch(e){return}[].forEach.call(document.querySelectorAll('a[data-ev="uye_bar"]'),function(x){x.lastChild.textContent="Hesabım"})})();
+
+;(function(){/*uye_fiyat*/var K="kxUye",tok=null;try{tok=localStorage.getItem(K)}catch(e){}
+function yer(){var c=document.getElementById("calcBtn");if(!c)return null;var d=document.getElementById("uyeDurum");if(!d){d=document.createElement("p");d.id="uyeDurum";d.className="uye-dr";var e=document.getElementById("cerr")||c;e.parentNode.insertBefore(d,e)}return d}
+function yaz(u){var d=yer();if(!d)return;if(!u){d.innerHTML='👤 Üye misiniz? <a href="/uyelik/#uye-ol">Giriş yapın</a>, indirimli fiyatınız otomatik çıksın.';return}
+ if(u.durum!=="onayli"){d.innerHTML="⏳ "+u.ad.split(" ")[0]+", üyeliğiniz onay bekliyor. Onaylanınca indirim otomatik uygulanır.";return}
+ if(u.oran>0)d.innerHTML="✅ "+u.ad.split(" ")[0]+", üye fiyatınız gösteriliyor: <b>%"+u.oran+" indirim</b> otomatik uygulanır.";
+ else d.innerHTML="👤 "+u.ad.split(" ")[0]+", "+(u.tur==="bireysel"?(5-(u.toplam||0))+" gönderi sonra %10 indiriminiz başlar.":"üyeliğiniz aktif.")}
+function uygula(u){window.__kxUye=u||null;window.__kxUyeOran=u&&u.durum==="onayli"?(+u.oran||0):0;yaz(u);var r=document.getElementById("result"),b=document.getElementById("calcBtn");if(r&&b&&r.style.display!=="none")b.click()}
+if(!tok){yaz(null);return}
+var c=null;try{c=JSON.parse(sessionStorage.getItem("kxUyeD")||"null")}catch(e){}
+if(c&&Date.now()-c.t<300000){uygula(c.u);return}
+yaz(null);fetch("/api/uye",{headers:{Authorization:"Bearer "+tok}}).then(function(r){return r.json()}).then(function(j){if(j.ok){try{sessionStorage.setItem("kxUyeD",JSON.stringify({t:Date.now(),u:j.uye}))}catch(e){}uygula(j.uye)}else{try{localStorage.removeItem(K)}catch(e){}yaz(null)}}).catch(function(){})})();
