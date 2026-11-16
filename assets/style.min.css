@@ -393,16 +393,17 @@ button,.btn,.nb-go,.nb-go2,.kx-ezf{min-height:44px}
 #result #pnote,#result #kgnote,#result #detail{display:none!important}
 #rowTm.kx-cevh{display:none!important}
 .btn-wa,.btn.btn-wa,#waBtn{background:#15803d!important;border-color:#15803d!important}
-.langbar a[aria-current],.mlang a[aria-current],.langbar a.on,.mlang a.on,.nb-go,.nb-go2,b.xn,ol.fsteps>li>b,li>a>em{background:#c2410c!important}
+.langbar a[aria-current],.mlang a[aria-current],.langbar a.on,.mlang a.on,.nb-go,b.xn,ol.fsteps>li>b,li>a>em{background:#c2410c!important}
 .ezsos,.ezsos.ezdirect{background:#0f6b3a!important}
 .kxas-ic{background:#c2410c!important}
 .kxas-s:disabled{background:#c2410c!important;opacity:.45}
 .kxrv-gl{color:#1a56c4!important}.kxrv-st{color:#b45309!important}
 .mcta .btn-wa,.btn-wa,.btn.btn-wa{color:#fff!important}
 .ezopen b{color:#0b6b37!important}.ezeta b{color:#b4470a!important}
-.calc .nb-go,.calc .nb-go2,.kx-ez .nb-go,.kx-ez .nb-go2,button.nb-go,button.nb-go2{background:#c2410c!important}
+.calc .nb-go,.kx-ez .nb-go,button.nb-go{background:#c2410c!important}
 .aside ul li a{color:#a8361c!important}
 .logo span b{color:#ff9a4d!important}
-.kxrv-a{filter:brightness(.82)}
-html body .kx-ez .nb-2 button.nb-go,html body .kx-ez .nb-2 button.nb-go2,html body div button.nb-go{background:#c2410c!important;background-color:#c2410c!important}
+
+html body .kx-ez .nb-2 button.nb-go,html body div button.nb-go{background:#c2410c!important;background-color:#c2410c!important}
 html body a.logo span b,html body .logo span b{color:#ffa45c!important;-webkit-text-fill-color:#ffa45c!important}
+html body button.nb-go2{color:#b4470a!important;border-color:#c2410c!important}
