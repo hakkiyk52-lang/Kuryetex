@@ -97,6 +97,7 @@ async function yonetim(env, b) {
   } else if (b.islem === "admin_oran") u.oran = Math.max(0, Math.min(50, Math.round(+b.oran) || 0));
   else if (b.islem === "admin_sil") {
     await env.AYAR.delete(anahtar);
+    if (u.eposta) await env.AYAR.delete("uyeep:" + String(u.eposta).toLowerCase());
     await env.AYAR.put("uyeler", JSON.stringify(liste.filter(x => x !== tel)));
     return json({ ok: true, silindi: true });
   } else return json({ ok: false, hata: "Bilinmeyen işlem." });
@@ -118,6 +119,17 @@ export async function onRequestPost({ request, env }) {
   let b = {};
   try { b = await request.json(); } catch (e) {}
   if (String(b.islem || "").startsWith("admin_")) return yonetim(env, b);
+  // Girişte telefon yerine e-posta da yazılabilir
+  if (b.islem === "giris" && String(b.tel || "").includes("@")) {
+    const ep = String(b.tel).trim().toLowerCase();
+    let t = await env.AYAR.get("uyeep:" + ep);
+    if (!t) {
+      const l = JSON.parse(await env.AYAR.get("uyeler") || "[]");
+      for (const x of l.slice(0, 500)) { const u = JSON.parse(await env.AYAR.get("uye:" + x) || "null"); if (u && String(u.eposta || "").toLowerCase() === ep) { t = x; break; } }
+    }
+    if (!t) { await new Promise(r => setTimeout(r, 700)); return json({ ok: false, hata: "Telefon/e-posta veya şifre hatalı." }); }
+    b.tel = t;
+  }
   const tel = telNorm(b.tel);
   const sifre = String(b.sifre || "");
   if (!tel) return json({ ok: false, hata: "Geçerli bir cep telefonu yazın (05xx xxx xx xx)." });
@@ -132,6 +144,8 @@ export async function onRequestPost({ request, env }) {
     if (!b.kvkk) return json({ ok: false, hata: "KVKK onayı gerekli." });
     if (tur !== "bireysel" && !temiz(b.firma, 80)) return json({ ok: false, hata: "Firma / işletme adı gerekli." });
     if (await env.AYAR.get(anahtar)) return json({ ok: false, hata: "Bu numarayla zaten üyelik var. Giriş yapın." });
+    const ep = temiz(b.eposta, 80).toLowerCase();
+    if (ep && await env.AYAR.get("uyeep:" + ep)) return json({ ok: false, hata: "Bu e-postayla zaten üyelik var. Giriş yapın." });
     const tuz = crypto.randomUUID();
     const u = {
       tel, ad, tur, durum: "bekliyor", kayit: new Date().toISOString(),
@@ -140,6 +154,7 @@ export async function onRequestPost({ request, env }) {
       tuz, hash: await hashle(sifre, tuz), toplam: 0, ay: "", ayGonderi: 0, gecenAy: 0, oran: 0
     };
     await env.AYAR.put(anahtar, JSON.stringify(u));
+    if (ep) await env.AYAR.put("uyeep:" + ep, tel);
     // Yönetim paneli için üye listesi (yalnızca telefon numaraları)
     try {
       const l = JSON.parse(await env.AYAR.get("uyeler") || "[]");
@@ -152,7 +167,7 @@ export async function onRequestPost({ request, env }) {
     const u = JSON.parse(await env.AYAR.get(anahtar) || "null");
     if (!u || (await hashle(sifre, u.tuz)) !== u.hash) {
       await new Promise(r => setTimeout(r, 700));
-      return json({ ok: false, hata: "Telefon veya şifre hatalı." });
+      return json({ ok: false, hata: "Telefon/e-posta veya şifre hatalı." });
     }
     return json({ ok: true, token: await tokenVer(env, tel), uye: disaAc(u) });
   }
