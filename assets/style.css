@@ -1087,7 +1087,7 @@ header.top .burger{background:rgba(255,255,255,.1)!important;color:#fff!importan
 .langbar,html[data-theme=dark] .langbar{transition:--lb1 11s ease-in-out,--lb2 11s ease-in-out!important}
 .tick{background:linear-gradient(90deg,var(--tk1,#ffb15c),var(--tk2,#ff8a3d))!important;transition:--tk1 11s ease-in-out,--tk2 11s ease-in-out}
 /* === Tema değişkenleri (bant rengi, çıta, ikon rengi) === */
-:root{--kxbar:#1f3c88;--kxline:linear-gradient(90deg,#ff9a3d 0%,#ff7a1a 35%,#e8620a 65%,#d62828 100%);--kxico:#ffffff;--kxburg:#ffffff;--kxth:3px;--kxtex:#ff8a2a}
+:root{--kxbar:#1f3c88;--kxline:linear-gradient(90deg,#ff9a3d 0%,#ff7a1a 35%,#e8620a 65%,#d62828 100%);--kxico:#ffffff;--kxburg:#ffffff;--kxth:3px;--kxtex:#ffa45c}
 :root[data-theme=dark]{--kxbar:#182f6b}
 header.top::after,header.top::before,.bar::before,.bar::after{content:"";position:absolute;left:0;right:0;height:var(--kxth);background:var(--kxline);pointer-events:none;display:none;z-index:1}
 header.top::before{top:0}header.top::after{bottom:0!important}.bar::before{top:0}.bar::after{bottom:0}
@@ -1365,3 +1365,17 @@ button,.btn,.nb-go,.nb-go2,.kx-ezf{min-height:44px}
 .calc .ip-f>.ip-loc,.ip-f>.ip-loc{z-index:45}
 #result #pnote,#result #kgnote,#result #detail{display:none!important}
 #rowTm.kx-cevh{display:none!important}
+.btn-wa,.btn.btn-wa,#waBtn{background:#15803d!important;border-color:#15803d!important}
+.langbar a[aria-current],.mlang a[aria-current],.langbar a.on,.mlang a.on,.nb-go,.nb-go2,b.xn,ol.fsteps>li>b,li>a>em{background:#c2410c!important}
+.ezsos,.ezsos.ezdirect{background:#0f6b3a!important}
+.kxas-ic{background:#c2410c!important}
+.kxas-s:disabled{background:#c2410c!important;opacity:.45}
+.kxrv-gl{color:#1a56c4!important}.kxrv-st{color:#b45309!important}
+.mcta .btn-wa,.btn-wa,.btn.btn-wa{color:#fff!important}
+.ezopen b{color:#0b6b37!important}.ezeta b{color:#b4470a!important}
+.calc .nb-go,.calc .nb-go2,.kx-ez .nb-go,.kx-ez .nb-go2,button.nb-go,button.nb-go2{background:#c2410c!important}
+.aside ul li a{color:#a8361c!important}
+.logo span b{color:#ff9a4d!important}
+.kxrv-a{filter:brightness(.82)}
+html body .kx-ez .nb-2 button.nb-go,html body .kx-ez .nb-2 button.nb-go2,html body div button.nb-go{background:#c2410c!important;background-color:#c2410c!important}
+html body a.logo span b,html body .logo span b{color:#ffa45c!important;-webkit-text-fill-color:#ffa45c!important}
