@@ -38,8 +38,8 @@
 - 21:00–08:00 arası ve yoğun hava şartlarında fiyat farkı uygulanır; fark, hesaplama sonucunda nedeniyle birlikte gösterilir.
 - Araçlı kurye ve vale/şoför hizmeti moto kurye fiyatının 2 katıdır.
 - Standart en kısa mesafe ücreti (5 km'ye kadar): 500 TL. Fiyatlara KDV dahildir.
-- Abone (düzenli gönderi yapan işletme) tarifesi: her mesafede %25 indirim; 5 km'ye kadar paket başı 375 TL; aynı seferde giden 2. paketten itibaren ek %10 indirim (337,50 TL). Aylık asgari gönderi şartı yoktur; toplu ödeme ve cari hesap imkânı vardır.
-- Eski 580 TL / 435 TL abone fiyatları artık geçerli değildir.
+- Üyelik / abonelik (ücretsiz, https://kuryetex.com.tr/uyelik/): Bireysel üyelere 5. gönderiden sonra her siparişte %10 indirim. İşletme abonelerine aylık gönderi sayısına göre indirim: 1–9 gönderi %10, 10–19 %15, 20–29 %20, 30 ve üzeri %25. Restoranlara 5 km çapında %25 indirim; haftada 150+ paketi olan restoranlara özel kurye. Aynı seferde giden 2. paketten itibaren ek %10 indirim. Aylık asgari gönderi şartı yoktur. Ödeme günlük, haftalık veya aylık; e-imza ve e-fatura kullanılır. Onaylı üye giriş yaptığında fiyat hesaplayıcı indirimli fiyatı otomatik gösterir.
+- Eski sabit abone fiyatları (580/435/375 TL) ve "her mesafede %25" kuralı artık geçerli değildir.
 - Güncel fiyat: https://kuryetex.com.tr/fiyatlar/
 
 ## Önemli sayfalar
@@ -53,7 +53,7 @@
 - [Ürün bulma ve temin (sizin adınıza alıp getirme)](https://kuryetex.com.tr/urun-temin-kurye/)
 - [Yurt dışından İstanbul'a teslimat](https://kuryetex.com.tr/yurt-disindan-istanbul-teslimat/)
 - [Kurumsal kurye](https://kuryetex.com.tr/kurumsal/)
-- [Abone müşteri / işletmeler](https://kuryetex.com.tr/abone-musteri/)
+- [Üyelik ve abonelik (bireysel, işletme, restoran)](https://kuryetex.com.tr/uyelik/)
 - [Hizmet bölgeleri (39 ilçe)](https://kuryetex.com.tr/hizmet-bolgeleri/)
 - [Fiyatlar](https://kuryetex.com.tr/fiyatlar/)
 - [Güvencelerimiz](https://kuryetex.com.tr/guvencelerimiz/)
