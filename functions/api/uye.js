@@ -1,5 +1,5 @@
 // Cloudflare Pages Function: /api/uye  — Kuryetex üyelik (1. aşama: kayıt / giriş / hesabım)
-// Depolama: KV "AYAR" (anahtar: "uye:<telefon>"). Gizli anahtar: UYE_GIZLI (yoksa YONETIM_SIFRE).
+// Depolama: KV "AYAR" (anahtar: "uye:<telefon>"). Gizli anahtar: UYE_GIZLI (yoksa KV'de kendiliğinden üretilir).
 // POST {islem:"kayit", ad, tel, sifre, tur:"bireysel"|"isletme"|"restoran", eposta?, firma?, vkn?, vd?, adres?, ilce?, kvkk:true}
 // POST {islem:"giris", tel, sifre}        -> {ok, token, uye}
 // GET  /api/uye  (Authorization: Bearer <token>) -> {ok, uye}
@@ -24,8 +24,14 @@ async function hashle(sifre, tuz) {
   const bits = await crypto.subtle.deriveBits({ name: "PBKDF2", hash: "SHA-256", salt: enc.encode(tuz), iterations: 100000 }, k, 256);
   return b64(bits);
 }
+async function gizliAl(env) {
+  if (env.UYE_GIZLI) return env.UYE_GIZLI;
+  let g = await env.AYAR.get("uye_gizli");
+  if (!g) { g = crypto.randomUUID() + crypto.randomUUID(); await env.AYAR.put("uye_gizli", g); }
+  return g;
+}
 async function imza(env, veri) {
-  const gizli = env.UYE_GIZLI || ("uye|" + (env.YONETIM_SIFRE || ""));
+  const gizli = await gizliAl(env);
   const k = await crypto.subtle.importKey("raw", enc.encode(gizli), { name: "HMAC", hash: "SHA-256" }, false, ["sign"]);
   return b64(await crypto.subtle.sign("HMAC", k, enc.encode(veri)));
 }
@@ -66,7 +72,7 @@ export async function onRequestGet({ request, env }) {
 }
 
 export async function onRequestPost({ request, env }) {
-  if (!env.AYAR || !(env.UYE_GIZLI || env.YONETIM_SIFRE)) return json({ ok: false, hata: "Üyelik sistemi şu an kapalı." });
+  if (!env.AYAR) return json({ ok: false, hata: "Üyelik sistemi şu an kapalı." });
   let b = {};
   try { b = await request.json(); } catch (e) {}
   const tel = telNorm(b.tel);
