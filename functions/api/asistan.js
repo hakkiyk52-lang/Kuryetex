@@ -58,6 +58,8 @@ async function telegram(env, metin) {
   } catch (e) {}
 }
 
+export async function onRequestGet({ env }) { return json({ on: !!env.ANTHROPIC_API_KEY }); }
+
 export async function onRequestPost({ request, env }) {
   if (!env.ANTHROPIC_API_KEY) return json({ off: true });
   let body; try { body = await request.json(); } catch (e) { return json({ err: "bad" }, 400); }

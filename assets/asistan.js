@@ -1,27 +1,66 @@
-/* Kuryetex müşteri asistanı (önizleme) */
+/* Kuryetex müşteri asistanı: hesaplayıcı altında sohbet kutusu + tam ekran sohbet */
 (function(){
 if(window.__kxAs)return;window.__kxAs=1;
-var WA="905515315234",msgs=[],busy=false,open=false;
-var css=".kxas-b{position:fixed;left:14px;bottom:96px;z-index:60;border:0;border-radius:999px;background:#1f3c88;color:#fff;font:700 14px system-ui,sans-serif;padding:12px 16px;min-height:44px;box-shadow:0 8px 24px -8px rgba(0,0,0,.4);cursor:pointer}"+
-".kxas-p{position:fixed;left:10px;right:10px;bottom:92px;z-index:61;max-width:400px;max-height:70vh;display:flex;flex-direction:column;background:#fff;border-radius:16px;box-shadow:0 18px 50px -12px rgba(0,0,0,.45);overflow:hidden;font:15px/1.5 system-ui,sans-serif;color:#1f2937}"+
-".kxas-h{background:#1f3c88;color:#fff;padding:12px 14px;display:flex;justify-content:space-between;align-items:center}.kxas-h b{font-size:15px}.kxas-h small{display:block;opacity:.85;font-size:12px}.kxas-x{background:none;border:0;color:#fff;font-size:22px;min-width:44px;min-height:44px;cursor:pointer}"+
-".kxas-m{flex:1;overflow:auto;padding:12px;background:#f6f8fb}.kxas-m div{margin:6px 0;padding:9px 12px;border-radius:12px;max-width:88%;white-space:pre-wrap;word-wrap:break-word}.kxas-u{background:#ffe8d6;margin-left:auto!important}.kxas-a{background:#fff;border:1px solid #e3e8ef}"+
-".kxas-f{display:flex;gap:8px;padding:10px;border-top:1px solid #e3e8ef}.kxas-f input{flex:1;min-height:44px;border:1px solid #cfd8e3;border-radius:10px;padding:0 12px;font:inherit}.kxas-f button,.kxas-w{min-height:44px;border:0;border-radius:10px;background:#b4470a;color:#fff;font-weight:700;padding:0 14px;cursor:pointer}.kxas-w{display:block;margin:6px 0;background:#1fbf5b;text-align:center;line-height:44px;text-decoration:none;color:#fff}"+
-".kxas-p[hidden]{display:none!important}"+
-"@media(min-width:760px){.kxas-p{left:20px;right:auto;width:380px;bottom:100px}}";
+var demo=/^(onizleme\.|localhost|127\.)/.test(location.hostname);
+if(demo)go();else fetch("/api/asistan").then(function(r){return r.json()}).then(function(j){if(j&&j.on)go()}).catch(function(){});
+function go(){
+var WA="905515315234",msgs=[],busy=false,views=[];
+var css=".kxas-b{position:fixed;left:14px;bottom:96px;z-index:60;border:0;border-radius:999px;background:#1f3c88;color:#fff;font:600 14px system-ui,sans-serif;padding:12px 16px;min-height:44px;box-shadow:0 8px 24px -8px rgba(0,0,0,.4);cursor:pointer}"+
+".kxas-p{position:fixed;inset:0;z-index:9999;display:flex;flex-direction:column;background:#faf9f5;color:#1f1e1d}.kxas-p[hidden]{display:none!important}"+
+".kxas-p,.kxas-in{font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:#1f1e1d}"+
+".kxas-h{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border-bottom:1px solid #e8e6dc}.kxas-h b{font-size:16px;font-weight:600}.kxas-h small{display:block;color:#73726c;font-size:12px}"+
+".kxas-x{background:none;border:0;color:#1f1e1d;font-size:26px;min-width:44px;min-height:44px;border-radius:10px;cursor:pointer}"+
+".kxas-m{flex:1;overflow:auto;padding:16px;max-width:760px;width:100%;margin:0 auto;box-sizing:border-box}"+
+".kxas-u{margin:12px 0 12px auto;max-width:85%;width:fit-content;background:#efede6;border-radius:18px;padding:9px 14px;white-space:pre-wrap;word-wrap:break-word}"+
+".kxas-a{margin:12px 0;white-space:pre-wrap;word-wrap:break-word}"+
+".kxas-w{display:inline-flex;align-items:center;min-height:44px;margin:2px 0 10px;padding:0 16px;border-radius:12px;background:#1fbf5b;color:#fff!important;text-decoration:none;font-weight:600}"+
+".kxas-f{padding:8px 12px calc(12px + env(safe-area-inset-bottom));max-width:760px;width:100%;margin:0 auto;box-sizing:border-box}"+
+".kxas-box{display:flex;align-items:flex-end;gap:8px;background:#fff;border:1px solid #dedcd1;border-radius:22px;padding:8px 8px 8px 16px;box-shadow:0 2px 10px rgba(0,0,0,.05)}"+
+".kxas-box textarea{flex:1;border:0!important;outline:0;resize:none;background:transparent!important;box-shadow:none!important;font:inherit;color:inherit;max-height:160px;min-height:28px;padding:6px 0!important;margin:0;line-height:1.5}"+
+".kxas-s{flex:none;width:40px;height:40px;min-height:40px;border:0;border-radius:12px;background:#e8620a;color:#fff;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0}.kxas-s:disabled{background:#e8c9b3;cursor:default}"+
+".kxas-n{font-size:12px;color:#73726c;text-align:center;margin-top:6px}"+
+".kxas-in{margin-top:16px;background:#faf9f5;border:1px solid #e8e6dc;border-radius:16px;overflow:hidden}.kxas-in .kxas-h{padding:12px 14px}.kxas-in .kxas-m{max-height:340px;padding:4px 14px}.kxas-in .kxas-m:empty{display:none}.kxas-in .kxas-f{padding:10px}"+
+".kxas-c{display:flex;flex-wrap:wrap;gap:6px;padding:10px 14px 0}.kxas-c button{border:1px solid #dedcd1;background:#fff;color:#1f1e1d;border-radius:999px;padding:6px 12px;min-height:36px;font:14px system-ui,sans-serif;cursor:pointer}"+
+".kxas-dots span{display:inline-block;width:7px;height:7px;margin-right:4px;border-radius:50%;background:#b4470a;animation:kxd 1s infinite}.kxas-dots span:nth-child(2){animation-delay:.15s}.kxas-dots span:nth-child(3){animation-delay:.3s}@keyframes kxd{0%,80%{opacity:.25}40%{opacity:1}}";
 var st=document.createElement("style");st.textContent=css;document.head.appendChild(st);
-var b=document.createElement("button");b.type="button";b.className="kxas-b";b.textContent="💬 Asistana sor";b.setAttribute("aria-label","Kuryetex asistanına soru sor");document.body.appendChild(b);
-var p=document.createElement("div");p.className="kxas-p";p.hidden=true;p.setAttribute("role","dialog");p.setAttribute("aria-label","Kuryetex asistanı");
-p.innerHTML='<div class="kxas-h"><div><b>Kuryetex Asistanı</b><small>Yapay zekâ destekli · fiyat için hesaplayıcıyı kullanır</small></div><button type="button" class="kxas-x" aria-label="Kapat">×</button></div><div class="kxas-m" aria-live="polite"></div><form class="kxas-f"><input type="text" placeholder="Sorunuzu yazın…" aria-label="Mesajınız" maxlength="500"><button type="submit">Gönder</button></form>';
-document.body.appendChild(p);
-var M=p.querySelector(".kxas-m"),F=p.querySelector("form"),I=F.querySelector("input");
-function add(t,c,html){var d=document.createElement("div");d.className=c;if(html)d.innerHTML=html;else d.textContent=t;M.appendChild(d);M.scrollTop=M.scrollHeight;return d}
-function wa(s){var a=document.createElement("a");a.className="kxas-w";a.target="_blank";a.rel="noopener";a.href="https://wa.me/"+WA+"?text="+encodeURIComponent("Merhaba, asistan üzerinden sipariş:\n"+s);a.textContent="WhatsApp'tan siparişi gönder";M.appendChild(a);M.scrollTop=M.scrollHeight}
-b.onclick=function(){open=!open;p.hidden=!open;if(open&&!M.childNodes.length)add("Merhaba! Kurye, eczane ve fiyat hesaplama hakkında sorularınızı yanıtlayabilirim. Size nasıl yardımcı olayım?","kxas-a");if(open)I.focus()};
-p.querySelector(".kxas-x").onclick=function(){open=false;p.hidden=true};
-F.onsubmit=function(e){e.preventDefault();var t=I.value.trim();if(!t||busy)return;I.value="";add(t,"kxas-u");msgs.push({role:"user",content:t});busy=true;var w=add("…","kxas-a");
- fetch("/api/asistan",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({messages:msgs})}).then(function(r){return r.json()}).then(function(d){
-  if(d.off){w.textContent="Asistan çok yakında aktif olacak. Şimdilik fiyatı hesaplayıcıdan görebilir, WhatsApp'tan yazabilirsiniz: 0551 531 52 34";msgs.pop();return}
-  w.textContent=d.text||"Şu an cevap veremiyorum. WhatsApp: 0551 531 52 34";msgs.push({role:"assistant",content:w.textContent});if(d.siparis)wa(d.siparis)
- }).catch(function(){w.textContent="Bağlantı hatası. WhatsApp: 0551 531 52 34";msgs.pop()}).then(function(){busy=false})};
+var ecz=/eczane|ilac|nobetci/.test(location.pathname);
+var HELLO=ecz?"Merhaba! İlaç siparişi, nöbetçi eczane, ödeme ve teslim hakkında sorularınızı yanıtlayabilirim.":"Merhaba! Kurye, eczane ve fiyat hesaplama hakkında sorularınızı yanıtlayabilirim. Size nasıl yardımcı olayım?";
+var CHIPS=ecz?["İlaç fiyatını öğrenebilir miyim?","Ödemeyi nasıl yapıyorum?","Gece ilaç getirir misiniz?"]:["Fiyat neye göre değişir?","Ne kadar sürede gelir?","Ödeme nasıl yapılır?"];
+var FORM='<form class="kxas-f"><div class="kxas-box"><textarea rows="1" placeholder="Bir şey sorun…" aria-label="Mesajınız" maxlength="800"></textarea><button type="submit" class="kxas-s" aria-label="Gönder" disabled>↑</button></div><div class="kxas-n">Kurye ücretini hesaplayıcı belirler. Acil sağlık durumunda 112\'yi arayın.</div></form>';
+
+function view(root){
+  var M=root.querySelector(".kxas-m"),F=root.querySelector("form"),I=F.querySelector("textarea"),S=F.querySelector(".kxas-s");I.__clr=1;
+  var v={M:M,I:I,S:S};views.push(v);
+  function grow(){I.style.height="auto";I.style.height=Math.min(160,I.scrollHeight)+"px";S.disabled=!I.value.trim()||busy}
+  v.grow=grow;I.addEventListener("input",grow);
+  I.addEventListener("keydown",function(e){if(e.key==="Enter"&&!e.shiftKey&&!/Android|iPhone|iPad/i.test(navigator.userAgent)){e.preventDefault();send(I.value,v)}});
+  F.addEventListener("submit",function(e){e.preventDefault();send(I.value,v)});
+  var ch=root.querySelector(".kxas-c");if(ch)ch.addEventListener("click",function(e){var t=e.target.closest("button");if(t)send(t.textContent,v);ch.hidden=true});
+  return v}
+function add(v,t,c,html){var d=document.createElement("div");d.className=c;if(html)d.innerHTML=html;else d.textContent=t;v.M.appendChild(d);v.M.scrollTop=v.M.scrollHeight;return d}
+function wa(v,s){var a=document.createElement("a");a.className="kxas-w";a.target="_blank";a.rel="noopener";a.href="https://wa.me/"+WA+"?text="+encodeURIComponent("Merhaba, asistan üzerinden sipariş:\n"+s);a.textContent="WhatsApp'tan siparişi gönder ›";v.M.appendChild(a);v.M.scrollTop=v.M.scrollHeight}
+function send(t,v){t=(t||"").trim();if(!t||busy)return;v.I.value="";if(!v.M.childNodes.length)add(v,HELLO,"kxas-a");add(v,t,"kxas-u");msgs.push({role:"user",content:t});busy=true;
+  var w=add(v,"","kxas-a",'<span class="kxas-dots"><span></span><span></span><span></span></span>');views.forEach(function(x){x.grow()});
+  fetch("/api/asistan",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({messages:msgs})}).then(function(r){return r.json()}).then(function(d){
+   if(d.off){w.textContent="Asistan çok yakında aktif olacak. Şimdilik fiyatı hesaplayıcıdan görebilir, WhatsApp'tan yazabilirsiniz: 0551 531 52 34";msgs.pop();return}
+   w.textContent=d.text||"Şu an cevap veremiyorum. WhatsApp: 0551 531 52 34";msgs.push({role:"assistant",content:w.textContent});if(d.siparis)wa(v,d.siparis)
+  }).catch(function(){w.textContent="Bağlantı hatası. WhatsApp: 0551 531 52 34";msgs.pop()}).then(function(){busy=false;views.forEach(function(x){x.grow()})})}
+
+/* 1) Hesaplayıcının altındaki sohbet kutusu */
+var res=document.getElementById("result");
+if(res&&res.parentNode){
+  var box=document.createElement("div");box.className="kxas-in";
+  box.innerHTML='<div class="kxas-h"><div><b>'+(ecz?"İlaç siparişiyle ilgili sorunuz mu var?":"Sorunuz mu var?")+'</b><small>Kuryetex asistanına buradan yazın</small></div></div><div class="kxas-c">'+CHIPS.map(function(c){return'<button type="button">'+c+'</button>'}).join("")+'</div><div class="kxas-m" aria-live="polite"></div>'+FORM;
+  res.parentNode.insertBefore(box,res.nextSibling);view(box);
+}
+/* 2) Hesaplayıcı olmayan sayfalarda yüzen buton + tam ekran sohbet */
+if(!res){
+  var b=document.createElement("button");b.type="button";b.className="kxas-b";b.textContent="💬 Asistana sor";b.setAttribute("aria-label","Kuryetex asistanına soru sor");document.body.appendChild(b);
+  var p=document.createElement("div");p.className="kxas-p";p.hidden=true;p.setAttribute("role","dialog");p.setAttribute("aria-label","Kuryetex asistanı");
+  p.innerHTML='<div class="kxas-h"><div><b>Kuryetex Asistanı</b><small>Yapay zekâ destekli müşteri asistanı</small></div><button type="button" class="kxas-x" aria-label="Kapat">×</button></div><div class="kxas-m" aria-live="polite"></div>'+FORM;
+  document.body.appendChild(p);var pv=view(p);
+  b.onclick=function(){p.hidden=false;document.documentElement.style.overflow="hidden";if(!pv.M.childNodes.length)add(pv,HELLO,"kxas-a");pv.I.focus()};
+  p.querySelector(".kxas-x").onclick=function(){p.hidden=true;document.documentElement.style.overflow=""};
+}
+}
 })();
