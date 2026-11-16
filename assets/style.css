@@ -1364,3 +1364,4 @@ button,.btn,.nb-go,.nb-go2,.kx-ezf{min-height:44px}
 @media(min-width:1000px){.hero.mid .hcalc .calc>div:first-child{grid-template-columns:1fr}.hero.mid .hcalc .kx-ez{margin-bottom:12px}}
 .calc .ip-f>.ip-loc,.ip-f>.ip-loc{z-index:45}
 #result #pnote,#result #kgnote,#result #detail{display:none!important}
+#rowTm.kx-cevh{display:none!important}
