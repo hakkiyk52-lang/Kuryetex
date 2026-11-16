@@ -821,7 +821,7 @@ apply();if("MutationObserver" in window)new MutationObserver(function(m){for(var
 var app=document.getElementById("app");if(app&&"MutationObserver" in window)new MutationObserver(apply).observe(app,{childList:true});
 addEventListener("resize",function(){document.querySelectorAll(".fab,.ecob").forEach(function(el){if(!S[key(el)])return;var r=el.getBoundingClientRect(),p=clampXY(el,r.left,r.top);setP(el,p[0],p[1])})})})();
 /* === Ekran kenarında dolaşan araçlar: tek döngü, birbirini iten (ters mıknatıs), sürükle-fırlat === */
-;(function(){if(window.__kxTraffic)return;window.__kxTraffic=1;
+;(function(){return;/* hareketli araçlar kaldırıldı */
 var R=document.querySelector(".roam");if(!R)return;var H=document.documentElement;
 [].forEach.call(document.querySelectorAll(".roam .rv,.lane"),function(e){e.parentNode&&e.parentNode.removeChild(e)});
 var EM=["🏍️","🚗","🚚"],SP=[22,18,15],V=[],L=1,x0=0,x1=0,y0=0,y1=0,GAP=64,RAD=150,lt=0,raf=0;
