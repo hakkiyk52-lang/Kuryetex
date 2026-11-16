@@ -20,7 +20,7 @@ window.__hv=true;window.__rs={};window.__RF=function(k,f){if(window.__hv&&!docum
   var sc = document.querySelectorAll(".scene");
   if(sc.length){
     var set = function(){
-      var narrow = window.innerWidth < 760;
+      var narrow = matchMedia("(max-width:759px)").matches;
       sc.forEach(function(s){s.setAttribute("viewBox", narrow ? "500 150 640 660" : "0 0 1200 700");
       s.setAttribute("preserveAspectRatio", narrow ? "xMidYMax meet" : "xMidYMax slice");});
     };
@@ -870,16 +870,16 @@ new MutationObserver(function(){chk();go()}).observe(H,{attributes:true,attribut
 /* === Mobilde uzun yazılar: "Devamını oku" (içerik DOM'da kalır) === */
 ;(function(){if(window.__foldInit)return;window.__foldInit=1;
 var D=window.__D||{};function T(x){return D[x]||x}
-function run(){if(innerWidth>=760)return;
+function run(){if(!matchMedia("(max-width:759px)").matches)return;
 var c=[].slice.call(document.querySelectorAll("section.sec .prose, section.sec.prose > .wrap"));
 c=c.filter(function(el){if(el.closest(".hero,#sss,#siparis,#hesapla,.calc,form"))return false;if(el.querySelector("form,.calc,details"))return false;for(var i=0;i<c.length;i++){if(c[i]!==el&&c[i].contains(el))return false}return true});
-c.forEach(function(el){if(el.scrollHeight<1000||el.classList.contains("kxfold"))return;
+c=c.filter(function(el){return !el.classList.contains("kxfold")&&el.scrollHeight>=1000});c.forEach(function(el){
 var h=location.hash&&el.querySelector(location.hash.replace(/[^#\w-]/g,""));if(h)return;
 el.classList.add("kxfold");var b=document.createElement("button");b.type="button";b.className="kxmore";b.textContent=T("Devamını oku ▾");b.setAttribute("aria-expanded","false");
 b.addEventListener("click",function(){el.classList.remove("kxfold");b.remove()});el.parentNode.insertBefore(b,el.nextSibling)})}
-if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",run);else run()})();
+function go(){requestAnimationFrame(run)}if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",go);else go()})();
 /* === Mobilde kart kaydırma ipucu === */
-;(function(){if(innerWidth>=760)return;document.querySelectorAll(".cards").forEach(function(c){if(c.children.length<2||c.nextElementSibling&&c.nextElementSibling.classList.contains("cards-hint"))return;var p=document.createElement("p");p.className="cards-hint";p.textContent=((window.__D||{})["Kaydırarak tüm hizmetleri görün →"])||"Kaydırarak tüm hizmetleri görün →";c.parentNode.insertBefore(p,c.nextSibling)})})();
+;(function(){if(!matchMedia("(max-width:759px)").matches)return;document.querySelectorAll(".cards").forEach(function(c){if(c.children.length<2||c.nextElementSibling&&c.nextElementSibling.classList.contains("cards-hint"))return;var p=document.createElement("p");p.className="cards-hint";p.textContent=((window.__D||{})["Kaydırarak tüm hizmetleri görün →"])||"Kaydırarak tüm hizmetleri görün →";c.parentNode.insertBefore(p,c.nextSibling)})})();
 
 
 
