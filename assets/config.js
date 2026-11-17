@@ -3206,6 +3206,7 @@ window.K360={
   ]
  ],
  "TIER_BASE": 500,
+  "ECZ_BASE": 600,
  "TIER_GRID": 580,
  "TIERS": [[5, 27], [8, 30],
   [
