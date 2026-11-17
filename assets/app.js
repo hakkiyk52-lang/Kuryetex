@@ -80,7 +80,7 @@ window.__hv=true;window.__rs={};window.__RF=function(k,f){if(window.__hv&&!docum
     (T.gunler||[]).forEach(function(g){if(g[0]!==n.ymd)return;var t=g[1];if((t==="ab"||t==="ar")&&n.h<13)return;var b=t==="b"||t==="ab";it.push([b?_t("bayram"):_t("resmî tatil"),b?(T.b||15):(T.r||13)])});
     (E.gunler||[]).forEach(function(g){if(g[0]===n.ymd)it.push([g[1],E.pct||15])});
     if(S.on)it.push([(S.txt||_t("yoğunluk")).toLocaleLowerCase("tr"),S.pct||15]);if(MANT&&MANT.on)it.push([String(MANT.ad||_t("resmî tatil")).toLocaleLowerCase("tr"),(+MANT.pct>0&&+MANT.pct<=60?Math.round(+MANT.pct):15)]);
-    var ngt=0;if(C.NIGHT_PCT&&!nn){var hh;if(typeof tmv!=="undefined"&&tmv==="custom"&&tmc&&tmc.value)hh=+tmc.value.split(":")[0];else hh=n.h;var na=C.NIGHT_START||0,nb=C.NIGHT_END||7;if(na<nb?(hh>=na&&hh<nb):(hh>=na||hh<nb))ngt=C.NIGHT_PCT}
+    var ngt=0;if(C.NIGHT_PCT&&!nn){var hh;if(typeof tmv!=="undefined"&&tmv==="custom"&&tmc&&tmc.value)hh=+tmc.value.split(":")[0];else hh=n.h;var na=C.NIGHT_START||0,nb=C.NIGHT_END||7;if(na<nb?(hh>=na&&hh<nb):(hh>=na||hh<nb))ngt=C.NIGHT_PCT}if(!ngt&&!nn&&C.NIGHT_PCT_PLAN&&window.__kxPlanNight&&window.__kxPlanNight())ngt=C.NIGHT_PCT_PLAN;
     if((!it.length&&!ngt)||!base)return{tot:0,txt:"",msg:""};var pct=0;it.forEach(function(x){pct=Math.max(pct,x[1])});if(it.length>1)pct=Math.max(pct,C.EXTRA_CAP_PCT||15);var tot=Math.round(base*(pct+ngt)/100/25)*25,pr=[];if(ngt)pr.push(_t("Gece saati (21:00–08:00): +%")+ngt);if(it.length){var nm=it.map(function(x){return x[0]});pr.push(nm.join(", ").replace(/^./,function(c){return c.toLocaleUpperCase("tr")})+": +%"+pct)}var txt=pr.join(" · ")+" (+"+tl(tot)+").";return{tot:tot,txt:txt,msg:"\n"+_t("Not: ")+txt}}
   function tier(km){var T=C.TIERS,p=C.TIER_BASE||580;for(var i=0;i<T.length;i++){var f=T[i][0],t=i+1<T.length?T[i+1][0]:1e9;if(km>f)p+=(Math.min(km,t)-f)*T[i][1]}return p}
   function setSel(el,d){var it=items.filter(function(x){return x.d===d&&x.r===0})[0];el.value=it?it.l:d;el.dataset.d=d}
@@ -222,9 +222,10 @@ window.__hv=true;window.__rs={};window.__RF=function(k,f){if(window.__hv&&!docum
     [].forEach.call(document.querySelectorAll(".tmq button"),function(b){b.addEventListener("click",function(){done=1;setT(new Date(Date.now()+(+b.getAttribute("data-h"))*3600e3+4*60000),true)})})})();
   var lastM=null;function tmExtra(base){var m;lastM=null;if(cur&&cur.np)return lastTx=0;if(tmv==="custom"){m=tmM();if(m==null)return lastTx=0}
     else m=tmv.indexOf(_t("60 dakika"))===0?60:tmv.indexOf(_t("90 dakika"))===0?90:tmv===_t("2 saat")?120:150;
-    lastM=Math.ceil(m);var f=tmF(m),tx=Math.round((base||0)*f/50)*50,k=tmv==="custom"?tmK(m):-1;if(k>=0){var pn=(base||0)+tx;tx-=Math.round(Math.max(pn*TF_EK[k][0],TF_EK[k][1])/10)*10}
+    lastM=Math.ceil(m);var f=tmF(m),tx=Math.round((base||0)*f/50)*50,k=tmv==="custom"&&!planNight()?tmK(m):-1;if(k>=0){var pn=(base||0)+tx;tx-=Math.round(Math.max(pn*TF_EK[k][0],TF_EK[k][1])/10)*10}
     return lastTx=tx}
   function txs(x){return x>0?"+"+tl(x):x<0?"−"+tl(-x):tl(0)}
+  function planNight(){if(!(typeof tmv!=="undefined"&&tmv==="custom"&&tmc&&tmc.value))return false;var h=+tmc.value.split(":")[0],a=C.NIGHT_START||21,b=C.NIGHT_END||8;return a<b?(h>=a&&h<b):(h>=a||h<b)}window.__kxPlanNight=planNight;
   function nightFee(){var F=C.NIGHT_FEE||0;if(!F)return 0;var h;if(tmv==="custom"&&tmc&&tmc.value){h=+tmc.value.split(":")[0]}else{h=new Date(Date.now()+(180+new Date().getTimezoneOffset())*60000).getHours()}var a=C.NIGHT_START||0,b=C.NIGHT_END||7;return (a<b?(h>=a&&h<b):(h>=a||h<b))?F:0}
 var lastFl=0;function txn(){if(cur&&cur.np)return _t("Eczane teslimi mahalle bölgesine göre hesaplanır.");if(lastFl)return _t("Kısa mesafede en uygun fiyat uygulanır.");return lastTx>0?_t("Hızlı teslim farkı: ")+txs(lastTx)+".":lastTx<0?_t("Geç teslim indirimi: ")+txs(lastTx)+".":_t("Express (90 dk) standart fiyat.")}
   function tmText(){if(cur&&cur.np)return _t("30–45 dakika (hava şartlarına bağlı)");if(window.__kxCev)return _t("Şehirler arası, beklemeden doğrudan (süre WhatsApp'ta netleşir)");return tmv==="custom"?(tmc&&tmc.value?_t("Saat ")+tmc.value+" (seçilen saat)":""):tmv}
