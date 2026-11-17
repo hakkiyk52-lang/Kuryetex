@@ -103,6 +103,15 @@ label{font-weight:600;font-size:15px}
     <p class="not">5 yıldızlı olarak sitedeki yorumların en başında görünür.</p>
     <div id="yListe"></div>
   </div>
+  <div class="k ek" id="yayK" hidden>
+    <h2>Önizlemeyi canlıya al</h2>
+    <p class="durum" id="yDurum">—</p>
+    <div id="ySon" class="not"></div>
+    <button class="kapat" id="yKontrol">Durumu kontrol et</button>
+    <button class="ac" id="yYay" style="margin-top:10px">Önizlemeyi CANLIYA AL</button>
+    <p class="h" id="hYay"></p>
+    <p class="not">Önizlemede gördüğünüz son hali kuryetex.com.tr'ye aynen taşır. Yayın 1–2 dakika içinde görünür.</p>
+  </div>
   <div class="k" id="bing" hidden>
     <h2>Bing / ChatGPT'ye bildir</h2>
     <button id="bildir">Tüm sayfaları Bing'e bildir</button>
@@ -179,6 +188,20 @@ var mo=new MutationObserver(function(){if(!$("uyeK").hidden){mo.disconnect();yuk
   $("fYukle").onclick=function(){if(!FD){$("hF").textContent="Önce bir görsel seçin.";return}if(!$("fSayfa").value){$("hF").textContent="Sayfayı seçin.";return}
     is(["fYukle"],"hF",A("/api/foto",{islem:"ekle",sayfa:$("fSayfa").value,a:$("fA").value,data:FD.data,w:FD.w,h:FD.h}).then(function(j){fotoGoster(j.liste);ok("hF","Yüklendi. Sayfada görünüyor.");FD=null;$("fDosya").value="";$("fOn").style.display="none";$("fA").value=""}))};
   if(S)gir();
+})();
+</script>
+<script>
+(function(){var $=function(i){return document.getElementById(i)};function S(){try{return sessionStorage.getItem("kx_s")||""}catch(e){return""}}
+function Y(islem){return fetch("/api/yayinla",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({sifre:S(),islem:islem})}).then(function(r){return r.text().then(function(t){try{return JSON.parse(t)}catch(e){return{hata:"Sunucu yanıtı: "+r.status}}})})}
+function goster(j){var d=$("yDurum"),s=$("ySon");if(j.hata){d.textContent=j.hata;d.className="durum kapali";return}
+if(j.guncel){d.textContent="CANLI GÜNCEL";d.className="durum acik";s.innerHTML="";return}
+d.textContent="ÖNİZLEMEDE YAYINLANMAMIŞ DEĞİŞİKLİK VAR";d.className="durum kapali";
+s.innerHTML="<b>Önizlemedeki son değişiklikler:</b><br>"+(j.son||[]).map(function(c){return"• "+String(c.m).replace(/[<>&]/g,"")}).join("<br>")}
+function kontrol(){$("yDurum").textContent="Kontrol ediliyor…";Y("durum").then(goster).catch(function(){$("yDurum").textContent="Bağlantı hatası"})}
+$("yKontrol").onclick=kontrol;
+$("yYay").onclick=function(){if(!confirm("Önizlemedeki hali canlı siteye almak istiyor musunuz?"))return;var h=$("hYay");h.style.color="";h.textContent="Yayınlanıyor…";$("yYay").disabled=true;
+Y("yayinla").then(function(j){if(j.hata)h.textContent=j.hata;else{h.style.color="#1f9d55";h.textContent=j.yayinlandi?"✓ Canlıya alındı. 1–2 dakika içinde sitede görünür.":(j.mesaj||"✓ Güncel");kontrol()}}).catch(function(){h.textContent="Bağlantı hatası"}).then(function(){$("yYay").disabled=false})};
+new MutationObserver(function(){if(!$("yayK").hidden&&!$("yayK").dataset.ok){$("yayK").dataset.ok=1;kontrol()}}).observe($("yayK"),{attributes:true});
 })();
 </script>
 </body>
