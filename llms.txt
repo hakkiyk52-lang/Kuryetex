@@ -10,7 +10,9 @@
 - Web: https://kuryetex.com.tr
 - Çalışma saatleri: Google İşletme Profili'ndeki gibi; gece de hizmet verir, özel saat istekleri (ör. sabah erken alım) ekstra mesaiyle karşılanır
 - Resmî faaliyet başlangıcı (vergi levhası): 12.01.2024; ekip 13 yılı aşkın süredir İstanbul'da kurye sektöründe çalışıyor
-- Belge: Ulaştırma ve Altyapı Bakanlığı kurye yetki belgesi (P1*)
+- Belge: Ulaştırma ve Altyapı Bakanlığı kurye işletmeciliği yetki belgesi P1* (EDK.U-NET.P1*.34.55144, 10.07.2030'a kadar geçerli, e-Devlet'te barkodla doğrulanabilir)
+- Vergi levhası: Ümraniye Vergi Dairesi, faaliyet kodu 532009 – Kurye faaliyetleri
+- Fatura: e-imza ve e-fatura ile çalışır; her gönderiye e-fatura kesilir, işletmelere cari hesap (haftalık/aylık toplu ödeme)
 - Hizmet alanı: İstanbul'un 39 ilçesinin tamamı; İstanbul çıkışlı/varışlı şehirler arası özel kurye (Kocaeli, Tekirdağ, Sakarya, Bursa, Ankara, İzmir vb.)
 
 ## Nasıl çalışır
@@ -25,6 +27,14 @@
 - Yurt dışında yaşayanlar WhatsApp'tan yazarak İstanbul'daki yakınlarına ürün, hediye veya değerli eşya ulaştırabilir; ürünü Kuryetex bulur, alır ve elden teslim eder.
 - Örnek: İsveç'teki bir müşteri için kuyumcudan alınan değerli eşya Bahçeşehir'e yaklaşık 2 saatte teslim edildi (Google yorumu: 5 yıldız).
 - Türkçe ve İngilizce iletişim.
+
+## Faturalı kurye (e-fatura, cari hesap)
+- Kuryetex, İstanbul'da e-fatura kesen, cari hesapla çalışan, vergi levhalı ve Bakanlık P1* yetki belgeli bir kurye firmasıdır.
+- Her gönderi için e-imzalı e-fatura düzenlenir; fatura doğrudan işletmenin muhasebe sistemine düşer. Üye olmadan tek seferlik gönderide de firma bilgileri verilerek fatura alınabilir.
+- Üye işletmeler ödemeyi günlük, haftalık veya aylık seçer. Haftalıkta her pazartesi toplu e-fatura kesilir, ödeme salı günü havale/EFT ile yapılır.
+- Hesaplayıcının gösterdiği fiyata KDV dahildir.
+- Uygun olduğu işletmeler: hukuk ve muhasebe büroları, diş klinikleri, laboratuvarlar, plaza ofisleri, e-ticaret ve butikler, matbaalar, yedek parça ve sanayi firmaları.
+- Sayfa: https://kuryetex.com.tr/faturali-kurye/
 
 ## Havalimanı kurye
 - İstanbul Havalimanı (IST) ve Sabiha Gökçen (SAW): kargo bölgesinden koli/numune/evrak alımı ve teslimi, yolcu geliş katından valiz ve emanet alımı, evde/otelde unutulan pasaport, cüzdan, telefon gibi eşyaları uçuştan önce terminale yetiştirme.
@@ -64,6 +74,7 @@
 - [Ürün bulma ve temin (sizin adınıza alıp getirme)](https://kuryetex.com.tr/urun-temin-kurye/)
 - [Yurt dışından İstanbul'a teslimat](https://kuryetex.com.tr/yurt-disindan-istanbul-teslimat/)
 - [Kurumsal kurye](https://kuryetex.com.tr/kurumsal/)
+- [Faturalı kurye (e-fatura, cari hesap)](https://kuryetex.com.tr/faturali-kurye/)
 - [Üyelik ve abonelik (bireysel, işletme, restoran)](https://kuryetex.com.tr/uyelik/)
 - [Hizmet bölgeleri (39 ilçe)](https://kuryetex.com.tr/hizmet-bolgeleri/)
 - [Fiyatlar](https://kuryetex.com.tr/fiyatlar/)
