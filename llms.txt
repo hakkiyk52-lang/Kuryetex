@@ -46,7 +46,7 @@
 - [Ana sayfa](https://kuryetex.com.tr/)
 - [Eczane kurye](https://kuryetex.com.tr/eczane-kurye/)
 - [Nöbetçi eczane kurye](https://kuryetex.com.tr/nobetci-eczane-kurye/)
-- [Moto kurye çağır](https://kuryetex.com.tr/moto-kurye-cagir/)
+- [Moto kurye çağır](https://kuryetex.com.tr/kurye-cagir/)
 - [Evrak kurye](https://kuryetex.com.tr/evrak-kurye/)
 - [Araçlı kurye](https://kuryetex.com.tr/aracli-kurye/)
 - [VIP kurye](https://kuryetex.com.tr/vip-kurye/)
