@@ -22,3 +22,15 @@ https://:version.kuryetex.pages.dev/*
 
 https://kuryetex.pages.dev/*
   X-Robots-Tag: noindex, nofollow
+
+/assets/*.js
+  Cache-Control: public, max-age=604800
+
+/assets/*.css
+  Cache-Control: public, max-age=604800
+
+/assets/*.png
+  Cache-Control: public, max-age=2592000
+
+/assets/*.svg
+  Cache-Control: public, max-age=2592000
