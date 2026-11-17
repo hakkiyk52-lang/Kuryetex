@@ -877,7 +877,7 @@ c=c.filter(function(el){return !el.classList.contains("kxfold")&&el.scrollHeight
 var h=location.hash&&el.querySelector(location.hash.replace(/[^#\w-]/g,""));if(h)return;
 el.classList.add("kxfold");var b=document.createElement("button");b.type="button";b.className="kxmore";b.textContent=T("Devamını oku ▾");b.setAttribute("aria-expanded","false");
 b.addEventListener("click",function(){el.classList.remove("kxfold");b.remove()});el.parentNode.insertBefore(b,el.nextSibling)})}
-function go(){requestAnimationFrame(run)}if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",go);else go()})();
+function go(){var ri=window.requestIdleCallback||function(f){setTimeout(f,300)};ri(function(){requestAnimationFrame(run)},{timeout:1500})}if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",go);else go()})();
 /* === Mobilde kart kaydırma ipucu === */
 ;(function(){if(!matchMedia("(max-width:759px)").matches)return;document.querySelectorAll(".cards").forEach(function(c){if(c.children.length<2||c.nextElementSibling&&c.nextElementSibling.classList.contains("cards-hint"))return;var p=document.createElement("p");p.className="cards-hint";p.textContent=((window.__D||{})["Kaydırarak tüm hizmetleri görün →"])||"Kaydırarak tüm hizmetleri görün →";c.parentNode.insertBefore(p,c.nextSibling)})})();
 
@@ -909,7 +909,7 @@ function go(){requestAnimationFrame(run)}if(document.readyState==="loading")docu
   document.addEventListener("click",function(e){var a=e.target.closest&&e.target.closest('a[href*="wa.me"]');if(!a||ok(a))return;
     e.preventDefault();e.stopPropagation();var wb=document.getElementById("waBtn");if(wb&&wb.offsetParent&&/[?&]text=/.test(wb.href)){wb.click();return}var h=document.getElementById("hesapla");
     if(!h){location.href="/#hesapla";return}
-    h.scrollIntoView({behavior:"smooth",block:"start"});var c=h.querySelector(".calc");if(c){c.classList.remove("kx-flash");void c.offsetWidth;c.classList.add("kx-flash")}
+    h.scrollIntoView({behavior:"smooth",block:"start"});var c=h.querySelector(".calc");if(c){c.classList.remove("kx-flash");requestAnimationFrame(function(){requestAnimationFrame(function(){c.classList.add("kx-flash")})})}
     say(_t("Önce kurye ücretini görün 👇 Fiyat çıkınca tek tuşla WhatsApp'tan gönderin."))},true);
 })();
 

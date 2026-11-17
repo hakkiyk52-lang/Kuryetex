@@ -24,10 +24,10 @@ https://kuryetex.pages.dev/*
   X-Robots-Tag: noindex, nofollow
 
 /assets/*.js
-  Cache-Control: public, max-age=604800
+  Cache-Control: public, max-age=2592000
 
 /assets/*.css
-  Cache-Control: public, max-age=604800
+  Cache-Control: public, max-age=2592000
 
 /assets/*.png
   Cache-Control: public, max-age=2592000
