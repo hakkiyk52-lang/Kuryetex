@@ -2,8 +2,14 @@
 /oyun / 301
 /abone-musteri/ /uyelik/ 301
 /abone-musteri /uyelik/ 301
-/motorlu-kurye/ /motor-kurye/ 301
-/motorlu-kurye /motor-kurye/ 301
+/motor-kurye/ /moto-kurye/ 301
+/motor-kurye /moto-kurye/ 301
+/en/motor-kurye/ /en/moto-kurye/ 301
+/en/motor-kurye /en/moto-kurye/ 301
+/ar/motor-kurye/ /ar/moto-kurye/ 301
+/ar/motor-kurye /ar/moto-kurye/ 301
+/motorlu-kurye/ /moto-kurye/ 301
+/motorlu-kurye /moto-kurye/ 301
 /moto-kurye-cagir/ /kurye-cagir/ 301
 /moto-kurye-cagir /kurye-cagir/ 301
 /hizli-kurye/ /express-kurye/ 301

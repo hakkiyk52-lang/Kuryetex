@@ -162,7 +162,7 @@ window.__hv=true;window.__rs={};window.__RF=function(k,f){if(window.__hv&&!docum
   if(f0)setSel(from,f0);if(t0)setSel(to,t0);
   // hizmet seçici
   var SV=[
-   {k:"motor-kurye",l:_t("🏍️ Moto kurye"),t:"calc",size:1,kg:1},
+   {k:"moto-kurye",l:_t("🏍️ Moto kurye"),t:"calc",size:1,kg:1},
    {k:"evrak-kurye",l:_t("📄 Evrak gönderi"),t:"calc",size:0,kg:0},
    {k:"paket-servis-kurye",l:_t("🍔 Paket servis (restoran)"),t:"calc",size:1,kg:0},
    {k:"eczane-kurye",l:_t("💊 Eczane (ilaç teslimi)"),t:"calc",size:0,kg:0,tm:0,np:1,tv:_t("90 dakika (Express teslim)")},
@@ -935,7 +935,7 @@ function go(){var ri=window.requestIdleCallback||function(f){setTimeout(f,300)};
   setInterval(function(){if(!document.hidden)sync()},2500);sync();
 })();
 
-(function(){var M={"eczane-kurye":"eczane-kurye-eczaneden-teslim","aracli-kurye":"aracli-kurye-koli-teslim","evrak-kurye":"kapida-teslim-kurye-istanbul","express-kurye":"moto-kurye-istanbul-teslimat","motor-kurye":"moto-kurye-bogaz-istanbul","otobus-kargo-teslim":"otobus-kargo-teslim-kurye","paket-servis-kurye":"kurye-paket-teslim-eminonu","sofor-vale":"sofor-vale-hizmeti","ucak-kargo-teslim":"ucak-kargo-teslim-kurye","vip-kurye":"moto-kurye-gun-batimi-istanbul"},u=0;
+(function(){var M={"eczane-kurye":"eczane-kurye-eczaneden-teslim","aracli-kurye":"aracli-kurye-koli-teslim","evrak-kurye":"kapida-teslim-kurye-istanbul","express-kurye":"moto-kurye-istanbul-teslimat","moto-kurye":"moto-kurye-bogaz-istanbul","otobus-kargo-teslim":"otobus-kargo-teslim-kurye","paket-servis-kurye":"kurye-paket-teslim-eminonu","sofor-vale":"sofor-vale-hizmeti","ucak-kargo-teslim":"ucak-kargo-teslim-kurye","vip-kurye":"moto-kurye-gun-batimi-istanbul"},u=0;
 function mark(ev){var t=ev.target;if(t&&t.closest&&t.closest("#hesapla .field"))u=1}
 document.addEventListener("pointerdown",mark,true);document.addEventListener("keydown",mark,true);
 document.addEventListener("kxsvc",function(e){if(!u)return;var s=e.detail,sec=document.getElementById("hesapla"),w=sec&&sec.querySelector(".wrap");if(!w)return;
