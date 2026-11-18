@@ -44,6 +44,18 @@
 - Yoğun bölgeler: Kadıköy, Göztepe, Bağdat Caddesi, Nişantaşı, Şişli, Beşiktaş, Bakırköy.
 - Sayfa: https://kuryetex.com.tr/dental-kurye/
 
+## Telefon ve elektronik kurye
+- Müşterinin mağazadan (ör. Vatan Bilgisayar, MediaMarkt, telefoncular) ya da ikinci el (Sahibinden, Letgo) satın alıp ödemesini yaptığı telefon, laptop ve elektronik ürünü satıcıdan teslim alıp müşteriye getirir. Kuryetex yalnızca aracıdır; alım-satıma ve ödemeye karışmaz.
+- Kurye ürünü ve kutusunu detaylı fotoğraflayıp gönderir; müşteri isterse WhatsApp görüntülü aramayla ürünü teslim alınmadan önce inceleyip onaylar.
+- Teknik servise gidiş-dönüş (cihazı servise bırakma, tamir sonrası geri getirme), Sirkeci telefon çarşısı ve esnaf arası taşıma.
+- Sayfa: https://kuryetex.com.tr/elektronik-kurye/
+
+## Gelinlik ve abiye kurye
+- Gelinlik, abiye, nişan elbisesi, damatlık ve aksesuarları mağaza, terzi ve kuru temizlemeden gelinin evine, kuaföre, otele ve düğün salonuna kılıfında, buruşmadan ve saatinde taşır.
+- Abiye ve sade gelinlikler moto kuryeyle kılıfında; kabarık ve kuyruklu gelinlikler araçlı kuryeyle askıda taşınır.
+- Terzi ve prova için bekle-getir, kiralık gelinlik ve abiye iadesi; Laleli, Aksaray, Beyazıt, Nişantaşı, Osmanbey mağazalarından alım.
+- Sayfa: https://kuryetex.com.tr/gelinlik-abiye-kurye/
+
 ## Havalimanı kurye
 - İstanbul Havalimanı (IST) ve Sabiha Gökçen (SAW): kargo bölgesinden koli/numune/evrak alımı ve teslimi, yolcu geliş katından valiz ve emanet alımı, evde/otelde unutulan pasaport, cüzdan, telefon gibi eşyaları uçuştan önce terminale yetiştirme.
 - Küçük işler moto kuryeyle; büyük valiz ve çok bagaj için binek araç, Doblo Maxi, Transit veya kamyon.
@@ -84,6 +96,8 @@
 - [Kurumsal kurye](https://kuryetex.com.tr/kurumsal/)
 - [Faturalı kurye (e-fatura, cari hesap)](https://kuryetex.com.tr/faturali-kurye/)
 - [Dental kurye (diş kliniği ve diş laboratuvarı)](https://kuryetex.com.tr/dental-kurye/)
+- [Gelinlik ve abiye kurye](https://kuryetex.com.tr/gelinlik-abiye-kurye/)
+- [Telefon ve elektronik kurye](https://kuryetex.com.tr/elektronik-kurye/)
 - [Üyelik ve abonelik (bireysel, işletme, restoran)](https://kuryetex.com.tr/uyelik/)
 - [Hizmet bölgeleri (39 ilçe)](https://kuryetex.com.tr/hizmet-bolgeleri/)
 - [Fiyatlar](https://kuryetex.com.tr/fiyatlar/)
