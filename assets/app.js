@@ -273,7 +273,7 @@ var lastFl=0;function txn(){if(cur&&cur.np)return _t("Eczane teslimi mahalle bö
       var slE=-1;if(!isCev&&zk&&Zp.m){zp=(C.ECZ_BASE||C.TIER_BASE||500)+Math.max(0,zp-Zp.m)}
       var nfE=0,dE=C.D[td]||{},exE=zp?extras(dE.lat||41.0,dE.lon||29.0,zp,0):{tot:0,txt:"",msg:""},pE=zp?zp+nfE+exE.tot:null;var uoE=window.__kxUyeOran||0,abE=0;if(pE&&uoE>0){abE=Math.round(pE*uoE/100/5)*5;pE-=abE}window.__kxAb=abE;
       $("route").textContent=_t("Teslim: ")+tv;$("km").textContent=zk?_t("Bölge: ")+zn[zk]:_t("Bölge: WhatsApp'ta netleşir");$("svcname").textContent=cur.l;$("detail").textContent=_t("Teslim: ")+tmText();
-      $("kgnote").textContent=_t("Eczaneyi ve nöbetçi eczaneyi biz buluruz; ilacı temin edip getiririz. Ilaç ve kurye ücretini kapıda tek seferde ödersiniz.")+(nfE?" "+_t("Gece farkı (00:00–07:00): +")+tl(nfE)+".":"")+"";
+      $("kgnote").textContent=_t("Eczaneyi ve nöbetçi eczaneyi biz buluruz; ilacı temin edip getiririz. İlaç ve kurye ücretini kapıda tek seferde ödersiniz.")+(nfE?" "+_t("Gece farkı (00:00–07:00): +")+tl(nfE)+".":"")+"";
       var peE=$("price");cancelAnimationFrame(raf);if(pE){peE.className="price";peE.textContent=tl(pE);$("pnote").textContent=(exE.txt?exE.txt+" ":"")+(nfE?_t("🌙 Gece farkı dahildir (00:00–07:00): +")+tl(nfE)+". ":"")+(abE?_t("Üye fiyatı: %")+uoE+_t(" indirim uygulandı. "):"")+(isCev?_t("İstanbul dışındaki çevre illerde eczane kurye ücreti en az ")+tl(C.ECZ_CEVRE||1200)+_t("’dir."):(slE>-1?"":_t("Kurye ücreti teslim mahallesine göre belirlenir.")))}
       else{peE.className="price ask";peE.textContent=_t("Fiyat WhatsApp'ta netleşir");$("pnote").textContent=_t("Bu bölge için kurye ücretini WhatsApp'tan hemen bildiririz.")}
       var bmE=function(){var ln=[],adr=kxAdr(to),ll=to.dataset.ll,S="━━━━━━━━━━━━";
