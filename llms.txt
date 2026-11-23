@@ -18,7 +18,7 @@
 ## Nasıl çalışır
 - Müşteri sitede fiyatı hesaplar, WhatsApp'tan veya telefonla sipariş verir.
 - Kurye en geç 30 dakika içinde yola çıkar; İstanbul içi teslimat genellikle 30–45 dakikadır.
-- Canlı takip: kurye anlık konumunu WhatsApp'tan doğrudan müşteriyle canlı paylaşır; siparişte "canlı takip" yazılması yeterli.
+- Canlı takip: kurye anlık konumunu WhatsApp'tan doğrudan müşteriyle canlı paylaşır; her siparişte vardır, ayrıca istemeye gerek yoktur.
 - Her teslimatta kurye teslim fotoğrafı çeker; paket alındığı andan teslime kadar sorumluluk Kuryetex'tedir.
 - İlaç ve soğuk ürünler ısı yalıtımlı çantayla taşınır.
 - Değerli ürünlerde yalnızca o işle ilgilenen özel kurye gönderilir; ücreti normal kurye ücretinin 2 katıdır.
@@ -108,7 +108,7 @@
 
 ## Fiyatlandırma
 - Fiyat mesafeye ve saate göre değişir; aynı güzergâh ve saatte eczane, evrak ve moto kurye fiyatı aynıdır.
-- Hesaplayıcının gösterdiği fiyat KDV dahil net fiyattır; köprü geçişi, bölge farkı ve varsa gece/hava farkı bu fiyatın içindedir.
+- Hesaplayıcının gösterdiği fiyat KDV dahil net fiyattır; köprü geçişi, bölge farkı ve varsa gece farkı (21:00–08:00, %20) ve yağış farkı (%15) bu fiyatın içindedir. VIP (60 dk) teslim normal fiyata %40 eklenerek hesaplanır.
 - Çoklu adres: hesaplayıcıda birden fazla alım ya da teslim adresi eklenebilir (ör. tek yerden alıp 5 adrese dağıtım, 3 yerden alıp tek adrese teslim); her ek durak fiyata otomatik eklenir. Eczane hizmetinde çoklu adres yoktur.
 - Ödeme: teslimden sonra kapıda nakit, kredi kartı veya havale; işletmelere cari hesap ve e-fatura.
 - Araçlı kurye ve vale/şoför hizmeti moto kurye fiyatının 2 katıdır.
