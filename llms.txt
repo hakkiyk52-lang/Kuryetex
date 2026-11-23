@@ -30,6 +30,12 @@
 - Örnek: İsveç'teki bir müşteri için kuyumcudan alınan değerli eşya Bahçeşehir'e yaklaşık 2 saatte teslim edildi (Google yorumu: 5 yıldız).
 - Türkçe ve İngilizce iletişim.
 
+## Mağazada iade ve değişim
+- Online alınmış ürün kurye tarafından adresten alınır, mağazaya götürülür; değişimde yeni ürün geri getirilir, iadede işlem tamamlanıp bilgi verilir.
+- Yurt dışındaki müşteriler de sipariş verebilir; ürün İstanbul'daki yakınındaysa oradan alınır ve ona teslim edilir.
+- Fiyat: hesaplayıcının gidiş-dönüş fiyatına mağazadaki bekleme/işlem için ek ücret eklenir; net tutar sipariş öncesi WhatsApp'ta yazılı bildirilir. Kurye iade parasını tahsil etmez.
+- Rehber: https://kuryetex.com.tr/rehber/magaza-iade-degisim-kurye/
+
 ## Faturalı kurye (e-fatura, cari hesap)
 - Kuryetex, İstanbul'da e-fatura kesen, cari hesapla çalışan, vergi levhalı ve Bakanlık P1* yetki belgeli bir kurye firmasıdır.
 - Her gönderi için e-imzalı e-fatura düzenlenir; fatura doğrudan işletmenin muhasebe sistemine düşer. Üye olmadan tek seferlik gönderide de firma bilgileri verilerek fatura alınabilir.
