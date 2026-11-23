@@ -26,6 +26,7 @@
 
 ## Yurt dışındaki müşteriler
 - Yurt dışında yaşayanlar WhatsApp'tan yazarak İstanbul'daki yakınlarına ürün, hediye veya değerli eşya ulaştırabilir; ürünü Kuryetex bulur, alır ve elden teslim eder.
+- Yurt dışına gönderi ya da uluslararası kargo yapılmaz; yalnızca Türkiye içinde (İstanbul ve çevresi) alım ve teslim.
 - Örnek: İsveç'teki bir müşteri için kuyumcudan alınan değerli eşya Bahçeşehir'e yaklaşık 2 saatte teslim edildi (Google yorumu: 5 yıldız).
 - Türkçe ve İngilizce iletişim.
 
@@ -75,7 +76,7 @@
 - Sayfalar: https://kuryetex.com.tr/otobus-kargo-teslim/ · https://kuryetex.com.tr/esenler-otogar-kurye/ · https://kuryetex.com.tr/alibeykoy-otogar-kurye/ · https://kuryetex.com.tr/harem-otogar-kurye/
 
 ## Eczane kurye (ilaç getirme)
-- Yalnızca İstanbul'da verilir; gece nöbetçi eczaneler dahil.
+- İstanbul'un 39 ilçesinde ve Gebze'de verilir; gece nöbetçi eczaneler dahil.
 - Müşteri ilacın adını ve adresini/konumunu WhatsApp'tan gönderir; eczaneyi Kuryetex bulur, ilacı alır ve adrese getirir.
 - Yakınları adına da sipariş verilebilir.
 - İlaç bulunamazsa hiçbir ücret alınmaz.
@@ -84,7 +85,19 @@
 - E-reçete: müşteri reçete numarasını ve hastanın T.C. kimlik numarasını WhatsApp'tan gönderir; kurye ilacı eczaneden alır.
 - Kırmızı ve yeşil reçeteli ilaçlar da getirilir; eczane reçetenin aslını isterse kurye reçeteyi müşterinin adresinden alıp eczaneye götürür (ek kurye ücretiyle).
 - Reçetesiz ilaç, medikal ürün, bebek maması ve soğuk zincir ürünleri de getirilir (ısı yalıtımlı çanta).
+- İstenen ilacın birebir aynısı alınır; bulunamazsa önce müşteriye sorulur, muadili eczacı önerir. Kuryetex eczane değildir, ilaç önermez; yalnızca Türkiye'de eczanelerde satılan ürünleri getirir. İlaç eczaneden alındıktan sonra sipariş iptal edilemez.
+- Eczaneyi arayıp ilacın stokta olup olmadığı teyit edilir; istenirse ürünün fotoğrafı gönderilir. Birden fazla kutu veya farklı ürün tek siparişte getirilir. İlaç kapalı pakette, yalnızca müşteriye ya da belirttiği kişiye teslim edilir.
+- Otele teslim: otel adı, oda numarası ve konum yeterli; odaya ya da resepsiyona teslim. Türk telefon numarası gerekmez, WhatsApp (Türkçe/İngilizce) yeterli.
 - Fiyat sayfası: https://kuryetex.com.tr/eczane-kurye/
+
+## Restorandan yemek getirme (paket servis)
+- Müşteri restoranı, siparişi ve teslim adresini WhatsApp'tan yazar; kurye yemeği restorandan müşteri adına alır ve öder. Müşteri teslimde yemek bedeli ile kurye ücretini tek seferde nakit, kredi kartı veya havaleyle öder; restoran fişi WhatsApp'tan iletilir. Sipariş restorana önceden ödenmişse kurye yalnızca teslim alır.
+- Hazır olma saatine göre alım ve ileri saatli teslim yapılır; 7/24. Yemekler ısı yalıtımlı çantada, aktarmasız taşınır.
+- Restoranlar sabit kurye tutmadan ihtiyaç oldukça kurye çağırabilir; günde 20+ paket çıkaran işletmelere tahsisli kurye. Sayfa: https://kuryetex.com.tr/paket-servis-kurye/
+
+## Evrak ve adına teslim alma
+- Evrak ya da ürün müşteri adına ofis, yurt, okul, noter, banka, mağaza, stadyum veya AVM'den teslim alınıp istenen adrese götürülür. Son teslim saati verilen işler o saate göre planlanır ("Belirli saat" seçeneği).
+- Kurye adrese gelince alıcıyı arar; teslimde fotoğraf çekip teslim alanın adıyla birlikte WhatsApp'tan iletir. Paketin motora sığıp sığmadığı fotoğrafla kontrol edilir; sığmazsa araçlı kurye.
 
 ## Toplu dağıtım ve özel günler
 - İstanbul içinde 500–600 adrese kadar toplu dağıtım: yılbaşı kurumsal hediye ve çikolata, Sevgililer Günü, 8 Mart, Anneler/Babalar Günü, Öğretmenler Günü, bayramlar, doğum günü, düğün ve davetiye, kurumsal etkinlikler.
