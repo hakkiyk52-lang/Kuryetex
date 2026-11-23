@@ -146,7 +146,7 @@ function kxDeny(er,fb){var c=er&&er.code;if(c===2||c===3)return kxT("Konum alın
     g.innerHTML='<div class="kx-ez-hd"><span class="kx-ez-ic" aria-hidden="true">🏍️</span><div><b>'+T("Kurye kapınıza gelsin!")+'</b><small>'+T("Konumunuzu kullanın; ilçe ve mahalle kendiliğinden seçilsin.")+'</small></div></div>'+
       '<div class="nb-2"><button type="button" class="nb-go">'+T("📍 Buradan alınsın")+'</button><button type="button" class="nb-go2">'+T("🏠 Buraya gelsin")+'</button></div><p class="kx-ez-h" hidden></p>';
 
-    var GT=[[/moto/i,T("Moto kurye kapınızda!")],[/evrak/i,T("Evrakınız güvenle yolda!")],[/paket servis|restoran/i,T("Siparişleriniz sıcak sıcak yolda!")],[/express/i,T("90 dakikada kapıda!")],[/araçlı|aracli/i,T("Büyük gönderiler araçla taşınır!")],[/vip/i,T("60 dakikada, doğrudan teslim!")],[/vale|şoför|sofor/i,T("Şoförünüz kapınıza gelsin!")],[/uçak|ucak/i,T("Havalimanından kapınıza!")],[/otobüs|otobus/i,T("Otogardan kapınıza!")]];
+    var GT=[[/moto/i,T("Moto kurye kapınızda!")],[/evrak/i,T("Evrakınız güvenle yolda!")],[/paket servis|restoran/i,T("Siparişleriniz sıcak sıcak yolda!")],[/express/i,T("Öncelikli, hızlı teslim!")],[/araçlı|aracli/i,T("Büyük gönderiler araçla taşınır!")],[/vip/i,T("Size özel kurye, doğrudan teslim!")],[/vale|şoför|sofor/i,T("Şoförünüz kapınıza gelsin!")],[/uçak|ucak/i,T("Havalimanından kapınıza!")],[/otobüs|otobus/i,T("Otogardan kapınıza!")]];
     var gb=g.querySelector("b"),gi=g.querySelector(".kx-ez-ic"),gh=g.querySelector(".kx-ez-h");
     function gsay(t){gh.textContent=t;gh.hidden=!t}
     function gset(v){var t=T("Kurye kapınıza gelsin!");GT.forEach(function(x){if(x[0].test(v))t=x[1]});gb.textContent=t;var e=(v||"").trim().split(/\s+/)[0];gi.textContent=e&&!/[a-zçğıöşü0-9]/i.test(e)?e:"🏍️"}
