@@ -401,3 +401,4 @@ main>.sec:has(.dgroup),.sec:has(.dgroup),footer{content-visibility:visible!impor
 .ezsos-ic b[data-e]::before{content:attr(data-e)}.ezopen[hidden]{display:none!important}
 nav.bar{grid-template-columns:repeat(5,minmax(0,1fr))!important}.bar a,.bar button{font-size:.7rem}
 .uye-dr{margin:6px 0 10px;padding:10px 12px;border-radius:12px;background:#fff4ea;border:1px solid #ffd3b0;font-size:.9rem;font-weight:600;color:#7a3a0a}.uye-dr a{color:#e8620a;font-weight:800}.uye-dr b{color:#e8620a}
+.kxrv-tr{align-items:flex-start}.kxrv-t{display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden}
