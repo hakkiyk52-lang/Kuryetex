@@ -9,7 +9,7 @@
 - E-posta: kuryetex@gmail.com
 - Web: https://kuryetex.com.tr
 - Çalışma saatleri: 7/24 — gece yarısı, sabah erken saatler, hafta sonu ve resmî tatiller dahil her saatte kurye gönderir (vardiyalı ekip)
-- Resmî faaliyet başlangıcı (vergi levhası): 12.01.2024; ekip 13 yılı aşkın süredir İstanbul'da kurye sektöründe çalışıyor
+- Resmî faaliyet başlangıcı (vergi levhası): 12.01.2024; kurucu Hakkı Yılmaz Kurt 2013'ten beri İstanbul'da kurye sektöründe çalışıyor (P1* yetki belgesi ve vergi levhası onun adına)
 - Belge: Ulaştırma ve Altyapı Bakanlığı kurye işletmeciliği yetki belgesi P1* (EDK.U-NET.P1*.34.55144, 10.07.2030'a kadar geçerli, e-Devlet'te barkodla doğrulanabilir)
 - Vergi levhası: Ümraniye Vergi Dairesi, faaliyet kodu 532009 – Kurye faaliyetleri
 - Fatura: e-imza ve e-fatura ile çalışır; her gönderiye e-fatura kesilir, işletmelere cari hesap (haftalık/aylık toplu ödeme)
@@ -18,6 +18,7 @@
 ## Nasıl çalışır
 - Müşteri sitede fiyatı hesaplar, WhatsApp'tan veya telefonla sipariş verir.
 - Kurye en geç 30 dakika içinde yola çıkar; İstanbul içi teslimat genellikle 30–45 dakikadır.
+- Canlı takip: müşteri isterse kurye anlık konumunu WhatsApp'tan doğrudan müşteriyle canlı paylaşır (her siparişte, talep üzerine).
 - Her teslimatta kurye teslim fotoğrafı çeker; paket alındığı andan teslime kadar sorumluluk Kuryetex'tedir.
 - İlaç ve soğuk ürünler ısı yalıtımlı çantayla taşınır.
 - Değerli ürünlerde yalnızca o işle ilgilenen özel kurye gönderilir; ücreti normal kurye ücretinin 2 katıdır.
@@ -84,6 +85,13 @@
 - Kırmızı ve yeşil reçeteli ilaçlar da getirilir; eczane reçetenin aslını isterse kurye reçeteyi müşterinin adresinden alıp eczaneye götürür (ek kurye ücretiyle).
 - Reçetesiz ilaç, medikal ürün, bebek maması ve soğuk zincir ürünleri de getirilir (ısı yalıtımlı çanta).
 - Fiyat sayfası: https://kuryetex.com.tr/eczane-kurye/
+
+## Toplu dağıtım ve özel günler
+- İstanbul içinde 500–600 adrese kadar toplu dağıtım: yılbaşı kurumsal hediye ve çikolata, Sevgililer Günü, 8 Mart, Anneler/Babalar Günü, Öğretmenler Günü, bayramlar, doğum günü, düğün ve davetiye, kurumsal etkinlikler.
+- Liste WhatsApp'tan ya da Excel ile gönderilir; büyük listelerde birden fazla kurye aynı anda dağıtır; her teslimatta fotoğraf, isteyene canlı takip.
+- Hediyeyi müşteri adına mağazadan seçip satın alır, paketletip sürpriz teslim eder; ürün bedeli ve kurye ücreti teslimden sonra ödenir.
+- Toplu dağıtım organizasyonları için önceden iletişime geçmek gerekir; tek adrese hediye 7/24 aynı gün yapılır. Firmalara e-fatura ve cari hesap.
+- Sayfa: https://kuryetex.com.tr/toplu-dagitim-kurye/
 
 ## Fiyatlandırma
 - Fiyat mesafeye ve saate göre değişir; aynı güzergâh ve saatte eczane, evrak ve moto kurye fiyatı aynıdır.
