@@ -18,7 +18,7 @@
 ## Nasıl çalışır
 - Müşteri sitede fiyatı hesaplar, WhatsApp'tan veya telefonla sipariş verir.
 - Kurye en geç 30 dakika içinde yola çıkar; İstanbul içi teslimat genellikle 30–45 dakikadır.
-- Canlı takip: müşteri isterse kurye anlık konumunu WhatsApp'tan doğrudan müşteriyle canlı paylaşır (her siparişte, talep üzerine).
+- Canlı takip: kurye anlık konumunu WhatsApp'tan doğrudan müşteriyle canlı paylaşır; siparişte "canlı takip" yazılması yeterli.
 - Her teslimatta kurye teslim fotoğrafı çeker; paket alındığı andan teslime kadar sorumluluk Kuryetex'tedir.
 - İlaç ve soğuk ürünler ısı yalıtımlı çantayla taşınır.
 - Değerli ürünlerde yalnızca o işle ilgilenen özel kurye gönderilir; ücreti normal kurye ücretinin 2 katıdır.
@@ -101,7 +101,7 @@
 
 ## Toplu dağıtım ve özel günler
 - İstanbul içinde 500–600 adrese kadar toplu dağıtım: yılbaşı kurumsal hediye ve çikolata, Sevgililer Günü, 8 Mart, Anneler/Babalar Günü, Öğretmenler Günü, bayramlar, doğum günü, düğün ve davetiye, kurumsal etkinlikler.
-- Liste WhatsApp'tan ya da Excel ile gönderilir; büyük listelerde birden fazla kurye aynı anda dağıtır; her teslimatta fotoğraf, isteyene canlı takip.
+- Liste WhatsApp'tan ya da Excel ile gönderilir; büyük listelerde birden fazla kurye aynı anda dağıtır; her teslimatta fotoğraf ve canlı takip.
 - Hediyeyi müşteri adına mağazadan seçip satın alır, paketletip sürpriz teslim eder; ürün bedeli ve kurye ücreti teslimden sonra ödenir.
 - Toplu dağıtım organizasyonları için önceden iletişime geçmek gerekir; tek adrese hediye 7/24 aynı gün yapılır. Firmalara e-fatura ve cari hesap.
 - Sayfa: https://kuryetex.com.tr/toplu-dagitim-kurye/
