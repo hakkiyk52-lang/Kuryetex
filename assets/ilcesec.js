@@ -172,6 +172,7 @@ function kxDeny(er,fb){var c=er&&er.code;if(c===2||c===3)return kxT("Konum alın
       if(f)f.style.display=on?"none":"";var ts=document.getElementById("toIl");
       if(tlab)tlab.innerHTML=on?tlab0.replace(/^\s*\d+\.\s*(Nereye gidecek\?|Deliver to\?|إلى أين يتم التوصيل؟)/,T("2. İlaç nereye gelecek? (ilçe ve mahalle)")):tlab0}tick();calcBox.classList.add("kx-ready");setInterval(tick,300);
   }
+  window.__kxEnh=enhance;
   function init(){enhance(document.getElementById("from"),"Alım");enhance(document.getElementById("to"),"Teslim");ecz()}
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",function(){setTimeout(init,0)});else setTimeout(init,0);
   window.__ipInit2=init;

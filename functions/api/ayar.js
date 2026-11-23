@@ -14,6 +14,7 @@ async function ham(env) {
   s.tatil = s.tatil || { on: false, ad: "Resmî tatil", until: 0 };
   s.duyuru = s.duyuru || { on: false, metin: "", tur: "bilgi", until: 0 };
   s.yorumlar = s.yorumlar || [];
+  s.durak = s.durak || { ucret: 250, km: 5, pct: 80 };
   return s;
 }
 function acik(s) {
@@ -24,7 +25,7 @@ function acik(s) {
 }
 
 export async function onRequestGet({ env }) {
-  if (!env.AYAR) return json({ tatil: { on: false }, duyuru: { on: false }, yorumlar: [] });
+  if (!env.AYAR) return json({ tatil: { on: false }, duyuru: { on: false }, yorumlar: [], durak: { ucret: 250, km: 5, pct: 80 } });
   return json(acik(await ham(env)), 200, { "Cache-Control": "public, max-age=30" });
 }
 
@@ -44,6 +45,10 @@ export async function onRequestPost({ request, env }) {
     const metin = temiz(b.metin, 220);
     if (b.on && !metin) return json({ hata: "Duyuru metni boş olamaz." }, 200);
     s.duyuru = { on: !!b.on && !!metin, metin, tur: b.tur === "uyari" ? "uyari" : "bilgi", until: b.on ? saatSonra(+b.saat || 0) : 0 };
+  } else if (b.islem === "durak") {
+    const u = Math.round(+b.ucret), k = +b.km, p = Math.round(+b.pct);
+    if (!(u >= 50 && u <= 2000) || !(k >= 1 && k <= 30) || !(p >= 30 && p <= 100)) return json({ hata: "Değerler geçersiz (ücret 50–2000 TL, mesafe 1–30 km, oran %30–100)." }, 200);
+    s.durak = { ucret: u, km: Math.round(k * 10) / 10, pct: p };
   } else if (b.islem === "yorum_ekle") {
     const n = temiz(b.n, 60), t = temiz(b.t, 900);
     if (!n || !t) return json({ hata: "Ad ve yorum metni gerekli." }, 200);
