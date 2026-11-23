@@ -8,7 +8,7 @@
 - Telefon / WhatsApp: +90 551 531 52 34
 - E-posta: kuryetex@gmail.com
 - Web: https://kuryetex.com.tr
-- Çalışma saatleri: Google İşletme Profili'ndeki gibi; gece de hizmet verir, özel saat istekleri (ör. sabah erken alım) ekstra mesaiyle karşılanır
+- Çalışma saatleri: 7/24 — gece yarısı, sabah erken saatler, hafta sonu ve resmî tatiller dahil her saatte kurye gönderir (vardiyalı ekip)
 - Resmî faaliyet başlangıcı (vergi levhası): 12.01.2024; ekip 13 yılı aşkın süredir İstanbul'da kurye sektöründe çalışıyor
 - Belge: Ulaştırma ve Altyapı Bakanlığı kurye işletmeciliği yetki belgesi P1* (EDK.U-NET.P1*.34.55144, 10.07.2030'a kadar geçerli, e-Devlet'te barkodla doğrulanabilir)
 - Vergi levhası: Ümraniye Vergi Dairesi, faaliyet kodu 532009 – Kurye faaliyetleri
@@ -70,19 +70,26 @@
 - Sayfalar: https://kuryetex.com.tr/havalimani-kurye/ · https://kuryetex.com.tr/istanbul-havalimani-kurye/ · https://kuryetex.com.tr/sabiha-gokcen-kurye/
 
 ## Otogar kurye
-- Esenler (Büyük İstanbul) Otogarı, Alibeyköy Cep Otogarı ve Harem Otogarı'ndan otobüs kargosu ve muavinden emanet teslim alma; Anadolu'ya gönderilecek paketi adresten alıp otobüs firmasına teslim etme. Dudullu ve Samandıra terminallerinden de alım. Sabah erken saatte otogardan alım ekstra mesaiyle yapılabilir.
+- Esenler (Büyük İstanbul) Otogarı, Alibeyköy Cep Otogarı ve Harem Otogarı'ndan otobüs kargosu ve muavinden emanet teslim alma; Anadolu'ya gönderilecek paketi adresten alıp otobüs firmasına teslim etme. Dudullu ve Samandıra terminallerinden de alım. 7/24 çalışıldığı için sabah erken saatte de otogardan alım yapılır.
 - Sayfalar: https://kuryetex.com.tr/otobus-kargo-teslim/ · https://kuryetex.com.tr/esenler-otogar-kurye/ · https://kuryetex.com.tr/alibeykoy-otogar-kurye/ · https://kuryetex.com.tr/harem-otogar-kurye/
 
 ## Eczane kurye (ilaç getirme)
 - Yalnızca İstanbul'da verilir; gece nöbetçi eczaneler dahil.
 - Müşteri ilacın adını ve adresini/konumunu WhatsApp'tan gönderir; eczaneyi Kuryetex bulur, ilacı alır ve adrese getirir.
-- Müşteri ilaç bedeli ile kurye ücretini teslimatta toplu öder (nakit veya havale). Yakınları adına da sipariş verilebilir.
+- Yakınları adına da sipariş verilebilir.
 - İlaç bulunamazsa hiçbir ücret alınmaz.
+- Süre: ilaç ortalama 15 dakikada eczaneden alınır, genellikle 30–45 dakikada adrese teslim edilir; 7/24.
+- Ödeme: ilacı Kuryetex satın alır; müşteri ilaç bedeli ve kurye ücretini teslimde kapıda tek seferde nakit, kredi kartı veya havaleyle öder. Eczane fişinin fotoğrafı WhatsApp'tan gönderilir. Müşteri dilerse ilaç bedelini eczaneye doğrudan ödeyebilir.
+- E-reçete: müşteri reçete numarasını ve hastanın T.C. kimlik numarasını WhatsApp'tan gönderir; kurye ilacı eczaneden alır.
+- Kırmızı ve yeşil reçeteli ilaçlar da getirilir; eczane reçetenin aslını isterse kurye reçeteyi müşterinin adresinden alıp eczaneye götürür (ek kurye ücretiyle).
+- Reçetesiz ilaç, medikal ürün, bebek maması ve soğuk zincir ürünleri de getirilir (ısı yalıtımlı çanta).
 - Fiyat sayfası: https://kuryetex.com.tr/eczane-kurye/
 
 ## Fiyatlandırma
 - Fiyat mesafeye ve saate göre değişir; aynı güzergâh ve saatte eczane, evrak ve moto kurye fiyatı aynıdır.
-- 21:00–08:00 arası ve yoğun hava şartlarında fiyat farkı uygulanır; fark, hesaplama sonucunda nedeniyle birlikte gösterilir.
+- Hesaplayıcının gösterdiği fiyat KDV dahil net fiyattır; köprü geçişi, bölge farkı ve varsa gece/hava farkı bu fiyatın içindedir.
+- Çoklu adres: hesaplayıcıda birden fazla alım ya da teslim adresi eklenebilir (ör. tek yerden alıp 5 adrese dağıtım, 3 yerden alıp tek adrese teslim); her ek durak fiyata otomatik eklenir. Eczane hizmetinde çoklu adres yoktur.
+- Ödeme: teslimden sonra kapıda nakit, kredi kartı veya havale; işletmelere cari hesap ve e-fatura.
 - Araçlı kurye ve vale/şoför hizmeti moto kurye fiyatının 2 katıdır.
 - Standart en kısa mesafe ücreti (5 km'ye kadar): 500 TL. Fiyatlara KDV dahildir.
 - Üyelik / abonelik (ücretsiz, https://kuryetex.com.tr/uyelik/): Bireysel üyelere 5. gönderiden sonra her siparişte %10 indirim. İşletme abonelerine aylık gönderi sayısına göre indirim: 1–9 gönderi %10, 10–19 %15, 20–29 %20, 30 ve üzeri %25. Restoranlara 5 km çapında %25 indirim; haftada 150+ paketi olan restoranlara özel kurye. Aynı seferde giden 2. paketten itibaren ek %10 indirim. Aylık asgari gönderi şartı yoktur. Ödeme günlük, haftalık veya aylık; e-imza ve e-fatura kullanılır. Onaylı üye giriş yaptığında fiyat hesaplayıcı indirimli fiyatı otomatik gösterir.
