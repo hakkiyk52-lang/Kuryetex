@@ -8,6 +8,10 @@ window.K360={
  "ECZ_SAAT": {"m": [500, 600, 800], "k": [600, 700, 900], "u": [700, 800, 1000]},
  "ECZ_CEVRE": 1200,
  "CEVRE_DONUS": 1000,
+ "STOP_FEE": 250,
+ "STOP_NEAR_KM": 5,
+ "STOP_FAR_PCT": 80,
+ "STOP_MAX": 9,
  "ANCHORS": [
   [
    3,

@@ -61,6 +61,20 @@ label{font-weight:600;font-size:15px}
   </div>
 
   <div class="k ek" hidden>
+    <h2>Çoklu adres (ek durak) ücreti</h2>
+    <div class="durum acik" id="sDurum">…</div>
+    <label for="sUcret">Yakın ek durak ücreti (TL)</label>
+    <input type="number" id="sUcret" inputmode="numeric" min="50" max="2000" step="10" value="250">
+    <label for="sKm">"Yakın" sayılan mesafe (km'ye kadar)</label>
+    <input type="number" id="sKm" inputmode="decimal" min="1" max="30" step="0.5" value="5">
+    <label for="sPct">Uzak ek durakta normal fiyatın yüzde kaçı alınsın? (%)</label>
+    <input type="number" id="sPct" inputmode="numeric" min="30" max="100" step="5" value="80">
+    <button class="ac" id="sKaydet">Kaydet</button>
+    <p class="h" id="hS"></p>
+    <p class="not">Müşteri hesaplayıcıda "➕ Alım adresi ekle" ya da "➕ Teslim adresi ekle" ile birden fazla adres girerse: ilk teslimat normal fiyat, her ek durak bir önceki durağa yakınsa sabit ücret, uzaksa o arası normal fiyatın belirlediğiniz yüzdesi. Araçlı kurye ve vale'de ek durak da 2 kat. Eczanede ve şehirler arasında ek adres çıkmaz.</p>
+  </div>
+
+  <div class="k ek" hidden>
     <h2>Duyuru şeridi</h2>
     <div class="durum kapali" id="dDurum">…</div>
     <label for="dMetin">Duyuru metni</label>
@@ -164,7 +178,7 @@ var mo=new MutationObserver(function(){if(!$("uyeK").hidden){mo.disconnect();yuk
   function A(u,b){return fetch(u,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(Object.assign({sifre:S},b))}).then(function(r){return r.text().then(function(t){var j;try{j=JSON.parse(t)}catch(e){throw new Error("Sunucu yanıtı: "+r.status)}if(j.hata)throw new Error(j.hata);return j})})}
   function saat(u){if(!u)return"";var t=new Date(u);return" · "+t.toLocaleDateString("tr-TR",{day:"numeric",month:"short"})+" "+("0"+t.getHours()).slice(-2)+":"+("0"+t.getMinutes()).slice(-2)+"'de kapanır"}
   function esc(x){return String(x||"").replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
-  function ayarGoster(j){var t=j.tatil||{},d=j.duyuru||{};
+  function ayarGoster(j){var t=j.tatil||{},d=j.duyuru||{};var dk=j.durak||{ucret:250,km:5,pct:80};$("sDurum").textContent="Yakın (≤"+dk.km+" km): "+dk.ucret+" TL · Uzak: normal fiyatın %"+dk.pct+"'i";$("sUcret").value=dk.ucret;$("sKm").value=dk.km;$("sPct").value=dk.pct;
     $("tDurum").textContent=t.on?"AÇIK · "+t.ad+" +%"+(t.pct||15)+saat(t.until):"KAPALI";$("tDurum").className="durum "+(t.on?"acik":"kapali");
     $("dDurum").textContent=d.on?"YAYINDA"+saat(d.until):"YOK";$("dDurum").className="durum "+(d.on?"acik":"kapali");if(d.on){$("dMetin").value=d.metin;$("dTur").value=d.tur}
     $("yListe").innerHTML=(j.yorumlar||[]).map(function(y){return'<div class="li"><span><b>'+esc(y.n)+'</b> – '+esc(y.t.slice(0,60))+'…</span><button data-y="'+y.id+'">Sil</button></div>'}).join("")}
@@ -177,6 +191,7 @@ var mo=new MutationObserver(function(){if(!$("uyeK").hidden){mo.disconnect();yuk
     fetch("/sitemap.xml").then(function(r){return r.text()}).then(function(x){var m=x.match(/<loc>[^<]+<\/loc>/g)||[];$("sayfalar").innerHTML=m.map(function(l){var p=l.replace(/<\/?loc>/g,"").replace(/^https?:\/\/[^/]+/,"");return'<option value="'+p+'">'}).join("")}).catch(function(){});
   }
   function tP(v){v=Math.min(50,Math.max(5,v));$("tPct").value=v;$("tPctV").textContent="%"+v;$("tAc").textContent="Farkı AÇ (%"+v+")";try{localStorage.setItem("kxPct",v)}catch(e){}}try{var sv=+localStorage.getItem("kxPct");if(sv)tP(sv)}catch(e){}$("tPct").oninput=function(){tP(+this.value)};$("tEksi").onclick=function(){tP(+$("tPct").value-1)};$("tArti").onclick=function(){tP(+$("tPct").value+1)};$("tAc").onclick=function(){is(["tKapat","tAc"],"hT",A("/api/ayar",{islem:"tatil",on:true,ad:$("tAd").value,pct:+$("tPct").value,saat:+$("tSaat").value}).then(function(j){ayarGoster(j);ok("hT","Açıldı (%"+$("tPct").value+"). 1 dakika içinde sitede.")}))};
+  $("sKaydet").onclick=function(){is(["sKaydet"],"hS",A("/api/ayar",{islem:"durak",ucret:+$("sUcret").value,km:+String($("sKm").value).replace(",","."),pct:+$("sPct").value}).then(function(j){ayarGoster(j);ok("hS","Kaydedildi. 1 dakika içinde sitede.")}))};
   $("tKapat").onclick=function(){is(["tKapat"],"hT",A("/api/ayar",{islem:"tatil",on:false}).then(function(j){ayarGoster(j);ok("hT","Kapatıldı.")}))};
   $("dAc").onclick=function(){is(["dAc","dKapat"],"hD",A("/api/ayar",{islem:"duyuru",on:true,metin:$("dMetin").value,tur:$("dTur").value,saat:+$("dSaat").value}).then(function(j){ayarGoster(j);ok("hD","Yayında. 1 dakika içinde sitede.")}))};
   $("dKapat").onclick=function(){is(["dAc","dKapat"],"hD",A("/api/ayar",{islem:"duyuru",on:false}).then(function(j){ayarGoster(j);$("dMetin").value="";ok("hD","Kaldırıldı.")}))};
