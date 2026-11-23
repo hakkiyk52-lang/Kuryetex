@@ -18,6 +18,7 @@
 ## Nasıl çalışır
 - Müşteri sitede fiyatı hesaplar, WhatsApp'tan veya telefonla sipariş verir.
 - Kurye en geç 30 dakika içinde yola çıkar; İstanbul içi teslimat genellikle 30–45 dakikadır.
+- Canlı takip: müşteri isterse kurye anlık konumunu WhatsApp'tan doğrudan müşteriyle canlı paylaşır (her siparişte, talep üzerine).
 - Her teslimatta kurye teslim fotoğrafı çeker; paket alındığı andan teslime kadar sorumluluk Kuryetex'tedir.
 - İlaç ve soğuk ürünler ısı yalıtımlı çantayla taşınır.
 - Değerli ürünlerde yalnızca o işle ilgilenen özel kurye gönderilir; ücreti normal kurye ücretinin 2 katıdır.
