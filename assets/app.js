@@ -999,3 +999,41 @@ if(!tok){yaz(null);return}
 var c=null;try{c=JSON.parse(sessionStorage.getItem("kxUyeD")||"null")}catch(e){}
 if(c&&Date.now()-c.t<300000){uygula(c.u);return}
 yaz(null);fetch("/api/uye",{headers:{Authorization:"Bearer "+tok}}).then(function(r){return r.json()}).then(function(j){if(j.ok){try{sessionStorage.setItem("kxUyeD",JSON.stringify({t:Date.now(),u:j.uye}))}catch(e){}uygula(j.uye)}else{try{localStorage.removeItem(K)}catch(e){}yaz(null)}}).catch(function(){})})();
+
+/* kx-fold: uzun sayfaları "Devamını göster" ile katla (içerik HTML'de kalır) */
+(function(){try{
+var L=(document.documentElement.lang||"tr").slice(0,2),T={tr:"Devamını göster",en:"Show more",ar:"عرض المزيد"}[L]||"Devamını göster";
+function run(){
+ var m=document.querySelector("main");if(!m||m.hasAttribute("data-nofold"))return;
+ var secs=[].slice.call(m.children).filter(function(e){return e.tagName==="SECTION"});
+ if(secs.length<4)return;
+ var vh=window.innerHeight||800;if(m.scrollHeight<vh*4)return;
+ var cut=null,i;
+ for(i=1;i<secs.length;i++){if(secs[i].classList.contains("prose")&&secs[i].querySelector("h2")){cut=i;break}}
+ if(cut===null){for(i=1;i<secs.length;i++){if(secs[i].offsetTop>vh*2.5&&secs[i].querySelector("h2")){cut=i;break}}}
+ if(cut===null||cut>=secs.length-1)return;
+ var h=location.hash&&location.hash.length>1?document.getElementById(decodeURIComponent(location.hash.slice(1))):null;
+ if(h&&secs[cut].compareDocumentPosition(h)&Node.DOCUMENT_POSITION_FOLLOWING&&!secs[cut].contains(h))return;
+ if(!document.getElementById("kxfoldcss")){var st=document.createElement("style");st.id="kxfoldcss";st.textContent=
+ ".kxf-hide{display:none!important}.kxf-clip{position:relative;max-height:9.5em;overflow:hidden}"+
+ ".kxf-clip:after{content:'';position:absolute;left:0;right:0;bottom:0;height:5em;background:linear-gradient(rgba(255,255,255,0),var(--kxf-bg,#eef3f8))}"+
+ ".kxf-wrap{text-align:center;padding:6px 0 26px}.kxf-btn{display:inline-flex;align-items:center;gap:8px;background:#1c266e;color:#fff;border:0;border-radius:999px;padding:13px 28px;font-family:inherit;font-weight:800;font-size:1rem;line-height:1;cursor:pointer;box-shadow:0 8px 20px -10px rgba(28,38,110,.7)}"+
+ ".kxf-btn svg{width:18px;height:18px}";document.head.appendChild(st)}
+ var sec=secs[cut],hid=[],h2=sec.querySelector("h2"),firstP=null,ps=sec.querySelectorAll("p");
+ for(i=0;i<ps.length;i++){if(h2.compareDocumentPosition(ps[i])&Node.DOCUMENT_POSITION_FOLLOWING){firstP=ps[i];break}}
+ if(!firstP)return;
+ var n=firstP;while(n&&n!==sec){var x=n.nextElementSibling;while(x){x.classList.add("kxf-hide");hid.push(x);x=x.nextElementSibling}n=n.parentElement}
+ var wrap=firstP.parentElement;
+ var bg=getComputedStyle(sec).backgroundColor;if(bg&&bg!=="rgba(0, 0, 0, 0)"&&bg!=="transparent")sec.style.setProperty("--kxf-bg",bg);
+ firstP.classList.add("kxf-clip");
+ for(i=cut+1;i<secs.length;i++){secs[i].classList.add("kxf-hide");hid.push(secs[i])}
+ var bw=document.createElement("div");bw.className="kxf-wrap";bw.innerHTML='<button type="button" class="kxf-btn" aria-expanded="false">'+T+' <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>';
+ wrap.appendChild(bw);
+ function open(){firstP.classList.remove("kxf-clip");hid.forEach(function(e){e.classList.remove("kxf-hide")});bw.remove()}
+ bw.firstChild.addEventListener("click",function(){open();try{gtag("event","devamini_goster")}catch(e){}});
+ function chk(id){var t=id&&document.getElementById(id);if(t&&hid.some(function(e){return e===t||e.contains(t)})){open();setTimeout(function(){t.scrollIntoView()},30)}}
+ window.addEventListener("hashchange",function(){chk(decodeURIComponent(location.hash.slice(1)))});
+ document.addEventListener("click",function(e){var a=e.target.closest&&e.target.closest('a[href*="#"]');if(!a)return;var u=a.getAttribute("href"),k=u.indexOf("#");if(k<0)return;var p=u.slice(0,k);if(p&&p!==location.pathname)return;chk(decodeURIComponent(u.slice(k+1)))},true);
+}
+if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",run);else run();
+}catch(e){}})();
