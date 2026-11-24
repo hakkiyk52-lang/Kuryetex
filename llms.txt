@@ -179,3 +179,8 @@
 - Pharmacy delivery Istanbul (English): https://kuryetex.com.tr/en/eczane-kurye/ — district pages, e.g. https://kuryetex.com.tr/en/goztepe-eczane-kurye/, https://kuryetex.com.tr/en/kadikoy-eczane-kurye/, https://kuryetex.com.tr/en/fatih-eczane-kurye/
 - توصيل الأدوية في إسطنبول (Arabic): https://kuryetex.com.tr/ar/eczane-kurye/
 - Van courier Istanbul (English): https://kuryetex.com.tr/en/aracli-kurye/
+
+## Ana sayfalar ve rolleri
+- [Ana sayfa](https://kuryetex.com.tr/): Kuryetex markası ve tüm kurye çözümleri (moto, eczane, evrak, araçlı, VIP) tek adreste.
+- [Moto kurye hizmeti](https://kuryetex.com.tr/moto-kurye/): moto kurye nasıl çalışır, neler taşınır, kargodan farkı, taşıma kuralları.
+- [İstanbul kurye ağı](https://kuryetex.com.tr/istanbul-kurye/): 39 ilçe ve iki yaka; ilçe ilçe hizmet, iş merkezleri, hastane/adliye/havalimanı/otogar işleri.
