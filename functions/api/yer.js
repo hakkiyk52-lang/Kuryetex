@@ -2,7 +2,7 @@
 // Ücretsiz OpenStreetMap araması (Photon, olmazsa Nominatim). Yalnızca İstanbul ve çevresi.
 // Yanıt: [{ad, alt, lat, lon}]  — 1 gün önbellekte tutulur.
 const BBOX = [27.95, 40.78, 29.95, 41.6]; // minLon, minLat, maxLon, maxLat
-const UA = "KuryetexSite/1.0 (kuryetex.com.tr; kuryetex@gmail.com)";
+const UA = "KuryetexSite/1.0 (kuryetex.com.tr; info@kuryetex.com.tr)";
 const json = (o, extra = {}) => new Response(JSON.stringify(o), {
   headers: { "Content-Type": "application/json; charset=utf-8", "Access-Control-Allow-Origin": "*", ...extra } });
 const icinde = (lat, lon) => lon >= BBOX[0] && lon <= BBOX[2] && lat >= BBOX[1] && lat <= BBOX[3];
