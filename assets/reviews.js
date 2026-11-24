@@ -78,7 +78,7 @@ function init(){var E=((window.__kxAyar||{}).yorumlar||[]).filter(function(x){re
 var box=document.getElementById("kxReviews");if(!box)return;
 var pk=box.getAttribute("data-pick");if(pk&&!init.p){init.p=1;var ids=pk.split(",").map(Number),nE=list.length-R.length;list=list.slice(0,nE).concat(ids.map(function(k){return R[k]}).filter(Boolean))}
 var st=document.createElement("style");st.textContent=css;document.head.appendChild(st);
-var h='<div class="kxrv" aria-label="'+esc(L.h)+'"><div class="kxrv-hd">'+GL+'<div><b>'+esc(L.h)+'</b><small>'+esc(M.g)+'</small></div></div><div class="kxrv-w"><div class="kxrv-tr" tabindex="0">';
+var h='<div class="kxrv" aria-label="'+esc(L.h)+'"><div class="kxrv-hd">'+GL+'<div><b>'+esc(L.h)+'</b><small>'+esc(M.g)+'</small></div></div><div class="kxrv-w"><div class="kxrv-tr on" tabindex="0">';
 list.forEach(function(r,i){var c=colors[i%colors.length],d=r.d||D[r.n];
 h+='<article class="kxrv-c"><div class="kxrv-u"><span class="kxrv-a" style="background:'+c+'" aria-hidden="true">'+esc(r.n.charAt(0).toLocaleUpperCase("tr"))+'</span><div><div class="kxrv-n">'+esc(r.n)+'</div> '+(d?'<div class="kxrv-dt">'+esc(fd(d))+'</div>':'')+'</div>'+GL+'</div><div class="kxrv-s"><span aria-label="5/5">★★★★★</span><i aria-hidden="true">✓</i></div><p class="kxrv-t" lang="'+(r.l||"tr")+'">'+esc(r.t)+'</p><button type="button" class="kxrv-m" style="visibility:hidden">'+esc(M.more)+'</button></article>';});
 h+='</div></div><div class="kxrv-nv"><button type="button" class="kxrv-ar p" aria-label="'+esc(L.p)+'">‹</button><span class="kxrv-ct" aria-live="polite"></span><button type="button" class="kxrv-ar x" aria-label="'+esc(L.x)+'">›</button></div></div>';
@@ -98,5 +98,5 @@ if(!rm){setInterval(function(){if(!paused&&!document.hidden){var vis=tr.getBound
 }
 function wa(f){if(window.__kxAyar)return f();var d=0,g=function(){if(!d){d=1;f()}};document.addEventListener("kxayar",g);setTimeout(g,1500)}
 function lazy(){var b=document.getElementById("kxReviews");if(!b)return;if("IntersectionObserver" in window){var io=new IntersectionObserver(function(es){if(es[0].isIntersecting){io.disconnect();wa(init)}},{rootMargin:"500px 0px"});io.observe(b)}else wa(init)}
-if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",lazy);else lazy();
+function late(){setTimeout(lazy,2500)}if(document.readyState==="complete")late();else addEventListener("load",late);
 })();
