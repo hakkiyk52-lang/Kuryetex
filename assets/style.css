@@ -488,7 +488,7 @@ body.busy .fab,body.busy .bar,body.busy .lane{display:none!important}
 .callp{display:flex;align-items:center;gap:8px;margin-left:auto;margin-right:8px;padding:4px 14px 4px 4px;border-radius:999px;background:linear-gradient(135deg,var(--acc3),var(--acc2));color:#fff;text-decoration:none;box-shadow:0 6px 16px -6px var(--acc2);line-height:1.05}
 .callp .ci{width:34px;height:34px;border-radius:50%;background:var(--card);color:var(--acc2);display:grid;place-items:center;flex:none}
 .callp .ci svg{width:18px;height:18px}
-.callp small{display:block;font-size:.66rem;font-weight:700;opacity:.92;letter-spacing:.04em;text-transform:uppercase}
+.callp small{display:block;font-size:.66rem;font-weight:700;opacity:.92;letter-spacing:.04em;word-spacing:.18em;text-transform:uppercase}
 .callp b{display:block;font-size:.92rem;font-weight:800;white-space:nowrap}
 .callp:active{transform:scale(.97)}
 @media(max-width:380px){.callp b{font-size:.84rem}.callp{padding-right:10px}}
