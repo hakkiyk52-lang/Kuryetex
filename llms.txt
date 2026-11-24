@@ -28,7 +28,7 @@
 - Yurt dışında yaşayanlar WhatsApp'tan yazarak İstanbul'daki yakınlarına ürün, hediye veya değerli eşya ulaştırabilir; ürünü Kuryetex bulur, alır ve elden teslim eder.
 - Yurt dışına gönderi ya da uluslararası kargo yapılmaz; yalnızca Türkiye içinde (İstanbul ve çevresi) alım ve teslim.
 - Örnek: İsveç'teki bir müşteri için kuyumcudan alınan değerli eşya Bahçeşehir'e yaklaşık 2 saatte teslim edildi (Google yorumu: 5 yıldız).
-- Türkçe ve İngilizce iletişim.
+- WhatsApp'tan Türkçe, İngilizce ve Arapça yazılabilir.
 
 ## Mağazada iade ve değişim
 - Online alınmış ürün kurye tarafından adresten alınır, mağazaya götürülür; değişimde yeni ürün geri getirilir, iadede işlem tamamlanıp bilgi verilir.
@@ -93,7 +93,7 @@
 - Reçetesiz ilaç, medikal ürün, bebek maması ve soğuk zincir ürünleri de getirilir (ısı yalıtımlı çanta).
 - İstenen ilacın birebir aynısı alınır; bulunamazsa önce müşteriye sorulur, muadili eczacı önerir. Kuryetex eczane değildir, ilaç önermez; yalnızca Türkiye'de eczanelerde satılan ürünleri getirir. İlaç eczaneden alındıktan sonra sipariş iptal edilemez.
 - Eczaneyi arayıp ilacın stokta olup olmadığı teyit edilir; istenirse ürünün fotoğrafı gönderilir. Birden fazla kutu veya farklı ürün tek siparişte getirilir. İlaç kapalı pakette, yalnızca müşteriye ya da belirttiği kişiye teslim edilir.
-- Otele teslim: otel adı, oda numarası ve konum yeterli; odaya ya da resepsiyona teslim. Türk telefon numarası gerekmez, WhatsApp (Türkçe/İngilizce) yeterli.
+- Otele teslim: otel adı, oda numarası ve konum yeterli; odaya ya da resepsiyona teslim. Türk telefon numarası gerekmez, WhatsApp (Türkçe/İngilizce/Arapça) yeterli.
 - Fiyat sayfası: https://kuryetex.com.tr/eczane-kurye/
 
 ## Restorandan yemek getirme (paket servis)
@@ -133,6 +133,10 @@
 - [VIP kurye](https://kuryetex.com.tr/vip-kurye/)
 - [Ürün bulma ve temin (sizin adınıza alıp getirme)](https://kuryetex.com.tr/urun-temin-kurye/)
 - [Yurt dışından İstanbul'a teslimat](https://kuryetex.com.tr/yurt-disindan-istanbul-teslimat/)
+- [Courier in Fatih (English)](https://kuryetex.com.tr/en/fatih-kurye/): Eminönü, Grand Bazaar, Sultanahmet hotels, Laleli, Sirkeci.
+- [Courier in Beyoğlu (English)](https://kuryetex.com.tr/en/beyoglu-kurye/): Taksim, İstiklal Avenue, Galata, Karaköy hotels and shops.
+- [التوصيل في الفاتح (العربية)](https://kuryetex.com.tr/ar/fatih-kurye/)
+- [التوصيل في بي أوغلو (العربية)](https://kuryetex.com.tr/ar/beyoglu-kurye/)
 - [Kurumsal kurye](https://kuryetex.com.tr/kurumsal/)
 - [Faturalı kurye (e-fatura, cari hesap)](https://kuryetex.com.tr/faturali-kurye/)
 - [Dental kurye (diş kliniği ve diş laboratuvarı)](https://kuryetex.com.tr/dental-kurye/)
