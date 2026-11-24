@@ -76,6 +76,7 @@ function esc(s){return s.replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&
 function fd(s){try{return new Date(s+"T12:00:00").toLocaleDateString(lang==="ar"?"ar":lang==="en"?"en-GB":"tr-TR",{day:"numeric",month:"long",year:"numeric"})}catch(e){return s}}
 function init(){var E=((window.__kxAyar||{}).yorumlar||[]).filter(function(x){return x&&x.n&&x.t}).map(function(x){return{n:x.n,t:x.t,e:x.e,d:x.d}});if(ecz)E=E.filter(function(x){return x.e||/ila[cç]|eczane|nöbetçi|pharmac|medic|دواء|صيدل/i.test(x.t)});if(E.length&&!init.m){init.m=1;list=E.concat(list)}
 var box=document.getElementById("kxReviews");if(!box)return;
+var pk=box.getAttribute("data-pick");if(pk&&!init.p){init.p=1;var ids=pk.split(",").map(Number),nE=list.length-R.length;list=list.slice(0,nE).concat(ids.map(function(k){return R[k]}).filter(Boolean))}
 var st=document.createElement("style");st.textContent=css;document.head.appendChild(st);
 var h='<div class="kxrv" aria-label="'+esc(L.h)+'"><div class="kxrv-hd">'+GL+'<div><b>'+esc(L.h)+'</b><small>'+esc(M.g)+'</small></div></div><div class="kxrv-w"><div class="kxrv-tr" tabindex="0">';
 list.forEach(function(r,i){var c=colors[i%colors.length],d=r.d||D[r.n];
