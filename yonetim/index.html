@@ -26,6 +26,7 @@ label{font-weight:600;font-size:15px}
 <body>
 <header>KuryeTEX · Yönetim</header>
 <main>
+<button type="button" id="kxBack">‹ Menü</button><div id="kxGrid" hidden></div>
   <div class="k" id="giris">
     <h2>Giriş</h2>
     <input id="sifre" type="password" placeholder="Yönetim şifresi" autocomplete="current-password" aria-label="Yönetim şifresi">
@@ -219,5 +220,29 @@ Y("yayinla").then(function(j){if(j.hata)h.textContent=j.hata;else{h.style.color=
 new MutationObserver(function(){if(!$("yayK").hidden&&!$("yayK").dataset.ok){$("yayK").dataset.ok=1;kontrol()}}).observe($("yayK"),{attributes:true});
 })();
 </script>
-</body>
+<style>
+#kxGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.kt{background:#fff;border:1px solid #e3e9f2;border-radius:16px;padding:18px 10px 14px;text-align:center;color:#13233f;font-size:15px;font-weight:700;width:100%;box-shadow:0 2px 10px rgba(11,47,107,.06);display:flex;flex-direction:column;align-items:center;gap:6px;text-decoration:none;cursor:pointer}
+.kt i{font-style:normal;font-size:30px;line-height:1}
+.kt small{font-size:12px;font-weight:600;color:#5b6b85;min-height:15px}
+.kt small.on{color:var(--y)}
+.kt:active{transform:scale(.97)}
+#kxBack{display:none;width:auto;padding:10px 16px;font-size:16px;margin:0 0 14px;background:#fff;color:var(--m);border:1px solid #c9d3e3}
+body.kxg main>.k{display:none}
+body.kxg main>.k.kx-on{display:block}
+body.kxg.kxo #kxBack{display:inline-block}
+body.kxg.kxo #kxGrid{display:none}
+</style><script>(function(){
+var T=[["Yağış farkı","🌧️","panel","durum"],["Fiyat farkı","💯","Fiyat farkı","tDurum"],["Ek durak","📍","Çoklu adres",null],["Duyuru","📢","Duyuru şeridi","dDurum"],["Teslimat fotoğrafı","📸","Teslimat fotoğrafı",null],["Yorum ekle","⭐","Google yorumu",null],["Canlıya al","🚀","yayK",null],["Bing'e bildir","📨","bing",null],["Üyeler","👥","uyeK",null]];
+var M=document.querySelector("main"),G=document.getElementById("kxGrid"),B=document.getElementById("kxBack"),cards=[].slice.call(M.querySelectorAll(":scope>.k"));
+function find(k){var e=document.getElementById(k);if(e&&e.classList.contains("k"))return e;for(var i=0;i<cards.length;i++){var h=cards[i].querySelector("h2");if(h&&h.textContent.indexOf(k)===0)return cards[i]}return null}
+T.forEach(function(t){var c=find(t[2]);if(!c)return;var b=document.createElement("button");b.type="button";b.className="kt";b.innerHTML='<i aria-hidden="true">'+t[1]+'</i>'+t[0]+'<small></small>';b.onclick=function(){open(c)};b._c=c;b._d=t[3];G.appendChild(b)});
+var a=document.createElement("a");a.className="kt";a.href="/";a.target="_blank";a.innerHTML='<i aria-hidden="true">🌐</i>Siteyi aç<small></small>';G.appendChild(a);
+function stat(){[].forEach.call(G.children,function(b){if(!b._d)return;var d=document.getElementById(b._d),sm=b.querySelector("small");if(!d||!sm)return;var tx=(d.textContent||"").trim();if(tx==="…"||tx==="—")tx="";sm.textContent=tx.length>26?tx.slice(0,26)+"…":tx;sm.className=d.classList.contains("acik")?"on":""})}
+function open(c){cards.forEach(function(x){x.classList.remove("kx-on")});c.classList.add("kx-on");document.body.classList.add("kxo");scrollTo(0,0)}
+function menu(){cards.forEach(function(x){x.classList.remove("kx-on")});document.body.classList.remove("kxo");stat();scrollTo(0,0)}
+B.onclick=menu;
+function chk(){var p=document.getElementById("panel");if(p&&!p.hidden&&!document.body.classList.contains("kxg")){document.body.classList.add("kxg");G.hidden=false;menu();setInterval(function(){if(!document.body.classList.contains("kxo"))stat()},3000)}}
+new MutationObserver(chk).observe(document.getElementById("panel"),{attributes:true,attributeFilter:["hidden"]});chk();
+})();</script></body>
 </html>
