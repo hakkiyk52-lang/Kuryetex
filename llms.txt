@@ -145,6 +145,7 @@
 - [Teslimat Güvence Sözleşmesi](https://kuryetex.com.tr/teslimat-guvence-sozlesmesi/)
 - [Sık sorulan sorular](https://kuryetex.com.tr/sss/)
 - [Hakkımızda](https://kuryetex.com.tr/hakkimizda/)
+- [Müşteri Yorumları](https://kuryetex.com.tr/yorumlar/): Google İşletme Profilimizdeki gerçek müşteri yorumları, yazıldığı gibi.
 - [İletişim](https://kuryetex.com.tr/iletisim/)
 
 ## Yapmadıklarımız
